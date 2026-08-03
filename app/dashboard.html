@@ -149,8 +149,18 @@
     </section>
 
     <section class="panel">
-      <h2>Approved for projection now</h2>
-      <p>Filterable by day, status, search, and sort. Click Download latest to get the current file.</p>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px;">
+        <div>
+          <h2 style="margin:0 0 4px;">Approved for projection now</h2>
+          <p style="margin:0;color:var(--muted);font-size:14px;">Filterable by day, status, search, and sort. Click Download latest to get the current file.</p>
+        </div>
+        <!-- Colour legend -->
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--success);display:inline-block;"></span>Ready</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#2563eb;display:inline-block;"></span>Updated</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--warning);display:inline-block;"></span>On hold</span>
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
