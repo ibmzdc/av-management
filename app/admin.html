@@ -137,13 +137,14 @@
       and the admin will compare filenames and modification dates against the session data.
     </p>
 
-    <!-- hidden directory picker — triggered by button -->
-    <input type="file" id="box-folder-input" webkitdirectory style="display:none;">
-
     <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No folder selected.</div>
 
     <div class="inline-actions">
-      <button id="box-folder-btn">📁 Pick Box Drive folder</button>
+      <!-- label wraps the hidden input — clicking the label opens the OS folder picker natively, works in Safari -->
+      <label for="box-folder-input" id="box-folder-btn" style="display:inline-flex;align-items:center;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-alt);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">
+        📁 Pick Box Drive folder
+      </label>
+      <input type="file" id="box-folder-input" webkitdirectory style="display:none;">
       <button id="box-scan-btn">🔍 Scan for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
@@ -302,7 +303,6 @@
   // Box scan panel refs
   const boxScanPanel    = document.getElementById('box-scan-panel');
   const boxFolderInput  = document.getElementById('box-folder-input');
-  const boxFolderBtn    = document.getElementById('box-folder-btn');
   const boxFolderStatus = document.getElementById('box-folder-status');
   const boxScanBtn      = document.getElementById('box-scan-btn');
   const boxScanStatus   = document.getElementById('box-scan-status');
@@ -664,10 +664,7 @@
   }
 
   /* ── Box Drive folder picker ── */
-  boxFolderBtn.addEventListener('click', () => {
-    boxFolderInput.value = '';
-    boxFolderInput.click();
-  });
+  // The label#box-folder-input triggers the file input natively — no JS click() needed.
   boxFolderInput.addEventListener('change', () => {
     const files = Array.from(boxFolderInput.files || []);
     if (!files.length) return;
@@ -847,7 +844,6 @@
 
   /* ── Wire events ── */
   boxFileBtn.addEventListener('click', loadFromBoxFile);
-  boxFolderBtn.addEventListener('click', () => { boxFolderInput.value = ''; boxFolderInput.click(); });
   reloadBtn.addEventListener('click', loadFromGitHub);
   useTemplateBtn.addEventListener('click', () => {
     data = getTemplate(); fileSha = null;
