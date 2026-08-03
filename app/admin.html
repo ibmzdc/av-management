@@ -494,8 +494,7 @@
   /* ── Activate editor ── */
   function activateEditor() {
     lastRefreshInput.value = formatRefreshInput(data.lastRefresh);
-    boxScanPanel.hidden = false;   // reveal the Box scan panel once data is loaded
-    editorPanel.hidden  = false;
+    editorPanel.hidden = false;
     renderDays();
     editorPanel.scrollIntoView({ behavior:'smooth', block:'start' });
   }
@@ -636,7 +635,6 @@
   });
   addDayBtn.addEventListener('click', addDay);
   saveBtn.addEventListener('click', saveToGitHub);
-  boxScanBtn.addEventListener('click', scanBoxFolder);
   modalCancel.addEventListener('click', closeModal);
   modalSave.addEventListener('click', saveModal);
   modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
