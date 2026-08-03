@@ -274,7 +274,7 @@
       statVideos.textContent   = day.files.filter(f=>f.type==='Video').length;
       statHold.textContent     = day.files.filter(f=>f.status==='hold').length;
     }
-    function renderFileRows(files, dayId) {
+    function renderFileRows(files, dayId, dayLabel) {
       files.forEach((file, i) => {
         const row = document.createElement('tr');
         // Row left-border accent by status
@@ -302,7 +302,7 @@
             <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
             ${holdWarn}
           </td>
-          <td>${escapeHtml(file.updatedAt)}<br><span class="file-meta">${escapeHtml(file.updatedNote)}</span></td>
+          <td>${file.updatedAt ? `<span style="white-space:nowrap;">${escapeHtml(dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + escapeHtml(file.updatedAt)}</span>` : '<span style="color:var(--muted);">—</span>'}<br><span class="file-meta">${escapeHtml(file.updatedNote)}</span></td>
           <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>
           <td class="download"><a href="${escapeHtml(file.downloadUrl)}">${file.status==='hold'?'Awaiting upload':'Download latest'}</a></td>`;
         fileTableBody.appendChild(row);
@@ -333,13 +333,13 @@
           const sep = document.createElement('tr');
           sep.innerHTML = `<td colspan="6" style="padding:12px 12px 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-alt);border-top:2px solid var(--border);">${escapeHtml(d.label)}</td>`;
           fileTableBody.appendChild(sep);
-          renderFileRows(files, d.id);
+          renderFileRows(files, d.id, d.label);
         });
         fileEmptyState.hidden = any;
       } else {
         const files = getFilteredFiles(day);
         fileEmptyState.hidden = !!files.length;
-        if (files.length) renderFileRows(files, day.id);
+        if (files.length) renderFileRows(files, day.id, day.label);
       }
       fileTableBody.querySelectorAll('.details-toggle').forEach(btn => {
         btn.addEventListener('click', () => {
