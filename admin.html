@@ -218,9 +218,21 @@
   /* ── State ── */
   let data         = null;
   let fileSha      = null;   // current SHA of the file in GitHub (required for PUT update)
-  let ghToken      = sessionStorage.getItem('gh_token') || '';
   let modalDayId   = null;
   let modalFileIdx = null;
+
+  // Token priority: 1) URL hash fragment  2) localStorage (persists forever)
+  // Hash fragment is never sent to the server — safe to use in a bookmark.
+  let ghToken = (function() {
+    const hash = window.location.hash.slice(1); // strip leading #
+    if (hash.startsWith('ghp_') || hash.startsWith('github_pat_')) {
+      localStorage.setItem('gh_token', hash);
+      // Remove token from URL bar without reloading (keeps bookmarks clean after first use)
+      history.replaceState(null, '', window.location.pathname);
+      return hash;
+    }
+    return localStorage.getItem('gh_token') || '';
+  })();
 
   /* ── Element refs ── */
   const tokenInput      = document.getElementById('token-input');
@@ -266,11 +278,11 @@
   /* ── Token management ── */
   function updateTokenUI() {
     if (ghToken) {
-      tokenStatus.textContent = '✅ Token set (stored for this session)';
+      tokenStatus.textContent = '✅ Token saved in this browser — auto-populated on every visit.';
       tokenStatus.style.color = 'var(--success)';
       tokenInput.value = '';
     } else {
-      tokenStatus.textContent = 'No token set — you can still view data but cannot save.';
+      tokenStatus.textContent = 'No token set — paste one below, or open the admin URL with #ghp_… appended.';
       tokenStatus.style.color = 'var(--muted)';
     }
   }
@@ -278,12 +290,12 @@
     const v = tokenInput.value.trim();
     if (!v) return;
     ghToken = v;
-    sessionStorage.setItem('gh_token', v);
+    localStorage.setItem('gh_token', v);
     updateTokenUI();
   });
   tokenClearBtn.addEventListener('click', () => {
     ghToken = '';
-    sessionStorage.removeItem('gh_token');
+    localStorage.removeItem('gh_token');
     tokenInput.value = '';
     updateTokenUI();
   });
