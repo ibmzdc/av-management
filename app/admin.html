@@ -131,28 +131,23 @@
   <section class="panel" id="box-scan-panel" hidden>
     <h2>Step 2 · Scan Box for updated files</h2>
     <p class="panel-desc">
-      Connect your Box account once — the admin stays connected automatically and refreshes the
-      token in the background. When a presenter uploads a new version of their file, click
-      <strong>Scan</strong> to detect it and apply the update in one click.
+      Paste a Box Developer Token to scan the presentation folder for new file versions.
+      Generate one at <strong>ibm.ent.box.com/developers/console</strong> → your app →
+      Configuration → Developer Token → Generate. Tokens last 60 minutes.
     </p>
 
-    <!-- Box OAuth connection status bar -->
-    <div id="box-auth-bar" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
-      <div id="box-auth-status" style="font-size:13px;color:var(--muted);flex:1;">Not connected to Box.</div>
-      <button id="box-connect-btn" class="btn-primary">🔗 Connect Box account</button>
-      <button id="box-disconnect-btn" style="display:none;">Disconnect</button>
-    </div>
-    <!-- Client ID entry — shown only until first connect -->
-    <div id="box-client-id-row" style="display:none;margin-bottom:14px;">
-      <label for="box-client-id-input">Box App Client ID <span style="font-weight:400;color:var(--muted);">(one-time setup — from box.com/developers/console → your app → Configuration)</span></label>
-      <div style="display:flex;gap:10px;">
-        <input id="box-client-id-input" type="text" placeholder="abc123…" style="font-family:monospace;max-width:420px;">
-        <button id="box-client-id-save-btn" class="btn-primary">Save &amp; Connect</button>
+    <div style="display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:flex-end;margin-bottom:6px;">
+      <div>
+        <label for="box-token-input">Box Developer Token</label>
+        <input id="box-token-input" type="password" placeholder="Paste token here…" style="font-family:monospace;">
       </div>
+      <button id="box-token-save-btn" class="btn-primary" style="white-space:nowrap;">Set token</button>
+      <button id="box-token-clear-btn" style="white-space:nowrap;">Clear</button>
     </div>
+    <div id="box-token-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;"></div>
 
     <div class="inline-actions">
-      <button id="box-scan-btn" disabled>🔍 Scan Box folder for updates</button>
+      <button id="box-scan-btn">🔍 Scan Box folder for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
 
@@ -265,12 +260,10 @@
   const FILE_PATH   = 'data/av-data.json';
   const RAW_URL     = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE_PATH}`;
   const API_URL     = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
-  const BOX_FILENAME    = 'zdc-2026-fall-av-data.json';  // Box Drive source-of-truth filename
-  const BOX_FOLDER_ID   = '405818329815';                 // ibm.ent.box.com/folder/405818329815
-  const BOX_API         = 'https://api.box.com/2.0';
-  const BOX_AUTH_URL    = 'https://account.box.com/api/oauth2/authorize';
-  const BOX_TOKEN_URL   = 'https://api.box.com/oauth2/token';
-  const BOX_REDIRECT    = window.location.origin + window.location.pathname; // self
+  const BOX_FILENAME  = 'zdc-2026-fall-av-data.json';  // Box Drive source-of-truth filename
+  const BOX_FOLDER_ID = '405818329815';                 // ibm.ent.box.com/folder/405818329815
+  const BOX_API       = 'https://api.box.com/2.0';
+  const BOX_TOKEN_TTL = 60 * 60 * 1000; // Box dev tokens last 60 min
 
   /* ── State ── */
   let data         = null;
@@ -279,12 +272,9 @@
   let modalFileIdx = null;
   let scanRows     = [];     // last scan result rows — used by applyBoxUpdates()
 
-  // Box OAuth state (persisted in localStorage)
-  let boxAccessToken   = localStorage.getItem('box_access_token')  || '';
-  let boxRefreshToken  = localStorage.getItem('box_refresh_token') || '';
-  let boxTokenExpiry   = parseInt(localStorage.getItem('box_token_expiry') || '0', 10);
-  let boxClientId      = localStorage.getItem('box_client_id')     || '';
-  let boxRefreshTimer  = null;   // handle for auto-refresh setTimeout
+  // Box Developer Token + saved-at timestamp for expiry tracking
+  let boxToken        = localStorage.getItem('box_token')          || '';
+  let boxTokenSavedAt = parseInt(localStorage.getItem('box_token_saved_at') || '0', 10);
 
   // Token priority: 1) URL hash fragment  2) localStorage (persists forever)
   // Hash fragment is never sent to the server — safe to use in a bookmark.
@@ -319,17 +309,15 @@
   const editorMessage   = document.getElementById('editor-message');
 
   // Box scan panel refs
-  const boxScanPanel       = document.getElementById('box-scan-panel');
-  const boxAuthStatus      = document.getElementById('box-auth-status');
-  const boxConnectBtn      = document.getElementById('box-connect-btn');
-  const boxDisconnectBtn   = document.getElementById('box-disconnect-btn');
-  const boxClientIdRow     = document.getElementById('box-client-id-row');
-  const boxClientIdInput   = document.getElementById('box-client-id-input');
-  const boxClientIdSaveBtn = document.getElementById('box-client-id-save-btn');
-  const boxScanBtn         = document.getElementById('box-scan-btn');
-  const boxScanStatus      = document.getElementById('box-scan-status');
-  const boxScanResults     = document.getElementById('box-scan-results');
-  const boxScanMessage     = document.getElementById('box-scan-message');
+  const boxScanPanel    = document.getElementById('box-scan-panel');
+  const boxTokenInput   = document.getElementById('box-token-input');
+  const boxTokenSaveBtn = document.getElementById('box-token-save-btn');
+  const boxTokenClearBtn= document.getElementById('box-token-clear-btn');
+  const boxTokenStatus  = document.getElementById('box-token-status');
+  const boxScanBtn      = document.getElementById('box-scan-btn');
+  const boxScanStatus   = document.getElementById('box-scan-status');
+  const boxScanResults  = document.getElementById('box-scan-results');
+  const boxScanMessage  = document.getElementById('box-scan-message');
 
   const modalBackdrop = document.getElementById('modal-backdrop');
   const modalTitle    = document.getElementById('modal-title');
@@ -685,178 +673,51 @@
     };
   }
 
-  /* ── Box OAuth PKCE helpers ── */
-  function generateRandom(len) {
-    const arr = new Uint8Array(len);
-    crypto.getRandomValues(arr);
-    return Array.from(arr, b => b.toString(16).padStart(2,'0')).join('');
-  }
-  async function sha256Base64url(str) {
-    const enc  = new TextEncoder().encode(str);
-    const hash = await crypto.subtle.digest('SHA-256', enc);
-    return btoa(String.fromCharCode(...new Uint8Array(hash)))
-      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-  }
-
-  /* ── Box OAuth: persist tokens ── */
-  function saveBoxTokens(access, refresh, expiresIn) {
-    boxAccessToken  = access;
-    boxRefreshToken = refresh;
-    boxTokenExpiry  = Date.now() + expiresIn * 1000;
-    localStorage.setItem('box_access_token',  access);
-    localStorage.setItem('box_refresh_token', refresh);
-    localStorage.setItem('box_token_expiry',  boxTokenExpiry);
-    scheduleBoxRefresh(expiresIn);
-    updateBoxAuthUI();
-  }
-  function clearBoxTokens() {
-    boxAccessToken = ''; boxRefreshToken = ''; boxTokenExpiry = 0;
-    ['box_access_token','box_refresh_token','box_token_expiry'].forEach(k => localStorage.removeItem(k));
-    if (boxRefreshTimer) clearTimeout(boxRefreshTimer);
-    updateBoxAuthUI();
-  }
-
-  /* ── Box OAuth: auto-refresh ── */
-  function scheduleBoxRefresh(expiresIn) {
-    if (boxRefreshTimer) clearTimeout(boxRefreshTimer);
-    // Refresh 5 minutes before expiry
-    const delay = Math.max(0, (expiresIn - 300) * 1000);
-    boxRefreshTimer = setTimeout(refreshBoxToken, delay);
-  }
-  async function refreshBoxToken() {
-    if (!boxRefreshToken || !boxClientId) return;
-    try {
-      const body = new URLSearchParams({
-        grant_type: 'refresh_token',
-        client_id:  boxClientId,
-        refresh_token: boxRefreshToken
-      });
-      const res = await fetch(BOX_TOKEN_URL, { method:'POST', body });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const t = await res.json();
-      saveBoxTokens(t.access_token, t.refresh_token, t.expires_in);
-    } catch (err) {
-      // Refresh failed — show reconnect prompt
-      boxAuthStatus.textContent = '⚠️ Session expired — click Connect to sign in again.';
-      boxAuthStatus.style.color = 'var(--warning)';
-      boxScanBtn.disabled = true;
-      boxConnectBtn.style.display = '';
-      boxDisconnectBtn.style.display = 'none';
-    }
-  }
-
-  /* ── Box OAuth: handle redirect callback ── */
-  async function handleBoxCallback() {
-    const params = new URLSearchParams(window.location.search);
-    const code   = params.get('code');
-    const state  = params.get('state');
-    if (!code) return false;
-
-    // Clean up the URL immediately
-    history.replaceState(null, '', window.location.pathname);
-
-    // Validate state
-    const savedState = sessionStorage.getItem('box_oauth_state');
-    if (state !== savedState) {
-      console.warn('Box OAuth state mismatch — ignoring callback');
-      return false;
-    }
-    const verifier = sessionStorage.getItem('box_code_verifier');
-    sessionStorage.removeItem('box_oauth_state');
-    sessionStorage.removeItem('box_code_verifier');
-
-    try {
-      const body = new URLSearchParams({
-        grant_type:    'authorization_code',
-        code,
-        client_id:     boxClientId,
-        redirect_uri:  BOX_REDIRECT,
-        code_verifier: verifier
-      });
-      const res = await fetch(BOX_TOKEN_URL, { method:'POST', body });
-      if (!res.ok) {
-        const e = await res.json().catch(()=>({}));
-        throw new Error(e.error_description || `HTTP ${res.status}`);
+  /* ── Box token UI ── */
+  function updateBoxTokenUI() {
+    const age       = Date.now() - boxTokenSavedAt;
+    const remaining = BOX_TOKEN_TTL - age;
+    if (boxToken) {
+      const mins = Math.max(0, Math.round(remaining / 60000));
+      if (remaining <= 0) {
+        boxTokenStatus.textContent = '⚠️ Token has likely expired (>60 min) — generate a new one and paste it above.';
+        boxTokenStatus.style.color = 'var(--warning)';
+      } else if (remaining < 5 * 60 * 1000) {
+        boxTokenStatus.textContent = `⚠️ Token expires in ~${mins} min — generate a fresh one soon.`;
+        boxTokenStatus.style.color = 'var(--warning)';
+      } else {
+        boxTokenStatus.textContent = `✅ Token set — ~${mins} min remaining.`;
+        boxTokenStatus.style.color = 'var(--success)';
       }
-      const t = await res.json();
-      saveBoxTokens(t.access_token, t.refresh_token, t.expires_in);
-      showMessage(boxScanMessage, '✅ Connected to Box — ready to scan.', 'ok');
-      boxScanMessage.hidden = false;
-    } catch (err) {
-      showMessage(boxScanMessage, `Box login failed: ${err.message}`, 'error');
-      boxScanMessage.hidden = false;
-    }
-    return true;
-  }
-
-  /* ── Box OAuth: start login ── */
-  async function connectBox() {
-    if (!boxClientId) {
-      // Show the client ID entry row
-      boxClientIdRow.style.display = '';
-      boxClientIdInput.focus();
-      return;
-    }
-    const verifier  = generateRandom(32);
-    const oauthState = generateRandom(16);
-    const challenge = await sha256Base64url(verifier);
-    sessionStorage.setItem('box_code_verifier', verifier);
-    sessionStorage.setItem('box_oauth_state',   oauthState);
-
-    const url = `${BOX_AUTH_URL}?response_type=code`
-      + `&client_id=${encodeURIComponent(boxClientId)}`
-      + `&redirect_uri=${encodeURIComponent(BOX_REDIRECT)}`
-      + `&state=${oauthState}`
-      + `&code_challenge=${challenge}`
-      + `&code_challenge_method=S256`;
-    window.location.href = url;
-  }
-
-  /* ── Box auth UI ── */
-  function updateBoxAuthUI() {
-    const connected = !!boxAccessToken && Date.now() < boxTokenExpiry;
-    if (connected) {
-      const mins = Math.round((boxTokenExpiry - Date.now()) / 60000);
-      boxAuthStatus.textContent = `✅ Connected to Box (~${mins} min until refresh).`;
-      boxAuthStatus.style.color = 'var(--success)';
-      boxConnectBtn.style.display     = 'none';
-      boxDisconnectBtn.style.display  = '';
-      boxScanBtn.disabled             = false;
     } else {
-      boxAuthStatus.textContent = boxRefreshToken
-        ? 'Session token expired — click Connect to refresh.'
-        : 'Not connected to Box.';
-      boxAuthStatus.style.color = boxRefreshToken ? 'var(--warning)' : 'var(--muted)';
-      boxConnectBtn.style.display    = '';
-      boxDisconnectBtn.style.display = 'none';
-      boxScanBtn.disabled            = true;
+      boxTokenStatus.textContent = 'No token set.';
+      boxTokenStatus.style.color = 'var(--muted)';
     }
-    // Keep client ID row hidden once we have a client ID saved
-    if (boxClientId) boxClientIdRow.style.display = 'none';
   }
+  setInterval(updateBoxTokenUI, 60000); // refresh countdown every minute
 
-  // Wire Box auth buttons
-  boxConnectBtn.addEventListener('click', connectBox);
-  boxDisconnectBtn.addEventListener('click', () => { clearBoxTokens(); });
-  boxClientIdSaveBtn.addEventListener('click', () => {
-    const v = boxClientIdInput.value.trim();
+  boxTokenSaveBtn.addEventListener('click', () => {
+    const v = boxTokenInput.value.trim();
     if (!v) return;
-    boxClientId = v;
-    localStorage.setItem('box_client_id', v);
-    boxClientIdRow.style.display = 'none';
-    connectBox();
+    boxToken = v; boxTokenSavedAt = Date.now();
+    localStorage.setItem('box_token', v);
+    localStorage.setItem('box_token_saved_at', String(boxTokenSavedAt));
+    boxTokenInput.value = '';
+    updateBoxTokenUI();
+  });
+  boxTokenClearBtn.addEventListener('click', () => {
+    boxToken = ''; boxTokenSavedAt = 0;
+    localStorage.removeItem('box_token');
+    localStorage.removeItem('box_token_saved_at');
+    updateBoxTokenUI();
   });
 
   /* ── Box folder scan ── */
   async function scanBoxFolder() {
-    if (!boxAccessToken) {
-      showMessage(boxScanMessage, 'Connect to Box above before scanning.', 'error');
+    if (!boxToken) {
+      showMessage(boxScanMessage, 'Paste a Box Developer Token above before scanning.', 'error');
       boxScanMessage.hidden = false;
       return;
-    }
-    // Proactively refresh if within 60s of expiry
-    if (Date.now() > boxTokenExpiry - 60000) {
-      await refreshBoxToken();
     }
     if (!data) {
       showMessage(boxScanMessage, 'Load session data first (Step 1) before scanning.', 'error');
@@ -874,7 +735,7 @@
       // Fetch up to 1000 items from the folder (Box default limit is 100, use 1000)
       const url = `${BOX_API}/folders/${BOX_FOLDER_ID}/items?fields=id,name,modified_at,size,version_number&limit=1000`;
       const res = await fetch(url, {
-        headers: { 'Authorization': `Bearer ${boxAccessToken}`, 'Accept': 'application/json' }
+        headers: { 'Authorization': `Bearer ${boxToken}`, 'Accept': 'application/json' }
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -982,8 +843,7 @@
       showMessage(boxScanMessage, `Box scan failed: ${err.message}`, 'error');
       boxScanMessage.hidden = false;
     } finally {
-      // Re-enable only if still connected
-      boxScanBtn.disabled = !boxAccessToken;
+      boxScanBtn.disabled = false;
     }
   }
 
@@ -1056,16 +916,8 @@
   modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key==='Escape' && !modalBackdrop.hidden) closeModal(); });
 
-  // Handle Box OAuth callback (?code=…) before anything else
-  // If not a callback, initialise auth UI and schedule refresh if token already exists
-  handleBoxCallback().then(() => {
-    updateBoxAuthUI();
-    if (boxRefreshToken && Date.now() < boxTokenExpiry) {
-      const remaining = Math.round((boxTokenExpiry - Date.now()) / 1000);
-      scheduleBoxRefresh(remaining);
-    }
-  });
-  // Auto-load data on startup
+  // Initialise Box token UI and auto-load data on startup
+  updateBoxTokenUI();
   loadFromGitHub();
 </script>
 </body>
