@@ -129,25 +129,22 @@
 
   <!-- Box version scan panel -->
   <section class="panel" id="box-scan-panel" hidden>
-    <h2>Step 2 · Scan Box for updated files</h2>
+    <h2>Step 2 · Scan Box Drive folder for updated files</h2>
     <p class="panel-desc">
-      Paste a Box Developer Token to scan the presentation folder for new file versions.
-      Generate one at <strong>ibm.ent.box.com/developers/console</strong> → your app →
-      Configuration → Developer Token → Generate. Tokens last 60 minutes.
+      No API token needed — this reads your local Box Drive folder directly.
+      When a presenter uploads a new file, Box Drive syncs it to your Mac automatically.
+      Click <strong>Pick folder</strong>, select the folder where presentation files are stored,
+      and the admin will compare filenames and modification dates against the session data.
     </p>
 
-    <div style="display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:flex-end;margin-bottom:6px;">
-      <div>
-        <label for="box-token-input">Box Developer Token</label>
-        <input id="box-token-input" type="password" placeholder="Paste token here…" style="font-family:monospace;">
-      </div>
-      <button id="box-token-save-btn" class="btn-primary" style="white-space:nowrap;">Set token</button>
-      <button id="box-token-clear-btn" style="white-space:nowrap;">Clear</button>
-    </div>
-    <div id="box-token-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;"></div>
+    <!-- hidden directory picker — triggered by button -->
+    <input type="file" id="box-folder-input" webkitdirectory style="display:none;">
+
+    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No folder selected.</div>
 
     <div class="inline-actions">
-      <button id="box-scan-btn">🔍 Scan Box folder for updates</button>
+      <button id="box-folder-btn">📁 Pick Box Drive folder</button>
+      <button id="box-scan-btn">🔍 Scan for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
 
@@ -261,9 +258,6 @@
   const RAW_URL     = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE_PATH}`;
   const API_URL     = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
   const BOX_FILENAME  = 'zdc-2026-fall-av-data.json';  // Box Drive source-of-truth filename
-  const BOX_FOLDER_ID = '405818329815';                 // ibm.ent.box.com/folder/405818329815
-  const BOX_API       = 'https://api.box.com/2.0';
-  const BOX_TOKEN_TTL = 60 * 60 * 1000; // Box dev tokens last 60 min
 
   /* ── State ── */
   let data         = null;
@@ -271,10 +265,7 @@
   let modalDayId   = null;
   let modalFileIdx = null;
   let scanRows     = [];     // last scan result rows — used by applyBoxUpdates()
-
-  // Box Developer Token + saved-at timestamp for expiry tracking
-  let boxToken        = localStorage.getItem('box_token')          || '';
-  let boxTokenSavedAt = parseInt(localStorage.getItem('box_token_saved_at') || '0', 10);
+  let localBoxFiles = [];    // FileList from the last folder pick — keyed by normalised name
 
   // Token priority: 1) URL hash fragment  2) localStorage (persists forever)
   // Hash fragment is never sent to the server — safe to use in a bookmark.
@@ -310,10 +301,9 @@
 
   // Box scan panel refs
   const boxScanPanel    = document.getElementById('box-scan-panel');
-  const boxTokenInput   = document.getElementById('box-token-input');
-  const boxTokenSaveBtn = document.getElementById('box-token-save-btn');
-  const boxTokenClearBtn= document.getElementById('box-token-clear-btn');
-  const boxTokenStatus  = document.getElementById('box-token-status');
+  const boxFolderInput  = document.getElementById('box-folder-input');
+  const boxFolderBtn    = document.getElementById('box-folder-btn');
+  const boxFolderStatus = document.getElementById('box-folder-status');
   const boxScanBtn      = document.getElementById('box-scan-btn');
   const boxScanStatus   = document.getElementById('box-scan-status');
   const boxScanResults  = document.getElementById('box-scan-results');
@@ -673,49 +663,25 @@
     };
   }
 
-  /* ── Box token UI ── */
-  function updateBoxTokenUI() {
-    const age       = Date.now() - boxTokenSavedAt;
-    const remaining = BOX_TOKEN_TTL - age;
-    if (boxToken) {
-      const mins = Math.max(0, Math.round(remaining / 60000));
-      if (remaining <= 0) {
-        boxTokenStatus.textContent = '⚠️ Token has likely expired (>60 min) — generate a new one and paste it above.';
-        boxTokenStatus.style.color = 'var(--warning)';
-      } else if (remaining < 5 * 60 * 1000) {
-        boxTokenStatus.textContent = `⚠️ Token expires in ~${mins} min — generate a fresh one soon.`;
-        boxTokenStatus.style.color = 'var(--warning)';
-      } else {
-        boxTokenStatus.textContent = `✅ Token set — ~${mins} min remaining.`;
-        boxTokenStatus.style.color = 'var(--success)';
-      }
-    } else {
-      boxTokenStatus.textContent = 'No token set.';
-      boxTokenStatus.style.color = 'var(--muted)';
-    }
-  }
-  setInterval(updateBoxTokenUI, 60000); // refresh countdown every minute
-
-  boxTokenSaveBtn.addEventListener('click', () => {
-    const v = boxTokenInput.value.trim();
-    if (!v) return;
-    boxToken = v; boxTokenSavedAt = Date.now();
-    localStorage.setItem('box_token', v);
-    localStorage.setItem('box_token_saved_at', String(boxTokenSavedAt));
-    boxTokenInput.value = '';
-    updateBoxTokenUI();
+  /* ── Box Drive folder picker ── */
+  boxFolderBtn.addEventListener('click', () => {
+    boxFolderInput.value = '';
+    boxFolderInput.click();
   });
-  boxTokenClearBtn.addEventListener('click', () => {
-    boxToken = ''; boxTokenSavedAt = 0;
-    localStorage.removeItem('box_token');
-    localStorage.removeItem('box_token_saved_at');
-    updateBoxTokenUI();
+  boxFolderInput.addEventListener('change', () => {
+    const files = Array.from(boxFolderInput.files || []);
+    if (!files.length) return;
+    localBoxFiles = files;
+    // Show the folder name (webkitRelativePath gives "folder/file.pptx")
+    const folderName = files[0].webkitRelativePath.split('/')[0];
+    boxFolderStatus.textContent = `✅ Folder selected: ${folderName} — ${files.length} file(s) found.`;
+    boxFolderStatus.style.color = 'var(--success)';
   });
 
-  /* ── Box folder scan ── */
-  async function scanBoxFolder() {
-    if (!boxToken) {
-      showMessage(boxScanMessage, 'Paste a Box Developer Token above before scanning.', 'error');
+  /* ── Box Drive local folder scan ── */
+  function scanBoxFolder() {
+    if (!localBoxFiles.length) {
+      showMessage(boxScanMessage, 'Pick a Box Drive folder first using the button above.', 'error');
       boxScanMessage.hidden = false;
       return;
     }
@@ -726,62 +692,47 @@
     }
 
     boxScanBtn.disabled = true;
-    boxScanStatus.textContent = 'Scanning Box folder…';
+    boxScanStatus.textContent = 'Scanning…';
     boxScanResults.hidden = true;
     boxScanMessage.hidden = true;
     scanRows = [];
 
     try {
-      // Fetch up to 1000 items from the folder (Box default limit is 100, use 1000)
-      const url = `${BOX_API}/folders/${BOX_FOLDER_ID}/items?fields=id,name,modified_at,size,version_number&limit=1000`;
-      const res = await fetch(url, {
-        headers: { 'Authorization': `Bearer ${boxToken}`, 'Accept': 'application/json' }
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${res.status}`);
-      }
-      const folder = await res.json();
-      const boxItems = folder.entries || [];
-
-      // Build a lookup: normalised filename → box item
+      // Build a lookup: normalised filename → File object (has .lastModified timestamp)
       const boxMap = {};
-      for (const item of boxItems) {
-        if (item.type === 'file') {
-          boxMap[item.name.trim().toLowerCase()] = item;
-        }
+      for (const file of localBoxFiles) {
+        // webkitRelativePath is "FolderName/file.pptx" — take just the filename part
+        const name = file.name.trim().toLowerCase();
+        boxMap[name] = file;
       }
 
-      // Match every session against the Box folder by fileName
+      // boxItem shape mirrored from API: { id, name, modified_at, version_number }
+      // For local files we use lastModified (ms epoch) and no version_number
+      const boxItems = localBoxFiles;
+
+      // Match every session against the local files by fileName
       for (const day of data.days) {
         for (const session of day.files) {
           if (!session.fileName || session.fileName === '#') continue;
-          const key = session.fileName.trim().toLowerCase();
-          const boxItem = boxMap[key];
+          const key  = session.fileName.trim().toLowerCase();
+          const file = boxMap[key];
 
-          if (!boxItem) {
-            // File not yet in Box
-            scanRows.push({ session, day, boxItem: null, state: 'missing' });
+          if (!file) {
+            scanRows.push({ session, day, file: null, state: 'missing' });
             continue;
           }
 
-          // Determine if this is new or an update
-          const boxModified  = new Date(boxItem.modified_at);
-          const knownVersion = session.boxVersion || null;
-          const knownId      = session.boxFileId  || null;
+          const fileModified = new Date(file.lastModified);
+          const knownMs      = session.boxModifiedAt ? new Date(session.boxModifiedAt).getTime() : null;
 
-          if (!knownId) {
-            // First time we've seen this file in Box — treat as "new match"
-            scanRows.push({ session, day, boxItem, state: 'new', boxModified });
-          } else if (boxItem.version_number && knownVersion !== null && boxItem.version_number > knownVersion) {
-            // Version number incremented — file was re-uploaded
-            scanRows.push({ session, day, boxItem, state: 'changed', boxModified,
-              prevVersion: knownVersion, newVersion: boxItem.version_number });
-          } else if (!knownVersion && boxItem.modified_at !== session.boxModifiedAt) {
-            // No version tracking yet — fall back to modified_at comparison
-            scanRows.push({ session, day, boxItem, state: 'changed', boxModified });
+          if (knownMs === null) {
+            // First time we've seen this file — treat as "new match"
+            scanRows.push({ session, day, file, state: 'new', boxModified: fileModified });
+          } else if (file.lastModified > knownMs) {
+            // File is newer than what we recorded — it was re-uploaded
+            scanRows.push({ session, day, file, state: 'changed', boxModified: fileModified });
           } else {
-            scanRows.push({ session, day, boxItem, state: 'matched', boxModified });
+            scanRows.push({ session, day, file, state: 'matched', boxModified: fileModified });
           }
         }
       }
@@ -793,10 +744,10 @@
 
       let html = `<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
         <div style="font-size:13px;color:var(--muted);">
-          ${boxItems.length} file(s) in Box folder &nbsp;·&nbsp;
+          ${boxItems.length} file(s) in folder &nbsp;·&nbsp;
           <strong style="color:var(--warning)">${changedCount} updated</strong> &nbsp;·&nbsp;
           <strong style="color:#6e40c9">${newCount} new match</strong> &nbsp;·&nbsp;
-          ${missingCount} not in Box yet
+          ${missingCount} not in folder yet
         </div>`;
       if (changedCount + newCount > 0) {
         html += `<button id="apply-box-btn" class="btn-primary">✅ Apply ${changedCount + newCount} update(s) to sessions</button>`;
@@ -808,23 +759,23 @@
       </tr></thead><tbody>`;
 
       for (const row of scanRows) {
-        const { session, day, boxItem, state, boxModified, prevVersion, newVersion } = row;
+        const { session, day, file, state, boxModified } = row;
         const rowClass = state === 'changed' ? 'row-changed' : state === 'new' ? 'row-new' : '';
         let badge = '';
-        if      (state === 'changed') badge = `<span class="badge badge-changed">Updated in Box</span>`;
+        if      (state === 'changed') badge = `<span class="badge badge-changed">Updated</span>`;
         else if (state === 'new')     badge = `<span class="badge badge-new">New match</span>`;
         else if (state === 'matched') badge = `<span class="badge badge-matched">Up to date</span>`;
-        else                          badge = `<span class="badge badge-missing">Not in Box</span>`;
+        else                          badge = `<span class="badge badge-missing">Not in folder</span>`;
 
-        const modStr  = boxModified ? boxModified.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : '—';
-        const verStr  = newVersion != null ? `v${prevVersion||'?'} → v${newVersion}` : (boxItem ? `v${boxItem.version_number ?? '—'}` : '—');
+        const modStr = boxModified ? boxModified.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : '—';
+        const sizeStr = file ? `${(file.size / 1024).toFixed(0)} KB` : '—';
 
         html += `<tr class="${rowClass}">
           <td><strong>${escapeHtml(session.sessionTitle)}</strong><br><span style="color:var(--muted);font-size:11px;">${escapeHtml(day.label)}</span></td>
           <td style="font-family:monospace;font-size:12px;">${escapeHtml(session.fileName)}</td>
           <td>${badge}</td>
           <td style="white-space:nowrap;font-size:12px;">${modStr}</td>
-          <td style="font-size:12px;">${verStr}</td>
+          <td style="font-size:12px;color:var(--muted);">${sizeStr}</td>
         </tr>`;
       }
       html += `</tbody></table>`;
@@ -856,33 +807,27 @@
     const timeStr = now.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
 
     for (const row of toApply) {
-      const { session, day, boxItem, state, boxModified, newVersion } = row;
+      const { session, day, file, state, boxModified } = row;
 
-      // Update Box tracking fields
-      session.boxFileId      = boxItem.id;
-      session.boxVersion     = boxItem.version_number ?? null;
-      session.boxModifiedAt  = boxItem.modified_at;
-      // Set download URL to Box file page
-      session.downloadUrl    = `https://ibm.ent.box.com/file/${boxItem.id}`;
+      // Record the file's last-modified timestamp so future scans can detect newer versions
+      session.boxModifiedAt = new Date(file.lastModified).toISOString();
 
       if (state === 'changed') {
-        // Mark as updated
         session.status      = 'updated';
         session.freshness   = 'changed';
         session.updatedAt   = timeStr;
-        session.updatedNote = `New version uploaded to Box at ${timeStr}`;
-        // Prepend a changelog entry to the day
+        session.updatedNote = `New version synced via Box Drive at ${timeStr}`;
         day.changeLog.unshift({
           time: timeStr,
           title: `${session.sessionTitle} — file updated`,
-          description: `New version of ${session.fileName} detected in Box (v${newVersion ?? boxItem.version_number}).`
+          description: `Newer version of ${session.fileName} detected in Box Drive folder (modified ${boxModified.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}).`
         });
       } else if (state === 'new') {
-        // First Box match — link file, mark ready if it was on hold
+        // First match — record it; move from hold → ready
         if (session.status === 'hold') session.status = 'ready';
         session.freshness   = 'new';
         session.updatedAt   = timeStr;
-        session.updatedNote = `Matched to Box file at ${timeStr}`;
+        session.updatedNote = `File found in Box Drive folder at ${timeStr}`;
       }
     }
 
@@ -902,6 +847,7 @@
 
   /* ── Wire events ── */
   boxFileBtn.addEventListener('click', loadFromBoxFile);
+  boxFolderBtn.addEventListener('click', () => { boxFolderInput.value = ''; boxFolderInput.click(); });
   reloadBtn.addEventListener('click', loadFromGitHub);
   useTemplateBtn.addEventListener('click', () => {
     data = getTemplate(); fileSha = null;
@@ -916,8 +862,7 @@
   modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key==='Escape' && !modalBackdrop.hidden) closeModal(); });
 
-  // Initialise Box token UI and auto-load data on startup
-  updateBoxTokenUI();
+  // Auto-load data on startup
   loadFromGitHub();
 </script>
 </body>
