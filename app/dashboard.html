@@ -302,9 +302,20 @@
             <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
             ${holdWarn}
           </td>
-          <td>${(file.updatedAt && file.updatedAt !== 'Pending' && file.updatedAt.trim())
-            ? `<span style="white-space:nowrap;font-weight:600;">${escapeHtml((dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + file.updatedAt)}</span>`
-            : `<span style="color:var(--muted);">Pending</span>`}</td>
+          <td>${(() => {
+            const t = (file.updatedAt || '').trim();
+            const hasTime = t && t !== 'Pending';
+            if (hasTime) {
+              const prefix = dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '';
+              return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(prefix + t)}</span>`;
+            }
+            // Ready/updated but no timestamp — show last refresh as fallback
+            if ((file.status === 'ready' || file.status === 'updated') && dashboardData.lastRefresh) {
+              const lr = dashboardData.lastRefresh.replace(/·/g,'·').split('·').pop().trim();
+              return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml((dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + lr)}</span>`;
+            }
+            return `<span style="color:var(--muted);">Pending</span>`;
+          })()}</td>
           <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>
           <td class="download"><a href="${escapeHtml(file.downloadUrl)}">${file.status==='hold'?'Awaiting upload':'Download latest'}</a></td>`;
         fileTableBody.appendChild(row);
