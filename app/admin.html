@@ -171,7 +171,7 @@
       </div>
     </div>
 
-    <div class="form-grid form-grid-3" style="margin-top:14px;">
+    <div class="form-grid form-grid-2" style="margin-top:14px;">
       <div>
         <label for="m-status">Status</label>
         <select id="m-status"><option value="ready">Ready</option><option value="updated">Updated</option><option value="hold">On hold</option></select>
@@ -180,11 +180,9 @@
         <label for="m-freshness">Freshness</label>
         <select id="m-freshness"><option value="">None</option><option value="new">New</option><option value="changed">Changed</option></select>
       </div>
-      <div><label for="m-updated-at">Updated at</label><input id="m-updated-at" type="text" placeholder="8:06 AM"></div>
     </div>
 
-    <div class="form-grid form-grid-2" style="margin-top:14px;">
-      <div><label for="m-updated-note">Updated note</label><input id="m-updated-note" type="text" placeholder="Replaces prior copy"></div>
+    <div class="form-grid" style="margin-top:14px;">
       <div><label for="m-url">Download URL</label><input id="m-url" type="text" placeholder="https://ibm.box.com/s/..."></div>
     </div>
 
@@ -274,8 +272,6 @@
   const mFiletype     = document.getElementById('m-filetype');
   const mStatus       = document.getElementById('m-status');
   const mFreshness    = document.getElementById('m-freshness');
-  const mUpdatedAt    = document.getElementById('m-updated-at');
-  const mUpdatedNote  = document.getElementById('m-updated-note');
   const mUrl          = document.getElementById('m-url');
   const mNotes        = document.getElementById('m-notes');
   const mAvMic        = document.getElementById('m-av-mic');
@@ -429,7 +425,7 @@
     modalDayId = dayId; modalFileIdx = fileIdx;
     modalTitle.textContent = fileIdx === -1 ? 'Add session' : 'Edit session';
     mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation'; mStatus.value='hold';
-    mFreshness.value=''; mUpdatedAt.value=''; mUpdatedNote.value=''; mUrl.value=''; mNotes.value='';
+    mFreshness.value=''; mUrl.value=''; mNotes.value='';
     mAvMic.value=''; mAvStage.value=''; mAvCm.value=''; mAvClicker.value=''; mAvTimer.value=''; mAvSpecial.value='';
     mLogTime.value=''; mLogTitle.value=''; mLogDesc.value='';
     if (fileIdx !== -1) {
@@ -437,7 +433,7 @@
       const f = day.files[fileIdx];
       mTime.value=toTimeInput(f.sessionTime); mTitle.value=f.sessionTitle; mFilename.value=f.fileName;
       mFiletype.value=f.type; mStatus.value=f.status; mFreshness.value=f.freshness||'';
-      mUpdatedAt.value=f.updatedAt; mUpdatedNote.value=f.updatedNote; mUrl.value=f.downloadUrl||'';
+      mUrl.value=f.downloadUrl||'';
       mNotes.value=Array.isArray(f.notes)?f.notes.join('\n'):'';
       const av=f.avDetails||{};
       mAvMic.value=av.microphones||''; mAvStage.value=av.stageSetup||''; mAvCm.value=av.confidenceMonitor||'';
@@ -449,11 +445,22 @@
   function saveModal() {
     if (!mTitle.value.trim() || !mFilename.value.trim()) { alert('Session title and file name are required.'); return; }
     const day = data.days.find(d=>d.id===modalDayId);
+    // Auto-stamp updatedAt when status is ready or updated; preserve existing value on hold
+    const prevFile = modalFileIdx !== -1 ? data.days.find(d=>d.id===modalDayId).files[modalFileIdx] : null;
+    const prevStatus = prevFile ? prevFile.status : null;
+    const newStatus  = mStatus.value;
+    let updatedAt = prevFile ? (prevFile.updatedAt || '') : '';
+    if ((newStatus === 'ready' || newStatus === 'updated') && newStatus !== prevStatus) {
+      // Status just changed to ready/updated — stamp now
+      updatedAt = new Date().toLocaleString('en-US', { month:'long', day:'numeric', hour:'numeric', minute:'2-digit' });
+    } else if (newStatus === 'hold') {
+      updatedAt = '';
+    }
     const fileObj = {
       sessionTime: fromTimeInput(mTime.value)||mTime.value,
       sessionTitle: mTitle.value.trim(), fileName: mFilename.value.trim(),
       type: mFiletype.value, status: mStatus.value,
-      updatedAt: mUpdatedAt.value.trim(), updatedNote: mUpdatedNote.value.trim(),
+      updatedAt,
       notes: mNotes.value.split('\n').map(n=>n.trim()).filter(Boolean),
       downloadUrl: mUrl.value.trim()||'#',
       avDetails: { microphones:mAvMic.value.trim(), stageSetup:mAvStage.value.trim(), confidenceMonitor:mAvCm.value.trim(), clicker:mAvClicker.value.trim(), timer:mAvTimer.value.trim(), specialNotes:mAvSpecial.value.trim() }
@@ -512,7 +519,7 @@
       autoLoadStatus.style.color = 'var(--success)';
       activateEditor();
     } catch (err) {
-      autoLoadStatus.textContent = `⚠️ Could not load from GitHub (${err.message}). Use "Load from Box file" to load locally, or set a token and try again.`;
+      autoLoadStatus.textContent = `⚠️ Could not load from GitHub (${err.message}). Set a token above and try again, or use "Start from blank template".`;
       autoLoadStatus.style.color = 'var(--warning)';
     }
   }
