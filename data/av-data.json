@@ -1,14 +1,14 @@
 {
-  "lastRefresh": "",
+  "lastRefresh": "October 6, 2026 · 8:00 AM",
   "days": [
     {
       "id": "day-0",
-      "label": "Day 0 · Sunday",
+      "label": "Day 0 · October 18",
       "files": [
         {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Introduction to the ZDC",
-          "fileName": "Introduction to the ZDC.pptx",
+          "sessionTime": "4:00 PM",
+          "sessionTitle": "Introduction to ZDC",
+          "fileName": "Introduction to ZDC.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -18,25 +18,54 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "Handheld 4, Catchbox 2",
-            "stageSetup": "Stage with podium",
+            "microphones": "2 handheld, 2 catchbox",
+            "stageSetup": "Podium",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "Yes",
+            "timer": "60",
             "specialNotes": ""
           }
+        },
+        {
+          "sessionTime": "11:45 AM",
+          "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen",
+          "fileName": "IBM ZDC Antwerp 2026 Event Identity Screen.png",
+          "type": "Presentation",
+          "status": "updated",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "30 minutes before event day starts",
+            "Breaks - morning, afternoon, lunch"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "",
+            "stageSetup": "",
+            "confidenceMonitor": "",
+            "clicker": "",
+            "timer": "",
+            "specialNotes": ""
+          },
+          "freshness": "changed"
         }
       ],
-      "changeLog": []
+      "changeLog": [
+        {
+          "time": "8:00 AM",
+          "title": "Dashboard ready for Day 0",
+          "description": "Update file statuses and Box links before the event begins."
+        }
+      ]
     },
     {
       "id": "day-1",
-      "label": "Day 1 · Monday",
+      "label": "Day 1 · October 19",
       "files": [
         {
-          "sessionTime": "1:30 PM",
-          "sessionTitle": "Welcome",
-          "fileName": "Welcome.pptx",
+          "sessionTime": "08:30",
+          "sessionTitle": "Welcome & Opening Remarks",
+          "fileName": "Day1-ZDC Welcome & Opening Remarks.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -46,123 +75,18 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "Handheld , 2 Catchbox 2",
-            "stageSetup": "Stage with soft chairs",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "2:00 PM",
-          "sessionTitle": "Opening Keynote: Mainframes and the Next Wave",
-          "fileName": "Opening Keynote: Mainframes and the Next Wave.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 1, Catchbox 2",
-            "stageSetup": "Stage with soft chairs",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "3:00 PM",
-          "sessionTitle": "Scaling AI on IBM Z: Fraud Detection",
-          "fileName": "Scaling AI on IBM Z: Fraud Detection.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 2, Catchbox 2",
-            "stageSetup": "Fireside chat",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "4:00 PM",
-          "sessionTitle": "Production Resilience in 2026",
-          "fileName": "Production Resilience in 2026.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 3, Catchbox 2",
-            "stageSetup": "Fireside chat",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "4:30 PM",
-          "sessionTitle": "Plan for the Week & Mobile App Demo",
-          "fileName": "Plan for the Week & Mobile App Demo.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Handheld 2 , Catchbox 2",
-            "stageSetup": "",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "AA/IA: AIOps and Observability on IBM Z",
-          "fileName": "AA/IA: AIOps and Observability on IBM Z.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "15 Chairs",
+            "microphones": "1 podium, 2 handheld, 3 catchbox",
+            "stageSetup": "podium",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "",
+            "timer": "30",
             "specialNotes": ""
           }
         },
         {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "Standard Install Pipeline for z/OS Software",
-          "fileName": "Standard Install Pipeline for z/OS Software.pptx",
+          "sessionTime": "09:00",
+          "sessionTitle": "From Manual Processes to Intelligent Workflows: Citi's Agentic AI Experience on IBM z17",
+          "fileName": "Day1-Intelligent Workflows.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -172,361 +96,52 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "",
-            "stageSetup": "15 Chairs",
+            "microphones": "3 lav, 3 catchbox",
+            "stageSetup": "Fireside chat (3)",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "Gen AI agents for DBA & Middleware",
-          "fileName": "Gen AI agents for DBA & Middleware.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "Unlocking IBM Z Security with Agentic AI",
-          "fileName": "Unlocking IBM Z Security with Agentic AI.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Flex Time Kickoff",
-          "fileName": "Flex Time Kickoff.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "",
-            "confidenceMonitor": "",
-            "clicker": "",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:15 PM",
-          "sessionTitle": "GenAI in the modern workplace",
-          "fileName": "GenAI in the modern workplace.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "10:00 PM",
-          "sessionTitle": "Future of Cyber Vault AI",
-          "fileName": "Future of Cyber Vault AI.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:15 PM",
-          "sessionTitle": "PB: How Simplification projects fit together",
-          "fileName": "PB: How Simplification projects fit together.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "IBM Z Crypto Discovery and Inventory",
-          "fileName": "IBM Z Crypto Discovery and Inventory.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "z/OS Next Generation User Experience",
-          "fileName": "z/OS Next Generation User Experience.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "I/O Topology: Hands-On Exploration",
-          "fileName": "I/O Topology: Hands-On Exploration.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "AI-Driven Compiler Upgrades for COBOL",
-          "fileName": "AI-Driven Compiler Upgrades for COBOL.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "Agent-Enabled Workflow for Problem Resolution",
-          "fileName": "Agent-Enabled Workflow for Problem Resolution.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "Machine Learning Information Architecture",
-          "fileName": "Machine Learning Information Architecture.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:30 PM",
-          "sessionTitle": "Provisioning with Terraform and Ansible",
-          "fileName": "Provisioning with Terraform and Ansible.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "7 Stations each with monitor",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
+            "timer": "30",
             "specialNotes": ""
           }
         }
       ],
-      "changeLog": []
+      "changeLog": [
+        {
+          "time": "8:00 AM",
+          "title": "Dashboard ready for Day 1",
+          "description": "Update file statuses and Box links before the event begins."
+        }
+      ]
     },
     {
       "id": "day-2",
-      "label": "Day 2 · Tuesday",
+      "label": "Day 2 · October 20",
       "files": [
         {
-          "sessionTime": "2:00 PM",
-          "sessionTitle": "Deploying z/OS apps in containers",
-          "fileName": "Deploying z/OS apps in containers.pptx",
-          "type": "Presentation",
+          "sessionTime": "08:25",
+          "sessionTitle": "Voices of ZDC: Day One Recap",
+          "fileName": "Day2-Voices of ZDC: Day One Recap.mp4",
+          "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
+          "updatedNote": "Awaiting render",
           "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 2, Catchbox 2",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "2:30 PM",
-          "sessionTitle": "Hard Questions, Honest Answers",
-          "fileName": "Hard Questions, Honest Answers.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Handheld 3, Catchbox 2",
-            "stageSetup": "",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "4:00 PM",
-          "sessionTitle": "Collaborative Sessions",
-          "fileName": "Collaborative Sessions.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
+            "Audio level check required before playback"
           ],
           "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
+            "stageSetup": "",
+            "confidenceMonitor": "",
+            "clicker": "",
             "timer": "",
-            "specialNotes": ""
+            "specialNotes": "Audio level check required before playback"
           }
         },
         {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "Collaborative Sessions",
-          "fileName": "Collaborative Sessions.pptx",
+          "sessionTime": "08:30",
+          "sessionTitle": "Keynote",
+          "fileName": "Day2-Keynote.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -536,102 +151,18 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "IBM Concert for Z",
-          "fileName": "IBM Concert for Z.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "AI powered DBA workspace",
-          "fileName": "AI powered DBA workspace.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Automate Certificate Lifecycle Management",
-          "fileName": "Automate Certificate Lifecycle Management.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "Yes",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "10:00 PM",
-          "sessionTitle": "Agentic AI for z/OS developers",
-          "fileName": "Agentic AI for z/OS developers.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
+            "microphones": "1 lav, 1 handheld, 3 catchbox",
             "stageSetup": "",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "",
+            "timer": "60",
             "specialNotes": ""
           }
         },
         {
-          "sessionTime": "10:00 PM",
-          "sessionTitle": "AI-Powered insights to actions",
-          "fileName": "AI-Powered insights to actions.pptx",
+          "sessionTime": "16:00",
+          "sessionTitle": "Simplication",
+          "fileName": "Day2-Simplification.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -641,18 +172,18 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "",
+            "microphones": "1 lav, 1 handheld",
+            "stageSetup": "podium",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
+            "timer": "50",
+            "specialNotes": "Breakout session"
           }
         },
         {
-          "sessionTime": "10:00 PM",
-          "sessionTitle": "Quantum Safe Update",
-          "fileName": "Quantum Safe Update.pptx",
+          "sessionTime": "17:00",
+          "sessionTitle": "Reimagining Mainframe Engineering Across the Stack",
+          "fileName": "Day2-Reimagining Mainframe Engineering Across the Stack.pptx",
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
@@ -662,207 +193,176 @@
           ],
           "downloadUrl": "#",
           "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "",
+            "microphones": "3 lav, 3 catchbox 1 handheld",
+            "stageSetup": "fireside chat (3)",
             "confidenceMonitor": "Yes",
             "clicker": "Yes",
-            "timer": "",
+            "timer": "45",
             "specialNotes": ""
           }
         }
       ],
-      "changeLog": []
+      "changeLog": [
+        {
+          "time": "8:00 AM",
+          "title": "Day 2 placeholder ready",
+          "description": "Update file statuses, Box links, and change log before Day 2 begins."
+        }
+      ]
     },
     {
       "id": "day-3",
-      "label": "Day 3 · Wednesday",
+      "label": "Day 3 · October 21",
       "files": [
         {
-          "sessionTime": "1:45 PM",
-          "sessionTitle": "Enterprise Key Management",
-          "fileName": "Enterprise Key Management.pptx",
-          "type": "Presentation",
+          "sessionTime": "09:55",
+          "sessionTitle": "Voices 0f ZDC: Day Two Recap",
+          "fileName": "Day3-Voices 0f ZDC: Day Two Recap.mp4",
+          "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
+          "updatedNote": "Awaiting render",
           "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 2, Catchbox 2",
-            "stageSetup": "Panel discussion",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "3:00 PM",
-          "sessionTitle": "Collaborative Sessions",
-          "fileName": "Collaborative Sessions.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
+            "Audio level check required before playback",
+            "Store local backup on playback machine"
           ],
           "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "6:30 PM",
-          "sessionTitle": "Collaborative Sessions",
-          "fileName": "Collaborative Sessions.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "",
-            "stageSetup": "15 Chairs",
-            "confidenceMonitor": "Yes",
-            "clicker": "",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Agentic AI for app modernization",
-          "fileName": "Agentic AI for app modernization.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Harness Z data at scale",
-          "fileName": "Harness Z data at scale.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "9:00 PM",
-          "sessionTitle": "Threat Detection and Response",
-          "fileName": "Threat Detection and Response.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Podium 1, Handheld 1",
-            "stageSetup": "Podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "10:00 PM",
-          "sessionTitle": "Research Projects",
-          "fileName": "Research Projects.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 1, Catchbox 2",
             "stageSetup": "",
             "confidenceMonitor": "",
-            "clicker": "Yes",
+            "clicker": "",
             "timer": "",
+            "specialNotes": "Audio level check required before playback"
+          }
+        },
+        {
+          "sessionTime": "10:00",
+          "sessionTitle": "Managing Db2 & IMS systems with Z Database Assistant",
+          "fileName": "Day3-Managing Db2 & IMS systems with Z Database Assistant.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "Do not project until status changes to Ready"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "2 lav, 3 catchbox",
+            "stageSetup": "ireside chat (2)",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "30",
             "specialNotes": ""
+          }
+        },
+        {
+          "sessionTime": "13:30",
+          "sessionTitle": "Product Briefing 1",
+          "fileName": "Day3-Product Briefing 1.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "Do not project until status changes to Ready"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "1 lav, 1 handheld",
+            "stageSetup": "podium",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "50",
+            "specialNotes": "Breakout session"
+          }
+        },
+        {
+          "sessionTime": "14:30",
+          "sessionTitle": "Research",
+          "fileName": "Day3-Research.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "Do not project until status changes to Ready"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "1 lav, 1 handheld 3 catchbox",
+            "stageSetup": "podium",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "60",
+            "specialNotes": ""
+          }
+        },
+        {
+          "sessionTime": "16:00",
+          "sessionTitle": "Product Briefing 2",
+          "fileName": "Day3-Product Briefing 2.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "Do not project until status changes to Ready"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "1 lav, 1 handheld",
+            "stageSetup": "podium",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "50",
+            "specialNotes": "Breakout session"
+          }
+        },
+        {
+          "sessionTime": "17:00",
+          "sessionTitle": "Product Briefing 3",
+          "fileName": "Day3-Product Briefing 3.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting final from presenter",
+          "notes": [
+            "Do not project until status changes to Ready"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "1 lav, 1 handheld",
+            "stageSetup": "podium",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "50",
+            "specialNotes": "Breakout session"
           }
         }
       ],
-      "changeLog": []
+      "changeLog": [
+        {
+          "time": "8:00 AM",
+          "title": "Day 2 placeholder ready",
+          "description": "Update file statuses, Box links, and change log before Day 2 begins."
+        }
+      ]
     },
     {
       "id": "day-4",
-      "label": "Day 4 · Thursday",
+      "label": "Day 4 · October 22",
       "files": [
         {
-          "sessionTime": "1:30 PM",
-          "sessionTitle": "AI Agents for Mainframe Operations",
-          "fileName": "AI Agents for Mainframe Operations.pptx",
-          "type": "Presentation",
+          "sessionTime": "08:25",
+          "sessionTitle": "Video",
+          "fileName": "Day4-video.mp4",
+          "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
-          "downloadUrl": "#",
-          "avDetails": {
-            "microphones": "Lavalier 1, Catchbox 2",
-            "stageSetup": "Stage with podium",
-            "confidenceMonitor": "",
-            "clicker": "Yes",
-            "timer": "Yes",
-            "specialNotes": ""
-          }
-        },
-        {
-          "sessionTime": "4:30 PM",
-          "sessionTitle": "Final Wrap-up",
-          "fileName": "Final Wrap-up.pptx",
-          "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
+          "updatedNote": "Awaiting render",
+          "notes": [],
           "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
@@ -870,11 +370,120 @@
             "confidenceMonitor": "",
             "clicker": "",
             "timer": "",
+            "specialNotes": "Audio level check required before playback"
+          }
+        },
+        {
+          "sessionTime": "08:30",
+          "sessionTitle": "How Bob helped IBM CIO modernize mainframe applications",
+          "fileName": "Day4-How Bob helped IBM CIO modernize mainframe applications.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting render",
+          "notes": [
+            ""
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "2 lav, 1 handheld, 3 catchbox",
+            "stageSetup": "Fireside chat (2)",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "30",
+            "specialNotes": ""
+          }
+        },
+        {
+          "sessionTime": "09:00",
+          "sessionTitle": "Collab Playbacks 1",
+          "fileName": "Day4-Collab Playbacks.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting render",
+          "notes": [
+            "4 teams, 15 minutes each"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "2 handheld, 3 catchbox",
+            "stageSetup": "",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "15x4",
+            "specialNotes": ""
+          }
+        },
+        {
+          "sessionTime": "10:25",
+          "sessionTitle": "Voices 0f ZDC: Event Recap",
+          "fileName": "Day4-Voices 0f ZDC: Event Recap.mp4",
+          "type": "Video",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting render",
+          "notes": [],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "",
+            "stageSetup": "",
+            "confidenceMonitor": "",
+            "clicker": "",
+            "timer": "",
+            "specialNotes": "Audio level check required before playback"
+          }
+        },
+        {
+          "sessionTime": "10:30",
+          "sessionTitle": "Collab Playbacks 2",
+          "fileName": "Day4-Collab Playbacks.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting render",
+          "notes": [
+            "4 teams, 15 minutes each"
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "2 handheld, 3 catchbox",
+            "stageSetup": "",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "15x4",
+            "specialNotes": ""
+          }
+        },
+        {
+          "sessionTime": "11:30",
+          "sessionTitle": "Wrap-up and Closing",
+          "fileName": "Day4-Wrap-up and Closing.pptx",
+          "type": "Presentation",
+          "status": "hold",
+          "updatedAt": "Pending",
+          "updatedNote": "Awaiting render",
+          "notes": [
+            ""
+          ],
+          "downloadUrl": "#",
+          "avDetails": {
+            "microphones": "2 handheld, 3 catchbox",
+            "stageSetup": "",
+            "confidenceMonitor": "Yes",
+            "clicker": "Yes",
+            "timer": "",
             "specialNotes": ""
           }
         }
       ],
-      "changeLog": []
+      "changeLog": [
+        {
+          "time": "8:00 AM",
+          "title": "Day 3 placeholder ready",
+          "description": "Update file statuses, Box links, and change log before Day 3 begins."
+        }
+      ]
     }
   ]
 }
