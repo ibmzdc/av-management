@@ -27,18 +27,18 @@
           }
         },
         {
-          "sessionTime": "11:45 AM",
-          "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen",
-          "fileName": "IBM ZDC Antwerp 2026 Event Identity Screen.png",
+          "sessionTime": "12:00 PM",
+          "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen 1",
+          "fileName": "Antwerp_light_4K.png",
           "type": "Presentation",
-          "status": "updated",
-          "updatedAt": "Pending",
+          "status": "ready",
+          "updatedAt": "",
           "updatedNote": "Awaiting final from presenter",
           "notes": [
             "30 minutes before event day starts",
             "Breaks - morning, afternoon, lunch"
           ],
-          "downloadUrl": "#",
+          "downloadUrl": "https://ibm.ent.box.com/file/2385930654593",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -47,7 +47,27 @@
             "timer": "",
             "specialNotes": ""
           },
-          "freshness": "changed"
+          "freshness": "new"
+        },
+        {
+          "sessionTime": "12:00 PM",
+          "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen 2",
+          "fileName": "Antwerp_dark_4K.png",
+          "type": "Presentation",
+          "status": "ready",
+          "updatedAt": "",
+          "updatedNote": "",
+          "notes": [],
+          "downloadUrl": "https://ibm.ent.box.com/file/2385920005516",
+          "avDetails": {
+            "microphones": "",
+            "stageSetup": "",
+            "confidenceMonitor": "",
+            "clicker": "",
+            "timer": "",
+            "specialNotes": ""
+          },
+          "freshness": "new"
         }
       ],
       "changeLog": [
