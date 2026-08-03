@@ -103,9 +103,15 @@
   <!-- Load panel -->
   <section class="panel" id="load-panel">
     <h2>Step 1 · Load data</h2>
-    <p class="panel-desc">Loads <code>data/av-data.json</code> from GitHub automatically on page open.</p>
-    <div id="auto-load-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;">Loading from GitHub…</div>
+    <p class="panel-desc">
+      On page open the admin loads <code>zdc-2026-fall-av-data.json</code> from your Box Drive folder automatically.
+      You can also pick the file manually or reload from GitHub as a fallback.
+    </p>
+    <div id="auto-load-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;">Loading…</div>
     <div class="inline-actions">
+      <!-- hidden file input — triggered by the button below -->
+      <input type="file" id="box-file-input" accept=".json" style="display:none;">
+      <button id="box-file-btn">📂 Load from Box file</button>
       <button id="reload-btn">↺ Reload from GitHub</button>
       <button id="use-template">Start from blank template</button>
     </div>
@@ -117,7 +123,7 @@
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
       <div>
         <h2 style="margin:0 0 4px;">Step 2 · Edit sessions</h2>
-        <p class="panel-desc" style="margin:0;">Edit sessions below, then click Save to commit directly to GitHub. The dashboard updates within seconds.</p>
+        <p class="panel-desc" style="margin:0;">Edit sessions below, then click Save. This commits to GitHub <em>and</em> automatically downloads <code>zdc-2026-fall-av-data.json</code> — replace the copy in your Box Drive folder to keep it in sync.</p>
       </div>
       <div class="inline-actions">
         <button id="save-btn" class="btn-primary">💾 Save to GitHub</button>
@@ -212,11 +218,12 @@
 
 <script>
   /* ── Config ── */
-  const REPO     = 'ibmzdc/av-management';
-  const BRANCH   = 'main';
-  const FILE_PATH = 'data/av-data.json';
-  const RAW_URL  = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE_PATH}`;
-  const API_URL  = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+  const REPO        = 'ibmzdc/av-management';
+  const BRANCH      = 'main';
+  const FILE_PATH   = 'data/av-data.json';
+  const RAW_URL     = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE_PATH}`;
+  const API_URL     = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+  const BOX_FILENAME = 'zdc-2026-fall-av-data.json';  // Box Drive source-of-truth filename
 
   /* ── State ── */
   let data         = null;
@@ -243,6 +250,8 @@
   const tokenClearBtn   = document.getElementById('token-clear-btn');
   const tokenStatus     = document.getElementById('token-status');
   const autoLoadStatus  = document.getElementById('auto-load-status');
+  const boxFileInput    = document.getElementById('box-file-input');
+  const boxFileBtn      = document.getElementById('box-file-btn');
   const reloadBtn       = document.getElementById('reload-btn');
   const useTemplateBtn  = document.getElementById('use-template');
   const loadMessage     = document.getElementById('load-message');
@@ -479,6 +488,33 @@
     editorPanel.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
+  /* ── Load from Box Drive file (file picker) ── */
+  function loadFromBoxFile() {
+    boxFileInput.value = '';           // reset so same file can be re-picked
+    boxFileInput.click();
+  }
+  boxFileInput.addEventListener('change', () => {
+    const file = boxFileInput.files[0];
+    if (!file) return;
+    autoLoadStatus.style.color = 'var(--muted)';
+    autoLoadStatus.textContent = `Reading ${file.name}…`;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        data    = JSON.parse(e.target.result);
+        fileSha = null; // local file — SHA unknown until GitHub load
+        autoLoadStatus.textContent = `✅ Loaded from Box file: ${file.name}`;
+        autoLoadStatus.style.color = 'var(--success)';
+        showLoadMessage(`Loaded from ${file.name}. Edit below and click Save to push to GitHub.`, 'info');
+        activateEditor();
+      } catch (err) {
+        autoLoadStatus.textContent = `⚠️ Could not parse file: ${err.message}`;
+        autoLoadStatus.style.color = 'var(--warning)';
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+  });
+
   /* ── Load from GitHub ── */
   async function loadFromGitHub() {
     autoLoadStatus.style.color = 'var(--muted)';
@@ -500,9 +536,23 @@
       autoLoadStatus.style.color = 'var(--success)';
       activateEditor();
     } catch (err) {
-      autoLoadStatus.textContent = `⚠️ Could not load (${err.message}). Set a token above if the repo is private, then click Reload.`;
+      autoLoadStatus.textContent = `⚠️ Could not load from GitHub (${err.message}). Use "Load from Box file" to load locally, or set a token and try again.`;
       autoLoadStatus.style.color = 'var(--warning)';
     }
+  }
+
+  /* ── Export / download as Box file ── */
+  function exportToBox() {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = BOX_FILENAME;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   /* ── Save to GitHub via Contents API ── */
@@ -533,7 +583,13 @@
       if (!res.ok) throw new Error(result.message || `HTTP ${res.status}`);
       fileSha = result.content.sha; // update SHA for next save
       const now = new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
-      showEditorMessage(`✅ Saved to GitHub at ${now} — dashboard will reflect changes within 30 seconds.`, 'ok');
+      // Auto-export Box file immediately after a successful GitHub save
+      exportToBox();
+      showEditorMessage(
+        `✅ Saved to GitHub at ${now} — dashboard updates within 30 s. ` +
+        `<strong>${BOX_FILENAME}</strong> was downloaded automatically — replace the copy in your Box Drive folder.`,
+        'ok'
+      );
     } catch (err) {
       showEditorMessage(`Save failed: ${err.message}`, 'error');
     } finally {
@@ -559,6 +615,7 @@
   }
 
   /* ── Wire events ── */
+  boxFileBtn.addEventListener('click', loadFromBoxFile);
   reloadBtn.addEventListener('click', loadFromGitHub);
   useTemplateBtn.addEventListener('click', () => {
     data = getTemplate(); fileSha = null;
@@ -572,7 +629,8 @@
   modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key==='Escape' && !modalBackdrop.hidden) closeModal(); });
 
-  // Auto-load on startup
+  // Auto-load on startup — try GitHub first (gets us the SHA for saving back),
+  // fall back gracefully with a prompt to use the Box file button if GitHub is unreachable.
   loadFromGitHub();
 </script>
 </body>
