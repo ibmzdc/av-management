@@ -228,13 +228,16 @@
       <p>All source files live in a single public GitHub repository under the event organisation. GitHub Pages serves the repo root on the <code>main</code> branch.</p>
       <div class="tree">
         <span class="dir">repo-root/</span><br>
-        &nbsp;&nbsp;<span class="file">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← redirects to dashboard.html</span><br>
-        &nbsp;&nbsp;<span class="file">dashboard.html</span> &nbsp;&nbsp;&nbsp;<span class="note">← AV team read-only view</span><br>
-        &nbsp;&nbsp;<span class="file">admin.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← Admin edit &amp; save UI</span><br>
-        &nbsp;&nbsp;<span class="file">admin-guide.html</span> &nbsp;<span class="note">← Admin how-to guide</span><br>
-        &nbsp;&nbsp;<span class="file">av-team-guide.html</span><span class="note">← AV vendor team guide</span><br>
+        &nbsp;&nbsp;<span class="file">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← redirects to app/dashboard.html</span><br>
+        &nbsp;&nbsp;<span class="dir">app/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">dashboard.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← AV team read-only view</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">admin.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← Admin edit &amp; save UI</span><br>
+        &nbsp;&nbsp;<span class="dir">docs/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">admin-guide.html</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← Admin how-to guide</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">av-team-guide.html</span> &nbsp;&nbsp;<span class="note">← AV vendor team guide</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">project-spec.html</span> &nbsp;&nbsp;&nbsp;<span class="note">← this specification</span><br>
         &nbsp;&nbsp;<span class="dir">data/</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">av-data.json</span> &nbsp;&nbsp;&nbsp;<span class="note">← single source of truth</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">av-data.json</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← single source of truth (do not move)</span>
       </div>
       <p style="margin-top:12px;">The Box workspace (local/synced via Box Drive) mirrors the same data file and holds the actual media files:</p>
       <div class="tree">
@@ -376,11 +379,11 @@ const API_URL   = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;<
 
     <div class="panel">
       <h3>index.html — Root redirect</h3>
-      <p>A single <code>&lt;meta http-equiv="refresh"&gt;</code> redirect to <code>dashboard.html</code>. Ensures the root GitHub Pages URL (<code>https://[org].github.io/[repo]/</code>) opens the dashboard automatically.</p>
+      <p>A single <code>&lt;meta http-equiv="refresh"&gt;</code> redirect to <code>app/dashboard.html</code>. Ensures the root GitHub Pages URL (<code>https://[org].github.io/[repo]/</code>) opens the dashboard automatically. Must stay at the repo root — not inside <code>app/</code>.</p>
     </div>
 
     <div class="panel">
-      <h3>admin-guide.html &amp; av-team-guide.html</h3>
+      <h3>docs/admin-guide.html &amp; docs/av-team-guide.html</h3>
       <p>Self-contained static HTML how-to guides. No JavaScript. Styled with the same CSS design system as the other pages. Update text content only when re-deploying for a new event — no code changes needed.</p>
     </div>
   </div>
@@ -410,8 +413,10 @@ const API_URL   = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;<
       <p>Repository → <strong>Settings</strong> → <strong>Pages</strong> → Source: <strong>Deploy from branch</strong> → Branch: <strong>main</strong> → Folder: <strong>/ (root)</strong> → Save.</p>
 
       <h3>Resulting URL pattern</h3>
-      <pre>https://[ORG].github.io/[REPO]/dashboard.html
-https://[ORG].github.io/[REPO]/admin.html</pre>
+      <pre>https://[ORG].github.io/[REPO]/app/dashboard.html
+https://[ORG].github.io/[REPO]/app/admin.html
+https://[ORG].github.io/[REPO]/docs/admin-guide.html
+https://[ORG].github.io/[REPO]/docs/av-team-guide.html</pre>
     </div>
   </div>
 
@@ -552,18 +557,18 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       <h3>Adding a new status type</h3>
       <p>Status values are driven by the <code>status</code> field in the JSON. To add a new status:</p>
       <ol>
-        <li>Add a CSS rule in <code>dashboard.html</code>: <code>.badge-[name] { color: ...; background: ...; }</code></li>
+        <li>Add a CSS rule in <code>app/dashboard.html</code>: <code>.badge-[name] { color: ...; background: ...; }</code></li>
         <li>Add the value to the <code>statusLabels</code> and <code>statusClasses</code> objects in the dashboard script</li>
-        <li>Add the option to the <code>&lt;select id="m-status"&gt;</code> dropdown in <code>admin.html</code></li>
-        <li>Add the filter option to <code>&lt;select id="status"&gt;</code> in <code>dashboard.html</code> if you want it as a filter</li>
+        <li>Add the option to the <code>&lt;select id="m-status"&gt;</code> dropdown in <code>app/admin.html</code></li>
+        <li>Add the filter option to <code>&lt;select id="status"&gt;</code> in <code>app/dashboard.html</code> if you want it as a filter</li>
       </ol>
 
       <h3>Adding a new session field</h3>
       <ol>
         <li>Add the field to the JSON schema (edit a session in admin to populate it)</li>
-        <li>Add an input to the modal in <code>admin.html</code></li>
+        <li>Add an input to the modal in <code>app/admin.html</code></li>
         <li>Read and write the field in <code>openModal()</code> and <code>saveModal()</code> functions</li>
-        <li>Render the field in <code>renderFileRows()</code> in <code>dashboard.html</code> if it should be visible</li>
+        <li>Render the field in <code>renderFileRows()</code> in <code>app/dashboard.html</code> if it should be visible</li>
       </ol>
 
       <h3>Changing the auto-refresh interval on the dashboard</h3>
@@ -633,10 +638,11 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       <table>
         <thead><tr><th>Resource</th><th>URL</th></tr></thead>
         <tbody>
-          <tr><td>Dashboard</td><td><a href="https://ibmzdc.github.io/av-management/dashboard.html" target="_blank">ibmzdc.github.io/av-management/dashboard.html</a></td></tr>
-          <tr><td>Admin page</td><td><a href="https://ibmzdc.github.io/av-management/admin.html" target="_blank">ibmzdc.github.io/av-management/admin.html</a></td></tr>
-          <tr><td>Admin guide</td><td><a href="https://ibmzdc.github.io/av-management/admin-guide.html" target="_blank">ibmzdc.github.io/av-management/admin-guide.html</a></td></tr>
-          <tr><td>AV team guide</td><td><a href="https://ibmzdc.github.io/av-management/av-team-guide.html" target="_blank">ibmzdc.github.io/av-management/av-team-guide.html</a></td></tr>
+          <tr><td>Dashboard</td><td><a href="https://ibmzdc.github.io/av-management/app/dashboard.html" target="_blank">ibmzdc.github.io/av-management/app/dashboard.html</a></td></tr>
+          <tr><td>Admin page</td><td><a href="https://ibmzdc.github.io/av-management/app/admin.html" target="_blank">ibmzdc.github.io/av-management/app/admin.html</a></td></tr>
+          <tr><td>Admin guide</td><td><a href="https://ibmzdc.github.io/av-management/docs/admin-guide.html" target="_blank">ibmzdc.github.io/av-management/docs/admin-guide.html</a></td></tr>
+          <tr><td>AV team guide</td><td><a href="https://ibmzdc.github.io/av-management/docs/av-team-guide.html" target="_blank">ibmzdc.github.io/av-management/docs/av-team-guide.html</a></td></tr>
+          <tr><td>Project specification</td><td><a href="https://ibmzdc.github.io/av-management/docs/project-spec.html" target="_blank">ibmzdc.github.io/av-management/docs/project-spec.html</a></td></tr>
           <tr><td>GitHub repository</td><td><a href="https://github.com/ibmzdc/av-management" target="_blank">github.com/ibmzdc/av-management</a></td></tr>
           <tr><td>Raw data file</td><td><a href="https://raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json" target="_blank">raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json</a></td></tr>
           <tr><td>Box Drive workspace</td><td>Box → ZDC-AV-Production → ZDC 2016 Fall</td></tr>
