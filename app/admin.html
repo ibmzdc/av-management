@@ -131,22 +131,17 @@
   <section class="panel" id="box-scan-panel" hidden>
     <h2>Step 2 · Scan Box Drive folder for updated files</h2>
     <p class="panel-desc">
-      No API token needed — this reads files directly from your local Box Drive folder.
-      When a presenter uploads a new file, Box Drive syncs it to your Mac automatically.
-      Click <strong>Select presentation files</strong>, navigate to
-      <code>Box-Box / ZDC-AV-Production / ZDC 2016 Fall / ZDC 2026 Fall Files</code>,
-      select all files (<kbd>Cmd+A</kbd>), then click Upload.
-      The admin compares filenames and modification dates against the session data.
+      No API token needed — reads filenames and dates directly from your local Box Drive folder
+      without downloading any file contents.
+      Click <strong>📁 Pick folder</strong>, navigate to
+      <code>Box-Box / ZDC-AV-Production / ZDC 2016 Fall / ZDC 2026 Fall Files</code>
+      and click Open. The admin compares filenames and modification dates against the session data.
     </p>
 
-    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No files selected.</div>
+    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No folder selected.</div>
 
     <div class="inline-actions">
-      <!-- label triggers the hidden multi-file input — works in Safari without JS .click() -->
-      <label for="box-folder-input" style="display:inline-flex;align-items:center;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-alt);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">
-        📁 Select presentation files
-      </label>
-      <input type="file" id="box-folder-input" multiple accept=".pptx,.ppt,.pdf,.mp4,.mov,.key" style="display:none;">
+      <button id="box-folder-btn">📁 Pick folder</button>
       <button id="box-scan-btn">🔍 Scan for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
@@ -304,7 +299,7 @@
 
   // Box scan panel refs
   const boxScanPanel    = document.getElementById('box-scan-panel');
-  const boxFolderInput  = document.getElementById('box-folder-input');
+  const boxFolderBtn    = document.getElementById('box-folder-btn');
   const boxFolderStatus = document.getElementById('box-folder-status');
   const boxScanBtn      = document.getElementById('box-scan-btn');
   const boxScanStatus   = document.getElementById('box-scan-status');
@@ -665,16 +660,32 @@
     };
   }
 
-  /* ── Box Drive folder picker ── */
-  // The label#box-folder-input triggers the file input natively — no JS click() needed.
-  boxFolderInput.addEventListener('change', () => {
-    const files = Array.from(boxFolderInput.files || []);
-    if (!files.length) return;
-    localBoxFiles = files;
-    // Show the folder name (webkitRelativePath gives "folder/file.pptx")
-    const folderName = files[0].webkitRelativePath.split('/')[0];
-    boxFolderStatus.textContent = `✅ Folder selected: ${folderName} — ${files.length} file(s) found.`;
-    boxFolderStatus.style.color = 'var(--success)';
+  /* ── Box Drive folder picker — uses showDirectoryPicker (no file download, no hang) ── */
+  boxFolderBtn.addEventListener('click', async () => {
+    if (!window.showDirectoryPicker) {
+      showMessage(boxScanMessage,
+        'Your browser does not support the Directory Picker API. Please use Chrome or Edge to use this feature.',
+        'error');
+      boxScanMessage.hidden = false;
+      return;
+    }
+    try {
+      const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
+      // Enumerate only the top-level entries — reads names + lastModified, never downloads content
+      localBoxFiles = [];
+      for await (const [name, handle] of dirHandle.entries()) {
+        if (handle.kind !== 'file') continue;
+        const file = await handle.getFile(); // gets metadata only — no content read
+        localBoxFiles.push(file);
+      }
+      boxFolderStatus.textContent = `✅ Folder: ${dirHandle.name} — ${localBoxFiles.length} file(s) found.`;
+      boxFolderStatus.style.color = 'var(--success)';
+    } catch (err) {
+      if (err.name !== 'AbortError') { // user cancelled — not an error
+        boxFolderStatus.textContent = `Could not open folder: ${err.message}`;
+        boxFolderStatus.style.color = 'var(--warning)';
+      }
+    }
   });
 
   /* ── Box Drive local folder scan ── */
@@ -697,16 +708,12 @@
     scanRows = [];
 
     try {
-      // Build a lookup: normalised filename → File object (has .lastModified timestamp)
+      // Build a lookup: normalised filename → File object (lastModified from filesystem metadata)
       const boxMap = {};
       for (const file of localBoxFiles) {
-        // webkitRelativePath is "FolderName/file.pptx" — take just the filename part
-        const name = file.name.trim().toLowerCase();
-        boxMap[name] = file;
+        boxMap[file.name.trim().toLowerCase()] = file;
       }
 
-      // boxItem shape mirrored from API: { id, name, modified_at, version_number }
-      // For local files we use lastModified (ms epoch) and no version_number
       const boxItems = localBoxFiles;
 
       // Match every session against the local files by fileName
