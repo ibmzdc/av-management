@@ -131,20 +131,22 @@
   <section class="panel" id="box-scan-panel" hidden>
     <h2>Step 2 · Scan Box Drive folder for updated files</h2>
     <p class="panel-desc">
-      No API token needed — this reads your local Box Drive folder directly.
+      No API token needed — this reads files directly from your local Box Drive folder.
       When a presenter uploads a new file, Box Drive syncs it to your Mac automatically.
-      Click <strong>Pick folder</strong>, select the folder where presentation files are stored,
-      and the admin will compare filenames and modification dates against the session data.
+      Click <strong>Select presentation files</strong>, navigate to
+      <code>Box-Box / ZDC-AV-Production / ZDC 2016 Fall / ZDC 2026 Fall Files</code>,
+      select all files (<kbd>Cmd+A</kbd>), then click Upload.
+      The admin compares filenames and modification dates against the session data.
     </p>
 
-    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No folder selected.</div>
+    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No files selected.</div>
 
     <div class="inline-actions">
-      <!-- label wraps the hidden input — clicking the label opens the OS folder picker natively, works in Safari -->
-      <label for="box-folder-input" id="box-folder-btn" style="display:inline-flex;align-items:center;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-alt);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">
-        📁 Pick Box Drive folder
+      <!-- label triggers the hidden multi-file input — works in Safari without JS .click() -->
+      <label for="box-folder-input" style="display:inline-flex;align-items:center;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-alt);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">
+        📁 Select presentation files
       </label>
-      <input type="file" id="box-folder-input" webkitdirectory style="display:none;">
+      <input type="file" id="box-folder-input" multiple accept=".pptx,.ppt,.pdf,.mp4,.mov,.key" style="display:none;">
       <button id="box-scan-btn">🔍 Scan for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
