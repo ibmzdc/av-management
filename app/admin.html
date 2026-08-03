@@ -49,6 +49,10 @@
     .scan-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .scan-table tr.row-changed td { background: #fffbeb; }
     .scan-table tr.row-new td { background: #faf5ff; }
+    /* Drag-and-drop zone for Safari */
+    .drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; color: var(--muted); font-size: 13px; cursor: default; transition: background 0.15s, border-color 0.15s; margin-top: 12px; }
+    .drop-zone.drag-over { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+    .drop-zone strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--text); }
     .message { border-radius: 10px; padding: 12px 14px; font-size: 13px; margin-top: 12px; }
     .message-ok    { background: var(--success-soft); color: var(--success); border: 1px solid #b0e6c0; }
     .message-error { background: var(--danger-soft);  color: var(--danger);  border: 1px solid #f5b8bb; }
@@ -131,17 +135,29 @@
   <section class="panel" id="box-scan-panel" hidden>
     <h2>Step 2 · Scan Box Drive folder for updated files</h2>
     <p class="panel-desc">
-      No API token needed — reads filenames and dates directly from your local Box Drive folder
-      without downloading any file contents.
-      Click <strong>📁 Pick folder</strong>, navigate to
-      <code>Box-Box / ZDC-AV-Production / ZDC 2016 Fall / ZDC 2026 Fall Files</code>
-      and click Open. The admin compares filenames and modification dates against the session data.
+      No API token needed — reads only filenames and modification dates from your local Box Drive
+      folder, without downloading any file content.
     </p>
 
-    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-bottom:14px;">No folder selected.</div>
+    <!-- Method A: showDirectoryPicker (Chrome / Edge) -->
+    <div id="method-picker" style="margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:8px;">Chrome / Edge</div>
+      <div class="inline-actions">
+        <button id="box-folder-btn">📁 Pick folder</button>
+        <span style="font-size:13px;color:var(--muted);">Navigate to <code>ZDC 2026 Fall Files</code> and click Open.</span>
+      </div>
+    </div>
+
+    <!-- Method B: drag-and-drop (Safari + all browsers) -->
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;">Safari — drag files from Finder</div>
+    <div id="drop-zone" class="drop-zone">
+      <strong>Drag all files here from Finder</strong>
+      Open <code>ZDC 2026 Fall Files</code> in Finder → Select All (<kbd>Cmd+A</kbd>) → drag onto this box
+    </div>
+
+    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:14px;">No files loaded yet.</div>
 
     <div class="inline-actions">
-      <button id="box-folder-btn">📁 Pick folder</button>
       <button id="box-scan-btn">🔍 Scan for updates</button>
       <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
     </div>
@@ -301,6 +317,7 @@
   const boxScanPanel    = document.getElementById('box-scan-panel');
   const boxFolderBtn    = document.getElementById('box-folder-btn');
   const boxFolderStatus = document.getElementById('box-folder-status');
+  const dropZone        = document.getElementById('drop-zone');
   const boxScanBtn      = document.getElementById('box-scan-btn');
   const boxScanStatus   = document.getElementById('box-scan-status');
   const boxScanResults  = document.getElementById('box-scan-results');
@@ -660,32 +677,53 @@
     };
   }
 
-  /* ── Box Drive folder picker — uses showDirectoryPicker (no file download, no hang) ── */
+  /* ── Helper: load files into localBoxFiles and update status ── */
+  function applyFileList(files, sourceName) {
+    // Only keep files (not directories) and only top-level — filter by name having no slash
+    localBoxFiles = files.filter(f => f.name && !f.name.includes('/'));
+    boxFolderStatus.textContent = `✅ ${sourceName} — ${localBoxFiles.length} file(s) ready.`;
+    boxFolderStatus.style.color = 'var(--success)';
+  }
+
+  /* ── Method A: showDirectoryPicker — Chrome / Edge ── */
   boxFolderBtn.addEventListener('click', async () => {
     if (!window.showDirectoryPicker) {
       showMessage(boxScanMessage,
-        'Your browser does not support the Directory Picker API. Please use Chrome or Edge to use this feature.',
-        'error');
+        'showDirectoryPicker is not available in this browser. Use the drag-and-drop zone below (works in Safari).',
+        'info');
       boxScanMessage.hidden = false;
       return;
     }
     try {
       const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
-      // Enumerate only the top-level entries — reads names + lastModified, never downloads content
       localBoxFiles = [];
-      for await (const [name, handle] of dirHandle.entries()) {
+      for await (const [, handle] of dirHandle.entries()) {
         if (handle.kind !== 'file') continue;
-        const file = await handle.getFile(); // gets metadata only — no content read
+        const file = await handle.getFile();
         localBoxFiles.push(file);
       }
-      boxFolderStatus.textContent = `✅ Folder: ${dirHandle.name} — ${localBoxFiles.length} file(s) found.`;
-      boxFolderStatus.style.color = 'var(--success)';
+      applyFileList(localBoxFiles, `Folder: ${dirHandle.name}`);
     } catch (err) {
-      if (err.name !== 'AbortError') { // user cancelled — not an error
+      if (err.name !== 'AbortError') {
         boxFolderStatus.textContent = `Could not open folder: ${err.message}`;
         boxFolderStatus.style.color = 'var(--warning)';
       }
     }
+  });
+
+  /* ── Method B: drag-and-drop — Safari + all browsers ── */
+  // Dragging from Finder gives File objects with lastModified but never downloads content
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const files = Array.from(e.dataTransfer.files || []);
+    if (!files.length) return;
+    applyFileList(files, `${files.length} file(s) dropped`);
   });
 
   /* ── Box Drive local folder scan ── */
