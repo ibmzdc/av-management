@@ -304,15 +304,9 @@
           </td>
           <td>${(() => {
             const t = (file.updatedAt || '').trim();
-            const hasTime = t && t !== 'Pending';
-            if (hasTime) {
-              const prefix = dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '';
-              return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(prefix + t)}</span>`;
-            }
-            // Ready/updated but no timestamp — show last refresh as fallback
-            if ((file.status === 'ready' || file.status === 'updated') && dashboardData.lastRefresh) {
-              const lr = dashboardData.lastRefresh.replace(/·/g,'·').split('·').pop().trim();
-              return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml((dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + lr)}</span>`;
+            if (t && t !== 'Pending') {
+              // updatedAt is already a full date+time stamp — show it as-is
+              return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(t)}</span>`;
             }
             return `<span style="color:var(--muted);">Pending</span>`;
           })()}</td>
