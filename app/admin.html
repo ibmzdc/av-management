@@ -49,10 +49,6 @@
     .scan-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .scan-table tr.row-changed td { background: #fffbeb; }
     .scan-table tr.row-new td { background: #faf5ff; }
-    /* Drag-and-drop zone for Safari */
-    .drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; color: var(--muted); font-size: 13px; cursor: default; transition: background 0.15s, border-color 0.15s; margin-top: 12px; }
-    .drop-zone.drag-over { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-    .drop-zone strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--text); }
     .message { border-radius: 10px; padding: 12px 14px; font-size: 13px; margin-top: 12px; }
     .message-ok    { background: var(--success-soft); color: var(--success); border: 1px solid #b0e6c0; }
     .message-error { background: var(--danger-soft);  color: var(--danger);  border: 1px solid #f5b8bb; }
@@ -129,41 +125,6 @@
       <button id="use-template">Start from blank template</button>
     </div>
     <div id="load-message" hidden></div>
-  </section>
-
-  <!-- Box version scan panel -->
-  <section class="panel" id="box-scan-panel" hidden>
-    <h2>Step 2 · Scan Box Drive folder for updated files</h2>
-    <p class="panel-desc">
-      No API token needed — reads only filenames and modification dates from your local Box Drive
-      folder, without downloading any file content.
-    </p>
-
-    <!-- Method A: showDirectoryPicker (Chrome / Edge) -->
-    <div id="method-picker" style="margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:8px;">Chrome / Edge</div>
-      <div class="inline-actions">
-        <button id="box-folder-btn">📁 Pick folder</button>
-        <span style="font-size:13px;color:var(--muted);">Navigate to <code>ZDC 2026 Fall Files</code> and click Open.</span>
-      </div>
-    </div>
-
-    <!-- Method B: drag-and-drop (Safari + all browsers) -->
-    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;">Safari — drag files from Finder</div>
-    <div id="drop-zone" class="drop-zone">
-      <strong>Drag all files here from Finder</strong>
-      Open <code>ZDC 2026 Fall Files</code> in Finder → Select All (<kbd>Cmd+A</kbd>) → drag onto this box
-    </div>
-
-    <div id="box-folder-status" style="font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:14px;">No files loaded yet.</div>
-
-    <div class="inline-actions">
-      <button id="box-scan-btn">🔍 Scan for updates</button>
-      <span id="box-scan-status" style="font-size:13px;color:var(--muted);"></span>
-    </div>
-
-    <div id="box-scan-results" hidden></div>
-    <div id="box-scan-message" hidden></div>
   </section>
 
   <!-- Editor panel -->
@@ -278,8 +239,6 @@
   let fileSha      = null;   // current SHA of the file in GitHub (required for PUT update)
   let modalDayId   = null;
   let modalFileIdx = null;
-  let scanRows     = [];     // last scan result rows — used by applyBoxUpdates()
-  let localBoxFiles = [];    // FileList from the last folder pick — keyed by normalised name
 
   // Token priority: 1) URL hash fragment  2) localStorage (persists forever)
   // Hash fragment is never sent to the server — safe to use in a bookmark.
@@ -312,16 +271,6 @@
   const addDayBtn       = document.getElementById('add-day-btn');
   const saveBtn         = document.getElementById('save-btn');
   const editorMessage   = document.getElementById('editor-message');
-
-  // Box scan panel refs
-  const boxScanPanel    = document.getElementById('box-scan-panel');
-  const boxFolderBtn    = document.getElementById('box-folder-btn');
-  const boxFolderStatus = document.getElementById('box-folder-status');
-  const dropZone        = document.getElementById('drop-zone');
-  const boxScanBtn      = document.getElementById('box-scan-btn');
-  const boxScanStatus   = document.getElementById('box-scan-status');
-  const boxScanResults  = document.getElementById('box-scan-results');
-  const boxScanMessage  = document.getElementById('box-scan-message');
 
   const modalBackdrop = document.getElementById('modal-backdrop');
   const modalTitle    = document.getElementById('modal-title');
@@ -675,218 +624,6 @@
         }
       ]
     };
-  }
-
-  /* ── Helper: load files into localBoxFiles and update status ── */
-  function applyFileList(files, sourceName) {
-    // Only keep files (not directories) and only top-level — filter by name having no slash
-    localBoxFiles = files.filter(f => f.name && !f.name.includes('/'));
-    boxFolderStatus.textContent = `✅ ${sourceName} — ${localBoxFiles.length} file(s) ready.`;
-    boxFolderStatus.style.color = 'var(--success)';
-  }
-
-  /* ── Method A: showDirectoryPicker — Chrome / Edge ── */
-  boxFolderBtn.addEventListener('click', async () => {
-    if (!window.showDirectoryPicker) {
-      showMessage(boxScanMessage,
-        'showDirectoryPicker is not available in this browser. Use the drag-and-drop zone below (works in Safari).',
-        'info');
-      boxScanMessage.hidden = false;
-      return;
-    }
-    try {
-      const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
-      localBoxFiles = [];
-      for await (const [, handle] of dirHandle.entries()) {
-        if (handle.kind !== 'file') continue;
-        const file = await handle.getFile();
-        localBoxFiles.push(file);
-      }
-      applyFileList(localBoxFiles, `Folder: ${dirHandle.name}`);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        boxFolderStatus.textContent = `Could not open folder: ${err.message}`;
-        boxFolderStatus.style.color = 'var(--warning)';
-      }
-    }
-  });
-
-  /* ── Method B: drag-and-drop — Safari + all browsers ── */
-  // Dragging from Finder gives File objects with lastModified but never downloads content
-  dropZone.addEventListener('dragover', e => {
-    e.preventDefault();
-    dropZone.classList.add('drag-over');
-  });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    const files = Array.from(e.dataTransfer.files || []);
-    if (!files.length) return;
-    applyFileList(files, `${files.length} file(s) dropped`);
-  });
-
-  /* ── Box Drive local folder scan ── */
-  function scanBoxFolder() {
-    if (!localBoxFiles.length) {
-      showMessage(boxScanMessage, 'Pick a Box Drive folder first using the button above.', 'error');
-      boxScanMessage.hidden = false;
-      return;
-    }
-    if (!data) {
-      showMessage(boxScanMessage, 'Load session data first (Step 1) before scanning.', 'error');
-      boxScanMessage.hidden = false;
-      return;
-    }
-
-    boxScanBtn.disabled = true;
-    boxScanStatus.textContent = 'Scanning…';
-    boxScanResults.hidden = true;
-    boxScanMessage.hidden = true;
-    scanRows = [];
-
-    try {
-      // Build a lookup: normalised filename → File object (lastModified from filesystem metadata)
-      const boxMap = {};
-      for (const file of localBoxFiles) {
-        boxMap[file.name.trim().toLowerCase()] = file;
-      }
-
-      const boxItems = localBoxFiles;
-
-      // Match every session against the local files by fileName
-      for (const day of data.days) {
-        for (const session of day.files) {
-          if (!session.fileName || session.fileName === '#') continue;
-          const key  = session.fileName.trim().toLowerCase();
-          const file = boxMap[key];
-
-          if (!file) {
-            scanRows.push({ session, day, file: null, state: 'missing' });
-            continue;
-          }
-
-          const fileModified = new Date(file.lastModified);
-          const knownMs      = session.boxModifiedAt ? new Date(session.boxModifiedAt).getTime() : null;
-
-          if (knownMs === null) {
-            // First time we've seen this file — treat as "new match"
-            scanRows.push({ session, day, file, state: 'new', boxModified: fileModified });
-          } else if (file.lastModified > knownMs) {
-            // File is newer than what we recorded — it was re-uploaded
-            scanRows.push({ session, day, file, state: 'changed', boxModified: fileModified });
-          } else {
-            scanRows.push({ session, day, file, state: 'matched', boxModified: fileModified });
-          }
-        }
-      }
-
-      // Render results table
-      const changedCount = scanRows.filter(r => r.state === 'changed').length;
-      const newCount     = scanRows.filter(r => r.state === 'new').length;
-      const missingCount = scanRows.filter(r => r.state === 'missing').length;
-
-      let html = `<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
-        <div style="font-size:13px;color:var(--muted);">
-          ${boxItems.length} file(s) in folder &nbsp;·&nbsp;
-          <strong style="color:var(--warning)">${changedCount} updated</strong> &nbsp;·&nbsp;
-          <strong style="color:#6e40c9">${newCount} new match</strong> &nbsp;·&nbsp;
-          ${missingCount} not in folder yet
-        </div>`;
-      if (changedCount + newCount > 0) {
-        html += `<button id="apply-box-btn" class="btn-primary">✅ Apply ${changedCount + newCount} update(s) to sessions</button>`;
-      }
-      html += `</div>`;
-
-      html += `<table class="scan-table"><thead><tr>
-        <th>Session</th><th>File name</th><th>Box status</th><th>Box modified</th><th>Version</th>
-      </tr></thead><tbody>`;
-
-      for (const row of scanRows) {
-        const { session, day, file, state, boxModified } = row;
-        const rowClass = state === 'changed' ? 'row-changed' : state === 'new' ? 'row-new' : '';
-        let badge = '';
-        if      (state === 'changed') badge = `<span class="badge badge-changed">Updated</span>`;
-        else if (state === 'new')     badge = `<span class="badge badge-new">New match</span>`;
-        else if (state === 'matched') badge = `<span class="badge badge-matched">Up to date</span>`;
-        else                          badge = `<span class="badge badge-missing">Not in folder</span>`;
-
-        const modStr = boxModified ? boxModified.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) : '—';
-        const sizeStr = file ? `${(file.size / 1024).toFixed(0)} KB` : '—';
-
-        html += `<tr class="${rowClass}">
-          <td><strong>${escapeHtml(session.sessionTitle)}</strong><br><span style="color:var(--muted);font-size:11px;">${escapeHtml(day.label)}</span></td>
-          <td style="font-family:monospace;font-size:12px;">${escapeHtml(session.fileName)}</td>
-          <td>${badge}</td>
-          <td style="white-space:nowrap;font-size:12px;">${modStr}</td>
-          <td style="font-size:12px;color:var(--muted);">${sizeStr}</td>
-        </tr>`;
-      }
-      html += `</tbody></table>`;
-
-      boxScanResults.innerHTML = html;
-      boxScanResults.hidden = false;
-
-      boxScanStatus.textContent = `Scan complete — ${scanRows.length} sessions checked.`;
-
-      // Wire the apply button if rendered
-      const applyBtn = document.getElementById('apply-box-btn');
-      if (applyBtn) applyBtn.addEventListener('click', applyBoxUpdates);
-
-    } catch (err) {
-      boxScanStatus.textContent = '';
-      showMessage(boxScanMessage, `Box scan failed: ${err.message}`, 'error');
-      boxScanMessage.hidden = false;
-    } finally {
-      boxScanBtn.disabled = false;
-    }
-  }
-
-  /* ── Apply Box updates to session data ── */
-  function applyBoxUpdates() {
-    const toApply = scanRows.filter(r => r.state === 'changed' || r.state === 'new');
-    if (!toApply.length) return;
-
-    const now     = new Date();
-    const timeStr = now.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
-
-    for (const row of toApply) {
-      const { session, day, file, state, boxModified } = row;
-
-      // Record the file's last-modified timestamp so future scans can detect newer versions
-      session.boxModifiedAt = new Date(file.lastModified).toISOString();
-
-      if (state === 'changed') {
-        session.status      = 'updated';
-        session.freshness   = 'changed';
-        session.updatedAt   = timeStr;
-        session.updatedNote = `New version synced via Box Drive at ${timeStr}`;
-        day.changeLog.unshift({
-          time: timeStr,
-          title: `${session.sessionTitle} — file updated`,
-          description: `Newer version of ${session.fileName} detected in Box Drive folder (modified ${boxModified.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}).`
-        });
-      } else if (state === 'new') {
-        // First match — record it; move from hold → ready
-        if (session.status === 'hold') session.status = 'ready';
-        session.freshness   = 'new';
-        session.updatedAt   = timeStr;
-        session.updatedNote = `File found in Box Drive folder at ${timeStr}`;
-      }
-    }
-
-    renderDays();
-    showMessage(boxScanMessage,
-      `✅ Applied ${toApply.length} update(s) to session data. Review in Step 3 below, then click <strong>Save to GitHub</strong> when ready.`,
-      'ok', true);
-    boxScanMessage.hidden = false;
-
-    // Re-run scan display to reflect new state
-    scanRows = scanRows.map(r =>
-      (r.state === 'changed' || r.state === 'new') ? { ...r, state: 'matched' } : r
-    );
-    // Re-render the results table with updated states
-    scanBoxFolder();
   }
 
   /* ── Wire events ── */
