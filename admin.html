@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZDC 2026 Fall · AV Admin</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8; --surface: #ffffff; --surface-alt: #f7f8fa;
+      --border: #d0d7de; --text: #1f2328; --muted: #57606a;
+      --accent: #3b82d4; --accent-soft: #e8f1fb;
+      --success: #1a7f37; --success-soft: #e7f6ec;
+      --warning: #9a6700; --warning-soft: #fff8c5;
+      --danger: #cf222e; --danger-soft: #ffebe9;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    .page { max-width: 1200px; margin: 0 auto; padding: 32px 20px 60px; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 24px; }
+    .header h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.2; }
+    .header p  { margin: 0; color: var(--muted); }
+    .top-link { color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; font-size: 14px; }
+    .top-link:hover { text-decoration: underline; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .panel h2 { margin: 0 0 6px; font-size: 18px; }
+    .panel > .panel-desc { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+    .inline-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    button { padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-alt); color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    button:hover { background: #eaeef2; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: #2f6fbf; }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); border-color: #f5b8bb; }
+    .btn-danger:hover { background: #ffd6d6; }
+    .btn-small { padding: 4px 10px; font-size: 12px; border-radius: 6px; }
+    label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+    select, input, textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text); font: inherit; font-size: 13px; }
+    textarea { resize: vertical; }
+    .badge { display: inline-block; border-radius: 999px; padding: 2px 8px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .badge-ready   { color: var(--success); background: var(--success-soft); }
+    .badge-updated { color: var(--accent);  background: var(--accent-soft); }
+    .badge-hold    { color: var(--warning); background: var(--warning-soft); }
+    .message { border-radius: 10px; padding: 12px 14px; font-size: 13px; margin-top: 12px; }
+    .message-ok    { background: var(--success-soft); color: var(--success); border: 1px solid #b0e6c0; }
+    .message-error { background: var(--danger-soft);  color: var(--danger);  border: 1px solid #f5b8bb; }
+    .message-info  { background: var(--surface-alt);  color: var(--text);    border: 1px solid var(--border); }
+    .day-group { margin-bottom: 28px; }
+    .day-group:last-child { margin-bottom: 0; }
+    .day-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .day-header h3 { margin: 0; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; border-top: 0; padding-top: 0; background: var(--surface-alt); }
+    tr:hover td { background: #f5f7fa; }
+    .col-time { width: 110px; white-space: nowrap; }
+    .col-title { min-width: 180px; }
+    .col-file { min-width: 160px; color: var(--muted); }
+    .col-status { width: 100px; }
+    .col-updated { width: 110px; }
+    .col-actions { width: 120px; text-align: right; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; z-index: 100; }
+    .modal-backdrop[hidden] { display: none; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 680px; padding: 24px; }
+    .modal h3 { margin: 0 0 16px; font-size: 18px; }
+    .form-grid { display: grid; gap: 14px; }
+    .form-grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .form-grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .form-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 16px 0 4px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
+    .empty-state { border: 1px dashed var(--border); border-radius: 10px; padding: 14px; color: var(--muted); font-size: 13px; background: var(--surface-alt); }
+    @media (max-width: 700px) {
+      .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+      .header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div>
+      <h1>ZDC 2026 Fall · AV Admin</h1>
+      <p>Data loads from GitHub automatically. Save commits directly back to the repository.</p>
+    </div>
+    <a class="top-link" href="dashboard.html">Open operator dashboard</a>
+  </header>
+
+  <!-- GitHub token panel -->
+  <section class="panel" id="token-panel">
+    <h2>GitHub access token</h2>
+    <p class="panel-desc">A personal access token with <code>repo</code> scope is required to save data back to GitHub. It is stored only in this browser tab and never sent anywhere except the GitHub API.</p>
+    <div class="inline-actions">
+      <input id="token-input" type="password" placeholder="ghp_…" style="max-width:340px;font-family:monospace;">
+      <button id="token-save-btn" class="btn-primary">Set token</button>
+      <button id="token-clear-btn">Clear</button>
+      <span id="token-status" style="font-size:13px;color:var(--muted);"></span>
+    </div>
+  </section>
+
+  <!-- Load panel -->
+  <section class="panel" id="load-panel">
+    <h2>Step 1 · Load data</h2>
+    <p class="panel-desc">Loads <code>data/av-data.json</code> from GitHub automatically on page open.</p>
+    <div id="auto-load-status" style="font-size:13px;color:var(--muted);margin-bottom:12px;">Loading from GitHub…</div>
+    <div class="inline-actions">
+      <button id="reload-btn">↺ Reload from GitHub</button>
+      <button id="use-template">Start from blank template</button>
+    </div>
+    <div id="load-message" hidden></div>
+  </section>
+
+  <!-- Editor panel -->
+  <section class="panel" id="editor-panel" hidden>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+      <div>
+        <h2 style="margin:0 0 4px;">Step 2 · Edit sessions</h2>
+        <p class="panel-desc" style="margin:0;">Edit sessions below, then click Save to commit directly to GitHub. The dashboard updates within seconds.</p>
+      </div>
+      <div class="inline-actions">
+        <button id="save-btn" class="btn-primary">💾 Save to GitHub</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+      <div>
+        <label for="last-refresh">Last refresh date &amp; time</label>
+        <input id="last-refresh" type="datetime-local">
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:10px;">
+        <div style="flex:1;">
+          <label for="new-day-label">Add a new day</label>
+          <input id="new-day-label" type="text" placeholder="Day 1 · October 19">
+        </div>
+        <button id="add-day-btn" style="flex-shrink:0;">Add day</button>
+      </div>
+    </div>
+
+    <div id="days-container"></div>
+    <div id="editor-message" hidden></div>
+  </section>
+
+</div>
+
+<!-- Session edit modal -->
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Edit session</h3>
+
+    <div class="form-grid form-grid-2">
+      <div><label for="m-time">Session time</label><input id="m-time" type="time"></div>
+      <div><label for="m-title">Session title</label><input id="m-title" type="text" placeholder="Opening Remarks"></div>
+    </div>
+
+    <div class="form-grid form-grid-2" style="margin-top:14px;">
+      <div><label for="m-filename">File name</label><input id="m-filename" type="text" placeholder="Day1-Opening Remarks.pptx"></div>
+      <div>
+        <label for="m-filetype">File type</label>
+        <select id="m-filetype"><option value="Presentation">Presentation</option><option value="Video">Video</option></select>
+      </div>
+    </div>
+
+    <div class="form-grid form-grid-3" style="margin-top:14px;">
+      <div>
+        <label for="m-status">Status</label>
+        <select id="m-status"><option value="ready">Ready</option><option value="updated">Updated</option><option value="hold">On hold</option></select>
+      </div>
+      <div>
+        <label for="m-freshness">Freshness</label>
+        <select id="m-freshness"><option value="">None</option><option value="new">New</option><option value="changed">Changed</option></select>
+      </div>
+      <div><label for="m-updated-at">Updated at</label><input id="m-updated-at" type="text" placeholder="8:06 AM"></div>
+    </div>
+
+    <div class="form-grid form-grid-2" style="margin-top:14px;">
+      <div><label for="m-updated-note">Updated note</label><input id="m-updated-note" type="text" placeholder="Replaces prior copy"></div>
+      <div><label for="m-url">Download URL</label><input id="m-url" type="text" placeholder="https://ibm.box.com/s/..."></div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <label for="m-notes">Operator notes (one per line)</label>
+      <textarea id="m-notes" rows="3"></textarea>
+    </div>
+
+    <div class="form-section-title">AV Production details</div>
+    <div class="form-grid form-grid-3">
+      <div><label for="m-av-mic">Microphones</label><textarea id="m-av-mic" rows="2" placeholder="2 handheld, 1 lav"></textarea></div>
+      <div><label for="m-av-stage">Stage setup</label><textarea id="m-av-stage" rows="2" placeholder="Fireside chat (3)"></textarea></div>
+      <div><label for="m-av-cm">Confidence monitor</label><textarea id="m-av-cm" rows="2" placeholder="Yes, downstage center"></textarea></div>
+    </div>
+    <div class="form-grid form-grid-3" style="margin-top:14px;">
+      <div><label for="m-av-clicker">Clicker</label><textarea id="m-av-clicker" rows="2" placeholder="Yes, presenter controlled"></textarea></div>
+      <div><label for="m-av-timer">Timer</label><textarea id="m-av-timer" rows="2" placeholder="30 min"></textarea></div>
+      <div><label for="m-av-special">Special AV notes</label><textarea id="m-av-special" rows="2" placeholder="Walk-on music…"></textarea></div>
+    </div>
+
+    <div class="form-section-title">Change log entry (optional)</div>
+    <div class="form-grid form-grid-3">
+      <div><label for="m-log-time">Time</label><input id="m-log-time" type="text" placeholder="8:06 AM"></div>
+      <div><label for="m-log-title">Title</label><input id="m-log-title" type="text" placeholder="Deck updated"></div>
+      <div><label for="m-log-desc">Description</label><input id="m-log-desc" type="text" placeholder="Replace the preloaded copy."></div>
+    </div>
+
+    <div class="modal-actions">
+      <button id="modal-cancel">Cancel</button>
+      <button id="modal-save" class="btn-primary">Save session</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Config ── */
+  const REPO     = 'ibmzdc/av-management';
+  const BRANCH   = 'main';
+  const FILE_PATH = 'data/av-data.json';
+  const RAW_URL  = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE_PATH}`;
+  const API_URL  = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+  /* ── State ── */
+  let data         = null;
+  let fileSha      = null;   // current SHA of the file in GitHub (required for PUT update)
+  let ghToken      = sessionStorage.getItem('gh_token') || '';
+  let modalDayId   = null;
+  let modalFileIdx = null;
+
+  /* ── Element refs ── */
+  const tokenInput      = document.getElementById('token-input');
+  const tokenSaveBtn    = document.getElementById('token-save-btn');
+  const tokenClearBtn   = document.getElementById('token-clear-btn');
+  const tokenStatus     = document.getElementById('token-status');
+  const autoLoadStatus  = document.getElementById('auto-load-status');
+  const reloadBtn       = document.getElementById('reload-btn');
+  const useTemplateBtn  = document.getElementById('use-template');
+  const loadMessage     = document.getElementById('load-message');
+  const editorPanel     = document.getElementById('editor-panel');
+  const daysContainer   = document.getElementById('days-container');
+  const lastRefreshInput = document.getElementById('last-refresh');
+  const newDayLabelInput = document.getElementById('new-day-label');
+  const addDayBtn       = document.getElementById('add-day-btn');
+  const saveBtn         = document.getElementById('save-btn');
+  const editorMessage   = document.getElementById('editor-message');
+
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalTitle    = document.getElementById('modal-title');
+  const modalCancel   = document.getElementById('modal-cancel');
+  const modalSave     = document.getElementById('modal-save');
+  const mTime         = document.getElementById('m-time');
+  const mTitle        = document.getElementById('m-title');
+  const mFilename     = document.getElementById('m-filename');
+  const mFiletype     = document.getElementById('m-filetype');
+  const mStatus       = document.getElementById('m-status');
+  const mFreshness    = document.getElementById('m-freshness');
+  const mUpdatedAt    = document.getElementById('m-updated-at');
+  const mUpdatedNote  = document.getElementById('m-updated-note');
+  const mUrl          = document.getElementById('m-url');
+  const mNotes        = document.getElementById('m-notes');
+  const mAvMic        = document.getElementById('m-av-mic');
+  const mAvStage      = document.getElementById('m-av-stage');
+  const mAvCm         = document.getElementById('m-av-cm');
+  const mAvClicker    = document.getElementById('m-av-clicker');
+  const mAvTimer      = document.getElementById('m-av-timer');
+  const mAvSpecial    = document.getElementById('m-av-special');
+  const mLogTime      = document.getElementById('m-log-time');
+  const mLogTitle     = document.getElementById('m-log-title');
+  const mLogDesc      = document.getElementById('m-log-desc');
+
+  /* ── Token management ── */
+  function updateTokenUI() {
+    if (ghToken) {
+      tokenStatus.textContent = '✅ Token set (stored for this session)';
+      tokenStatus.style.color = 'var(--success)';
+      tokenInput.value = '';
+    } else {
+      tokenStatus.textContent = 'No token set — you can still view data but cannot save.';
+      tokenStatus.style.color = 'var(--muted)';
+    }
+  }
+  tokenSaveBtn.addEventListener('click', () => {
+    const v = tokenInput.value.trim();
+    if (!v) return;
+    ghToken = v;
+    sessionStorage.setItem('gh_token', v);
+    updateTokenUI();
+  });
+  tokenClearBtn.addEventListener('click', () => {
+    ghToken = '';
+    sessionStorage.removeItem('gh_token');
+    tokenInput.value = '';
+    updateTokenUI();
+  });
+  updateTokenUI();
+
+  /* ── Helpers ── */
+  function escapeHtml(v) {
+    return String(v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  function displayTime(v) {
+    if (!v) return v;
+    if (/\d{1,2}:\d{2}\s*(AM|PM)/i.test(v)) return v;
+    const p = v.match(/^(\d{2}):(\d{2})$/);
+    if (!p) return v;
+    let h = Number(p[1]); const min = p[2]; const mer = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12; return `${h}:${min} ${mer}`;
+  }
+  function toTimeInput(v) {
+    if (!v) return '';
+    if (/^\d{2}:\d{2}$/.test(v)) return v;
+    const m = v.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+    if (!m) return '';
+    let h = Number(m[1]) % 12;
+    if (m[3].toUpperCase() === 'PM') h += 12;
+    return `${String(h).padStart(2,'0')}:${m[2]}`;
+  }
+  function fromTimeInput(v) {
+    if (!v) return '';
+    const [hStr, min] = v.split(':');
+    let h = Number(hStr); const mer = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12; return `${h}:${min} ${mer}`;
+  }
+  function formatRefreshInput(v) {
+    if (!v) return '';
+    const d = new Date(v);
+    if (isNaN(d)) return '';
+    const off = d.getTimezoneOffset();
+    return new Date(d.getTime() - off * 60000).toISOString().slice(0,16);
+  }
+  const statusBadge = {
+    ready:   '<span class="badge badge-ready">Ready</span>',
+    updated: '<span class="badge badge-updated">Updated</span>',
+    hold:    '<span class="badge badge-hold">On hold</span>'
+  };
+  function showMessage(el, text, type) {
+    el.hidden = false; el.className = `message message-${type}`; el.textContent = text;
+  }
+  function showLoadMessage(t, type)   { showMessage(loadMessage, t, type); }
+  function showEditorMessage(t, type) { showMessage(editorMessage, t, type); }
+
+  /* ── Render session table ── */
+  function renderDays() {
+    daysContainer.innerHTML = '';
+    data.days.forEach(day => {
+      const group = document.createElement('div');
+      group.className = 'day-group'; group.dataset.dayId = day.id;
+      const header = document.createElement('div');
+      header.className = 'day-header';
+      header.innerHTML = `<h3>${escapeHtml(day.label)}</h3><button class="btn-small" data-action="add-session" data-day="${escapeHtml(day.id)}">+ Add session</button>`;
+      group.appendChild(header);
+      if (!day.files.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state'; empty.textContent = 'No sessions yet. Click "+ Add session" to add one.';
+        group.appendChild(empty);
+      } else {
+        const table = document.createElement('table');
+        table.innerHTML = `<thead><tr>
+          <th class="col-time">Time</th><th class="col-title">Session</th>
+          <th class="col-file">File</th><th class="col-status">Status</th>
+          <th class="col-updated">Updated at</th><th class="col-actions"></th>
+        </tr></thead><tbody></tbody>`;
+        const tbody = table.querySelector('tbody');
+        const sorted = [...day.files].map((f,i)=>({f,i})).sort((a,b)=>{
+          const toMins = v => {
+            if (!v) return 0;
+            const hhmm = v.match(/^(\d{2}):(\d{2})$/);
+            if (hhmm) return Number(hhmm[1])*60+Number(hhmm[2]);
+            const ampm = v.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+            if (!ampm) return 0;
+            let h = Number(ampm[1]) % 12; if (ampm[3].toUpperCase()==='PM') h+=12;
+            return h*60+Number(ampm[2]);
+          };
+          return toMins(a.f.sessionTime)-toMins(b.f.sessionTime);
+        });
+        sorted.forEach(({f,i}) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="col-time">${escapeHtml(displayTime(f.sessionTime))}</td>
+            <td class="col-title">${escapeHtml(f.sessionTitle)}</td>
+            <td class="col-file">${escapeHtml(f.fileName)}</td>
+            <td class="col-status">${statusBadge[f.status]||escapeHtml(f.status)}</td>
+            <td class="col-updated">${escapeHtml(f.updatedAt)}</td>
+            <td class="col-actions">
+              <div style="display:flex;gap:6px;justify-content:flex-end;">
+                <button class="btn-small" data-action="edit-session" data-day="${escapeHtml(day.id)}" data-idx="${i}">Edit</button>
+                <button class="btn-small btn-danger" data-action="delete-session" data-day="${escapeHtml(day.id)}" data-idx="${i}">Delete</button>
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+        group.appendChild(table);
+      }
+      daysContainer.appendChild(group);
+    });
+    daysContainer.onclick = e => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action, dayId = btn.dataset.day, idx = btn.dataset.idx !== undefined ? Number(btn.dataset.idx) : null;
+      if (action === 'add-session')    openModal(dayId, -1);
+      if (action === 'edit-session')   openModal(dayId, idx);
+      if (action === 'delete-session') deleteSession(dayId, idx);
+    };
+  }
+
+  /* ── Modal ── */
+  function openModal(dayId, fileIdx) {
+    modalDayId = dayId; modalFileIdx = fileIdx;
+    modalTitle.textContent = fileIdx === -1 ? 'Add session' : 'Edit session';
+    mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation'; mStatus.value='hold';
+    mFreshness.value=''; mUpdatedAt.value=''; mUpdatedNote.value=''; mUrl.value=''; mNotes.value='';
+    mAvMic.value=''; mAvStage.value=''; mAvCm.value=''; mAvClicker.value=''; mAvTimer.value=''; mAvSpecial.value='';
+    mLogTime.value=''; mLogTitle.value=''; mLogDesc.value='';
+    if (fileIdx !== -1) {
+      const day = data.days.find(d=>d.id===dayId);
+      const f = day.files[fileIdx];
+      mTime.value=toTimeInput(f.sessionTime); mTitle.value=f.sessionTitle; mFilename.value=f.fileName;
+      mFiletype.value=f.type; mStatus.value=f.status; mFreshness.value=f.freshness||'';
+      mUpdatedAt.value=f.updatedAt; mUpdatedNote.value=f.updatedNote; mUrl.value=f.downloadUrl||'';
+      mNotes.value=Array.isArray(f.notes)?f.notes.join('\n'):'';
+      const av=f.avDetails||{};
+      mAvMic.value=av.microphones||''; mAvStage.value=av.stageSetup||''; mAvCm.value=av.confidenceMonitor||'';
+      mAvClicker.value=av.clicker||''; mAvTimer.value=av.timer||''; mAvSpecial.value=av.specialNotes||'';
+    }
+    modalBackdrop.hidden = false; mTime.focus();
+  }
+  function closeModal() { modalBackdrop.hidden=true; modalDayId=null; modalFileIdx=null; }
+  function saveModal() {
+    if (!mTitle.value.trim() || !mFilename.value.trim()) { alert('Session title and file name are required.'); return; }
+    const day = data.days.find(d=>d.id===modalDayId);
+    const fileObj = {
+      sessionTime: fromTimeInput(mTime.value)||mTime.value,
+      sessionTitle: mTitle.value.trim(), fileName: mFilename.value.trim(),
+      type: mFiletype.value, status: mStatus.value,
+      updatedAt: mUpdatedAt.value.trim(), updatedNote: mUpdatedNote.value.trim(),
+      notes: mNotes.value.split('\n').map(n=>n.trim()).filter(Boolean),
+      downloadUrl: mUrl.value.trim()||'#',
+      avDetails: { microphones:mAvMic.value.trim(), stageSetup:mAvStage.value.trim(), confidenceMonitor:mAvCm.value.trim(), clicker:mAvClicker.value.trim(), timer:mAvTimer.value.trim(), specialNotes:mAvSpecial.value.trim() }
+    };
+    if (mFreshness.value) fileObj.freshness = mFreshness.value;
+    if (mLogTime.value.trim() && mLogTitle.value.trim() && mLogDesc.value.trim()) {
+      day.changeLog.unshift({ time:mLogTime.value.trim(), title:mLogTitle.value.trim(), description:mLogDesc.value.trim() });
+    }
+    if (modalFileIdx === -1) day.files.push(fileObj);
+    else day.files[modalFileIdx] = fileObj;
+    if (lastRefreshInput.value) data.lastRefresh = lastRefreshInput.value;
+    closeModal(); renderDays();
+    showEditorMessage(modalFileIdx===-1 ? 'Session added. Click "Save to GitHub" when ready.' : 'Session updated. Click "Save to GitHub" when ready.', 'ok');
+  }
+  function deleteSession(dayId, idx) {
+    const day = data.days.find(d=>d.id===dayId);
+    const title = day.files[idx]?.sessionTitle||'this session';
+    if (!confirm(`Delete "${title}"?`)) return;
+    day.files.splice(idx,1); renderDays();
+    showEditorMessage('Session deleted. Click "Save to GitHub" when ready.', 'ok');
+  }
+  function addDay() {
+    const label = newDayLabelInput.value.trim();
+    if (!label) { showEditorMessage('Enter a day label first.', 'error'); return; }
+    data.days.push({ id:`day-${Date.now()}`, label, files:[], changeLog:[] });
+    newDayLabelInput.value=''; renderDays();
+    showEditorMessage(`Day "${label}" added. Click "Save to GitHub" when ready.`, 'ok');
+  }
+
+  /* ── Activate editor ── */
+  function activateEditor() {
+    lastRefreshInput.value = formatRefreshInput(data.lastRefresh);
+    editorPanel.hidden = false; renderDays();
+    editorPanel.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  /* ── Load from GitHub ── */
+  async function loadFromGitHub() {
+    autoLoadStatus.style.color = 'var(--muted)';
+    autoLoadStatus.textContent = 'Loading from GitHub…';
+    fileSha = null;
+    try {
+      // Use API endpoint so we get the SHA (needed for saving back)
+      const headers = { 'Accept': 'application/vnd.github.v3+json' };
+      if (ghToken) headers['Authorization'] = `token ${ghToken}`;
+      const res = await fetch(API_URL, { headers, cache:'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const meta = await res.json();
+      fileSha = meta.sha;
+      data = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      autoLoadStatus.textContent = '✅ Loaded from GitHub';
+      autoLoadStatus.style.color = 'var(--success)';
+      activateEditor();
+    } catch (err) {
+      autoLoadStatus.textContent = `⚠️ Could not load (${err.message}). Set a token above if the repo is private, then click Reload.`;
+      autoLoadStatus.style.color = 'var(--warning)';
+    }
+  }
+
+  /* ── Save to GitHub via Contents API ── */
+  async function saveToGitHub() {
+    if (!ghToken) {
+      showEditorMessage('Set a GitHub token in the panel above before saving.', 'error');
+      document.getElementById('token-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+      return;
+    }
+    if (lastRefreshInput.value) data.lastRefresh = lastRefreshInput.value;
+    const json    = JSON.stringify(data, null, 2);
+    const content = btoa(unescape(encodeURIComponent(json))); // base64-encode UTF-8
+    const body = {
+      message: `AV data update — ${new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}`,
+      content,
+      branch: BRANCH
+    };
+    if (fileSha) body.sha = fileSha; // required for updates (not needed for first create)
+
+    saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+    try {
+      const res = await fetch(API_URL, {
+        method: 'PUT',
+        headers: { 'Authorization': `token ${ghToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message || `HTTP ${res.status}`);
+      fileSha = result.content.sha; // update SHA for next save
+      const now = new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+      showEditorMessage(`✅ Saved to GitHub at ${now} — dashboard will reflect changes within 30 seconds.`, 'ok');
+    } catch (err) {
+      showEditorMessage(`Save failed: ${err.message}`, 'error');
+    } finally {
+      saveBtn.disabled = false; saveBtn.textContent = '💾 Save to GitHub';
+    }
+  }
+
+  /* ── Template ── */
+  function getTemplate() {
+    return {
+      lastRefresh: '',
+      days: [
+        { id:'day-0', label:'Day 0 · October 18', files:[
+            { sessionTime:'4:00 PM', sessionTitle:'Introduction to ZDC', fileName:'Introduction to ZDC.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', updatedNote:'Awaiting final from presenter', notes:['Do not project until status changes to Ready'], downloadUrl:'#', avDetails:{ microphones:'2 handheld, 2 catchbox', stageSetup:'Podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'60', specialNotes:'' } }
+          ], changeLog:[{ time:'8:00 AM', title:'Dashboard ready for Day 0', description:'Update file statuses and links before the event begins.' }]
+        },
+        { id:'day-1', label:'Day 1 · October 19', files:[
+            { sessionTime:'08:30', sessionTitle:'Welcome & Opening Remarks', fileName:'Day1-ZDC Welcome & Opening Remarks.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', updatedNote:'Awaiting final from presenter', notes:['Do not project until status changes to Ready'], downloadUrl:'#', avDetails:{ microphones:'1 podium, 2 handheld, 3 catchbox', stageSetup:'podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'30', specialNotes:'' } }
+          ], changeLog:[{ time:'8:00 AM', title:'Dashboard ready for Day 1', description:'Update file statuses and links before the event begins.' }]
+        }
+      ]
+    };
+  }
+
+  /* ── Wire events ── */
+  reloadBtn.addEventListener('click', loadFromGitHub);
+  useTemplateBtn.addEventListener('click', () => {
+    data = getTemplate(); fileSha = null;
+    showLoadMessage('Loaded blank template. Edit and save to GitHub when ready.', 'info');
+    activateEditor();
+  });
+  addDayBtn.addEventListener('click', addDay);
+  saveBtn.addEventListener('click', saveToGitHub);
+  modalCancel.addEventListener('click', closeModal);
+  modalSave.addEventListener('click', saveModal);
+  modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape' && !modalBackdrop.hidden) closeModal(); });
+
+  // Auto-load on startup
+  loadFromGitHub();
+</script>
+</body>
+</html>
