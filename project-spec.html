@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AV Management System · Project Specification</title>
+  <style>
+    :root {
+      --bg: #f4f6f8; --surface: #ffffff; --surface-alt: #f7f8fa;
+      --border: #d0d7de; --text: #1f2328; --muted: #57606a;
+      --accent: #3b82d4; --accent-soft: #e8f1fb;
+      --success: #1a7f37; --success-soft: #e7f6ec;
+      --warning: #9a6700; --warning-soft: #fff8c5;
+      --purple: #7c5cd8; --purple-soft: #f0ebff;
+      --code-bg: #f6f8fa;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px; }
+    a { color: var(--accent); }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 48px 28px 100px; }
+
+    /* ── Cover ── */
+    .cover { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 44px 44px 36px; margin-bottom: 40px; }
+    .cover .eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 10px; }
+    .cover h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.15; }
+    .cover .lead { margin: 0 0 28px; color: var(--muted); font-size: 16px; max-width: 620px; }
+    .meta-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .meta-item { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+    .meta-item .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+    .meta-item .value { font-size: 14px; font-weight: 600; }
+
+    /* ── TOC ── */
+    .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; margin-bottom: 40px; }
+    .toc h2 { margin: 0 0 14px; font-size: 16px; }
+    .toc ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+    .toc li { font-size: 14px; }
+    .toc a { text-decoration: none; font-weight: 600; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 48px; }
+    .section-title { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+    .section-title .num { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 24px; }
+    .section-title h2 { margin: 0; font-size: 24px; }
+
+    /* ── Panels ── */
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 16px; }
+    .panel h3 { margin: 0 0 10px; font-size: 16px; }
+    .panel h4 { margin: 16px 0 6px; font-size: 14px; font-weight: 700; color: var(--text); }
+    .panel p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel ul, .panel ol { margin: 0 0 10px; padding-left: 20px; color: var(--muted); font-size: 14px; }
+    .panel ul:last-child, .panel ol:last-child { margin-bottom: 0; }
+    .panel li { margin-bottom: 5px; }
+
+    /* ── Code ── */
+    pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; font-size: 13px; font-family: "SF Mono","Fira Code",monospace; line-height: 1.6; margin: 10px 0; }
+    code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 13px; font-family: "SF Mono","Fira Code",monospace; color: var(--text); }
+
+    /* ── Tables ── */
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+    th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-top: 0; padding-top: 0; background: var(--surface-alt); }
+    td code { font-size: 12px; }
+
+    /* ── Callouts ── */
+    .callout { border-radius: 10px; padding: 13px 16px; margin: 12px 0; font-size: 14px; }
+    .callout p { margin: 0; color: inherit; }
+    .callout-tip  { background: var(--success-soft); border: 1px solid #b0e6c0; color: var(--success); }
+    .callout-info { background: var(--accent-soft);  border: 1px solid #b3d4f5; color: #1a4f8a; }
+    .callout-warn { background: var(--warning-soft); border: 1px solid #e6c87a; color: var(--warning); }
+
+    /* ── Badges ── */
+    .badge { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+    .badge-green  { background: var(--success-soft); color: var(--success); }
+    .badge-blue   { background: var(--accent-soft);  color: var(--accent); }
+    .badge-purple { background: var(--purple-soft);  color: var(--purple); }
+
+    /* ── File tree ── */
+    .tree { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-family: "SF Mono","Fira Code",monospace; font-size: 13px; line-height: 1.8; }
+    .tree .dir  { font-weight: 700; color: var(--accent); }
+    .tree .file { color: var(--text); }
+    .tree .note { color: var(--muted); font-style: italic; }
+
+    /* ── Architecture diagram ── */
+    .arch { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; align-items: center; gap: 0; margin: 16px 0; }
+    .arch-box { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; font-size: 13px; }
+    .arch-box strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .arch-box span { color: var(--muted); font-size: 12px; }
+    .arch-arrow { text-align: center; font-size: 20px; color: var(--muted); }
+    .arch-box.admin-box  { border-color: var(--purple); background: var(--purple-soft); }
+    .arch-box.data-box   { border-color: var(--accent);  background: var(--accent-soft); }
+    .arch-box.vendor-box { border-color: var(--success); background: var(--success-soft); }
+
+    /* ── Divider ── */
+    hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ── Footer ── */
+    .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--muted); }
+
+    @media (max-width: 640px) {
+      .cover { padding: 24px; }
+      .cover h1 { font-size: 26px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .arch { grid-template-columns: 1fr; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Cover ── -->
+  <div class="cover">
+    <div class="eyebrow">Project Specification · Reusable Infrastructure</div>
+    <h1>AV Management System</h1>
+    <p class="lead">A lightweight, browser-based AV file tracking and dashboard system for live events. Built with static HTML, GitHub Pages, and IBM Box. Zero servers, zero frameworks, zero cost.</p>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="label">First deployed</div>
+        <div class="value">ZDC 2026 Fall · Antwerp</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">GitHub organisation</div>
+        <div class="value">ibmzdc</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Hosting</div>
+        <div class="value">GitHub Pages (free)</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">File storage</div>
+        <div class="value">IBM Box</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Admin browser</div>
+        <div class="value">Any (Safari ✓)</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Vendor browser</div>
+        <div class="value">Any · No login</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOC ── -->
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s1">System overview &amp; architecture</a></li>
+      <li><a href="#s2">Repository structure</a></li>
+      <li><a href="#s3">Data model — av-data.json</a></li>
+      <li><a href="#s4">How each page works</a></li>
+      <li><a href="#s5">GitHub Pages setup</a></li>
+      <li><a href="#s6">Authentication — GitHub token</a></li>
+      <li><a href="#s7">IBM Box integration</a></li>
+      <li><a href="#s8">Re-onboarding for a new event</a></li>
+      <li><a href="#s9">Customisation reference</a></li>
+      <li><a href="#s10">Design system &amp; CSS tokens</a></li>
+      <li><a href="#s11">Known limitations</a></li>
+      <li><a href="#s12">Live URLs — ZDC 2026 Fall</a></li>
+    </ol>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 1. Overview                                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-title"><span class="num">01</span><h2>System overview &amp; architecture</h2></div>
+
+    <div class="panel">
+      <h3>What it does</h3>
+      <p>The AV Management System gives an event AV lead a single place to track presentation and video files across all event days. The vendor AV team gets a live, read-only dashboard showing which files are approved, updated, or on hold — with direct download links, AV production requirements per session, and a change log feed.</p>
+      <p>All data lives in a single JSON file committed to a GitHub repository. The admin edits data through a browser-based form and saves it via the GitHub Contents API — no server, no command line, no file drag required.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Architecture</h3>
+      <div class="arch">
+        <div class="arch-box admin-box">
+          <strong>Admin page</strong>
+          <span>admin.html<br>Browser form UI<br>Saves via GitHub API</span>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box data-box">
+          <strong>Data file</strong>
+          <span>data/av-data.json<br>GitHub repo<br>Single source of truth</span>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box vendor-box">
+          <strong>Dashboard</strong>
+          <span>dashboard.html<br>Read-only<br>Fetches from GitHub raw</span>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Admin saves</strong> → GitHub Contents API PUT commits <code>av-data.json</code> to the repo</li>
+        <li><strong>GitHub Pages</strong> serves the static files over HTTPS</li>
+        <li><strong>Dashboard loads</strong> → <code>fetch()</code> pulls <code>av-data.json</code> from <code>raw.githubusercontent.com</code></li>
+        <li><strong>Download links</strong> point to IBM Box shared files — Box controls who can actually download</li>
+        <li><strong>Latency</strong>: ~30–60 seconds from admin save to live dashboard update</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h3>Technology stack</h3>
+      <table>
+        <thead><tr><th>Layer</th><th>Technology</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Hosting</td><td>GitHub Pages</td><td>Free, HTTPS, no server config, auto-deploys on push</td></tr>
+          <tr><td>Data storage</td><td>JSON file in GitHub repo</td><td>Version controlled, readable, editable via API from any browser</td></tr>
+          <tr><td>Save mechanism</td><td>GitHub Contents API (PUT)</td><td>Works in any browser including Safari; no file system access needed</td></tr>
+          <tr><td>File hosting</td><td>IBM Box</td><td>Existing enterprise storage; access controlled per file share</td></tr>
+          <tr><td>Frontend</td><td>Vanilla HTML + CSS + JS</td><td>No build step, no dependencies, no framework — zero maintenance burden</td></tr>
+          <tr><td>Auth</td><td>GitHub Personal Access Token</td><td>Stored in <code>localStorage</code>; admin-only; vendor has no token</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 2. Repository structure                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-title"><span class="num">02</span><h2>Repository structure</h2></div>
+
+    <div class="panel">
+      <p>All source files live in a single public GitHub repository under the event organisation. GitHub Pages serves the repo root on the <code>main</code> branch.</p>
+      <div class="tree">
+        <span class="dir">repo-root/</span><br>
+        &nbsp;&nbsp;<span class="file">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← redirects to dashboard.html</span><br>
+        &nbsp;&nbsp;<span class="file">dashboard.html</span> &nbsp;&nbsp;&nbsp;<span class="note">← AV team read-only view</span><br>
+        &nbsp;&nbsp;<span class="file">admin.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← Admin edit &amp; save UI</span><br>
+        &nbsp;&nbsp;<span class="file">admin-guide.html</span> &nbsp;<span class="note">← Admin how-to guide</span><br>
+        &nbsp;&nbsp;<span class="file">av-team-guide.html</span><span class="note">← AV vendor team guide</span><br>
+        &nbsp;&nbsp;<span class="dir">data/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">av-data.json</span> &nbsp;&nbsp;&nbsp;<span class="note">← single source of truth</span>
+      </div>
+      <p style="margin-top:12px;">The Box workspace (local/synced via Box Drive) mirrors the same data file and holds the actual media files:</p>
+      <div class="tree">
+        <span class="dir">ZDC [Year] [Season]/</span> &nbsp;<span class="note">← Box Drive root for this event</span><br>
+        &nbsp;&nbsp;<span class="dir">av-management/</span> &nbsp;&nbsp;&nbsp;<span class="note">← local clone of GitHub repo</span><br>
+        &nbsp;&nbsp;<span class="dir">Data/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← agenda XLSX, floor plans, master JSON</span><br>
+        &nbsp;&nbsp;<span class="dir">Box Links/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← event branding images</span><br>
+        &nbsp;&nbsp;<span class="dir">files/</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="note">← presentation .pptx / video .mp4 files</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 3. Data model                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-title"><span class="num">03</span><h2>Data model — av-data.json</h2></div>
+
+    <div class="panel">
+      <h3>Top-level structure</h3>
+      <pre>{
+  "lastRefresh": "October 19, 2026 · 9:00 AM",
+  "days": [ ...array of day objects... ]
+}</pre>
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>lastRefresh</code></td><td>string</td><td>Human-readable timestamp shown in the dashboard header. Set by the admin before each save.</td></tr>
+          <tr><td><code>days</code></td><td>array</td><td>Ordered array of event day objects.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Day object</h3>
+      <pre>{
+  "id": "day-1",
+  "label": "Day 1 · October 19",
+  "files": [ ...array of session file objects... ],
+  "changeLog": [ ...array of change log entries... ]
+}</pre>
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>string</td><td>Unique identifier, e.g. <code>day-1</code>. Used as a DOM key and filter value.</td></tr>
+          <tr><td><code>label</code></td><td>string</td><td>Display name shown in the day selector and table headers.</td></tr>
+          <tr><td><code>files</code></td><td>array</td><td>Session file objects for this day.</td></tr>
+          <tr><td><code>changeLog</code></td><td>array</td><td>Change log entries shown in the dashboard timeline panel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Session file object</h3>
+      <pre>{
+  "sessionTime": "08:30",
+  "sessionTitle": "Welcome &amp; Opening Remarks",
+  "fileName": "Day1-Opening Remarks.pptx",
+  "type": "Presentation",
+  "status": "ready",
+  "freshness": "new",
+  "updatedAt": "8:45 AM",
+  "updatedNote": "Final version from presenter",
+  "notes": ["Do not project until status is Ready"],
+  "downloadUrl": "https://ibm.box.com/shared/static/xxxxx.pptx",
+  "avDetails": {
+    "microphones": "2 handheld, 1 lav",
+    "stageSetup": "Podium",
+    "confidenceMonitor": "Yes, downstage center",
+    "clicker": "Yes",
+    "timer": "30",
+    "specialNotes": ""
+  }
+}</pre>
+      <table>
+        <thead><tr><th>Field</th><th>Values</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>sessionTime</code></td><td>HH:MM or H:MM AM/PM</td><td>Session start time. Used for sorting. Both 24h and 12h formats accepted.</td></tr>
+          <tr><td><code>sessionTitle</code></td><td>string</td><td>Full session name.</td></tr>
+          <tr><td><code>fileName</code></td><td>string</td><td>Exact filename with extension.</td></tr>
+          <tr><td><code>type</code></td><td><code>Presentation</code> · <code>Video</code></td><td>File type used for the Videos stat counter.</td></tr>
+          <tr><td><code>status</code></td><td><code>ready</code> · <code>updated</code> · <code>hold</code></td><td>Core status driving badge colour and download link visibility.</td></tr>
+          <tr><td><code>freshness</code></td><td><code>new</code> · <code>changed</code> · omit</td><td>Optional. Highlights row with a colour band and badge. Clear once acknowledged.</td></tr>
+          <tr><td><code>updatedAt</code></td><td>string</td><td>Time file was received, e.g. <code>9:15 AM</code> or <code>Pending</code>.</td></tr>
+          <tr><td><code>updatedNote</code></td><td>string</td><td>Short description of the most recent change.</td></tr>
+          <tr><td><code>notes</code></td><td>string[]</td><td>Array of operator notes shown as a bullet list on the dashboard.</td></tr>
+          <tr><td><code>downloadUrl</code></td><td>URL string</td><td>Box direct download link. Use <code>#</code> as placeholder until file is uploaded.</td></tr>
+          <tr><td><code>avDetails</code></td><td>object</td><td>AV production requirements. All sub-fields are strings. Shown in expandable row.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Change log entry object</h3>
+      <pre>{
+  "time": "9:20 AM",
+  "title": "Deck updated",
+  "description": "Replace the preloaded copy with this version."
+}</pre>
+      <p>Entries are displayed newest-first in the dashboard timeline panel, filtered to the selected day.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 4. How each page works                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-title"><span class="num">04</span><h2>How each page works</h2></div>
+
+    <div class="panel">
+      <h3>dashboard.html — AV team read-only view</h3>
+      <ul>
+        <li>On load calls <code>fetch(DATA_URL + '?t=' + Date.now())</code> against <code>raw.githubusercontent.com/[org]/[repo]/main/data/av-data.json</code>. Cache-busting query param ensures freshest data on every refresh.</li>
+        <li>If fetch fails, retries automatically every 10 seconds.</li>
+        <li>Renders a filterable/sortable table of sessions, a summary stat bar, a change log timeline, and expandable AV detail rows per session.</li>
+        <li>Download links use the <code>downloadUrl</code> field directly — Box handles authentication.</li>
+        <li>No authentication, no write access, no local state beyond the fetched JSON.</li>
+      </ul>
+      <h4>Key constant to update per event:</h4>
+      <pre>const DATA_URL = 'https://raw.githubusercontent.com/[ORG]/[REPO]/main/data/av-data.json';</pre>
+    </div>
+
+    <div class="panel">
+      <h3>admin.html — Admin edit &amp; save UI</h3>
+      <ul>
+        <li>On load calls the <strong>GitHub Contents API</strong> (<code>GET /repos/[org]/[repo]/contents/data/av-data.json</code>) using the stored token. This returns the file content (base64-encoded) and its current SHA.</li>
+        <li>Content is decoded via <code>Uint8Array</code> + <code>TextDecoder('utf-8')</code> to correctly handle multi-byte characters (e.g. middle dot <code>·</code>).</li>
+        <li>The admin edits sessions via a modal form. All changes are held in memory until the admin clicks <strong>💾 Save to GitHub</strong>.</li>
+        <li>Save calls <code>PUT /repos/[org]/[repo]/contents/data/av-data.json</code> with the updated base64 content, a commit message, and the file's current SHA (required by GitHub to prevent conflicts).</li>
+        <li>On success, the returned SHA is stored in memory for the next save.</li>
+        <li>Token is read from: (1) <code>window.location.hash</code> on first visit, then stored to <code>localStorage</code>; (2) <code>localStorage</code> on all subsequent visits.</li>
+      </ul>
+      <h4>Key constants to update per event:</h4>
+      <pre>const REPO      = '[ORG]/[REPO]';
+const BRANCH    = 'main';
+const FILE_PATH = 'data/av-data.json';
+const API_URL   = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;</pre>
+    </div>
+
+    <div class="panel">
+      <h3>index.html — Root redirect</h3>
+      <p>A single <code>&lt;meta http-equiv="refresh"&gt;</code> redirect to <code>dashboard.html</code>. Ensures the root GitHub Pages URL (<code>https://[org].github.io/[repo]/</code>) opens the dashboard automatically.</p>
+    </div>
+
+    <div class="panel">
+      <h3>admin-guide.html &amp; av-team-guide.html</h3>
+      <p>Self-contained static HTML how-to guides. No JavaScript. Styled with the same CSS design system as the other pages. Update text content only when re-deploying for a new event — no code changes needed.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 5. GitHub Pages setup                      -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-title"><span class="num">05</span><h2>GitHub Pages setup</h2></div>
+
+    <div class="panel">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Repository must be <strong>public</strong> for GitHub Pages on a free plan. Private repos require GitHub Team ($4/user/month) or higher.</li>
+        <li>Pages must be enabled with source: <strong>branch <code>main</code>, root path <code>/</code></strong>.</li>
+        <li>HTTPS is enforced automatically by GitHub Pages — required for the GitHub Contents API to work from the browser.</li>
+      </ul>
+
+      <h3>Enable via API (one-time)</h3>
+      <pre>curl -X POST \
+  -H "Authorization: token YOUR_TOKEN" \
+  -H "Accept: application/vnd.github.v3+json" \
+  https://api.github.com/repos/[ORG]/[REPO]/pages \
+  -d '{"source":{"branch":"main","path":"/"}}'</pre>
+
+      <h3>Enable via GitHub UI</h3>
+      <p>Repository → <strong>Settings</strong> → <strong>Pages</strong> → Source: <strong>Deploy from branch</strong> → Branch: <strong>main</strong> → Folder: <strong>/ (root)</strong> → Save.</p>
+
+      <h3>Resulting URL pattern</h3>
+      <pre>https://[ORG].github.io/[REPO]/dashboard.html
+https://[ORG].github.io/[REPO]/admin.html</pre>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 6. Authentication                          -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-title"><span class="num">06</span><h2>Authentication — GitHub token</h2></div>
+
+    <div class="panel">
+      <h3>Token requirements</h3>
+      <ul>
+        <li>Type: <strong>Personal Access Token (classic)</strong></li>
+        <li>Required scope: <code>repo</code> (full repository access)</li>
+        <li>Expiry: set to no expiration for event use, or 90 days for tighter security</li>
+        <li>The token must belong to an account that has <strong>write access</strong> to the repository</li>
+      </ul>
+
+      <h3>How the token is stored</h3>
+      <ul>
+        <li>Never hardcoded in any file — the repository is public</li>
+        <li>Stored in <code>localStorage</code> under the key <code>gh_token</code> on the <code>ibmzdc.github.io</code> origin</li>
+        <li>Scoped to that origin only — cannot be read by other websites</li>
+        <li>Cleared by clicking <strong>Clear</strong> in the token panel, or by clearing browser data</li>
+      </ul>
+
+      <h3>First-time setup method (hash fragment)</h3>
+      <p>Open this URL once in the admin's browser — the page extracts the token, saves it to <code>localStorage</code>, and strips it from the address bar:</p>
+      <pre>https://[ORG].github.io/[REPO]/admin.html#YOUR_TOKEN</pre>
+      <div class="callout callout-warn">
+        <p>Do not share this URL with anyone. The hash fragment is client-side only and not sent to GitHub's servers, but it is visible in browser history on the device used.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 7. IBM Box integration                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-title"><span class="num">07</span><h2>IBM Box integration</h2></div>
+
+    <div class="panel">
+      <h3>Role of Box in this system</h3>
+      <p>Box is used exclusively for <strong>file storage and access control</strong>. The AV system itself (dashboard, admin, data) does not integrate with the Box API — it only stores Box shared links as strings inside <code>av-data.json</code>.</p>
+
+      <h3>Box direct download link format</h3>
+      <p>Shared links copied from Box use the preview URL format. They must be converted to the direct download format before being entered into the admin page:</p>
+      <pre>Preview URL:  https://ibm.box.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.pptx</pre>
+      <p>Replace <code>/s/</code> with <code>/shared/static/</code> and append the file extension. This forces an immediate download instead of opening the Box preview page.</p>
+
+      <h3>Access control</h3>
+      <ul>
+        <li>The dashboard URL and data JSON are public — anyone can read session metadata</li>
+        <li>Box file access is controlled separately by Box sharing settings</li>
+        <li>Share files with the AV vendor team's Box accounts directly, not as "Anyone with the link" unless you intend public access</li>
+        <li>The <code>files/</code> folder in Box Drive is the recommended upload location for all event media files</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 8. Re-onboarding for a new event           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-title"><span class="num">08</span><h2>Re-onboarding for a new event</h2></div>
+
+    <div class="panel">
+      <h3>Checklist — new event setup</h3>
+      <ol>
+        <li>
+          <strong>Create a new GitHub repository</strong> under the event organisation (e.g. <code>ibmzdc/av-management-2027-spring</code>).
+          <ul>
+            <li>Set to <strong>public</strong></li>
+            <li>Default branch: <code>main</code></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Copy all files</strong> from the previous event's <code>av-management/</code> folder into the new repo:
+          <ul>
+            <li><code>index.html</code>, <code>dashboard.html</code>, <code>admin.html</code></li>
+            <li><code>admin-guide.html</code>, <code>av-team-guide.html</code></li>
+            <li><code>data/av-data.json</code></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Update constants</strong> in <code>dashboard.html</code> and <code>admin.html</code> (see Section 4):
+          <ul>
+            <li><code>REPO</code> — new repo name</li>
+            <li><code>DATA_URL</code> — new raw GitHub URL</li>
+            <li>Page <code>&lt;title&gt;</code> tags and <code>&lt;h1&gt;</code> headings</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Reset <code>av-data.json</code></strong> — clear all days and sessions, update <code>lastRefresh</code>, add the new event's day structure. Use the admin page's <strong>Start from blank template</strong> button as a starting point.
+        </li>
+        <li>
+          <strong>Enable GitHub Pages</strong> on the new repo (see Section 5).
+        </li>
+        <li>
+          <strong>Generate a new GitHub token</strong> (or reuse an existing one with repo access) and set it in the admin browser using the hash fragment method (see Section 6).
+        </li>
+        <li>
+          <strong>Create a new Box Drive folder</strong> for the event. Create a <code>files/</code> subfolder for presentation uploads.
+        </li>
+        <li>
+          <strong>Share the new dashboard URL</strong> with the AV vendor team and the <strong>AV team guide URL</strong>.
+        </li>
+      </ol>
+      <div class="callout callout-tip">
+        <p>The entire setup — from creating the repo to having a live dashboard — takes approximately 15 minutes.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>What to update in each file</h3>
+      <table>
+        <thead><tr><th>File</th><th>What to change</th></tr></thead>
+        <tbody>
+          <tr><td><code>dashboard.html</code></td><td><code>DATA_URL</code> constant · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
+          <tr><td><code>admin.html</code></td><td><code>REPO</code> · <code>API_URL</code> · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
+          <tr><td><code>admin-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · any event-specific text</td></tr>
+          <tr><td><code>av-team-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · dashboard URL in the URL block</td></tr>
+          <tr><td><code>data/av-data.json</code></td><td>Clear all days/files · update <code>lastRefresh</code> · add new event days</td></tr>
+          <tr><td><code>index.html</code></td><td>No change needed — redirect is generic</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 9. Customisation reference                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-title"><span class="num">09</span><h2>Customisation reference</h2></div>
+
+    <div class="panel">
+      <h3>Adding a new status type</h3>
+      <p>Status values are driven by the <code>status</code> field in the JSON. To add a new status:</p>
+      <ol>
+        <li>Add a CSS rule in <code>dashboard.html</code>: <code>.badge-[name] { color: ...; background: ...; }</code></li>
+        <li>Add the value to the <code>statusLabels</code> and <code>statusClasses</code> objects in the dashboard script</li>
+        <li>Add the option to the <code>&lt;select id="m-status"&gt;</code> dropdown in <code>admin.html</code></li>
+        <li>Add the filter option to <code>&lt;select id="status"&gt;</code> in <code>dashboard.html</code> if you want it as a filter</li>
+      </ol>
+
+      <h3>Adding a new session field</h3>
+      <ol>
+        <li>Add the field to the JSON schema (edit a session in admin to populate it)</li>
+        <li>Add an input to the modal in <code>admin.html</code></li>
+        <li>Read and write the field in <code>openModal()</code> and <code>saveModal()</code> functions</li>
+        <li>Render the field in <code>renderFileRows()</code> in <code>dashboard.html</code> if it should be visible</li>
+      </ol>
+
+      <h3>Changing the auto-refresh interval on the dashboard</h3>
+      <p>The dashboard does not auto-refresh. It fetches once on load and again on manual browser refresh. To add auto-refresh, insert this at the bottom of the dashboard script:</p>
+      <pre>setInterval(initialize, 60000); // refresh every 60 seconds</pre>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 10. Design system                          -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-title"><span class="num">10</span><h2>Design system &amp; CSS tokens</h2></div>
+
+    <div class="panel">
+      <p>All pages share the same CSS custom properties defined in <code>:root</code>. Changing these values propagates across the entire UI.</p>
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td><code>--bg</code></td><td><code>#f4f6f8</code></td><td>Page background</td></tr>
+          <tr><td><code>--surface</code></td><td><code>#ffffff</code></td><td>Card / panel background</td></tr>
+          <tr><td><code>--surface-alt</code></td><td><code>#f7f8fa</code></td><td>Table header, input background</td></tr>
+          <tr><td><code>--border</code></td><td><code>#d0d7de</code></td><td>All borders</td></tr>
+          <tr><td><code>--text</code></td><td><code>#1f2328</code></td><td>Primary text</td></tr>
+          <tr><td><code>--muted</code></td><td><code>#57606a</code></td><td>Secondary / label text</td></tr>
+          <tr><td><code>--accent</code></td><td><code>#3b82d4</code></td><td>Links, primary buttons, Updated badge</td></tr>
+          <tr><td><code>--accent-soft</code></td><td><code>#e8f1fb</code></td><td>Updated badge background</td></tr>
+          <tr><td><code>--success</code></td><td><code>#1a7f37</code></td><td>Ready badge, ok messages</td></tr>
+          <tr><td><code>--success-soft</code></td><td><code>#e7f6ec</code></td><td>Ready badge background</td></tr>
+          <tr><td><code>--warning</code></td><td><code>#9a6700</code></td><td>On hold badge, warning messages</td></tr>
+          <tr><td><code>--warning-soft</code></td><td><code>#fff8c5</code></td><td>On hold badge background</td></tr>
+          <tr><td><code>--danger</code></td><td><code>#cf222e</code></td><td>Error messages, delete buttons</td></tr>
+          <tr><td><code>--danger-soft</code></td><td><code>#ffebe9</code></td><td>Error message background</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 11. Known limitations                      -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-title"><span class="num">11</span><h2>Known limitations</h2></div>
+
+    <div class="panel">
+      <table>
+        <thead><tr><th>Limitation</th><th>Impact</th><th>Workaround / Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Dashboard data is public</td><td>Session titles, AV notes, and Box URLs are readable by anyone with the GitHub URL</td><td>Box controls actual file downloads. Session metadata is not sensitive. Make repo private + upgrade to GitHub Team if required.</td></tr>
+          <tr><td>~30–60s publish delay</td><td>After admin saves, dashboard takes up to 60s to show updated data</td><td>Vendor team must refresh their browser. Consider adding auto-refresh interval (see Section 9).</td></tr>
+          <tr><td>Single admin user</td><td>Concurrent edits from two browsers will cause the second save to fail (SHA mismatch)</td><td>Designed for one admin. The second save will show an error and the admin must reload and re-apply changes.</td></tr>
+          <tr><td>No edit history UI</td><td>Admin cannot see previous versions of session data</td><td>Full history is preserved in the GitHub commit log at <code>github.com/[org]/[repo]/commits/main</code>.</td></tr>
+          <tr><td>Token in localStorage</td><td>Anyone with physical access to the admin's browser can extract the token from DevTools</td><td>Use a token with minimal required scope. Revoke and regenerate the token after the event.</td></tr>
+          <tr><td>No offline support</td><td>Dashboard requires internet access to fetch data</td><td>Dashboard falls back to a retry loop on failure. Consider embedding fallback data for offline use.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 12. Live URLs                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-title"><span class="num">12</span><h2>Live URLs — ZDC 2026 Fall</h2></div>
+
+    <div class="panel">
+      <table>
+        <thead><tr><th>Resource</th><th>URL</th></tr></thead>
+        <tbody>
+          <tr><td>Dashboard</td><td><a href="https://ibmzdc.github.io/av-management/dashboard.html" target="_blank">ibmzdc.github.io/av-management/dashboard.html</a></td></tr>
+          <tr><td>Admin page</td><td><a href="https://ibmzdc.github.io/av-management/admin.html" target="_blank">ibmzdc.github.io/av-management/admin.html</a></td></tr>
+          <tr><td>Admin guide</td><td><a href="https://ibmzdc.github.io/av-management/admin-guide.html" target="_blank">ibmzdc.github.io/av-management/admin-guide.html</a></td></tr>
+          <tr><td>AV team guide</td><td><a href="https://ibmzdc.github.io/av-management/av-team-guide.html" target="_blank">ibmzdc.github.io/av-management/av-team-guide.html</a></td></tr>
+          <tr><td>GitHub repository</td><td><a href="https://github.com/ibmzdc/av-management" target="_blank">github.com/ibmzdc/av-management</a></td></tr>
+          <tr><td>Raw data file</td><td><a href="https://raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json" target="_blank">raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json</a></td></tr>
+          <tr><td>Box Drive workspace</td><td>Box → ZDC-AV-Production → ZDC 2016 Fall</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    AV Management System · Project Specification · ZDC 2026 Fall &nbsp;·&nbsp; Made with IBM Bob
+  </div>
+
+</div>
+</body>
+</html>
