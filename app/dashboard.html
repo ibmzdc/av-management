@@ -302,10 +302,9 @@
             <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
             ${holdWarn}
           </td>
-          <td>
-            <span style="white-space:nowrap;">${escapeHtml(file.updatedAt && file.updatedAt !== 'Pending' ? (dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + file.updatedAt : file.updatedAt || '—')}</span>
-            ${file.updatedNote ? `<br><span class="file-meta">${escapeHtml(file.updatedNote)}</span>` : ''}
-          </td>
+          <td>${(file.updatedAt && file.updatedAt !== 'Pending' && file.updatedAt.trim())
+            ? `<span style="white-space:nowrap;font-weight:600;">${escapeHtml((dayLabel ? dayLabel.split('·').pop().trim() + ' · ' : '') + file.updatedAt)}</span>`
+            : `<span style="color:var(--muted);">Pending</span>`}</td>
           <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>
           <td class="download"><a href="${escapeHtml(file.downloadUrl)}">${file.status==='hold'?'Awaiting upload':'Download latest'}</a></td>`;
         fileTableBody.appendChild(row);
