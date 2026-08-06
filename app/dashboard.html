@@ -250,6 +250,46 @@
       let h = Number(ampm[1]) % 12; if (ampm[3].toUpperCase()==='PM') h+=12;
       return h*60+Number(ampm[2]);
     }
+    /* Box API: Fetch file metadata and version info */
+    async function fetchBoxFileMetadata(boxFileId) {
+      if (!boxFileId) return null;
+      try {
+        // Use public Box shared file API endpoint (no token required for public shares)
+        // For now, we'll use a CORS-friendly approach with error handling
+        const response = await fetch(`https://api.box.com/2.0/files/${boxFileId}?fields=name,size,modified_at,file_version`, {
+          headers: { 'Accept': 'application/json' },
+          cache: 'no-store'
+        });
+        if (!response.ok) {
+          console.warn(`Box API error for file ${boxFileId}:`, response.status);
+          return null;
+        }
+        const data = await response.json();
+        return {
+          id: data.id,
+          name: data.name,
+          version: data.file_version?.id || '1',
+          modifiedAt: data.modified_at,
+          size: data.size
+        };
+      } catch (err) {
+        console.warn('Box API fetch failed:', err.message);
+        return null;
+      }
+    }
+    /* Check if Box file has a newer version than stored */
+    async function checkBoxFileVersion(file) {
+      if (!file.boxFileId) return false; // No Box file ID, use timestamp detection instead
+      const metadata = await fetchBoxFileMetadata(file.boxFileId);
+      if (!metadata) return false; // Box API unavailable, fall back to timestamp
+      const versionMismatch = String(metadata.version) !== String(file.boxVersion || '1');
+      if (versionMismatch) {
+        // Update stored version for next comparison
+        file.boxVersion = metadata.version;
+        file.downloadUrl = `https://ibm.box.com/shared/static/${file.boxFileId}`; // Construct download URL
+      }
+      return versionMismatch;
+    }
 
     const statusLabels  = { ready:'Ready', updated:'Updated', hold:'On hold' };
     const statusClasses = { ready:'badge badge-ready', updated:'badge badge-updated', hold:'badge badge-hold' };
@@ -289,17 +329,21 @@
       statVideos.textContent   = day.files.filter(f=>f.type==='Video').length;
       statHold.textContent     = day.files.filter(f=>f.status==='hold').length;
     }
-    function renderFileRows(files, dayId, dayLabel) {
-      files.forEach((file, i) => {
+    async function renderFileRows(files, dayId, dayLabel) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         const row = document.createElement('tr');
         // Row left-border accent by status
         row.className = rowClasses[file.status] || '';
 
-        // Freshness pill for the Change column — shows freshness flag or recent update detection
+        // Freshness pill for the Change column — shows freshness flag, Box version, or timestamp detection
         let freshPill = '<span class="pill-none">—</span>';
         if (file.freshness === 'new')     freshPill = '<span class="pill-new">New</span>';
         if (file.freshness === 'changed') freshPill = '<span class="pill-changed">Updated</span>';
-        if (!file.freshness && isRecentUpdate(file.updatedAt)) freshPill = '<span class="pill-changed">📥 New version</span>';
+        // Check Box API for version mismatch (Phase 2)
+        const boxVersionMismatch = await checkBoxFileVersion(file);
+        if (boxVersionMismatch) freshPill = '<span class="pill-changed">📥 New version (Box)</span>';
+        else if (!file.freshness && isRecentUpdate(file.updatedAt)) freshPill = '<span class="pill-changed">📥 New version</span>';
 
         // Hold warning line
         const holdWarn = file.status === 'hold'
@@ -350,26 +394,26 @@
           </div></div></td>`;
           fileTableBody.appendChild(dr);
         }
-      });
+      }
     }
-    function renderFiles(day) {
+    async function renderFiles(day) {
       fileTableBody.innerHTML = '';
       if (daySelect.value === 'all') {
         let any = false;
-        dashboardData.days.forEach(d => {
+        for (const d of dashboardData.days) {
           const files = getFilteredFiles(d);
-          if (!files.length) return;
+          if (!files.length) continue;
           any = true;
           const sep = document.createElement('tr');
           sep.innerHTML = `<td colspan="6" style="padding:12px 12px 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-alt);border-top:2px solid var(--border);">${escapeHtml(d.label)}</td>`;
           fileTableBody.appendChild(sep);
-          renderFileRows(files, d.id, d.label);
-        });
+          await renderFileRows(files, d.id, d.label);
+        }
         fileEmptyState.hidden = any;
       } else {
         const files = getFilteredFiles(day);
         fileEmptyState.hidden = !!files.length;
-        if (files.length) renderFileRows(files, day.id, day.label);
+        if (files.length) await renderFileRows(files, day.id, day.label);
       }
       fileTableBody.querySelectorAll('.details-toggle').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -391,10 +435,10 @@
         changeLog.appendChild(item);
       });
     }
-    function render() {
+    async function render() {
       const day = getSelectedDay();
       lastRefresh.textContent = formatRefreshLabel(dashboardData.lastRefresh);
-      renderStats(day); renderFiles(day); renderChangeLog(day);
+      renderStats(day); await renderFiles(day); renderChangeLog(day);
     }
     function populateDayOptions(days) {
       daySelect.innerHTML = '<option value="all">All days</option>' +
@@ -431,7 +475,7 @@
         return;
       }
       populateDayOptions(dashboardData.days);
-      render();
+      await render();
       startCountdown();
       // Auto-refresh every 60 seconds
       if (refreshInterval) clearInterval(refreshInterval);

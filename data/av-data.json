@@ -43,7 +43,9 @@
             "timer": "",
             "specialNotes": ""
           },
-          "freshness": "new"
+          "freshness": "new",
+          "boxFileId": "1234567890",
+          "boxVersion": "1"
         },
         {
           "sessionTime": "12:00 PM",
@@ -61,7 +63,9 @@
             "timer": "",
             "specialNotes": ""
           },
-          "freshness": "new"
+          "freshness": "new",
+          "boxFileId": "2345678901",
+          "boxVersion": "1"
         }
       ],
       "changeLog": [
@@ -93,7 +97,9 @@
             "clicker": "Yes",
             "timer": "30",
             "specialNotes": ""
-          }
+          },
+          "boxFileId": "3456789012",
+          "boxVersion": "1"
         },
         {
           "sessionTime": "09:00",

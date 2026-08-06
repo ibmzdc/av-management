@@ -126,7 +126,7 @@
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
       <div>
         <h2 style="margin:0 0 4px;">Step 3 · Edit sessions</h2>
-        <p class="panel-desc" style="margin:0;"><strong>Files are managed in Box.</strong> Edit session metadata below (status, AV details, notes), then click Save. Status changes auto-timestamp for version detection on the dashboard.</p>
+        <p class="panel-desc" style="margin:0;"><strong>Files are managed in Box.</strong> Edit session metadata below (status, AV details, notes), then click Save. Status changes auto-timestamp for version detection. <strong>Phase 2 (NEW):</strong> Enter Box File ID to enable automatic version detection from the Box API.</p>
       </div>
       <div class="inline-actions">
         <button id="save-btn" class="btn-primary">💾 Save to GitHub</button>
@@ -180,6 +180,11 @@
         <label for="m-freshness">Freshness</label>
         <select id="m-freshness"><option value="">None</option><option value="new">New</option><option value="changed">Changed</option></select>
       </div>
+    </div>
+
+    <div class="form-grid" style="margin-top:14px;">
+      <div><label for="m-box-file-id">Box File ID</label><input id="m-box-file-id" type="text" placeholder="1234567890"></div>
+      <div><label for="m-box-folder-id">Box Folder ID (optional)</label><input id="m-box-folder-id" type="text" placeholder="9876543210"></div>
     </div>
 
     <div style="margin-top:14px;">
@@ -268,6 +273,8 @@
   const mFiletype     = document.getElementById('m-filetype');
   const mStatus       = document.getElementById('m-status');
   const mFreshness    = document.getElementById('m-freshness');
+  const mBoxFileId    = document.getElementById('m-box-file-id');
+  const mBoxFolderId  = document.getElementById('m-box-folder-id');
   const mNotes        = document.getElementById('m-notes');
   const mAvMic        = document.getElementById('m-av-mic');
   const mAvStage      = document.getElementById('m-av-stage');
@@ -420,7 +427,7 @@
     modalDayId = dayId; modalFileIdx = fileIdx;
     modalTitle.textContent = fileIdx === -1 ? 'Add session' : 'Edit session';
     mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation'; mStatus.value='hold';
-    mFreshness.value=''; mNotes.value='';
+    mFreshness.value=''; mBoxFileId.value=''; mBoxFolderId.value=''; mNotes.value='';
     mAvMic.value=''; mAvStage.value=''; mAvCm.value=''; mAvClicker.value=''; mAvTimer.value=''; mAvSpecial.value='';
     mLogTime.value=''; mLogTitle.value=''; mLogDesc.value='';
     if (fileIdx !== -1) {
@@ -428,6 +435,7 @@
       const f = day.files[fileIdx];
       mTime.value=toTimeInput(f.sessionTime); mTitle.value=f.sessionTitle; mFilename.value=f.fileName;
       mFiletype.value=f.type; mStatus.value=f.status; mFreshness.value=f.freshness||'';
+      mBoxFileId.value=f.boxFileId||''; mBoxFolderId.value=f.boxFolderId||'';
       mNotes.value=Array.isArray(f.notes)?f.notes.join('\n'):'';
       const av=f.avDetails||{};
       mAvMic.value=av.microphones||''; mAvStage.value=av.stageSetup||''; mAvCm.value=av.confidenceMonitor||'';
@@ -458,6 +466,11 @@
       notes: mNotes.value.split('\n').map(n=>n.trim()).filter(Boolean),
       avDetails: { microphones:mAvMic.value.trim(), stageSetup:mAvStage.value.trim(), confidenceMonitor:mAvCm.value.trim(), clicker:mAvClicker.value.trim(), timer:mAvTimer.value.trim(), specialNotes:mAvSpecial.value.trim() }
     };
+    if (mBoxFileId.value.trim()) {
+      fileObj.boxFileId = mBoxFileId.value.trim();
+      fileObj.boxVersion = '1'; // Will be updated by Box API on dashboard load
+      if (mBoxFolderId.value.trim()) fileObj.boxFolderId = mBoxFolderId.value.trim();
+    }
     if (mFreshness.value) fileObj.freshness = mFreshness.value;
     if (mLogTime.value.trim() && mLogTitle.value.trim() && mLogDesc.value.trim()) {
       day.changeLog.unshift({ time:mLogTime.value.trim(), title:mLogTitle.value.trim(), description:mLogDesc.value.trim() });
