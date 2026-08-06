@@ -152,14 +152,15 @@
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px;">
         <div>
           <h2 style="margin:0 0 4px;">Approved for projection now</h2>
-          <p style="margin:0;color:var(--muted);font-size:14px;">Filterable by day, status, search, and sort. Click Download latest to get the current file.</p>
+          <p style="margin:0;color:var(--muted);font-size:14px;">All files are stored in Box and managed by the AV lead. Updated timestamp shows when status last changed. Click Download to get the current file.</p>
         </div>
         <!-- Colour legend -->
         <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;">
-          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--success);display:inline-block;"></span>Ready</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#2563eb;display:inline-block;"></span>Updated</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--warning);display:inline-block;"></span>On hold</span>
-        </div>
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--success);display:inline-block;"></span>Ready</span>
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#2563eb;display:inline-block;"></span>Updated</span>
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--warning);display:inline-block;"></span>On hold</span>
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#7c3aed;display:inline-block;"></span>New version available</span>
+          </div>
       </div>
       <table>
         <thead>
@@ -226,6 +227,20 @@
       let h = Number(m[1]) % 12; if (m[3].toUpperCase()==='PM') h+=12;
       return h*60+Number(m[2]);
     }
+    /* Check if file was recently updated (within 2 hours) */
+    function isRecentUpdate(updatedAt) {
+      if (!updatedAt || updatedAt === 'Pending' || !updatedAt.trim()) return false;
+      try {
+        const fileTime = new Date(updatedAt);
+        if (isNaN(fileTime)) return false;
+        const now = new Date();
+        const diffMs = now - fileTime;
+        const diffHours = diffMs / (1000 * 60 * 60);
+        return diffHours < 2 && diffHours >= 0;
+      } catch (e) {
+        return false;
+      }
+    }
     function parseSessionTime(v) {
       if (!v) return 0;
       const hhmm = v.match(/^(\d{2}):(\d{2})$/);
@@ -280,10 +295,11 @@
         // Row left-border accent by status
         row.className = rowClasses[file.status] || '';
 
-        // Freshness pill for the Change column
+        // Freshness pill for the Change column — shows freshness flag or recent update detection
         let freshPill = '<span class="pill-none">—</span>';
         if (file.freshness === 'new')     freshPill = '<span class="pill-new">New</span>';
         if (file.freshness === 'changed') freshPill = '<span class="pill-changed">Updated</span>';
+        if (!file.freshness && isRecentUpdate(file.updatedAt)) freshPill = '<span class="pill-changed">📥 New version</span>';
 
         // Hold warning line
         const holdWarn = file.status === 'hold'
@@ -311,7 +327,14 @@
             return `<span style="color:var(--muted);">Pending</span>`;
           })()}</td>
           <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>
-          <td class="download"><a href="${escapeHtml(file.downloadUrl)}">${file.status==='hold'?'Awaiting upload':'Download latest'}</a></td>`;
+          <td class="download">
+            ${file.status==='hold'
+              ? '<span style="color:var(--muted);">Awaiting upload</span>'
+              : file.downloadUrl && file.downloadUrl !== '#'
+                ? `<a href="${escapeHtml(file.downloadUrl)}">⬇ Download</a>`
+                : '<span style="color:var(--warning);">⚠ Check Box</span>'
+            }
+          </td>`;
         fileTableBody.appendChild(row);
         if (hasAv) {
           const dr = document.createElement('tr');

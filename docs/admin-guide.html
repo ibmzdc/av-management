@@ -140,70 +140,61 @@
 
   <div class="panel">
     <h3>When a presenter delivers a final file</h3>
+    <p style="color: var(--muted);">Files are managed in Box. Your workflow: upload → set status → save. The dashboard auto-detects updates.</p>
     <ol class="steps">
       <li>
         <div class="step-num">1</div>
         <div class="step-body">
           <strong>Upload the file to Box</strong>
-          <p>Drop the final <code>.pptx</code>, <code>.pdf</code>, or <code>.mp4</code> into your Box folder. Share it with the AV vendor team's Box accounts so they can download it.</p>
+          <p>Drop the final <code>.pptx</code>, <code>.pdf</code>, or <code>.mp4</code> into your Box folder (organized by session or day). Share it with the AV vendor team's Box accounts so they can download it.</p>
         </div>
       </li>
       <li>
         <div class="step-num">2</div>
-        <div class="step-body">
-          <strong>Copy the Box direct download link</strong>
-          <p>Right-click the file in Box → <strong>Share</strong> → <strong>Copy Link</strong>. Then convert the URL to the direct download format:</p>
-          <div class="url-block">From: https://ibm.box.com/s/xxxxxxxxxxxxxxx<br>To:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxx.pptx</div>
-          <p>The <code>/shared/static/</code> format forces an immediate download instead of opening the Box preview page.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-num">3</div>
         <div class="step-body">
           <strong>Open the admin page and find the session</strong>
           <p>Go to <a href="../app/admin.html">admin.html</a>, locate the correct day and session in the table, then click <strong>Edit</strong>.</p>
         </div>
       </li>
       <li>
-        <div class="step-num">4</div>
+        <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Update the session fields</strong>
+          <strong>Update status (required) and optional fields</strong>
           <table style="margin-top:8px;">
-            <thead><tr><th>Field</th><th>What to set</th></tr></thead>
+            <thead><tr><th>Field</th><th>What to do</th></tr></thead>
             <tbody>
-              <tr><td>Status</td><td><span class="badge badge-ready">Ready</span> for first delivery, or <span class="badge badge-updated">Updated</span> when replacing a prior version</td></tr>
-              <tr><td>Download URL</td><td>Paste the Box direct download link from Step 2</td></tr>
-              <tr><td>Updated at</td><td>Time you received the file, e.g. <code>9:15 AM</code></td></tr>
-              <tr><td>Updated note</td><td>Short description, e.g. <code>Final version from presenter</code></td></tr>
-              <tr><td>Freshness</td><td><code>New</code> for first delivery · <code>Changed</code> for a replacement</td></tr>
+              <tr><td><strong>Status</strong></td><td><span class="badge badge-ready">Ready</span> for first delivery, or <span class="badge badge-updated">Updated</span> when replacing a prior version. <strong>Timestamp auto-sets on save.</strong></td></tr>
+              <tr><td>Freshness</td><td><code>New</code> to highlight first-time file. <code>Changed</code> to highlight a replacement. (Optional)</td></tr>
+              <tr><td>AV details</td><td>Update if needed (mics, stage setup, etc.). Optional.</td></tr>
+              <tr><td>Operator notes</td><td>Session-specific instructions for the AV team. Optional.</td></tr>
             </tbody>
           </table>
         </div>
       </li>
       <li>
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Add a change log entry (optional but recommended)</strong>
+          <p>Scroll to the <em>Change log entry</em> section. Fill in Time, Title, and Description. This appears in the AV team's dashboard so they know exactly what changed and when.</p>
+        </div>
+      </li>
+      <li>
         <div class="step-num">5</div>
         <div class="step-body">
-          <strong>Add a change log entry (recommended)</strong>
-          <p>Scroll to the <em>Change log entry</em> section in the modal. Fill in Time, Title, and Description. This appears in the AV team's dashboard change log so they know exactly what changed and when.</p>
+          <strong>Click Save session</strong>
+          <p>The modal closes and the session row updates in the table. Status timestamp is auto-set to current time.</p>
         </div>
       </li>
       <li>
         <div class="step-num">6</div>
         <div class="step-body">
-          <strong>Click Save session</strong>
-          <p>The modal closes and the session row updates in the table.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-num">7</div>
-        <div class="step-body">
           <strong>Click 💾 Save to GitHub</strong>
-          <p>This commits all pending changes to the GitHub repository. The live dashboard reflects updates within approximately 30–60 seconds. A green confirmation message will show the save timestamp.</p>
+          <p>This commits all pending changes to the GitHub repository. The live dashboard reflects updates within approximately 30–60 seconds. The AV team will see a "New version available" indicator.</p>
         </div>
       </li>
     </ol>
-    <div class="callout callout-warn" style="margin-top:16px;">
-      <p><strong>Important:</strong> Editing sessions without clicking <strong>💾 Save to GitHub</strong> leaves changes in the browser only — nothing is published to the live dashboard.</p>
+    <div class="callout callout-tip" style="margin-top:16px;">
+      <p><strong>Tip:</strong> The admin form only asks for essential metadata now. Download URL management is removed entirely — files are tracked by status and timestamp in Box.</p>
     </div>
   </div>
 
@@ -255,10 +246,8 @@
         <tr><td>File type</td><td><code>Presentation</code> or <code>Video</code>.</td></tr>
         <tr><td>Status</td><td><span class="badge badge-ready">Ready</span> approved for projection · <span class="badge badge-updated">Updated</span> replacement received today · <span class="badge badge-hold">On hold</span> not yet received.</td></tr>
         <tr><td>Freshness</td><td><code>New</code> highlights a first-time file. <code>Changed</code> highlights a replacement. Clear once the AV team has acknowledged.</td></tr>
-        <tr><td>Updated at</td><td>Time the file was received, e.g. <code>9:15 AM</code>.</td></tr>
-        <tr><td>Updated note</td><td>One-line description of the change, e.g. <code>Final version from presenter</code>.</td></tr>
-        <tr><td>Download URL</td><td>Box direct download link: <code>https://ibm.box.com/shared/static/xxxxx.pptx</code></td></tr>
-        <tr><td>Operator notes</td><td>One note per line. Displayed to the AV team on the dashboard.</td></tr>
+        <tr><td>Updated at</td><td>Automatically set to current time when status changes to Ready or Updated. Shows "Pending" while status is On hold. This timestamp helps the AV team detect new versions.</td></tr>
+        <tr><td>Operator notes</td><td>One note per line. Displayed to the AV team on the dashboard. Optional.</td></tr>
         <tr><td>Microphones</td><td>Mic setup, e.g. <code>2 handheld, 1 lav</code>.</td></tr>
         <tr><td>Stage setup</td><td>Physical layout, e.g. <code>Fireside chat (3)</code> or <code>Podium</code>.</td></tr>
         <tr><td>Confidence monitor</td><td>Whether required and location, e.g. <code>Yes, downstage center</code>.</td></tr>

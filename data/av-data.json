@@ -12,11 +12,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 handheld, 2 catchbox",
             "stageSetup": "Podium",
@@ -33,12 +31,10 @@
           "type": "Presentation",
           "status": "ready",
           "updatedAt": "8:00 AM",
-          "updatedNote": "File ready",
           "notes": [
             "30 minutes before event day starts",
             "Breaks - morning, afternoon, lunch"
           ],
-          "downloadUrl": "https://ibm-my.sharepoint.com/my?viewid=fccac822%2D4f2f%2D4458%2D86e9%2D14f5b817acba&id=%2Fpersonal%2Fevalyan%5Fus%5Fibm%5Fcom%2FDocuments%2FZDC%202026%20Fall%20AV%20Files%2FAntwerp1%5F4K%2Epng&parent=%2Fpersonal%2Fevalyan%5Fus%5Fibm%5Fcom%2FDocuments%2FZDC%202026%20Fall%20AV%20Files",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -56,9 +52,7 @@
           "type": "Presentation",
           "status": "ready",
           "updatedAt": "",
-          "updatedNote": "",
           "notes": [],
-          "downloadUrl": "https://ibm.ent.box.com/file/2385920005516",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -89,11 +83,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 podium, 2 handheld, 3 catchbox",
             "stageSetup": "podium",
@@ -110,11 +102,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "3 lav, 3 catchbox",
             "stageSetup": "Fireside chat (3)",
@@ -144,11 +134,9 @@
           "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             "Audio level check required before playback"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -165,11 +153,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld, 3 catchbox",
             "stageSetup": "",
@@ -186,11 +172,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld",
             "stageSetup": "podium",
@@ -207,11 +191,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "3 lav, 3 catchbox 1 handheld",
             "stageSetup": "fireside chat (3)",
@@ -241,12 +223,10 @@
           "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             "Audio level check required before playback",
             "Store local backup on playback machine"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -263,11 +243,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 lav, 3 catchbox",
             "stageSetup": "ireside chat (2)",
@@ -284,11 +262,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld",
             "stageSetup": "podium",
@@ -305,11 +281,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld 3 catchbox",
             "stageSetup": "podium",
@@ -326,11 +300,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld",
             "stageSetup": "podium",
@@ -347,11 +319,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting final from presenter",
           "notes": [
             "Do not project until status changes to Ready"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "1 lav, 1 handheld",
             "stageSetup": "podium",
@@ -381,9 +351,7 @@
           "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -400,11 +368,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             ""
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 lav, 1 handheld, 3 catchbox",
             "stageSetup": "Fireside chat (2)",
@@ -421,11 +387,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             "4 teams, 15 minutes each"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 handheld, 3 catchbox",
             "stageSetup": "",
@@ -442,9 +406,7 @@
           "type": "Video",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -461,11 +423,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             "4 teams, 15 minutes each"
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 handheld, 3 catchbox",
             "stageSetup": "",
@@ -482,11 +442,9 @@
           "type": "Presentation",
           "status": "hold",
           "updatedAt": "Pending",
-          "updatedNote": "Awaiting render",
           "notes": [
             ""
           ],
-          "downloadUrl": "#",
           "avDetails": {
             "microphones": "2 handheld, 3 catchbox",
             "stageSetup": "",

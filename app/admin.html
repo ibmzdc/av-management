@@ -126,7 +126,7 @@
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
       <div>
         <h2 style="margin:0 0 4px;">Step 3 · Edit sessions</h2>
-        <p class="panel-desc" style="margin:0;">Edit sessions below, then click Save. This commits to GitHub <em>and</em> automatically downloads <code>zdc-2026-fall-av-data.json</code> — replace the copy in your Box Drive folder to keep it in sync.</p>
+        <p class="panel-desc" style="margin:0;"><strong>Files are managed in Box.</strong> Edit session metadata below (status, AV details, notes), then click Save. Status changes auto-timestamp for version detection on the dashboard.</p>
       </div>
       <div class="inline-actions">
         <button id="save-btn" class="btn-primary">💾 Save to GitHub</button>
@@ -180,10 +180,6 @@
         <label for="m-freshness">Freshness</label>
         <select id="m-freshness"><option value="">None</option><option value="new">New</option><option value="changed">Changed</option></select>
       </div>
-    </div>
-
-    <div class="form-grid" style="margin-top:14px;">
-      <div><label for="m-url">Download URL</label><input id="m-url" type="text" placeholder="https://ibm.box.com/s/..."></div>
     </div>
 
     <div style="margin-top:14px;">
@@ -272,7 +268,6 @@
   const mFiletype     = document.getElementById('m-filetype');
   const mStatus       = document.getElementById('m-status');
   const mFreshness    = document.getElementById('m-freshness');
-  const mUrl          = document.getElementById('m-url');
   const mNotes        = document.getElementById('m-notes');
   const mAvMic        = document.getElementById('m-av-mic');
   const mAvStage      = document.getElementById('m-av-stage');
@@ -425,7 +420,7 @@
     modalDayId = dayId; modalFileIdx = fileIdx;
     modalTitle.textContent = fileIdx === -1 ? 'Add session' : 'Edit session';
     mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation'; mStatus.value='hold';
-    mFreshness.value=''; mUrl.value=''; mNotes.value='';
+    mFreshness.value=''; mNotes.value='';
     mAvMic.value=''; mAvStage.value=''; mAvCm.value=''; mAvClicker.value=''; mAvTimer.value=''; mAvSpecial.value='';
     mLogTime.value=''; mLogTitle.value=''; mLogDesc.value='';
     if (fileIdx !== -1) {
@@ -433,7 +428,6 @@
       const f = day.files[fileIdx];
       mTime.value=toTimeInput(f.sessionTime); mTitle.value=f.sessionTitle; mFilename.value=f.fileName;
       mFiletype.value=f.type; mStatus.value=f.status; mFreshness.value=f.freshness||'';
-      mUrl.value=f.downloadUrl||'';
       mNotes.value=Array.isArray(f.notes)?f.notes.join('\n'):'';
       const av=f.avDetails||{};
       mAvMic.value=av.microphones||''; mAvStage.value=av.stageSetup||''; mAvCm.value=av.confidenceMonitor||'';
@@ -462,7 +456,6 @@
       type: mFiletype.value, status: mStatus.value,
       updatedAt,
       notes: mNotes.value.split('\n').map(n=>n.trim()).filter(Boolean),
-      downloadUrl: mUrl.value.trim()||'#',
       avDetails: { microphones:mAvMic.value.trim(), stageSetup:mAvStage.value.trim(), confidenceMonitor:mAvCm.value.trim(), clicker:mAvClicker.value.trim(), timer:mAvTimer.value.trim(), specialNotes:mAvSpecial.value.trim() }
     };
     if (mFreshness.value) fileObj.freshness = mFreshness.value;
@@ -586,11 +579,11 @@
       lastRefresh: '',
       days: [
         { id:'day-0', label:'Day 0 · October 18', files:[
-            { sessionTime:'4:00 PM', sessionTitle:'Introduction to ZDC', fileName:'Introduction to ZDC.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', updatedNote:'Awaiting final from presenter', notes:['Do not project until status changes to Ready'], downloadUrl:'#', avDetails:{ microphones:'2 handheld, 2 catchbox', stageSetup:'Podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'60', specialNotes:'' } }
+            { sessionTime:'4:00 PM', sessionTitle:'Introduction to ZDC', fileName:'Introduction to ZDC.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', notes:['Do not project until status changes to Ready'], avDetails:{ microphones:'2 handheld, 2 catchbox', stageSetup:'Podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'60', specialNotes:'' } }
           ], changeLog:[{ time:'8:00 AM', title:'Dashboard ready for Day 0', description:'Update file statuses and links before the event begins.' }]
         },
         { id:'day-1', label:'Day 1 · October 19', files:[
-            { sessionTime:'08:30', sessionTitle:'Welcome & Opening Remarks', fileName:'Day1-ZDC Welcome & Opening Remarks.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', updatedNote:'Awaiting final from presenter', notes:['Do not project until status changes to Ready'], downloadUrl:'#', avDetails:{ microphones:'1 podium, 2 handheld, 3 catchbox', stageSetup:'podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'30', specialNotes:'' } }
+            { sessionTime:'08:30', sessionTitle:'Welcome & Opening Remarks', fileName:'Day1-ZDC Welcome & Opening Remarks.pptx', type:'Presentation', status:'hold', updatedAt:'Pending', notes:['Do not project until status changes to Ready'], avDetails:{ microphones:'1 podium, 2 handheld, 3 catchbox', stageSetup:'podium', confidenceMonitor:'Yes', clicker:'Yes', timer:'30', specialNotes:'' } }
           ], changeLog:[{ time:'8:00 AM', title:'Dashboard ready for Day 1', description:'Update file statuses and links before the event begins.' }]
         }
       ]
