@@ -50,11 +50,11 @@
     .badge-ready   { color: var(--success); background: var(--success-soft); }
     .badge-updated { color: #0550ae; background: #dbeafe; }
     .badge-hold    { color: var(--warning); background: var(--warning-soft); }
-    /* Freshness indicator pills — standalone column */
-    .freshness-cell { width: 90px; text-align: center; }
-    .pill-new     { display: inline-block; border-radius: 6px; padding: 5px 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: #7c3aed; white-space: nowrap; }
-    .pill-changed { display: inline-block; border-radius: 6px; padding: 5px 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: #0550ae; white-space: nowrap; }
-    .pill-none    { color: var(--muted); font-size: 12px; }
+    /* Sync status pills */
+    .pill-redownload { display: inline-block; border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 700; color: #b91c1c; background: #fee2e2; border: 1px solid #fca5a5; white-space: nowrap; }
+    .pill-uptodate   { display: inline-block; border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 700; color: #15803d; background: #dcfce7; border: 1px solid #86efac; white-space: nowrap; }
+    .btn-dl { display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; border-radius: 6px; background: var(--accent); color: #fff !important; text-decoration: none !important; font-weight: 600; font-size: 12px; white-space: nowrap; }
+    .btn-dl:hover { background: #2f6fbf; }
     /* Row accent: left border stripe by status */
     .row-ready   { border-left: 4px solid var(--success); }
     .row-updated { border-left: 4px solid #2563eb; background: #f0f7ff; }
@@ -151,20 +151,25 @@
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px;">
         <div>
           <h2 style="margin:0 0 4px;">Approved for projection now</h2>
-          <p style="margin:0;color:var(--muted);font-size:14px;">All files are stored in Box and managed by the AV lead. Updated timestamp shows when status last changed. Click Download to get the current file.</p>
+          <p style="margin:0;color:var(--muted);font-size:14px;">Shows each session file. Comparing <strong>Updated at</strong> vs <strong>Last Downloaded</strong> automatically alerts if a re-download is required.</p>
         </div>
         <!-- Colour legend -->
         <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;">
             <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--success);display:inline-block;"></span>Ready</span>
             <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#2563eb;display:inline-block;"></span>Updated</span>
             <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--warning);display:inline-block;"></span>On hold</span>
-            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#7c3aed;display:inline-block;"></span>New version available</span>
+            <span style="display:flex;align-items:center;gap:6px;"><span class="pill-redownload">⚠️ Re-download required</span></span>
           </div>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Session</th><th class="freshness-cell">Change</th><th>Status</th><th>Updated</th><th>Operator notes</th><th>Download</th>
+            <th>Session &amp; File</th>
+            <th>Status</th>
+            <th>Updated at</th>
+            <th>Last Downloaded</th>
+            <th>Sync &amp; Download</th>
+            <th>Operator Notes</th>
           </tr>
         </thead>
         <tbody id="file-table-body"></tbody>
@@ -224,27 +229,59 @@
       return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + ' · ' +
              d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
     }
-    function parseUpdatedAt(v) {
-      if (!v) return -1;
-      const d = new Date(v);
-      if (!isNaN(d)) return d.getTime();
-      const m = String(v).match(/(\d{1,2}):(\d{2})/);
-      if (m) return Number(m[1]) * 60 + Number(m[2]);
-      return -1;
-    }
-    /* Check if file was recently updated (within 2 hours) */
-    function isRecentUpdate(updatedAt) {
-      if (!updatedAt || updatedAt === 'Pending' || !updatedAt.trim()) return false;
-      try {
-        const fileTime = new Date(updatedAt);
-        if (isNaN(fileTime)) return false;
-        const now = new Date();
-        const diffMs = now - fileTime;
-        const diffHours = diffMs / (1000 * 60 * 60);
-        return diffHours < 2 && diffHours >= 0;
-      } catch (e) {
-        return false;
+    function parseToMs(str) {
+      if (!str || str === 'Pending' || str === 'Never' || !str.trim()) return 0;
+      let s = str.trim();
+      if (!/\d{4}/.test(s)) {
+        const yr = new Date().getFullYear();
+        s = `${s}, ${yr}`;
       }
+      const d = new Date(s);
+      return isNaN(d) ? 0 : d.getTime();
+    }
+
+    function getDownloadInfo(fileKey, updatedAtStr, fileStatus) {
+      if (fileStatus === 'hold') {
+        return {
+          lastDlText: '<span style="color:var(--muted);">—</span>',
+          syncPill: '<span style="color:var(--muted);">Awaiting upload</span>'
+        };
+      }
+
+      const lastDlTimeStr = localStorage.getItem('dl_time_' + fileKey) || '';
+      const lastDlMs = Number(localStorage.getItem('dl_ms_' + fileKey) || 0);
+      const updatedMs = parseToMs(updatedAtStr);
+
+      if (!lastDlMs) {
+        return {
+          lastDlText: '<span style="color:var(--muted);">Never</span>',
+          syncPill: '<span class="pill-redownload">⚠️ Download required</span>'
+        };
+      }
+
+      if (updatedMs > lastDlMs + 5000) {
+        return {
+          lastDlText: `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(lastDlTimeStr)}</span>`,
+          syncPill: '<span class="pill-redownload">⚠️ Re-download required</span>'
+        };
+      }
+
+      return {
+        lastDlText: `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(lastDlTimeStr)}</span>`,
+        syncPill: '<span class="pill-uptodate">✅ Up to date</span>'
+      };
+    }
+
+    function recordDownload(fileKey) {
+      const now = new Date();
+      const timeStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+      localStorage.setItem('dl_time_' + fileKey, timeStr);
+      localStorage.setItem('dl_ms_' + fileKey, String(now.getTime()));
+      render();
+    }
+
+    function parseUpdatedAt(v) {
+      return parseToMs(v);
     }
     function parseSessionTime(v) {
       if (!v) return 0;
@@ -341,15 +378,6 @@
         // Row left-border accent by status
         row.className = rowClasses[file.status] || '';
 
-        // Freshness pill for the Change column — shows freshness flag, Box version, or timestamp detection
-        let freshPill = '<span class="pill-none">—</span>';
-        if (file.freshness === 'new')     freshPill = '<span class="pill-new">New</span>';
-        if (file.freshness === 'changed') freshPill = '<span class="pill-changed">Updated</span>';
-        // Check Box API for version mismatch (Phase 2)
-        const boxVersionMismatch = await checkBoxFileVersion(file);
-        if (boxVersionMismatch) freshPill = '<span class="pill-changed">📥 New version (Box)</span>';
-        else if (!file.freshness && isRecentUpdate(file.updatedAt)) freshPill = '<span class="pill-changed">📥 New version</span>';
-
         // Hold warning line
         const holdWarn = file.status === 'hold'
           ? '<span class="hold-warn">⚠ Do not project</span>' : '';
@@ -367,6 +395,9 @@
           return `https://ibm.box.com/shared/static/${val}`;
         })();
 
+        const fileKey = `${file.fileName || file.sessionTitle}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+        const dlInfo = getDownloadInfo(fileKey, file.updatedAt, file.status);
+
         const hasAv = file.avDetails && Object.values(file.avDetails).some(v=>v);
         const did = `av-${escapeHtml(dayId)}-${i}`;
         row.innerHTML = `
@@ -375,7 +406,6 @@
             <div class="file-meta">${escapeHtml(file.fileName)} · ${escapeHtml(file.type)}</div>
             ${hasAv ? `<button type="button" class="details-toggle" aria-expanded="false" data-details-id="${did}">View AV details</button>` : ''}
           </td>
-          <td class="freshness-cell">${freshPill}</td>
           <td>
             <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
             ${holdWarn}
@@ -383,20 +413,23 @@
           <td>${(() => {
             const t = (file.updatedAt || '').trim();
             if (t && t !== 'Pending') {
-              // updatedAt is already a full date+time stamp — show it as-is
               return `<span style="white-space:nowrap;font-weight:600;">${escapeHtml(t)}</span>`;
             }
             return `<span style="color:var(--muted);">Pending</span>`;
           })()}</td>
-          <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>
+          <td>${dlInfo.lastDlText}</td>
           <td class="download">
             ${file.status==='hold'
               ? '<span style="color:var(--muted);">Awaiting upload</span>'
               : downloadUrl
-                ? `<a href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener">⬇ Download</a>`
+                ? `<div style="display:flex;flex-direction:column;gap:5px;align-items:flex-start;">
+                     ${dlInfo.syncPill}
+                     <a href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener" class="btn-dl" data-dl-key="${escapeHtml(fileKey)}">⬇ Download</a>
+                   </div>`
                 : '<span style="color:var(--warning);">⚠ Check Box</span>'
             }
-          </td>`;
+          </td>
+          <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>`;
         fileTableBody.appendChild(row);
         if (hasAv) {
           const dr = document.createElement('tr');
@@ -439,6 +472,11 @@
           dr.hidden = !dr.hidden;
           btn.setAttribute('aria-expanded', String(!dr.hidden));
           btn.textContent = dr.hidden ? 'View AV details' : 'Hide AV details';
+        });
+      });
+      fileTableBody.querySelectorAll('[data-dl-key]').forEach(link => {
+        link.addEventListener('click', () => {
+          recordDownload(link.dataset.dlKey);
         });
       });
     }
