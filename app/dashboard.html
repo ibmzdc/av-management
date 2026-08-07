@@ -113,19 +113,10 @@
       </div>
     </header>
 
-    <section class="controls">
+    <section class="controls" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
       <div>
         <label for="day">Event day</label>
         <select id="day"><option value="all">All days</option></select>
-      </div>
-      <div>
-        <label for="status">Status</label>
-        <select id="status">
-          <option value="approved">Approved for projection</option>
-          <option value="updated">Updated today</option>
-          <option value="hold">On hold</option>
-          <option value="all">All files</option>
-        </select>
       </div>
       <div>
         <label for="search">Search file or session</label>
@@ -141,32 +132,21 @@
       </div>
     </section>
 
-    <section class="summary">
-      <article class="stat"><span>Approved now</span><strong id="stat-approved">0</strong></article>
-      <article class="stat"><span>Updated today</span><strong id="stat-updated">0</strong></article>
+    <section class="summary" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+      <article class="stat"><span>Total Sessions</span><strong id="stat-approved">0</strong></article>
       <article class="stat"><span>Videos</span><strong id="stat-videos">0</strong></article>
-      <article class="stat"><span>Awaiting final</span><strong id="stat-hold">0</strong></article>
+      <article class="stat"><span>Pending Upload</span><strong id="stat-hold">0</strong></article>
     </section>
 
     <section class="panel">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px;">
-        <div>
-          <h2 style="margin:0 0 4px;">Approved for projection now</h2>
-          <p style="margin:0;color:var(--muted);font-size:14px;">Shows each session file. Comparing <strong>Updated at</strong> vs <strong>Last Downloaded</strong> automatically alerts if a re-download is required.</p>
-        </div>
-        <!-- Colour legend -->
-        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;">
-            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--success);display:inline-block;"></span>Ready</span>
-            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:#2563eb;display:inline-block;"></span>Updated</span>
-            <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:20px;border-radius:2px;background:var(--warning);display:inline-block;"></span>On hold</span>
-            <span style="display:flex;align-items:center;gap:6px;"><span class="pill-redownload">⚠️ Re-download required</span></span>
-          </div>
+      <div style="margin-bottom:14px;">
+        <h2 style="margin:0 0 4px;">Approved for projection now</h2>
+        <p style="margin:0;color:var(--muted);font-size:14px;">Shows each session file. Comparing <strong>Last Updated</strong> vs <strong>Last Downloaded</strong> automatically alerts if a re-download is required.</p>
       </div>
       <table>
         <thead>
           <tr>
             <th>Session &amp; File</th>
-            <th>Status</th>
             <th>Last Updated</th>
             <th>Last Downloaded</th>
             <th>Sync &amp; Download</th>
@@ -192,7 +172,6 @@
 
     /* ── Element refs ── */
     const daySelect      = document.getElementById('day');
-    const statusSelect   = document.getElementById('status');
     const searchInput    = document.getElementById('search');
     const sortSelect     = document.getElementById('sort');
     const fileTableBody  = document.getElementById('file-table-body');
@@ -352,11 +331,8 @@
       return dashboardData.days.find(d=>d.id===daySelect.value) || dashboardData.days[0];
     }
     function getFilteredFiles(day) {
-      const sf = statusSelect.value, sv = searchInput.value.trim().toLowerCase();
+      const sv = searchInput.value.trim().toLowerCase();
       const files = day.files.filter(f => {
-        if (sf==='approved' && !['ready','updated'].includes(f.status)) return false;
-        if (sf==='updated'  && f.status!=='updated') return false;
-        if (sf==='hold'     && f.status!=='hold')    return false;
         if (!sv) return true;
         return [f.sessionTitle,f.fileName,f.sessionTime,f.type].join(' ').toLowerCase().includes(sv);
       });
@@ -370,21 +346,15 @@
 
     /* ── Render ── */
     function renderStats(day) {
-      statApproved.textContent = day.files.filter(f=>['ready','updated'].includes(f.status)).length;
-      statUpdated.textContent  = day.files.filter(f=>f.status==='updated').length;
+      statApproved.textContent = day.files.length;
       statVideos.textContent   = day.files.filter(f=>f.type==='Video').length;
-      statHold.textContent     = day.files.filter(f=>f.status==='hold').length;
+      statHold.textContent     = day.files.filter(f=>f.status==='hold' || !f.updatedAt || f.updatedAt==='Pending').length;
     }
     async function renderFileRows(files, dayId, dayLabel) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const row = document.createElement('tr');
-        // Row left-border accent by status
         row.className = rowClasses[file.status] || '';
-
-        // Hold warning line
-        const holdWarn = file.status === 'hold'
-          ? '<span class="hold-warn">⚠ Do not project</span>' : '';
 
         // Construct download URL from boxFileId or downloadUrl intelligently
         const downloadUrl = (() => {
@@ -411,10 +381,6 @@
           <td>
             <div class="file-name">${escapeHtml(formatSessionTime(file.sessionTime))} · ${escapeHtml(file.sessionTitle)}</div>
             <div class="file-meta">${escapeHtml(file.fileName)} · ${escapeHtml(file.type)}</div>
-          </td>
-          <td>
-            <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
-            ${holdWarn}
           </td>
           <td>${(() => {
             const t = (file.updatedAt || '').trim();
@@ -450,7 +416,7 @@
           const notesHtml = hasNotes
             ? `<div class="av-detail-group" style="grid-column:1 / -1;"><strong>Operator notes</strong><span>${file.notes.map(n=>'• ' + escapeHtml(n)).join('\n')}</span></div>`
             : '';
-          dr.innerHTML = `<td class="details-cell" colspan="6"><div class="av-details"><div class="av-details-grid">
+          dr.innerHTML = `<td class="details-cell" colspan="5"><div class="av-details"><div class="av-details-grid">
             <div class="av-detail-group"><strong>Microphones</strong><span>${escapeHtml(av.microphones||'Not specified')}</span></div>
             <div class="av-detail-group"><strong>Stage setup</strong><span>${escapeHtml(av.stageSetup||'Not specified')}</span></div>
             <div class="av-detail-group"><strong>Confidence monitor</strong><span>${escapeHtml(av.confidenceMonitor||'Not specified')}</span></div>
@@ -472,7 +438,7 @@
           if (!files.length) continue;
           any = true;
           const sep = document.createElement('tr');
-          sep.innerHTML = `<td colspan="6" style="padding:12px 12px 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-alt);border-top:2px solid var(--border);">${escapeHtml(d.label)}</td>`;
+          sep.innerHTML = `<td colspan="5" style="padding:12px 12px 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-alt);border-top:2px solid var(--border);">${escapeHtml(d.label)}</td>`;
           fileTableBody.appendChild(sep);
           await renderFileRows(files, d.id, d.label);
         }
@@ -557,7 +523,6 @@
     }
 
     daySelect.addEventListener('change', render);
-    statusSelect.addEventListener('change', render);
     searchInput.addEventListener('input', render);
     sortSelect.addEventListener('change', render);
 
