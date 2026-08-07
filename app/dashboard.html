@@ -348,10 +348,18 @@
         const holdWarn = file.status === 'hold'
           ? '<span class="hold-warn">⚠ Do not project</span>' : '';
 
-        // Construct download URL from boxFileId or downloadUrl
-        const downloadUrl = file.boxFileId
-          ? `https://ibm.box.com/shared/static/${file.boxFileId}`
-          : (file.downloadUrl && file.downloadUrl !== '#' ? file.downloadUrl : '');
+        // Construct download URL from boxFileId or downloadUrl intelligently
+        const downloadUrl = (() => {
+          const val = (file.boxFileId || file.downloadUrl || '').trim();
+          if (!val || val === '#') return '';
+          if (val.startsWith('http://') || val.startsWith('https://')) {
+            return val.includes('/s/') ? val.replace('/s/', '/shared/static/') : val;
+          }
+          if (/^\d+$/.test(val)) {
+            return `https://ibm.app.box.com/file/${val}`;
+          }
+          return `https://ibm.box.com/shared/static/${val}`;
+        })();
 
         const hasAv = file.avDetails && Object.values(file.avDetails).some(v=>v);
         const did = `av-${escapeHtml(dayId)}-${i}`;
