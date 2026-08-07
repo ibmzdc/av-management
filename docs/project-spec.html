@@ -445,7 +445,7 @@ https://[ORG].github.io/[REPO]/docs/av-team-guide.html</pre>
 
       <h3>First-time setup method (hash fragment)</h3>
       <p>Open this URL once in the admin's browser — the page extracts the token, saves it to <code>localStorage</code>, and strips it from the address bar:</p>
-      <pre>https://[ORG].github.io/[REPO]/admin.html#YOUR_TOKEN</pre>
+      <pre>https://[ORG].github.io/[REPO]/app/admin.html#YOUR_TOKEN</pre>
       <div class="callout callout-warn">
         <p>Do not share this URL with anyone. The hash fragment is client-side only and not sent to GitHub's servers, but it is visible in browser history on the device used.</p>
       </div>
@@ -460,13 +460,13 @@ https://[ORG].github.io/[REPO]/docs/av-team-guide.html</pre>
 
     <div class="panel">
       <h3>Role of Box in this system</h3>
-      <p>Box is used exclusively for <strong>file storage and access control</strong>. The AV system itself (dashboard, admin, data) does not integrate with the Box API — it only stores Box shared links as strings inside <code>av-data.json</code>.</p>
+      <p>Box is used exclusively for <strong>file storage and access control</strong>. The AV system primarily stores numeric <code>boxFileId</code> values inside <code>av-data.json</code>. The admin page derives readiness from the presence of that Box File ID and auto-stamps <code>updatedAt</code> when the Box File ID changes.</p>
 
-      <h3>Box direct download link format</h3>
-      <p>Shared links copied from Box use the preview URL format. They must be converted to the direct download format before being entered into the admin page:</p>
-      <pre>Preview URL:  https://ibm.box.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.pptx</pre>
-      <p>Replace <code>/s/</code> with <code>/shared/static/</code> and append the file extension. This forces an immediate download instead of opening the Box preview page.</p>
+      <h3>Preferred Box input format</h3>
+      <p>Admins should copy the numeric file ID from the Box browser URL and paste it into the admin page:</p>
+      <pre>Box URL:      https://ibm.app.box.com/file/1234567890
+Box File ID:  1234567890</pre>
+      <p>Older records may still contain shared links or full Box URLs. The dashboard continues to handle those legacy values when constructing a download link.</p>
 
       <h3>Access control</h3>
       <ul>
@@ -497,13 +497,13 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         <li>
           <strong>Copy all files</strong> from the previous event's <code>av-management/</code> folder into the new repo:
           <ul>
-            <li><code>index.html</code>, <code>dashboard.html</code>, <code>admin.html</code></li>
-            <li><code>admin-guide.html</code>, <code>av-team-guide.html</code></li>
+            <li><code>index.html</code>, <code>app/dashboard.html</code>, <code>app/admin.html</code></li>
+            <li><code>docs/admin-guide.html</code>, <code>docs/av-team-guide.html</code>, <code>docs/project-spec.html</code></li>
             <li><code>data/av-data.json</code></li>
           </ul>
         </li>
         <li>
-          <strong>Update constants</strong> in <code>dashboard.html</code> and <code>admin.html</code> (see Section 4):
+          <strong>Update constants</strong> in <code>app/dashboard.html</code> and <code>app/admin.html</code> (see Section 4):
           <ul>
             <li><code>REPO</code> — new repo name</li>
             <li><code>DATA_URL</code> — new raw GitHub URL</li>
@@ -536,10 +536,10 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       <table>
         <thead><tr><th>File</th><th>What to change</th></tr></thead>
         <tbody>
-          <tr><td><code>dashboard.html</code></td><td><code>DATA_URL</code> constant · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
-          <tr><td><code>admin.html</code></td><td><code>REPO</code> · <code>API_URL</code> · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
-          <tr><td><code>admin-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · any event-specific text</td></tr>
-          <tr><td><code>av-team-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · dashboard URL in the URL block</td></tr>
+          <tr><td><code>app/dashboard.html</code></td><td><code>DATA_URL</code> constant · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
+          <tr><td><code>app/admin.html</code></td><td><code>REPO</code> · <code>API_URL</code> · <code>&lt;title&gt;</code> · <code>&lt;h1&gt;</code> event name</td></tr>
+          <tr><td><code>docs/admin-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · any event-specific text</td></tr>
+          <tr><td><code>docs/av-team-guide.html</code></td><td><code>&lt;title&gt;</code> · cover heading · dashboard URL in the URL block</td></tr>
           <tr><td><code>data/av-data.json</code></td><td>Clear all days/files · update <code>lastRefresh</code> · add new event days</td></tr>
           <tr><td><code>index.html</code></td><td>No change needed — redirect is generic</td></tr>
         </tbody>
@@ -555,12 +555,12 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     <div class="panel">
       <h3>Adding a new status type</h3>
-      <p>Status values are driven by the <code>status</code> field in the JSON. To add a new status:</p>
+      <p>Status values are driven by the <code>status</code> field in the JSON. In the current admin workflow, status is derived from form data rather than selected manually. To add a new status:</p>
       <ol>
         <li>Add a CSS rule in <code>app/dashboard.html</code>: <code>.badge-[name] { color: ...; background: ...; }</code></li>
         <li>Add the value to the <code>statusLabels</code> and <code>statusClasses</code> objects in the dashboard script</li>
-        <li>Add the option to the <code>&lt;select id="m-status"&gt;</code> dropdown in <code>app/admin.html</code></li>
-        <li>Add the filter option to <code>&lt;select id="status"&gt;</code> in <code>app/dashboard.html</code> if you want it as a filter</li>
+        <li>Update the derivation logic in <code>saveModal()</code> inside <code>app/admin.html</code> so the new status can be produced from the form data</li>
+        <li>Render or expose the new status anywhere it is surfaced in the dashboard output</li>
       </ol>
 
       <h3>Adding a new session field</h3>
@@ -572,7 +572,7 @@ Direct URL:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       </ol>
 
       <h3>Changing the auto-refresh interval on the dashboard</h3>
-      <p>The dashboard does not auto-refresh. It fetches once on load and again on manual browser refresh. To add auto-refresh, insert this at the bottom of the dashboard script:</p>
+      <p>The dashboard already auto-refreshes. If you want to change the interval, update the existing interval logic at the bottom of the dashboard script.</p>
       <pre>setInterval(initialize, 60000); // refresh every 60 seconds</pre>
     </div>
   </div>

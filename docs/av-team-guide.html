@@ -92,7 +92,7 @@
   <div class="cover">
     <div class="role">AV Vendor Team</div>
     <h1>ZDC 2026 Fall · AV Team Guide</h1>
-    <p class="subtitle">How to use the dashboard to check file statuses, view AV requirements, and download approved files.</p>
+    <p class="subtitle">How to use the dashboard to check sync status, view AV requirements, and download approved files.</p>
     <div class="cover-links">
       <a class="link-dashboard" href="../app/dashboard.html">Open Dashboard</a>
     </div>
@@ -106,37 +106,33 @@
     <p>Open the dashboard in any browser on macOS or Windows. No login, no install required.</p>
     <div class="url-block">https://ibmzdc.github.io/av-management/app/dashboard.html</div>
     <div class="callout callout-info" style="margin-top:12px;">
-      <p><strong>All files are stored in Box.</strong> The admin updates file status in the dashboard management tool. When the status changes, the dashboard shows "New version available" — that's your cue to download the latest file.</p>
+      <p><strong>All files are stored in Box.</strong> The admin updates session metadata in the management tool. The dashboard compares <strong>Last Updated</strong> with your locally recorded <strong>Last Downloaded</strong> time and tells you when a download or re-download is required.</p>
     </div>
   </div>
 
-  <!-- ── File statuses ── -->
-  <div class="section-header"><h2>Understanding file statuses</h2></div>
+  <!-- ── File readiness ── -->
+  <div class="section-header"><h2>Understanding file readiness and sync</h2></div>
 
   <div class="panel">
-    <p>Every session file has one of three statuses. Check the badge before taking any action.</p>
+    <p>The dashboard now focuses on whether a session is ready to download and whether your local copy is still current.</p>
     <div class="status-grid" style="margin-top:12px;">
       <div class="status-card ready">
         <span class="badge badge-ready">Ready</span>
         <div>
           <strong>Approved for projection</strong>
-          <p>File has been received and approved. Download it and load it onto the playback machine.</p>
-        </div>
-      </div>
-      <div class="status-card updated">
-        <span class="badge badge-updated">Updated</span>
-        <div>
-          <strong>Replacement received today</strong>
-          <p>A newer version of this file was delivered. Download it immediately and replace any local copy you already have.</p>
+          <p>A Box file is attached to the session. Download it and load it onto the playback machine if the Sync column says download is required.</p>
         </div>
       </div>
       <div class="status-card hold">
         <span class="badge badge-hold">On hold</span>
         <div>
           <strong>File not yet received</strong>
-          <p>Do not project. Check back before the session. If it is still On hold close to start time, alert the AV lead immediately.</p>
+          <p>No Box file is attached yet. Do not project. If it is still On hold close to start time, alert the AV lead immediately.</p>
         </div>
       </div>
+    </div>
+    <div class="callout callout-info" style="margin-top:16px;">
+      <p><strong>Sync status is the key signal now:</strong> <strong>Download required</strong> means you have never downloaded the file on this browser. <strong>Re-download required</strong> means the file changed after your last download. <strong>Up to date</strong> means your local recorded download time is current.</p>
     </div>
   </div>
 
@@ -148,15 +144,15 @@
       <li>
         <div class="step-num">1</div>
         <div class="step-body">
-          <strong>Confirm the status is Ready or Updated</strong>
-          <p>Never download a file marked <span class="badge badge-hold">On hold</span> — it may be an incomplete draft.</p>
+          <strong>Confirm the session is available to download</strong>
+          <p>Never download a file marked <span class="badge badge-hold">On hold</span>. Start with rows that show <strong>Download required</strong> or <strong>Re-download required</strong>.</p>
         </div>
       </li>
       <li>
         <div class="step-num">2</div>
         <div class="step-body">
-          <strong>Check the Updated at timestamp</strong>
-          <p>The <em>Updated</em> column shows when the file was last changed. If you already have a copy, compare timestamps. Always use the most recent version.</p>
+          <strong>Check Last Updated and Last Downloaded</strong>
+          <p>The dashboard shows both timestamps side by side. If <strong>Last Updated</strong> is newer than <strong>Last Downloaded</strong>, you must replace your local copy.</p>
         </div>
       </li>
       <li>
@@ -175,7 +171,7 @@
       </li>
     </ol>
     <div class="callout callout-tip" style="margin-top:16px;">
-      <p>Files with a <span class="badge badge-updated">Updated</span> badge or a <strong>New</strong> / <strong>Changed</strong> highlight are ones that changed since the last refresh. Prioritise reviewing those first.</p>
+      <p>Prioritise rows that show <strong>Download required</strong> or <strong>Re-download required</strong>. Those are the sessions that need action from the playback team.</p>
     </div>
   </div>
 
@@ -183,14 +179,13 @@
   <div class="section-header"><h2>Filtering and searching</h2></div>
 
   <div class="panel">
-    <p>Use the four controls at the top of the dashboard to narrow the file list to exactly what you need.</p>
+    <p>Use the three controls at the top of the dashboard to narrow the file list to exactly what you need.</p>
     <table style="margin-top:8px;">
       <thead><tr><th>Control</th><th>How to use it</th></tr></thead>
       <tbody>
         <tr><td>Event day</td><td>Filter to a single day, or select <em>All days</em> for a full view. Start each morning by switching to the current day.</td></tr>
-        <tr><td>Status</td><td>Use <em>Approved for projection</em> as your default — shows only Ready and Updated files. Switch to <em>All files</em> to see On hold sessions too.</td></tr>
         <tr><td>Search</td><td>Type any part of a session title or file name to find it instantly, e.g. <code>keynote</code> or <code>recap</code>.</td></tr>
-        <tr><td>Sort</td><td><em>Most recently updated</em> surfaces new arrivals first. <em>Session time</em> puts the list in run-of-show order.</td></tr>
+        <tr><td>Sort</td><td><em>Most recently updated</em> surfaces new arrivals first. <em>Session time</em> puts the list in run-of-show order. <em>File name</em> sorts alphabetically by session/file label.</td></tr>
       </tbody>
     </table>
   </div>
@@ -199,7 +194,7 @@
   <div class="section-header"><h2>Viewing AV production details</h2></div>
 
   <div class="panel">
-    <p>Each session row includes a <strong>View AV details</strong> button where production requirements have been entered. Click it to expand the full AV setup for that session.</p>
+    <p>Each session row includes a <strong>View AV details</strong> button. Click it to expand the full AV setup for that session, then click <strong>Hide AV details</strong> to collapse it.</p>
     <table style="margin-top:8px;">
       <thead><tr><th>Detail</th><th>What it covers</th></tr></thead>
       <tbody>
@@ -217,7 +212,7 @@
   <div class="section-header"><h2>Today's change log</h2></div>
 
   <div class="panel">
-    <p>The change log panel (bottom-left of the dashboard) lists every update made since the last refresh — newest entry first. Check it at the start of each session block to catch any last-minute file swaps or status changes.</p>
+    <p>The change log panel lists every update made for the selected day — newest entry first. Check it at the start of each session block to catch any last-minute file swaps or timing changes.</p>
     <div class="callout callout-warn">
       <p>If you see a change log entry for a session that is already loaded on your playback machine, download the updated file immediately and replace your local copy before that session begins.</p>
     </div>
@@ -228,13 +223,13 @@
 
   <div class="panel">
     <ul>
-      <li>Only download files with status <span class="badge badge-ready">Ready</span> or <span class="badge badge-updated">Updated</span>.</li>
-      <li>Always use the file with the most recent <em>Updated at</em> timestamp.</li>
+      <li>Only download files that are available and not marked <span class="badge badge-hold">On hold</span>.</li>
+      <li>Prioritise rows that show <strong>Download required</strong> or <strong>Re-download required</strong>.</li>
+      <li>Always compare <em>Last Updated</em> and <em>Last Downloaded</em> before assuming your local copy is current.</li>
       <li>Before replacing any file already used on stage, save a local backup of the old version.</li>
       <li>Check the dashboard before each session block — not just once in the morning.</li>
-      <li>If a file shows <span class="badge badge-updated">Updated</span>, download and replace your local copy before that session begins.</li>
       <li>If a file remains <span class="badge badge-hold">On hold</span> within 30 minutes of the session start, alert the AV lead immediately.</li>
-      <li>Read <strong>Operator notes</strong> for each file — they contain session-specific instructions from the AV lead.</li>
+      <li>Use <strong>View AV details</strong> to review microphones, stage setup, clicker, timer, and special AV notes for each session.</li>
       <li>For videos, check the <em>Special AV notes</em> field for audio level requirements before playback.</li>
     </ul>
   </div>

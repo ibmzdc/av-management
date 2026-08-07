@@ -82,7 +82,7 @@
   <div class="cover">
     <div class="role">Admin · AV Event Lead</div>
     <h1>ZDC 2026 Fall · Admin Guide</h1>
-    <p class="subtitle">How to manage sessions, update file statuses, and publish changes to the live dashboard.</p>
+    <p class="subtitle">How to manage sessions, enter Box file IDs, and publish changes to the live dashboard.</p>
     <div class="cover-links">
       <a class="link-admin" href="../app/admin.html">Open Admin Page</a>
       <a class="link-dashboard" href="../app/dashboard.html">View Dashboard</a>
@@ -96,10 +96,10 @@
   <div class="panel">
     <h3>Your URLs</h3>
     <p>Bookmark both of these in your browser.</p>
-    <p><strong>Admin page</strong> — edit sessions, update statuses, save to GitHub</p>
-    <div class="url-block">https://ibmzdc.github.io/av-management/admin.html</div>
+    <p><strong>Admin page</strong> — edit sessions, enter Box file IDs, save to GitHub</p>
+    <div class="url-block">https://ibmzdc.github.io/av-management/app/admin.html</div>
     <p><strong>Dashboard</strong> — same view the AV vendor team sees</p>
-    <div class="url-block">https://ibmzdc.github.io/av-management/dashboard.html</div>
+    <div class="url-block">https://ibmzdc.github.io/av-management/app/dashboard.html</div>
   </div>
 
   <div class="panel">
@@ -111,7 +111,7 @@
         <div class="step-body">
           <strong>Open the admin page with your token appended to the URL</strong>
           <p>Paste this into your browser address bar, replacing <code>YOUR_TOKEN</code> with your actual token:</p>
-          <div class="url-block">https://ibmzdc.github.io/av-management/admin.html#YOUR_TOKEN</div>
+          <div class="url-block">https://ibmzdc.github.io/av-management/app/admin.html#YOUR_TOKEN</div>
           <p>The page reads the token from the <code>#</code> fragment, saves it to your browser's local storage, and removes it from the URL bar — all automatically.</p>
         </div>
       </li>
@@ -140,7 +140,7 @@
 
   <div class="panel">
     <h3>When a presenter delivers a final file</h3>
-    <p style="color: var(--muted);">Files are managed in Box. Your workflow: upload → set status → save. The dashboard auto-detects updates.</p>
+    <p style="color: var(--muted);">Files are managed in Box. Your workflow: upload → copy Box File ID → save. The admin page auto-derives status and timestamp.</p>
     <ol class="steps">
       <li>
         <div class="step-num">1</div>
@@ -159,12 +159,13 @@
       <li>
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Update status (required) and optional fields</strong>
+          <strong>Enter the Box File ID and update any optional fields</strong>
           <table style="margin-top:8px;">
             <thead><tr><th>Field</th><th>What to do</th></tr></thead>
             <tbody>
-              <tr><td><strong>Status</strong></td><td><span class="badge badge-ready">Ready</span> for first delivery, or <span class="badge badge-updated">Updated</span> when replacing a prior version. <strong>Timestamp auto-sets on save.</strong></td></tr>
-              <tr><td>Freshness</td><td><code>New</code> to highlight first-time file. <code>Changed</code> to highlight a replacement. (Optional)</td></tr>
+              <tr><td><strong>Box File ID</strong></td><td>Paste the file ID from the Box file URL. If a Box File ID is present, the admin page automatically marks the session as <span class="badge badge-ready">Ready</span>.</td></tr>
+              <tr><td>Box Folder ID</td><td>Optional. Use only if you want to record the parent Box folder.</td></tr>
+              <tr><td>Last Updated</td><td>Auto-stamped when the Box File ID is added or changed. If the Box File ID is removed, the session returns to <span class="badge badge-hold">On hold</span> and the timestamp becomes <code>Pending</code>.</td></tr>
               <tr><td>AV details</td><td>Update if needed (mics, stage setup, etc.). Optional.</td></tr>
               <tr><td>Operator notes</td><td>Session-specific instructions for the AV team. Optional.</td></tr>
             </tbody>
@@ -182,19 +183,19 @@
         <div class="step-num">5</div>
         <div class="step-body">
           <strong>Click Save session</strong>
-          <p>The modal closes and the session row updates in the table. Status timestamp is auto-set to current time.</p>
+          <p>The modal closes and the session row updates in the table. Status and Last Updated are derived automatically from the Box File ID.</p>
         </div>
       </li>
       <li>
         <div class="step-num">6</div>
         <div class="step-body">
           <strong>Click 💾 Save to GitHub</strong>
-          <p>This commits all pending changes to the GitHub repository. The live dashboard reflects updates within approximately 30–60 seconds. The AV team will see a "New version available" indicator.</p>
+          <p>This commits all pending changes to the GitHub repository and automatically downloads <code>zdc-2026-fall-av-data.json</code> so you can replace the Box Drive copy if needed. The live dashboard reflects updates within approximately 30–60 seconds.</p>
         </div>
       </li>
     </ol>
     <div class="callout callout-tip" style="margin-top:16px;">
-      <p><strong>Tip:</strong> The admin form only asks for essential metadata now. Download URL management is removed entirely — files are tracked by status and timestamp in Box.</p>
+      <p><strong>Tip:</strong> The admin form no longer has manual Status, Freshness, or Download URL fields. Box File ID is now the key field that controls whether a session is Ready or On hold.</p>
     </div>
   </div>
 
@@ -202,7 +203,7 @@
     <h3>Adding a new session to an existing day</h3>
     <ol class="steps">
       <li><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add session"</strong> next to the day header you want to add to.</div></li>
-      <li><div class="step-num">2</div><div class="step-body"><strong>Fill in all fields</strong> in the modal — time, title, file name, type, status, and AV production details.</div></li>
+      <li><div class="step-num">2</div><div class="step-body"><strong>Fill in the core fields</strong> in the modal — time, title, file name, type, Box File ID if available, and AV production details.</div></li>
       <li><div class="step-num">3</div><div class="step-body"><strong>Click Save session</strong>, then <strong>💾 Save to GitHub</strong>.</div></li>
     </ol>
   </div>
@@ -244,11 +245,10 @@
         <tr><td>Session title</td><td>Full session name as it appears in the agenda.</td></tr>
         <tr><td>File name</td><td>Exact filename with extension, e.g. <code>Day1-Opening Remarks.pptx</code>.</td></tr>
         <tr><td>File type</td><td><code>Presentation</code> or <code>Video</code>.</td></tr>
-        <tr><td>Status</td><td><span class="badge badge-ready">Ready</span> approved for projection · <span class="badge badge-updated">Updated</span> replacement received today · <span class="badge badge-hold">On hold</span> not yet received.</td></tr>
-        <tr><td>Freshness</td><td><code>New</code> highlights a first-time file. <code>Changed</code> highlights a replacement. Clear once the AV team has acknowledged.</td></tr>
-        <tr><td>Updated at</td><td>Automatically set to current time when status changes to Ready or Updated. Shows "Pending" while status is On hold. This timestamp helps the AV team detect new versions.</td></tr>
-        <tr><td><strong>Box File ID</strong></td><td><strong>Phase 2 (NEW):</strong> The Box file ID for this session. Example: <code>1234567890</code>. The dashboard will automatically check Box for the latest version and alert the AV team if a newer version is available. Optional; files default to timestamp-based detection.</td></tr>
-        <tr><td>Box Folder ID</td><td><strong>Phase 2 (NEW):</strong> Optional. Folder ID in Box where this file is stored. Used for organization only.</td></tr>
+        <tr><td>Status</td><td><span class="badge badge-ready">Ready</span> when a Box File ID is present · <span class="badge badge-hold">On hold</span> when no Box File ID has been entered yet. Status is derived automatically in the admin page.</td></tr>
+        <tr><td>Updated at</td><td>Automatically set to the current timestamp when the Box File ID is added or changed. Shows <code>Pending</code> while the session is On hold.</td></tr>
+        <tr><td><strong>Box File ID</strong></td><td>The Box file ID for this session. Example: <code>1234567890</code>. You can copy it from a Box file URL such as <code>https://ibm.app.box.com/file/1234567890</code> or paste an existing shared link / full Box URL already stored in the data.</td></tr>
+        <tr><td>Box Folder ID</td><td>Optional. Folder ID in Box where this file is stored. Used for organization only.</td></tr>
         <tr><td>Operator notes</td><td>One note per line. Displayed to the AV team on the dashboard. Optional.</td></tr>
         <tr><td>Microphones</td><td>Mic setup, e.g. <code>2 handheld, 1 lav</code>.</td></tr>
         <tr><td>Stage setup</td><td>Physical layout, e.g. <code>Fireside chat (3)</code> or <code>Podium</code>.</td></tr>

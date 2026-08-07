@@ -172,7 +172,7 @@ ZDC [Year] [Season]/         ← Box Drive root for this event
 
 - Fetches `data/av-data.json` from `raw.githubusercontent.com` on load with cache-busting (`?t=Date.now()`)
 - Retries automatically every 10 seconds on failure
-- Renders filterable/sortable session table, summary stats, change log timeline, expandable AV detail rows
+- Renders filterable/sortable session table, summary stats, change log timeline, expandable AV detail rows, and local download sync indicators (`Download required`, `Re-download required`, `Up to date`)
 - No authentication, no write access
 
 **Key constant to update per event:**
@@ -185,7 +185,9 @@ const DATA_URL = 'https://raw.githubusercontent.com/[ORG]/[REPO]/main/data/av-da
 - On load: calls GitHub Contents API `GET` with the stored token → receives file content (base64) and current SHA
 - Decodes base64 via `Uint8Array` + `TextDecoder('utf-8')` (handles multi-byte characters correctly)
 - All edits held in memory until **💾 Save to GitHub** is clicked
-- Save: calls `PUT /repos/[org]/[repo]/contents/data/av-data.json` with updated content, commit message, and current SHA
+- Session readiness is derived from `boxFileId`: if present → `ready`; if blank → `hold`
+- `updatedAt` is auto-stamped when `boxFileId` is added or changed; blank `boxFileId` resets `updatedAt` to `Pending`
+- Save: calls `PUT /repos/[org]/[repo]/contents/data/av-data.json` with updated content, commit message, and current SHA, then downloads `zdc-2026-fall-av-data.json`
 - Token read from: `window.location.hash` on first visit (then saved to `localStorage`), or `localStorage` on all subsequent visits
 
 **Key constants to update per event:**
@@ -258,14 +260,14 @@ Open this URL once. The page extracts the token, saves it to `localStorage`, and
 
 ## 7. IBM Box Integration
 
-Box is used exclusively for **file storage and access control**. The AV system stores Box shared links as strings inside `av-data.json`.
+Box is used exclusively for **file storage and access control**. The AV system primarily stores `boxFileId` values inside `av-data.json`; existing shared links or full Box URLs may also appear in older records and are still handled by the dashboard.
 
-**Convert a Box shared link to a direct download link:**
+**Preferred admin input:**
 ```
-Preview:  https://ibm.box.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-Direct:   https://ibm.box.com/shared/static/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.pptx
+https://ibm.app.box.com/file/1234567890
+                  └──── Box File ID = 1234567890
 ```
-Replace `/s/` with `/shared/static/` and append the file extension.
+Paste the numeric file ID into the admin form. The admin UI uses that value to mark a session as ready and auto-stamp `updatedAt`.
 
 **Access control:**
 - Dashboard and JSON are public — session metadata is visible to anyone
@@ -310,8 +312,8 @@ Replace `/s/` with `/shared/static/` and append the file extension.
 
 1. Add a CSS rule in `app/dashboard.html`: `.badge-[name] { color: ...; background: ...; }`
 2. Add the value to `statusLabels` and `statusClasses` objects in the dashboard script
-3. Add the option to `<select id="m-status">` in `app/admin.html`
-4. Add the filter option to `<select id="status">` in `app/dashboard.html`
+3. Update the admin save logic in `saveModal()` so the new status can still be derived consistently from the form data
+4. Render or expose the new status anywhere it is surfaced in the dashboard row output
 
 ### Adding a new session field
 
@@ -353,8 +355,9 @@ All pages share the same CSS custom properties defined in `:root`:
 | Limitation | Impact | Workaround |
 |---|---|---|
 | Dashboard data is public | Session metadata visible to anyone with the URL | Box controls actual file downloads. Upgrade to GitHub Team for a private repo. |
-| ~30–60s publish delay | Dashboard lags behind admin saves | Vendor must refresh browser. Add `setInterval(initialize, 60000)` for auto-refresh. |
+| ~30–60s publish delay | Dashboard lags behind admin saves | Dashboard auto-refreshes, but operators may still need to wait briefly for GitHub Pages / raw content propagation. |
 | Single admin user | Concurrent edits cause SHA mismatch on second save | Designed for one admin. Second save shows error; reload and re-apply. |
+| Download sync tracking is browser-local | `Last Downloaded` and `Up to date` only reflect the current browser/device | Use the same browser on the playback machine that operators actually use for downloads. |
 | No edit history UI | Admin cannot browse previous data versions | Full history in GitHub commit log at `github.com/[org]/[repo]/commits/main` |
 | Token in localStorage | Extractable via browser DevTools | Use minimal scope token. Revoke and regenerate after the event. |
 | No offline support | Dashboard requires internet to fetch data | Falls back to retry loop on failure. |
