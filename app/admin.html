@@ -381,7 +381,7 @@
         table.innerHTML = `<thead><tr>
           <th class="col-time">Time</th><th class="col-title">Session</th>
           <th class="col-file">File</th><th class="col-status">Status</th>
-          <th class="col-updated">Updated at</th><th class="col-actions"></th>
+          <th class="col-updated">Last Updated</th><th class="col-actions"></th>
         </tr></thead><tbody></tbody>`;
         const tbody = table.querySelector('tbody');
         const sorted = [...day.files].map((f,i)=>({f,i})).sort((a,b)=>{
@@ -457,8 +457,12 @@
     const newStatus  = mStatus.value;
     let updatedAt = prevFile ? (prevFile.updatedAt || '') : '';
     if ((newStatus === 'ready' || newStatus === 'updated') && newStatus !== prevStatus) {
-      // Status just changed to ready/updated — stamp now
-      updatedAt = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:false });
+      // Status just changed to ready/updated — stamp now in "Aug 7 at 09:06" format
+      const now = new Date();
+      const month = now.toLocaleDateString('en-US', { month: 'short' });
+      const dayNum = now.getDate();
+      const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+      updatedAt = `${month} ${dayNum} at ${time}`;
     } else if (newStatus === 'hold') {
       updatedAt = '';
     }
