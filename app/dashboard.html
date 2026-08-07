@@ -66,7 +66,8 @@
     .note-list { margin: 0; padding-left: 18px; }
     .download a { color: var(--accent); text-decoration: none; font-weight: 600; }
     .download a:hover, .top-link:hover { text-decoration: underline; }
-    .details-toggle { margin-top: 8px; padding: 0; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-av-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-alt); color: var(--accent); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    .btn-av-toggle:hover { background: #eaeef2; text-decoration: underline; }
     .details-row { background: var(--surface-alt); }
     .details-cell { padding-top: 0; }
     .av-details { border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 14px; }
@@ -169,7 +170,7 @@
             <th>Last Updated</th>
             <th>Last Downloaded</th>
             <th>Sync &amp; Download</th>
-            <th>Operator Notes</th>
+            <th>AV details</th>
           </tr>
         </thead>
         <tbody id="file-table-body"></tbody>
@@ -402,12 +403,14 @@
         const dlInfo = getDownloadInfo(fileKey, file.updatedAt, file.status);
 
         const hasAv = file.avDetails && Object.values(file.avDetails).some(v=>v);
+        const hasNotes = file.notes && file.notes.length > 0;
+        const hasDetails = hasAv || hasNotes;
         const did = `av-${escapeHtml(dayId)}-${i}`;
+
         row.innerHTML = `
           <td>
             <div class="file-name">${escapeHtml(formatSessionTime(file.sessionTime))} · ${escapeHtml(file.sessionTitle)}</div>
             <div class="file-meta">${escapeHtml(file.fileName)} · ${escapeHtml(file.type)}</div>
-            ${hasAv ? `<button type="button" class="details-toggle" aria-expanded="false" data-details-id="${did}">View AV details</button>` : ''}
           </td>
           <td>
             <span class="${statusClasses[file.status]||'badge'}">${statusLabels[file.status]||escapeHtml(file.status)}</span>
@@ -432,12 +435,21 @@
                 : '<span style="color:var(--warning);">⚠ Check Box</span>'
             }
           </td>
-          <td><ul class="note-list">${(file.notes||[]).map(n=>`<li>${escapeHtml(n)}</li>`).join('')}</ul></td>`;
+          <td>
+            ${hasDetails
+              ? `<button type="button" class="btn-av-toggle" aria-expanded="false" data-details-id="${did}">View AV details</button>`
+              : '<span style="color:var(--muted);">—</span>'
+            }
+          </td>`;
         fileTableBody.appendChild(row);
-        if (hasAv) {
+
+        if (hasDetails) {
           const dr = document.createElement('tr');
           dr.className = 'details-row'; dr.id = did; dr.hidden = true;
-          const av = file.avDetails;
+          const av = file.avDetails || {};
+          const notesHtml = hasNotes
+            ? `<div class="av-detail-group" style="grid-column:1 / -1;"><strong>Operator notes</strong><span>${file.notes.map(n=>'• ' + escapeHtml(n)).join('\n')}</span></div>`
+            : '';
           dr.innerHTML = `<td class="details-cell" colspan="6"><div class="av-details"><div class="av-details-grid">
             <div class="av-detail-group"><strong>Microphones</strong><span>${escapeHtml(av.microphones||'Not specified')}</span></div>
             <div class="av-detail-group"><strong>Stage setup</strong><span>${escapeHtml(av.stageSetup||'Not specified')}</span></div>
@@ -445,6 +457,7 @@
             <div class="av-detail-group"><strong>Clicker</strong><span>${escapeHtml(av.clicker||'Not specified')}</span></div>
             <div class="av-detail-group"><strong>Timer</strong><span>${escapeHtml(av.timer||'Not specified')}</span></div>
             <div class="av-detail-group"><strong>Special AV notes</strong><span>${escapeHtml(av.specialNotes||'Not specified')}</span></div>
+            ${notesHtml}
           </div></div></td>`;
           fileTableBody.appendChild(dr);
         }
@@ -469,12 +482,14 @@
         fileEmptyState.hidden = !!files.length;
         if (files.length) await renderFileRows(files, day.id, day.label);
       }
-      fileTableBody.querySelectorAll('.details-toggle').forEach(btn => {
+      fileTableBody.querySelectorAll('.btn-av-toggle').forEach(btn => {
         btn.addEventListener('click', () => {
           const dr = document.getElementById(btn.dataset.detailsId);
+          if (!dr) return;
           dr.hidden = !dr.hidden;
-          btn.setAttribute('aria-expanded', String(!dr.hidden));
-          btn.textContent = dr.hidden ? 'View AV details' : 'Hide AV details';
+          const isExpanded = !dr.hidden;
+          btn.setAttribute('aria-expanded', String(isExpanded));
+          btn.textContent = isExpanded ? 'Hide AV details' : 'View AV details';
         });
       });
       fileTableBody.querySelectorAll('[data-dl-key]').forEach(link => {
