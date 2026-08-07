@@ -10,11 +10,9 @@
           "sessionTitle": "Introduction to ZDC",
           "fileName": "Introduction to ZDC.pptx",
           "type": "Presentation",
-          "status": "hold",
-          "updatedAt": "Pending",
-          "notes": [
-            "Do not project until status changes to Ready"
-          ],
+          "status": "ready",
+          "updatedAt": "Aug 7 at 09:06",
+          "notes": [],
           "avDetails": {
             "microphones": "2 handheld, 2 catchbox",
             "stageSetup": "Podium",
@@ -22,7 +20,10 @@
             "clicker": "Yes",
             "timer": "60",
             "specialNotes": ""
-          }
+          },
+          "boxFileId": "https://ibm.box.com/s/skonjkg1tiv1pxr5epph4l30xv0aj2oe",
+          "boxVersion": "1",
+          "freshness": "new"
         },
         {
           "sessionTime": "12:00",
