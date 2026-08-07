@@ -62,11 +62,11 @@
     th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; border-top: 0; padding-top: 0; background: var(--surface-alt); }
     tr:hover td { background: #f5f7fa; }
     .col-time { width: 110px; white-space: nowrap; }
-    .col-title { min-width: 180px; }
-    .col-file { min-width: 160px; color: var(--muted); }
+    .col-title { width: 32%; overflow: hidden; text-overflow: ellipsis; }
+    .col-file { width: 28%; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
     .col-status { width: 100px; }
-    .col-updated { width: 110px; }
-    .col-actions { width: 120px; text-align: right; }
+    .col-updated { width: 110px; white-space: nowrap; }
+    .col-actions { width: 120px; text-align: right; white-space: nowrap; }
     .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; z-index: 100; }
     .modal-backdrop[hidden] { display: none; }
     .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 680px; padding: 24px; }
