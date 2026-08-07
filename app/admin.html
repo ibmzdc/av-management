@@ -318,16 +318,20 @@
   }
   function displayTime(v) {
     if (!v) return v;
-    if (/\d{1,2}:\d{2}\s*(AM|PM)/i.test(v)) return v;
-    const p = v.match(/^(\d{2}):(\d{2})$/);
-    if (!p) return v;
-    let h = Number(p[1]); const min = p[2]; const mer = h >= 12 ? 'PM' : 'AM';
-    h = h % 12 || 12; return `${h}:${min} ${mer}`;
+    const ampm = String(v).match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+    if (ampm) {
+      let h = Number(ampm[1]) % 12;
+      if (ampm[3].toUpperCase() === 'PM') h += 12;
+      return `${String(h).padStart(2, '0')}:${ampm[2]}`;
+    }
+    const p = String(v).match(/^(\d{1,2}):(\d{2})$/);
+    if (p) return `${p[1].padStart(2, '0')}:${p[2]}`;
+    return v;
   }
   function toTimeInput(v) {
     if (!v) return '';
     if (/^\d{2}:\d{2}$/.test(v)) return v;
-    const m = v.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+    const m = String(v).match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
     if (!m) return '';
     let h = Number(m[1]) % 12;
     if (m[3].toUpperCase() === 'PM') h += 12;
@@ -336,8 +340,8 @@
   function fromTimeInput(v) {
     if (!v) return '';
     const [hStr, min] = v.split(':');
-    let h = Number(hStr); const mer = h >= 12 ? 'PM' : 'AM';
-    h = h % 12 || 12; return `${h}:${min} ${mer}`;
+    if (!hStr || !min) return v;
+    return `${hStr.padStart(2, '0')}:${min}`;
   }
   function formatRefreshInput(v) {
     if (!v) return '';
@@ -454,7 +458,7 @@
     let updatedAt = prevFile ? (prevFile.updatedAt || '') : '';
     if ((newStatus === 'ready' || newStatus === 'updated') && newStatus !== prevStatus) {
       // Status just changed to ready/updated — stamp now
-      updatedAt = new Date().toLocaleString('en-US', { month:'long', day:'numeric', hour:'numeric', minute:'2-digit' });
+      updatedAt = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:false });
     } else if (newStatus === 'hold') {
       updatedAt = '';
     }
@@ -555,7 +559,7 @@
     const json    = JSON.stringify(data, null, 2);
     const content = btoa(unescape(encodeURIComponent(json))); // base64-encode UTF-8
     const body = {
-      message: `AV data update — ${new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}`,
+      message: `AV data update — ${new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false})}`,
       content,
       branch: BRANCH
     };
@@ -571,7 +575,7 @@
       const result = await res.json();
       if (!res.ok) throw new Error(result.message || `HTTP ${res.status}`);
       fileSha = result.content.sha; // update SHA for next save
-      const now = new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+      const now = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',hour12:false});
       // Auto-export Box file immediately after a successful GitHub save
       exportToBox();
       showMessage(editorMessage,

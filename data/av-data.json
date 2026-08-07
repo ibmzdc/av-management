@@ -1,12 +1,12 @@
 {
-  "lastRefresh": "October 6, 2026 · 8:00 AM",
+  "lastRefresh": "Oct 6, 2026 · 08:00",
   "days": [
     {
       "id": "day-0",
-      "label": "Day 0 · October 18",
+      "label": "Day 0 · Oct 18",
       "files": [
         {
-          "sessionTime": "4:00 PM",
+          "sessionTime": "16:00",
           "sessionTitle": "Introduction to ZDC",
           "fileName": "Introduction to ZDC.pptx",
           "type": "Presentation",
@@ -25,12 +25,12 @@
           }
         },
         {
-          "sessionTime": "12:00 PM",
+          "sessionTime": "12:00",
           "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen 1",
           "fileName": "Antwerp_light_4K.png",
           "type": "Presentation",
           "status": "ready",
-          "updatedAt": "8:00 AM",
+          "updatedAt": "08:00",
           "notes": [
             "30 minutes before event day starts",
             "Breaks - morning, afternoon, lunch"
@@ -48,12 +48,12 @@
           "freshness": "new"
         },
         {
-          "sessionTime": "12:00 PM",
+          "sessionTime": "12:00",
           "sessionTitle": "IBM ZDC Antwerp 2026 Event Identity Screen 2",
           "fileName": "Antwerp_dark_4K.png",
           "type": "Presentation",
           "status": "ready",
-          "updatedAt": "August 7, 8:37 AM",
+          "updatedAt": "Aug 7, 08:37",
           "notes": [
             "30 minutes before event day starts",
             "Breaks - morning, afternoon, lunch"
@@ -73,7 +73,7 @@
       ],
       "changeLog": [
         {
-          "time": "8:00 AM",
+          "time": "08:00",
           "title": "Dashboard ready for Day 0",
           "description": "Update file statuses and Box links before the event begins."
         }
@@ -81,7 +81,7 @@
     },
     {
       "id": "day-1",
-      "label": "Day 1 · October 19",
+      "label": "Day 1 · Oct 19",
       "files": [
         {
           "sessionTime": "08:30",
@@ -126,7 +126,7 @@
       ],
       "changeLog": [
         {
-          "time": "8:00 AM",
+          "time": "08:00",
           "title": "Dashboard ready for Day 1",
           "description": "Update file statuses and Box links before the event begins."
         }
@@ -134,7 +134,7 @@
     },
     {
       "id": "day-2",
-      "label": "Day 2 · October 20",
+      "label": "Day 2 · Oct 20",
       "files": [
         {
           "sessionTime": "08:25",
@@ -215,7 +215,7 @@
       ],
       "changeLog": [
         {
-          "time": "8:00 AM",
+          "time": "08:00",
           "title": "Day 2 placeholder ready",
           "description": "Update file statuses, Box links, and change log before Day 2 begins."
         }
@@ -223,7 +223,7 @@
     },
     {
       "id": "day-3",
-      "label": "Day 3 · October 21",
+      "label": "Day 3 · Oct 21",
       "files": [
         {
           "sessionTime": "09:55",
@@ -343,7 +343,7 @@
       ],
       "changeLog": [
         {
-          "time": "8:00 AM",
+          "time": "08:00",
           "title": "Day 2 placeholder ready",
           "description": "Update file statuses, Box links, and change log before Day 2 begins."
         }
@@ -351,7 +351,7 @@
     },
     {
       "id": "day-4",
-      "label": "Day 4 · October 22",
+      "label": "Day 4 · Oct 22",
       "files": [
         {
           "sessionTime": "08:25",
@@ -466,7 +466,7 @@
       ],
       "changeLog": [
         {
-          "time": "8:00 AM",
+          "time": "08:00",
           "title": "Day 3 placeholder ready",
           "description": "Update file statuses, Box links, and change log before Day 3 begins."
         }
