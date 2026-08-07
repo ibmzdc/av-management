@@ -171,16 +171,6 @@
       </div>
     </div>
 
-    <div class="form-grid form-grid-2" style="margin-top:14px;">
-      <div>
-        <label for="m-status">Status</label>
-        <select id="m-status"><option value="ready">Ready</option><option value="updated">Updated</option><option value="hold">On hold</option></select>
-      </div>
-      <div>
-        <label for="m-freshness">Freshness</label>
-        <select id="m-freshness"><option value="">None</option><option value="new">New</option><option value="changed">Changed</option></select>
-      </div>
-    </div>
 
     <div class="form-grid form-grid-2" style="margin-top:14px;">
       <div><label for="m-box-file-id">Box File ID</label><input id="m-box-file-id" type="text" placeholder="1234567890"></div>
@@ -271,8 +261,6 @@
   const mTitle        = document.getElementById('m-title');
   const mFilename     = document.getElementById('m-filename');
   const mFiletype     = document.getElementById('m-filetype');
-  const mStatus       = document.getElementById('m-status');
-  const mFreshness    = document.getElementById('m-freshness');
   const mBoxFileId    = document.getElementById('m-box-file-id');
   const mBoxFolderId  = document.getElementById('m-box-folder-id');
   const mNotes        = document.getElementById('m-notes');
@@ -380,7 +368,7 @@
         const table = document.createElement('table');
         table.innerHTML = `<thead><tr>
           <th class="col-time">Time</th><th class="col-title">Session</th>
-          <th class="col-file">File</th><th class="col-status">Status</th>
+          <th class="col-file">File</th>
           <th class="col-updated">Last Updated</th><th class="col-actions"></th>
         </tr></thead><tbody></tbody>`;
         const tbody = table.querySelector('tbody');
@@ -402,7 +390,6 @@
             <td class="col-time">${escapeHtml(displayTime(f.sessionTime))}</td>
             <td class="col-title">${escapeHtml(f.sessionTitle)}</td>
             <td class="col-file">${escapeHtml(f.fileName)}</td>
-            <td class="col-status">${statusBadge[f.status]||escapeHtml(f.status)}</td>
             <td class="col-updated">${escapeHtml(f.updatedAt)}</td>
             <td class="col-actions">
               <div style="display:flex;gap:6px;justify-content:flex-end;">
@@ -430,15 +417,15 @@
   function openModal(dayId, fileIdx) {
     modalDayId = dayId; modalFileIdx = fileIdx;
     modalTitle.textContent = fileIdx === -1 ? 'Add session' : 'Edit session';
-    mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation'; mStatus.value='hold';
-    mFreshness.value=''; mBoxFileId.value=''; mBoxFolderId.value=''; mNotes.value='';
+    mTime.value=''; mTitle.value=''; mFilename.value=''; mFiletype.value='Presentation';
+    mBoxFileId.value=''; mBoxFolderId.value=''; mNotes.value='';
     mAvMic.value=''; mAvStage.value=''; mAvCm.value=''; mAvClicker.value=''; mAvTimer.value=''; mAvSpecial.value='';
     mLogTime.value=''; mLogTitle.value=''; mLogDesc.value='';
     if (fileIdx !== -1) {
       const day = data.days.find(d=>d.id===dayId);
       const f = day.files[fileIdx];
       mTime.value=toTimeInput(f.sessionTime); mTitle.value=f.sessionTitle; mFilename.value=f.fileName;
-      mFiletype.value=f.type; mStatus.value=f.status; mFreshness.value=f.freshness||'';
+      mFiletype.value=f.type;
       mBoxFileId.value=f.boxFileId||''; mBoxFolderId.value=f.boxFolderId||'';
       mNotes.value=Array.isArray(f.notes)?f.notes.join('\n'):'';
       const av=f.avDetails||{};
@@ -451,35 +438,42 @@
   function saveModal() {
     if (!mTitle.value.trim() || !mFilename.value.trim()) { alert('Session title and file name are required.'); return; }
     const day = data.days.find(d=>d.id===modalDayId);
-    // Auto-stamp updatedAt when status is ready or updated; preserve existing value on hold
     const prevFile = modalFileIdx !== -1 ? data.days.find(d=>d.id===modalDayId).files[modalFileIdx] : null;
-    const prevStatus = prevFile ? prevFile.status : null;
-    const newStatus  = mStatus.value;
-    let updatedAt = prevFile ? (prevFile.updatedAt || '') : '';
-    if ((newStatus === 'ready' || newStatus === 'updated') && newStatus !== prevStatus) {
-      // Status just changed to ready/updated — stamp now in "Aug 7 at 09:06" format
-      const now = new Date();
-      const month = now.toLocaleDateString('en-US', { month: 'short' });
-      const dayNum = now.getDate();
-      const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-      updatedAt = `${month} ${dayNum} at ${time}`;
-    } else if (newStatus === 'hold') {
-      updatedAt = '';
+    const boxFileIdVal = mBoxFileId.value.trim();
+    const prevBoxFileId = prevFile ? (prevFile.boxFileId || '').trim() : '';
+
+    let status = 'hold';
+    let updatedAt = 'Pending';
+
+    if (!boxFileIdVal) {
+      status = 'hold';
+      updatedAt = 'Pending';
+    } else {
+      status = 'ready';
+      if (prevFile && prevBoxFileId === boxFileIdVal && prevFile.updatedAt && prevFile.updatedAt !== 'Pending') {
+        updatedAt = prevFile.updatedAt;
+      } else {
+        const now = new Date();
+        const month = now.toLocaleDateString('en-US', { month: 'short' });
+        const dayNum = now.getDate();
+        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        updatedAt = `${month} ${dayNum} at ${time}`;
+      }
     }
+
     const fileObj = {
       sessionTime: fromTimeInput(mTime.value)||mTime.value,
       sessionTitle: mTitle.value.trim(), fileName: mFilename.value.trim(),
-      type: mFiletype.value, status: mStatus.value,
+      type: mFiletype.value, status,
       updatedAt,
       notes: mNotes.value.split('\n').map(n=>n.trim()).filter(Boolean),
       avDetails: { microphones:mAvMic.value.trim(), stageSetup:mAvStage.value.trim(), confidenceMonitor:mAvCm.value.trim(), clicker:mAvClicker.value.trim(), timer:mAvTimer.value.trim(), specialNotes:mAvSpecial.value.trim() }
     };
-    if (mBoxFileId.value.trim()) {
-      fileObj.boxFileId = mBoxFileId.value.trim();
-      fileObj.boxVersion = '1'; // Will be updated by Box API on dashboard load
+    if (boxFileIdVal) {
+      fileObj.boxFileId = boxFileIdVal;
+      fileObj.boxVersion = prevFile && prevFile.boxVersion ? prevFile.boxVersion : '1';
       if (mBoxFolderId.value.trim()) fileObj.boxFolderId = mBoxFolderId.value.trim();
     }
-    if (mFreshness.value) fileObj.freshness = mFreshness.value;
     if (mLogTime.value.trim() && mLogTitle.value.trim() && mLogDesc.value.trim()) {
       day.changeLog.unshift({ time:mLogTime.value.trim(), title:mLogTitle.value.trim(), description:mLogDesc.value.trim() });
     }
