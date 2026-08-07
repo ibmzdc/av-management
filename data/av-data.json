@@ -43,9 +43,9 @@
             "timer": "",
             "specialNotes": ""
           },
-          "freshness": "new",
-          "boxFileId": "1234567890",
-          "boxVersion": "1"
+          "boxFileId": "https://ibm.box.com/s/emavmgynmxn45atmtdsbm380gev7tpw5",
+          "boxVersion": "1",
+          "freshness": "new"
         },
         {
           "sessionTime": "12:00 PM",
@@ -54,7 +54,10 @@
           "type": "Presentation",
           "status": "ready",
           "updatedAt": "",
-          "notes": [],
+          "notes": [
+            "30 minutes before event day starts",
+            "Breaks - morning, afternoon, lunch"
+          ],
           "avDetails": {
             "microphones": "",
             "stageSetup": "",
@@ -63,9 +66,9 @@
             "timer": "",
             "specialNotes": ""
           },
-          "freshness": "new",
-          "boxFileId": "2345678901",
-          "boxVersion": "1"
+          "boxFileId": "https://ibm.box.com/s/4n9scfog0n9bu8juzshzmt6hjk977br8",
+          "boxVersion": "1",
+          "freshness": "new"
         }
       ],
       "changeLog": [
