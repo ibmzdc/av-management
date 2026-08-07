@@ -348,6 +348,11 @@
         const holdWarn = file.status === 'hold'
           ? '<span class="hold-warn">⚠ Do not project</span>' : '';
 
+        // Construct download URL from boxFileId or downloadUrl
+        const downloadUrl = file.boxFileId
+          ? `https://ibm.box.com/shared/static/${file.boxFileId}`
+          : (file.downloadUrl && file.downloadUrl !== '#' ? file.downloadUrl : '');
+
         const hasAv = file.avDetails && Object.values(file.avDetails).some(v=>v);
         const did = `av-${escapeHtml(dayId)}-${i}`;
         row.innerHTML = `
@@ -373,8 +378,8 @@
           <td class="download">
             ${file.status==='hold'
               ? '<span style="color:var(--muted);">Awaiting upload</span>'
-              : file.downloadUrl && file.downloadUrl !== '#'
-                ? `<a href="${escapeHtml(file.downloadUrl)}">⬇ Download</a>`
+              : downloadUrl
+                ? `<a href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener">⬇ Download</a>`
                 : '<span style="color:var(--warning);">⚠ Check Box</span>'
             }
           </td>`;
