@@ -38,9 +38,17 @@ a{color:#3b82d4;text-decoration:none}
 .modal{background:#fff;border-radius:8px;padding:24px;width:440px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 .modal h2{font-size:15px;font-weight:700;margin-bottom:8px}
 .modal p{font-size:12.5px;color:#57606a;margin-bottom:14px}
-.modal input{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;font-family:monospace;margin-bottom:14px}
-.modal input:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
+.modal input,.modal select,.modal textarea{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;font-family:inherit;margin-bottom:12px}
+.modal input[type=monospace]{font-family:monospace}
+.modal input:focus,.modal select:focus,.modal textarea:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
+.modal label{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#57606a;margin-bottom:3px}
+.modal textarea{resize:vertical;min-height:52px}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.modal-wide{width:560px}
+/* Add session button */
+.btn-add-session{font-size:12px;font-weight:600;padding:5px 14px;border-radius:4px;border:1px dashed #d1d5db;background:#fff;cursor:pointer;color:#57606a;margin-top:4px}
+.btn-add-session:hover{background:#f0f4ff;border-color:#93c5fd;color:#1d4ed8}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 /* Stats bar */
 .stats-bar{display:flex;gap:16px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:12px 16px;margin-bottom:20px;flex-wrap:wrap}
 .stat{display:flex;flex-direction:column;gap:2px}
@@ -131,6 +139,84 @@ a{color:#3b82d4;text-decoration:none}
     <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
     <div class="modal-btns">
       <button class="btn btn-primary" onclick="saveToken()">Save &amp; Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Session modal -->
+<div class="modal-overlay" id="addSessionModal">
+  <div class="modal modal-wide">
+    <h2>Add Session</h2>
+    <div class="modal-grid">
+      <div>
+        <label>Day</label>
+        <select id="ns-day">
+          <option value="Sunday">Sunday</option>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+        </select>
+      </div>
+      <div>
+        <label>Date (YYYY-MM-DD)</label>
+        <input type="text" id="ns-date" placeholder="2026-10-19">
+      </div>
+      <div>
+        <label>Start Time (HH:MM)</label>
+        <input type="text" id="ns-start" placeholder="09:00">
+      </div>
+      <div>
+        <label>End Time (HH:MM)</label>
+        <input type="text" id="ns-end" placeholder="09:30">
+      </div>
+    </div>
+    <label>Session Title</label>
+    <input type="text" id="ns-title" placeholder="Session title">
+    <label>Speakers</label>
+    <input type="text" id="ns-speakers" placeholder="First Last, First Last">
+    <div class="modal-grid">
+      <div>
+        <label>Room</label>
+        <input type="text" id="ns-room" placeholder="Belle Epoque Ballroom">
+      </div>
+      <div>
+        <label>Session Type</label>
+        <select id="ns-type">
+          <option>General Session</option>
+          <option>Client Experience</option>
+          <option>Solution Review</option>
+          <option>Z Design Fair</option>
+          <option>Client Roundtable</option>
+          <option>Collaborative Session</option>
+          <option>Registration</option>
+          <option>Meal</option>
+          <option>Networking</option>
+          <option>Break</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Projection</label>
+        <select id="ns-projection">
+          <option value="">— not required —</option>
+          <option value="AV team">AV team</option>
+          <option value="AV team - LED">AV team – LED</option>
+          <option value="Presenter">Presenter</option>
+          <option value="not required">not required</option>
+          <option value="Design Fair Station">Design Fair Station</option>
+        </select>
+      </div>
+      <div>
+        <label>Microphones</label>
+        <input type="text" id="ns-mics" placeholder="e.g. 2 wireless">
+      </div>
+    </div>
+    <label>Room Setup</label>
+    <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
+    <div class="modal-btns">
+      <button class="btn" style="background:#f3f4f6;color:#374151" onclick="closeAddSession()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddSession()">Add Session</button>
     </div>
   </div>
 </div>
@@ -366,6 +452,7 @@ function renderDay(day){
   return `<div class="day-section" id="day-${day}">
     <h2>${dateStr}</h2>
     ${sessions.map(s=>renderSession(s)).join("")}
+    <button class="btn-add-session" onclick="openAddSession('${day}')">+ Add Session</button>
   </div>`;
 }
 
@@ -526,6 +613,113 @@ function renderFiles(s){
       <input type="text" id="fboxid-${s.id}-${i}" value="${esc(f.boxFileId||"")}" placeholder="IBM Box file ID or full Box URL" oninput="onBoxIdInput(this)" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:11.5px;font-family:monospace">
     </div>
   `).join("");
+}
+
+// ── Add Session ───────────────────────────────────────────────────────────────
+const DAY_DATES = {
+  Sunday:"2026-10-18", Monday:"2026-10-19", Tuesday:"2026-10-20",
+  Wednesday:"2026-10-21", Thursday:"2026-10-22"
+};
+
+function openAddSession(day){
+  // Pre-fill day and its date
+  document.getElementById("ns-day").value  = day;
+  document.getElementById("ns-date").value = DAY_DATES[day] || "";
+  document.getElementById("ns-start").value = "";
+  document.getElementById("ns-end").value   = "";
+  document.getElementById("ns-title").value = "";
+  document.getElementById("ns-speakers").value = "";
+  document.getElementById("ns-room").value  = "";
+  document.getElementById("ns-type").value  = "General Session";
+  document.getElementById("ns-projection").value = "";
+  document.getElementById("ns-mics").value  = "";
+  document.getElementById("ns-roomsetup").value = "";
+  document.getElementById("addSessionModal").classList.add("open");
+  setTimeout(()=>document.getElementById("ns-title").focus(), 50);
+}
+
+function closeAddSession(){
+  document.getElementById("addSessionModal").classList.remove("open");
+}
+
+function confirmAddSession(){
+  const day       = document.getElementById("ns-day").value.trim();
+  const title     = document.getElementById("ns-title").value.trim();
+  if(!title){ alert("Session title is required."); return; }
+
+  const startTime = document.getElementById("ns-start").value.trim() || null;
+  const endTime   = document.getElementById("ns-end").value.trim()   || null;
+  const room      = document.getElementById("ns-room").value.trim()  || null;
+
+  // Generate a unique ID (same scheme as import script)
+  const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,80);
+  const baseId  = slugify(`${day}-${startTime||"tba"}-${(room||"tbd").slice(0,18)}-${title.slice(0,28)}`);
+  // Ensure uniqueness — append counter if collision
+  let id = baseId, n = 2;
+  while(DATA.sessions.find(s=>s.id===id)) id = `${baseId}-${n++}`;
+
+  const newSession = {
+    id,
+    day,
+    date:         document.getElementById("ns-date").value.trim()       || DAY_DATES[day] || null,
+    startTime,
+    endTime,
+    sessionType:  document.getElementById("ns-type").value,
+    track:        null,
+    title,
+    description:  null,
+    speakers:     document.getElementById("ns-speakers").value.trim()   || null,
+    room,
+    roomSetup:    document.getElementById("ns-roomsetup").value.trim()  || null,
+    projection:   document.getElementById("ns-projection").value        || null,
+    microphones:  document.getElementById("ns-mics").value.trim()       || null,
+    podium:       false,
+    timer:        null,
+    monitor:      null,
+    specialReqs:  null,
+    showInDashboard: false,
+    files:        [],
+    avNote:       null,
+    operatorNote: null
+  };
+
+  // Insert into DATA.sessions in time order within the day
+  const dayOrder = ["Sunday","Monday","Tuesday","Wednesday","Thursday"];
+  const insertIdx = DATA.sessions.findIndex(s => {
+    // Insert before the first session that is a later day, or same day with later/equal start time
+    const laterDay  = dayOrder.indexOf(s.day) > dayOrder.indexOf(day);
+    const sameDay   = s.day === day;
+    const laterTime = sameDay && (s.startTime||"") > (startTime||"");
+    const endOfDay  = sameDay && !startTime;
+    return laterDay || laterTime || endOfDay;
+  });
+
+  if(insertIdx === -1){
+    DATA.sessions.push(newSession);
+  } else {
+    DATA.sessions.splice(insertIdx, 0, newSession);
+  }
+
+  closeAddSession();
+  // Re-render just the affected day section
+  const dayEl = document.getElementById("day-"+day);
+  if(dayEl){
+    const daySessions = DATA.sessions.filter(s=>s.day===day);
+    const dateStr = daySessions[0]?.date
+      ? new Date(daySessions[0].date+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})
+      : day;
+    dayEl.outerHTML = renderDay(day);
+  } else {
+    renderContent();
+  }
+  renderStats();
+  renderDayNav();
+  markDirty();
+  // Scroll to and open the new card
+  setTimeout(()=>{
+    const card = document.getElementById("card-"+id);
+    if(card){ card.scrollIntoView({behavior:"smooth",block:"center"}); toggleCard(id); }
+  }, 100);
 }
 
 // ── Interactions ──────────────────────────────────────────────────────────────
