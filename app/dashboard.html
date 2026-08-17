@@ -383,11 +383,22 @@ function renderDays() {
   filterBarEl.style.display = "flex";
   filterBarEl.innerHTML =
     `<span class="room-filter-label">Room:</span>` +
-    `<button class="room-btn all-rooms${!activeRoom?" active":""}" onclick="setRoomFilter(null)">All Rooms</button>` +
-    rooms.map(r => {
-      const cnt = allVendor.filter(s => s.room === r).length;
-      return `<button class="room-btn${activeRoom===r?" active":""}" onclick="setRoomFilter(${JSON.stringify(r)})">${esc(r)} <span style="font-size:10px;opacity:.7">${cnt}</span></button>`;
-    }).join("");
+    `<button class="room-btn all-rooms${!activeRoom?" active":""}" onclick="setRoomFilter(null)">All Rooms</button>`;
+
+  // Append room buttons via DOM — avoids innerHTML quoting issues with room names
+  rooms.forEach(r => {
+    const cnt = allVendor.filter(s => s.room === r).length;
+    const btn = document.createElement("button");
+    btn.className = "room-btn" + (activeRoom === r ? " active" : "");
+    btn._roomName = r;                            // store for setRoomFilter matching
+    btn.textContent = `${r} `;
+    const countEl = document.createElement("span");
+    countEl.style.cssText = "font-size:10px;opacity:.7";
+    countEl.textContent = cnt;
+    btn.appendChild(countEl);
+    btn.addEventListener("click", () => setRoomFilter(r));
+    filterBarEl.appendChild(btn);
+  });
 
   // Preserve active day across refreshes
   const activeDay = (tabsEl.querySelector(".day-tab.active") || {}).dataset?.day || days[0];
@@ -427,15 +438,10 @@ function renderDays() {
 
 function setRoomFilter(room) {
   activeRoom = room;
-  // Update button active states
-  document.querySelectorAll(".room-btn").forEach(b => b.classList.remove("active"));
-  if (!room) {
-    document.querySelector(".room-btn.all-rooms")?.classList.add("active");
-  } else {
-    document.querySelectorAll(".room-btn:not(.all-rooms)").forEach(b => {
-      if (b.textContent.trim().startsWith(room)) b.classList.add("active");
-    });
-  }
+  document.querySelectorAll(".room-btn").forEach(b => {
+    const isAll = b.classList.contains("all-rooms");
+    b.classList.toggle("active", room === null ? isAll : b._roomName === room);
+  });
   applyRoomFilter();
 }
 
