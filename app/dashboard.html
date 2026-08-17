@@ -52,7 +52,7 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 
 /* ── Session Rows ────────────────────────────────────────── */
 .session-block { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
-.session-row { display: grid; grid-template-columns: 78px 1fr 120px 116px 116px; align-items: center; gap: 0 12px; padding: 10px 14px; background: var(--surface); }
+.session-row { display: grid; grid-template-columns: 78px 1fr 120px 116px 200px; align-items: center; gap: 0 12px; padding: 10px 14px; background: var(--surface); }
 .session-row:hover { background: #eef0f3; }
 .session-time { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .session-info { min-width: 0; cursor: default; }
@@ -73,9 +73,18 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; }
 .row-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
 .row-btn.active { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
-.row-btn-badge { font-size: 10px; font-weight: 700; border-radius: 20px; padding: 1px 6px; background: var(--border); color: var(--muted); }
-.row-btn.active .row-btn-badge { background: #bfdbfe; color: #1d4ed8; }
-.row-btn-badge.has-update { background: #fde68a; color: #92400e; }
+/* Files column — status pills inline on the row */
+.files-col { display: flex; flex-direction: column; gap: 3px; }
+.files-col-btn { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; }
+.files-col-btn:hover { background: #f0f4ff; border-color: #93c5fd; }
+.files-col-btn.active { background: #eff6ff; border-color: #3b82d4; }
+.files-col-label { font-size: 11px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.fs-pill { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 700; border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+.fs-update { background: #fde68a; color: #92400e; animation: dl-pulse 1.6s ease-in-out infinite; }
+.fs-new    { background: #dbeafe; color: #1d4ed8; }
+.fs-done   { background: var(--green-bg); color: var(--green); }
+.fs-hold   { background: var(--amber-bg); color: var(--amber); }
+.fs-nofile { background: var(--gray-bg);  color: var(--gray); }
 /* AV chips — inside AV details panel */
 .av-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
 .av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
@@ -376,9 +385,6 @@ function buildSessionBlock(s) {
   block.className = "session-block";
   const [badgeClass, badgeLabel] = TYPE_BADGE[s.sessionType] || ["badge-default", s.sessionType];
   const files = s.files || [];
-  const hasUpdate = files.some(f => dlState(f) === "update");
-  const fileBadgeCls = hasUpdate ? " has-update" : "";
-  const fileBadgeTxt = files.length ? String(files.length) : "0";
 
   block.innerHTML = `
     <div class="session-row">
@@ -395,9 +401,10 @@ function buildSessionBlock(s) {
           AV Details
         </button>
       </div>
-      <div>
-        <button class="row-btn" id="filesbtn-${s.id}" onclick="togglePanel('${s.id}','files')">
-          Files <span class="row-btn-badge${fileBadgeCls}" id="filebadge-${s.id}">${fileBadgeTxt}</span>
+      <div class="files-col">
+        <button class="files-col-btn" id="filesbtn-${s.id}" onclick="togglePanel('${s.id}','files')">
+          <span class="files-col-label">Files</span>
+          ${buildRowFilePills(files)}
         </button>
       </div>
     </div>
@@ -426,6 +433,21 @@ function buildAVChips(s) {
   return `<table style="font-size:12.5px;border-collapse:collapse;width:100%">
     ${rows.map(r => r.replace('<tr>','<tr style="border-bottom:1px solid var(--border)">')).join("")}
   </table>`;
+}
+
+// Inline pills shown on the collapsed session row for each file's download state
+function buildRowFilePills(files) {
+  if (!files.length) return `<span class="fs-pill fs-nofile">no files</span>`;
+  return files.map(f => {
+    const state = dlState(f);
+    const name  = f.fileName ? esc(f.fileName.slice(0, 28)) : (f.fileType || "file");
+    if (state === "update")      return `<span class="fs-pill fs-update">↻ ${name}</span>`;
+    if (state === "new")         return `<span class="fs-pill fs-new">⬇ ${name}</span>`;
+    if (state === "distributed") return `<span class="fs-pill fs-done">✓ ${name}</span>`;
+    if (state === "done")        return `<span class="fs-pill fs-done">✓ ${name}</span>`;
+    if (f.status === "onhold")   return `<span class="fs-pill fs-hold">⏸ ${name}</span>`;
+    return `<span class="fs-pill fs-nofile">${name}</span>`;
+  }).join("");
 }
 
 function buildFilesSummary(files) {
@@ -544,6 +566,51 @@ function togglePanel(sid, which) {
     const open = filesPanel.classList.toggle("open");
     filesBtn.classList.toggle("active", open);
   }
+}
+
+// After a file is downloaded, also refresh the row pills so state updates immediately
+const _origOnDownload = onDownload;
+function onDownload(boxFileId, btnId) {
+  _origOnDownload(boxFileId, btnId);
+  // Find which session owns this file and refresh its row pills
+  if (!avData) return;
+  for (const s of avData.sessions) {
+    if ((s.files || []).some(f => f.boxFileId === boxFileId)) {
+      // Record the download in the file object temporarily so dlState() returns "done"
+      const btn = document.getElementById("filesbtn-" + s.id);
+      if (btn) {
+        // Re-render just the pills inside the button
+        const label = btn.querySelector(".files-col-label");
+        if (label) {
+          // Update each file's pill that matches this boxFileId
+          s.files.forEach(f => { if (f.boxFileId === boxFileId) f._justDownloaded = true; });
+          btn.innerHTML = `<span class="files-col-label">Files</span>${buildRowFilePillsLive(s.files)}`;
+        }
+      }
+      break;
+    }
+  }
+}
+
+function buildRowFilePillsLive(files) {
+  if (!files.length) return `<span class="fs-pill fs-nofile">no files</span>`;
+  const log = getDownloadLog();
+  return files.map(f => {
+    const name = f.fileName ? esc(f.fileName.slice(0, 28)) : (f.fileType || "file");
+    // Use updated log after recordDownload was called
+    const lastDl = f.boxFileId && log[f.boxFileId];
+    let state;
+    if (f.status === "distributed")                                    state = "distributed";
+    else if (!f.boxFileId)                                             state = "nolink";
+    else if (!lastDl)                                                  state = "new";
+    else if (f.updatedAt && f.updatedAt > lastDl)                     state = "update";
+    else                                                               state = "done";
+    if (state === "update")      return `<span class="fs-pill fs-update">↻ ${name}</span>`;
+    if (state === "new")         return `<span class="fs-pill fs-new">⬇ ${name}</span>`;
+    if (state === "distributed"||state==="done") return `<span class="fs-pill fs-done">✓ ${name}</span>`;
+    if (f.status === "onhold")   return `<span class="fs-pill fs-hold">⏸ ${name}</span>`;
+    return `<span class="fs-pill fs-nofile">${name}</span>`;
+  }).join("");
 }
 
 function switchDay(day) {
