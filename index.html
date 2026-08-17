@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=app/dashboard.html">
-  <title>ZDC 2026 Fall · AV Management</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AV Management — ZDC 2026 Fall</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system,"Segoe UI",system-ui,sans-serif;
+  background: #1f2328;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.card {
+  background: #ffffff;
+  color: #1f2328;
+  border-radius: 10px;
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+.event-tag { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #57606a; margin-bottom: 8px; }
+h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.subtitle { font-size: 14px; color: #57606a; margin-bottom: 32px; }
+.btn-row { display: flex; flex-direction: column; gap: 12px; }
+a.btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: left;
+  transition: opacity .15s;
+}
+a.btn:hover { opacity: .88; }
+a.btn .icon { font-size: 24px; flex-shrink: 0; }
+a.btn .label { font-weight: 700; font-size: 15px; display: block; }
+a.btn .desc  { font-size: 12px; display: block; margin-top: 2px; }
+.btn-admin     { background: #1f2328; color: #ffffff; }
+.btn-dashboard { background: #3b82d4; color: #ffffff; }
+.divider { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
+.footer { font-size: 11.5px; color: #57606a; }
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="app/dashboard.html">dashboard</a>…</p>
+<div class="card">
+  <div class="event-tag">ZDC 2026 Fall · Antwerp</div>
+  <h1>AV Management</h1>
+  <p class="subtitle">Oct 18 – 22, 2026</p>
+
+  <div class="btn-row">
+    <a class="btn btn-admin" href="app/admin.html">
+      <span class="icon">🎛</span>
+      <div>
+        <span class="label">AV Admin</span>
+        <span class="desc">Track files, set statuses, save to GitHub — AV lead only</span>
+      </div>
+    </a>
+    <a class="btn btn-dashboard" href="app/dashboard.html">
+      <span class="icon">📺</span>
+      <div>
+        <span class="label">Vendor Dashboard</span>
+        <span class="desc">Live read-only view — file statuses, AV requirements, download links</span>
+      </div>
+    </a>
+  </div>
+
+  <hr class="divider" />
+  <p class="footer">Zero servers · Static site · GitHub Pages · IBM Box file storage</p>
+</div>
 </body>
 </html>

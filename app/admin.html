@@ -61,12 +61,18 @@ a{color:#3b82d4;text-decoration:none}
 /* Session card */
 .session-card{background:#fff;border:1px solid #e5e7eb;border-radius:6px;margin-bottom:10px;overflow:hidden}
 .session-card.in-dashboard{border-left:3px solid #3b82d4}
-.session-head{display:grid;grid-template-columns:80px minmax(0,1fr) 110px 130px 120px 52px 110px;gap:10px;align-items:start;padding:10px 14px;column-gap:14px}
+.session-head{display:grid;grid-template-columns:80px minmax(0,1fr) 110px 130px 120px 52px;gap:10px;align-items:start;padding:10px 14px 8px;column-gap:14px}
 .session-head:hover{background:#fafafa}
 /* Dashboard toggle */
 .dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:2px}
 .dash-toggle label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#9ca3af;cursor:pointer;text-align:center;line-height:1.2}
 .dash-toggle input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#3b82d4}
+/* AV details toggle bar */
+.av-details-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 14px;background:#f7f8fa;border-top:1px solid #e5e7eb;cursor:pointer;user-select:none}
+.av-details-bar:hover{background:#eff6ff}
+.av-details-bar span{font-size:11px;font-weight:700;color:#374151;letter-spacing:.04em;text-transform:uppercase}
+.av-details-bar .chevron{font-size:10px;color:#9ca3af;transition:transform .2s}
+.av-details-bar .chevron.open{transform:rotate(180deg)}
 .session-time{font-size:11.5px;color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums;padding-top:2px}
 .session-info{min-width:0}
 .session-title{font-weight:600;font-size:13px;color:#1f2328;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -494,11 +500,10 @@ function renderSession(s){
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
         <label for="dash-${s.id}">Dashboard</label>
       </div>
-      <div class="session-badges">
-        <button class="btn-av-details" onclick="toggleCard('${s.id}')">
-          AV DETAILS <span class="chevron" id="chev-${s.id}">▼</span>
-        </button>
-      </div>
+    </div>
+    <div class="av-details-bar" onclick="toggleCard('${s.id}')">
+      <span>AV Details</span>
+      <span class="chevron" id="chev-${s.id}">▼</span>
     </div>
     <div class="session-body" id="body-${s.id}">
       ${renderAVReqs(s)}
