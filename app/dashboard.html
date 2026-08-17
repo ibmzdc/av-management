@@ -264,10 +264,9 @@ function renderAll() {
   renderNeedsAttention();
 }
 
-// Sessions visible to the vendor team (exclude logistics-only rows)
-const VENDOR_EXCLUDE_TYPES = new Set(["Registration","Meal","Networking","Break","Rehearsal"]);
+// Sessions visible to the vendor team — only those explicitly flagged in admin
 function vendorSessions() {
-  return (avData.sessions || []).filter(s => !VENDOR_EXCLUDE_TYPES.has(s.sessionType));
+  return (avData.sessions || []).filter(s => s.showInDashboard === true);
 }
 
 function renderSummary() {
@@ -306,6 +305,12 @@ function renderDays() {
   const days = DAY_ORDER.filter(d => allVendor.some(s => s.day === d));
   const tabsEl   = document.getElementById("day-tabs");
   const panelsEl = document.getElementById("day-panels");
+
+  if (!days.length) {
+    tabsEl.innerHTML = "";
+    panelsEl.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:24px 0;text-align:center">No sessions have been marked for the dashboard yet.<br><span style="font-size:11.5px">Use the Dashboard checkbox in the AV Admin to include sessions.</span></p>`;
+    return;
+  }
 
   // Preserve active day across refreshes
   const activeDay = (tabsEl.querySelector(".day-tab.active") || {}).dataset?.day || days[0];
