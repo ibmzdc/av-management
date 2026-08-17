@@ -52,20 +52,15 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 
 /* ── Session Rows ────────────────────────────────────────── */
 .session-block { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
-.session-row { display: grid; grid-template-columns: 78px 1fr auto; align-items: start; gap: 0 12px; padding: 10px 14px; background: var(--surface); cursor: pointer; }
+.session-row { display: grid; grid-template-columns: 78px 1fr 120px 116px 116px; align-items: center; gap: 0 12px; padding: 10px 14px; background: var(--surface); }
 .session-row:hover { background: #eef0f3; }
-.session-time { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; padding-top: 2px; }
-.session-info { min-width: 0; }
-.session-title { font-weight: 600; font-size: 13px; line-height: 1.3; margin-bottom: 3px; }
-.session-sub { font-size: 11.5px; color: var(--muted); margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* AV chips — always visible on the row */
-.av-chips { display: flex; flex-wrap: wrap; gap: 4px; }
-.av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
-.av-chip .chip-k { font-weight: 700; color: var(--muted); margin-right: 2px; }
-.av-chip.chip-roomsetup { background: #f7f8fa; border-color: var(--border); color: var(--text); max-width: 340px; white-space: normal; line-height: 1.4; }
-/* Right column: type badge + file summary */
-.session-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 2px; }
-.session-type-badge { font-size: 10.5px; font-weight: 600; border-radius: 20px; padding: 2px 9px; white-space: nowrap; }
+.session-time { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.session-info { min-width: 0; cursor: default; }
+.session-title { font-weight: 600; font-size: 13px; line-height: 1.3; margin-bottom: 2px; }
+.session-sub { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Session type badge */
+.session-type-col { display: flex; justify-content: center; }
+.session-type-badge { font-size: 10.5px; font-weight: 600; border-radius: 20px; padding: 2px 9px; white-space: nowrap; text-align: center; }
 .badge-general   { background: #ede9fe; color: #6d28d9; }
 .badge-client    { background: #dbeafe; color: #1d4ed8; }
 .badge-solution  { background: #dcfce7; color: #15803d; }
@@ -74,12 +69,23 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .badge-roundtable{ background: #e0f2fe; color: #0369a1; }
 .badge-playback  { background: #f0fdf4; color: #166534; }
 .badge-default   { background: var(--surface); color: var(--muted); }
-.file-summary { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
-.collapse-arrow { font-size: 10px; color: var(--muted); transition: transform .2s; margin-top: 2px; }
-.collapse-arrow.open { transform: rotate(90deg); }
-
-.session-detail { display: none; padding: 12px 14px; border-top: 1px solid var(--border); }
-.session-detail.open { display: block; }
+/* Action buttons */
+.row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; }
+.row-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
+.row-btn.active { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
+.row-btn-badge { font-size: 10px; font-weight: 700; border-radius: 20px; padding: 1px 6px; background: var(--border); color: var(--muted); }
+.row-btn.active .row-btn-badge { background: #bfdbfe; color: #1d4ed8; }
+.row-btn-badge.has-update { background: #fde68a; color: #92400e; }
+/* AV chips — inside AV details panel */
+.av-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
+.av-chip .chip-k { font-weight: 700; color: var(--muted); margin-right: 2px; }
+.av-chip.chip-roomsetup { background: #f7f8fa; border-color: var(--border); color: var(--text); max-width: 100%; white-space: normal; line-height: 1.4; }
+/* Sub-panels */
+.sub-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
+.sub-panel.open { display: block; }
+.sub-panel-av { background: #fafbff; }
+.sub-panel-files { background: #fff; }
 
 /* ── Files Table ─────────────────────────────────────────── */
 .files-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
@@ -103,6 +109,8 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .dl-nolink   { color: var(--muted); font-size: 11.5px; font-style: italic; }
 @keyframes dl-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
+/* AV table key cells */
+.chip-k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 5px 12px 5px 0; width: 120px; vertical-align: top; white-space: nowrap; }
 .av-note { margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #78350f; }
 .av-note strong { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: #92400e; margin-bottom: 2px; }
 
@@ -368,39 +376,56 @@ function buildSessionBlock(s) {
   block.className = "session-block";
   const [badgeClass, badgeLabel] = TYPE_BADGE[s.sessionType] || ["badge-default", s.sessionType];
   const files = s.files || [];
+  const hasUpdate = files.some(f => dlState(f) === "update");
+  const fileBadgeCls = hasUpdate ? " has-update" : "";
+  const fileBadgeTxt = files.length ? String(files.length) : "0";
 
   block.innerHTML = `
-    <div class="session-row" onclick="toggleSession('${s.id}')">
+    <div class="session-row">
       <span class="session-time">${s.startTime || ""}${s.endTime?"–"+s.endTime:""}</span>
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-sub">${s.speakers ? esc(s.speakers.slice(0,80)) : "&nbsp;"}</div>
-        ${buildAVChips(s)}
       </div>
-      <div class="session-right">
+      <div class="session-type-col">
         <span class="session-type-badge ${badgeClass}">${badgeLabel}</span>
-        <span class="file-summary" id="filesummary-${s.id}">${buildFilesSummary(files)}</span>
-        <span class="collapse-arrow" id="arrow-${s.id}">▶</span>
+      </div>
+      <div>
+        <button class="row-btn" id="avbtn-${s.id}" onclick="togglePanel('${s.id}','av')">
+          AV Details
+        </button>
+      </div>
+      <div>
+        <button class="row-btn" id="filesbtn-${s.id}" onclick="togglePanel('${s.id}','files')">
+          Files <span class="row-btn-badge${fileBadgeCls}" id="filebadge-${s.id}">${fileBadgeTxt}</span>
+        </button>
       </div>
     </div>
-    <div class="session-detail" id="detail-${s.id}">
+    <div class="sub-panel sub-panel-av" id="av-panel-${s.id}">
+      ${buildAVChips(s)}
+      ${s.avNote ? `<div class="av-note" style="margin-top:8px"><strong>AV Note</strong>${esc(s.avNote)}</div>` : ""}
+    </div>
+    <div class="sub-panel sub-panel-files" id="files-panel-${s.id}">
       ${buildFilesSection(s)}
-      ${s.avNote ? `<div class="av-note"><strong>AV Note</strong>${esc(s.avNote)}</div>` : ""}
     </div>`;
   return block;
 }
 
 function buildAVChips(s) {
-  const chips = [];
-  if (s.room)        chips.push(`<span class="av-chip"><span class="chip-k">Room</span>${esc(s.room)}</span>`);
-  if (s.projection)  chips.push(`<span class="av-chip"><span class="chip-k">Proj</span>${esc(s.projection)}</span>`);
-  if (s.microphones) chips.push(`<span class="av-chip"><span class="chip-k">Mics</span>${esc(s.microphones)}</span>`);
-  if (s.podium)      chips.push(`<span class="av-chip"><span class="chip-k">Podium</span>Yes</span>`);
-  if (s.timer)       chips.push(`<span class="av-chip"><span class="chip-k">Timer</span>${esc(String(s.timer))} min</span>`);
-  if (s.monitor)     chips.push(`<span class="av-chip"><span class="chip-k">Monitor</span>${esc(s.monitor)}</span>`);
-  if (s.roomSetup)   chips.push(`<span class="av-chip chip-roomsetup"><span class="chip-k">Setup</span>${esc(s.roomSetup)}</span>`);
-  if (!chips.length) return "";
-  return `<div class="av-chips">${chips.join("")}</div>`;
+  const rows = [
+    s.room        && `<tr><td class="chip-k">Room</td><td>${esc(s.room)}</td></tr>`,
+    s.projection  && `<tr><td class="chip-k">Projection</td><td>${esc(s.projection)}</td></tr>`,
+    s.microphones && `<tr><td class="chip-k">Mics</td><td>${esc(s.microphones)}</td></tr>`,
+    s.podium      && `<tr><td class="chip-k">Podium</td><td>Yes</td></tr>`,
+    s.timer       && `<tr><td class="chip-k">Timer</td><td>${esc(String(s.timer))} min</td></tr>`,
+    s.monitor     && `<tr><td class="chip-k">Monitor</td><td>${esc(s.monitor)}</td></tr>`,
+    s.roomSetup   && `<tr><td class="chip-k">Room Setup</td><td>${esc(s.roomSetup)}</td></tr>`,
+    s.specialReqs && `<tr><td class="chip-k">Special Reqs</td><td>${esc(s.specialReqs)}</td></tr>`,
+  ].filter(Boolean);
+  if (!rows.length) return `<p style="color:var(--muted);font-size:12px;font-style:italic">No AV details on file.</p>`;
+  return `<table style="font-size:12.5px;border-collapse:collapse;width:100%">
+    ${rows.map(r => r.replace('<tr>','<tr style="border-bottom:1px solid var(--border)">')).join("")}
+  </table>`;
 }
 
 function buildFilesSummary(files) {
@@ -507,12 +532,18 @@ function renderChangelog() {
 }
 
 // ── Interaction ────────────────────────────────────────────
-function toggleSession(sid) {
-  const detail = document.getElementById("detail-" + sid);
-  const arrow  = document.getElementById("arrow-" + sid);
-  if (!detail) return;
-  const open = detail.classList.toggle("open");
-  arrow.classList.toggle("open", open);
+function togglePanel(sid, which) {
+  const avPanel    = document.getElementById("av-panel-"    + sid);
+  const filesPanel = document.getElementById("files-panel-" + sid);
+  const avBtn      = document.getElementById("avbtn-"       + sid);
+  const filesBtn   = document.getElementById("filesbtn-"    + sid);
+  if (which === "av") {
+    const open = avPanel.classList.toggle("open");
+    avBtn.classList.toggle("active", open);
+  } else {
+    const open = filesPanel.classList.toggle("open");
+    filesBtn.classList.toggle("active", open);
+  }
 }
 
 function switchDay(day) {
