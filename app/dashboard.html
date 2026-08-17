@@ -73,18 +73,23 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; }
 .row-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
 .row-btn.active { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
-/* Files column — status pills inline on the row */
+/* Download Status column */
 .files-col { display: flex; flex-direction: column; gap: 3px; }
-.files-col-btn { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; }
+.files-col-btn { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; flex-wrap: wrap; }
 .files-col-btn:hover { background: #f0f4ff; border-color: #93c5fd; }
 .files-col-btn.active { background: #eff6ff; border-color: #3b82d4; }
-.files-col-label { font-size: 11px; font-weight: 700; color: var(--muted); white-space: nowrap; }
-.fs-pill { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 700; border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+.files-col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); white-space: nowrap; margin-right: 2px; }
+.fs-pill { display: inline-flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; width: 24px; height: 24px; border-radius: 4px; }
 .fs-update { background: #fde68a; color: #92400e; animation: dl-pulse 1.6s ease-in-out infinite; }
 .fs-new    { background: #dbeafe; color: #1d4ed8; }
 .fs-done   { background: var(--green-bg); color: var(--green); }
 .fs-hold   { background: var(--amber-bg); color: var(--amber); }
-.fs-nofile { background: var(--gray-bg);  color: var(--gray); }
+.fs-nofile { background: var(--gray-bg);  color: var(--gray); font-size: 10px; }
+/* Legend bar */
+.legend-bar { display: flex; align-items: center; gap: 14px; padding: 6px 14px; background: #f7f8fa; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 10px; flex-wrap: wrap; }
+.legend-bar span { font-size: 10.5px; color: var(--muted); }
+.legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text); }
+.legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; }
 /* AV chips — inside AV details panel */
 .av-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
 .av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
@@ -359,7 +364,15 @@ function renderDays() {
   const activeDay = (tabsEl.querySelector(".day-tab.active") || {}).dataset?.day || days[0];
 
   tabsEl.innerHTML = "";
-  panelsEl.innerHTML = "";
+  panelsEl.innerHTML = `<div class="legend-bar">
+    <span class="legend-title">Download Status:</span>
+    <span class="legend-item"><span class="fs-pill fs-update" style="width:20px;height:20px;font-size:12px">↻</span> Re-download required</span>
+    <span class="legend-item"><span class="fs-pill fs-new"    style="width:20px;height:20px;font-size:12px">⬇</span> Download needed</span>
+    <span class="legend-item"><span class="fs-pill fs-done"   style="width:20px;height:20px;font-size:12px">✓</span> Downloaded / Distributed</span>
+    <span class="legend-item"><span class="fs-pill fs-hold"   style="width:20px;height:20px;font-size:12px">⏸</span> On Hold — awaiting file</span>
+    <span class="legend-item"><span class="fs-pill fs-nofile" style="width:20px;height:20px;font-size:12px">—</span> No file attached</span>
+    <span style="margin-left:4px;font-style:italic">· Hover a pill to see file name · Click Download Status to open/close full details</span>
+  </div>`;
 
   days.forEach(day => {
     const sessions = allVendor.filter(s => s.day === day);
@@ -403,7 +416,7 @@ function buildSessionBlock(s) {
       </div>
       <div class="files-col">
         <button class="files-col-btn" id="filesbtn-${s.id}" onclick="togglePanel('${s.id}','files')">
-          <span class="files-col-label">Files</span>
+          <span class="files-col-label">Download Status</span>
           ${buildRowFilePills(files)}
         </button>
       </div>
@@ -435,18 +448,18 @@ function buildAVChips(s) {
   </table>`;
 }
 
-// Inline pills shown on the collapsed session row for each file's download state
+// Inline icon-only pills shown on the collapsed session row
 function buildRowFilePills(files) {
-  if (!files.length) return `<span class="fs-pill fs-nofile">no files</span>`;
+  if (!files.length) return `<span class="fs-pill fs-nofile" title="No files attached">—</span>`;
   return files.map(f => {
     const state = dlState(f);
-    const name  = f.fileName ? esc(f.fileName.slice(0, 28)) : (f.fileType || "file");
-    if (state === "update")      return `<span class="fs-pill fs-update">↻ ${name}</span>`;
-    if (state === "new")         return `<span class="fs-pill fs-new">⬇ ${name}</span>`;
-    if (state === "distributed") return `<span class="fs-pill fs-done">✓ ${name}</span>`;
-    if (state === "done")        return `<span class="fs-pill fs-done">✓ ${name}</span>`;
-    if (f.status === "onhold")   return `<span class="fs-pill fs-hold">⏸ ${name}</span>`;
-    return `<span class="fs-pill fs-nofile">${name}</span>`;
+    const tip   = f.fileName || f.fileType || "file";
+    if (state === "update")      return `<span class="fs-pill fs-update" title="↻ Update — re-download: ${tip}">↻</span>`;
+    if (state === "new")         return `<span class="fs-pill fs-new"    title="⬇ Download needed: ${tip}">⬇</span>`;
+    if (state === "distributed") return `<span class="fs-pill fs-done"   title="✓ Distributed: ${tip}">✓</span>`;
+    if (state === "done")        return `<span class="fs-pill fs-done"   title="✓ Downloaded: ${tip}">✓</span>`;
+    if (f.status === "onhold")   return `<span class="fs-pill fs-hold"   title="⏸ On Hold: ${tip}">⏸</span>`;
+    return `<span class="fs-pill fs-nofile" title="${tip}">—</span>`;
   }).join("");
 }
 
@@ -584,7 +597,7 @@ function onDownload(boxFileId, btnId) {
         if (label) {
           // Update each file's pill that matches this boxFileId
           s.files.forEach(f => { if (f.boxFileId === boxFileId) f._justDownloaded = true; });
-          btn.innerHTML = `<span class="files-col-label">Files</span>${buildRowFilePillsLive(s.files)}`;
+          btn.innerHTML = `<span class="files-col-label">Download Status</span>${buildRowFilePillsLive(s.files)}`;
         }
       }
       break;
@@ -593,23 +606,22 @@ function onDownload(boxFileId, btnId) {
 }
 
 function buildRowFilePillsLive(files) {
-  if (!files.length) return `<span class="fs-pill fs-nofile">no files</span>`;
+  if (!files.length) return `<span class="fs-pill fs-nofile" title="No files attached">—</span>`;
   const log = getDownloadLog();
   return files.map(f => {
-    const name = f.fileName ? esc(f.fileName.slice(0, 28)) : (f.fileType || "file");
-    // Use updated log after recordDownload was called
+    const tip    = f.fileName || f.fileType || "file";
     const lastDl = f.boxFileId && log[f.boxFileId];
     let state;
-    if (f.status === "distributed")                                    state = "distributed";
-    else if (!f.boxFileId)                                             state = "nolink";
-    else if (!lastDl)                                                  state = "new";
-    else if (f.updatedAt && f.updatedAt > lastDl)                     state = "update";
-    else                                                               state = "done";
-    if (state === "update")      return `<span class="fs-pill fs-update">↻ ${name}</span>`;
-    if (state === "new")         return `<span class="fs-pill fs-new">⬇ ${name}</span>`;
-    if (state === "distributed"||state==="done") return `<span class="fs-pill fs-done">✓ ${name}</span>`;
-    if (f.status === "onhold")   return `<span class="fs-pill fs-hold">⏸ ${name}</span>`;
-    return `<span class="fs-pill fs-nofile">${name}</span>`;
+    if (f.status === "distributed")              state = "distributed";
+    else if (!f.boxFileId)                       state = "nolink";
+    else if (!lastDl)                            state = "new";
+    else if (f.updatedAt && f.updatedAt > lastDl) state = "update";
+    else                                         state = "done";
+    if (state === "update")                        return `<span class="fs-pill fs-update" title="↻ Update — re-download: ${tip}">↻</span>`;
+    if (state === "new")                           return `<span class="fs-pill fs-new"    title="⬇ Download needed: ${tip}">⬇</span>`;
+    if (state === "distributed" || state==="done") return `<span class="fs-pill fs-done"   title="✓ Downloaded: ${tip}">✓</span>`;
+    if (f.status === "onhold")                     return `<span class="fs-pill fs-hold"   title="⏸ On Hold: ${tip}">⏸</span>`;
+    return `<span class="fs-pill fs-nofile" title="${tip}">—</span>`;
   }).join("");
 }
 
