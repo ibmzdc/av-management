@@ -130,6 +130,15 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 
 .no-files-msg { color: var(--muted); font-size: 12px; font-style: italic; padding: 6px 0; }
 
+/* ── Room Filter ──────────────────────────────────────────── */
+.room-filter-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.room-filter-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; white-space: nowrap; }
+.room-btn { font-size: 11.5px; font-weight: 500; padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; white-space: nowrap; transition: background .1s; }
+.room-btn:hover { background: #e5e7eb; color: var(--text); }
+.room-btn.active { background: #1f2328; color: #fff; border-color: #1f2328; font-weight: 600; }
+.room-btn.all-rooms.active { background: var(--accent); border-color: var(--accent); }
+.session-block.room-hidden { display: none; }
+
 /* ── Changelog Sidebar ────────────────────────────────────── */
 .sidebar { padding-left: 20px; }
 @media(max-width: 900px){ .sidebar { padding-left: 0; padding-top: 20px; } }
@@ -180,6 +189,7 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
   <div class="layout">
     <div>
       <div class="day-tabs" id="day-tabs"></div>
+      <div id="room-filter-bar" class="room-filter-bar" style="display:none"></div>
       <div id="day-panels"></div>
     </div>
     <div class="sidebar">
@@ -238,6 +248,7 @@ function onDownload(boxFileId, btnId) {
 
 // ── Boot ──────────────────────────────────────────────────
 let avData = null;
+let activeRoom = null;   // null = All Rooms
 
 async function loadData() {
   // Tier 1: GitHub raw (works on GitHub Pages + any network connection)
@@ -351,14 +362,32 @@ function renderNeedsAttention() {
 function renderDays() {
   const allVendor = vendorSessions();
   const days = DAY_ORDER.filter(d => allVendor.some(s => s.day === d));
-  const tabsEl   = document.getElementById("day-tabs");
-  const panelsEl = document.getElementById("day-panels");
+  const tabsEl      = document.getElementById("day-tabs");
+  const panelsEl    = document.getElementById("day-panels");
+  const filterBarEl = document.getElementById("room-filter-bar");
 
   if (!days.length) {
     tabsEl.innerHTML = "";
+    filterBarEl.style.display = "none";
     panelsEl.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:24px 0;text-align:center">No sessions have been marked for the dashboard yet.<br><span style="font-size:11.5px">Use the Dashboard checkbox in the AV Admin to include sessions.</span></p>`;
     return;
   }
+
+  // Build room list from current data
+  const rooms = [...new Set(allVendor.map(s => s.room).filter(Boolean))].sort();
+
+  // Validate activeRoom still exists
+  if (activeRoom && !rooms.includes(activeRoom)) activeRoom = null;
+
+  // Render room filter bar
+  filterBarEl.style.display = "flex";
+  filterBarEl.innerHTML =
+    `<span class="room-filter-label">Room:</span>` +
+    `<button class="room-btn all-rooms${!activeRoom?" active":""}" onclick="setRoomFilter(null)">All Rooms</button>` +
+    rooms.map(r => {
+      const cnt = allVendor.filter(s => s.room === r).length;
+      return `<button class="room-btn${activeRoom===r?" active":""}" onclick="setRoomFilter(${JSON.stringify(r)})">${esc(r)} <span style="font-size:10px;opacity:.7">${cnt}</span></button>`;
+    }).join("");
 
   // Preserve active day across refreshes
   const activeDay = (tabsEl.querySelector(".day-tab.active") || {}).dataset?.day || days[0];
@@ -391,11 +420,36 @@ function renderDays() {
     sessions.forEach(s => panel.appendChild(buildSessionBlock(s)));
     panelsEl.appendChild(panel);
   });
+
+  // Apply current room filter after building
+  applyRoomFilter();
+}
+
+function setRoomFilter(room) {
+  activeRoom = room;
+  // Update button active states
+  document.querySelectorAll(".room-btn").forEach(b => b.classList.remove("active"));
+  if (!room) {
+    document.querySelector(".room-btn.all-rooms")?.classList.add("active");
+  } else {
+    document.querySelectorAll(".room-btn:not(.all-rooms)").forEach(b => {
+      if (b.textContent.trim().startsWith(room)) b.classList.add("active");
+    });
+  }
+  applyRoomFilter();
+}
+
+function applyRoomFilter() {
+  document.querySelectorAll(".session-block[data-room]").forEach(block => {
+    const match = !activeRoom || block.dataset.room === activeRoom;
+    block.classList.toggle("room-hidden", !match);
+  });
 }
 
 function buildSessionBlock(s) {
   const block = document.createElement("div");
   block.className = "session-block";
+  if (s.room) block.dataset.room = s.room;
   const [badgeClass, badgeLabel] = TYPE_BADGE[s.sessionType] || ["badge-default", s.sessionType];
   const files = s.files || [];
 
