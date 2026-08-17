@@ -88,10 +88,11 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .files-table tr:last-child td { border-bottom: none; }
 
 .status-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
-.pill-approved { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.pill-updated  { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
-.pill-onhold   { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-.pill-nofile   { background: var(--gray-bg);  color: var(--gray);  border: 1px solid var(--gray-border); }
+.pill-approved     { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.pill-updated      { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
+.pill-onhold       { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.pill-nofile       { background: var(--gray-bg);  color: var(--gray);  border: 1px solid var(--gray-border); }
+.pill-distributed  { background: #f3e8ff; color: #7c3aed; border: 1px solid #d8b4fe; }
 
 /* ── Download button states ───────────────────────────────── */
 .dl-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; border-radius: 4px; padding: 4px 12px; text-decoration: none; white-space: nowrap; cursor: pointer; border: none; }
@@ -192,13 +193,14 @@ function recordDownload(boxFileId) {
   localStorage.setItem("av_downloads", JSON.stringify(log));
 }
 
-// Returns "new" | "done" | "update" for a file object
+// Returns "distributed" | "new" | "done" | "update" | "nolink"
 function dlState(f) {
+  if (f.status === "distributed") return "distributed"; // global shared state — set by AV lead
   if (!f.boxFileId) return "nolink";
   const log = getDownloadLog();
   const lastDl = log[f.boxFileId];
-  if (!lastDl) return "new";                          // never downloaded
-  if (f.updatedAt && f.updatedAt > lastDl) return "update"; // file changed since last download
+  if (!lastDl) return "new";                                    // never downloaded locally
+  if (f.updatedAt && f.updatedAt > lastDl) return "update";    // file updated since last download
   return "done";
 }
 
@@ -209,7 +211,6 @@ function onDownload(boxFileId, btnId) {
   if (btn) {
     btn.className = "dl-btn dl-done";
     btn.innerHTML = "✓ Downloaded";
-    // keep it as a real link so the browser still opens it
   }
 }
 
@@ -405,11 +406,13 @@ function buildAVChips(s) {
 function buildFilesSummary(files) {
   if (!files.length) return '<span style="font-size:10.5px;color:var(--amber)">no files</span>';
   const hasUpdate = files.some(f => dlState(f) === "update");
+  const d = files.filter(f=>f.status==="distributed").length;
   const a = files.filter(f=>f.status==="approved").length;
   const u = files.filter(f=>f.status==="updated").length;
   const h = files.filter(f=>f.status==="onhold").length;
   const parts = [];
   if (hasUpdate) parts.push(`<span style="color:var(--amber);font-size:10.5px;font-weight:700">↻ update</span>`);
+  if (d) parts.push(`<span style="color:#7c3aed;font-size:10.5px;font-weight:700">${d}⬇</span>`);
   if (a) parts.push(`<span style="color:var(--green);font-size:10.5px;font-weight:700">${a}✓</span>`);
   if (u && !hasUpdate) parts.push(`<span style="color:var(--blue);font-size:10.5px;font-weight:700">${u}↑</span>`);
   if (h) parts.push(`<span style="color:var(--amber);font-size:10.5px;font-weight:700">${h}⏸</span>`);
@@ -422,13 +425,13 @@ function buildFilesSection(s) {
 
   const rows = files.map((f, i) => {
     const pillClass = {
-      "approved":"pill-approved","updated":"pill-updated",
+      "approved":"pill-approved","updated":"pill-updated","distributed":"pill-distributed",
       "onhold":"pill-onhold","nofile":"pill-nofile","pending":"pill-nofile"
     }[f.status] || "pill-nofile";
 
     const statusLabel = {
       "approved":"Approved","updated":"Updated","onhold":"On Hold",
-      "nofile":"No File Needed","pending":"Pending"
+      "distributed":"Distributed","nofile":"No File Needed","pending":"Pending"
     }[f.status] || f.status || "—";
 
     const updFmt = f.updatedAt ? fmtTs(f.updatedAt) : "—";
@@ -436,7 +439,14 @@ function buildFilesSection(s) {
     const state = dlState(f);
     const btnId = `dlbtn-${s.id}-${i}`;
     let dlBtn;
-    if (state === "nolink") {
+    if (state === "distributed") {
+      // Global state: AV lead confirmed distributed — show as a download link but already marked
+      const href = f.boxFileId ? `https://ibm.box.com/s/${esc(f.boxFileId)}` : null;
+      dlBtn = href
+        ? `<a id="${btnId}" class="dl-btn dl-done" href="${href}" target="_blank" rel="noopener"
+               onclick="onDownload('${esc(f.boxFileId)}','${btnId}')">✓ Distributed</a>`
+        : `<span class="dl-nolink">✓ Distributed</span>`;
+    } else if (state === "nolink") {
       dlBtn = `<span class="dl-nolink">No link yet</span>`;
     } else {
       const href  = `https://ibm.box.com/s/${esc(f.boxFileId)}`;

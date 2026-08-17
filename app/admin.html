@@ -76,6 +76,7 @@ a{color:#3b82d4;text-decoration:none}
 .badge-nofile{background:#f3f4f6;color:#6b7280}
 .badge-missing{background:#fee2e2;color:#b91c1c}
 .badge-av{background:#ede9fe;color:#6d28d9}
+.badge-distributed{background:#f3e8ff;color:#7c3aed}
 .chevron{font-size:10px;color:#9ca3af;transition:transform .2s}
 .chevron.open{transform:rotate(180deg)}
 /* Session body */
@@ -305,14 +306,15 @@ function render(){
 
 function renderStats(){
   const bar = document.getElementById("statsBar");
-  let total=0, approved=0, updated=0, onhold=0, missing=0;
+  let total=0, approved=0, updated=0, onhold=0, distributed=0, missing=0;
   for(const s of DATA.sessions){
     if(s.files.length===0 && s.sessionType !== "Z Design Fair") missing++;
     for(const f of s.files){
       total++;
-      if(f.status==="approved") approved++;
-      else if(f.status==="updated") updated++;
-      else if(f.status==="onhold") onhold++;
+      if(f.status==="approved")     approved++;
+      else if(f.status==="updated")     updated++;
+      else if(f.status==="onhold")      onhold++;
+      else if(f.status==="distributed") distributed++;
     }
   }
   bar.style.display="flex";
@@ -324,6 +326,7 @@ function renderStats(){
     <div class="stat"><div class="val" style="color:#15803d">${approved}</div><div class="lbl">Approved</div></div>
     <div class="stat"><div class="val" style="color:#1d4ed8">${updated}</div><div class="lbl">Updated</div></div>
     <div class="stat"><div class="val" style="color:#92400e">${onhold}</div><div class="lbl">On Hold</div></div>
+    <div class="stat"><div class="val" style="color:#7c3aed">${distributed}</div><div class="lbl">Distributed</div></div>
     <div class="stat-divider"></div>
     <div class="stat"><div class="val" style="color:${missing>0?"#b91c1c":"#9ca3af"}">${missing}</div><div class="lbl">Missing Files</div></div>
   `;
@@ -335,9 +338,9 @@ function renderDayNav(){
   nav.innerHTML = days.map(day => {
     const sessions = DATA.sessions.filter(s=>s.day===day);
     const files = sessions.flatMap(s=>s.files);
-    const approved = files.filter(f=>f.status==="approved").length;
+    const done = files.filter(f=>f.status==="approved"||f.status==="distributed").length;
     return `<a class="day-link" id="nav-${day}" onclick="scrollToDay('${day}')" href="#">
-      ${day} <span class="day-stats">${approved}/${files.length}</span>
+      ${day} <span class="day-stats">${done}/${files.length}</span>
     </a>`;
   }).join("");
 }
@@ -371,11 +374,12 @@ function fileStatusBadge(files){
   const statuses = files.map(f=>f.status);
   const parts = [];
   const cnt = (st) => statuses.filter(s=>s===st).length;
-  if(cnt("approved"))  parts.push(`<span class="badge badge-approved">✓ ${cnt("approved")} Approved</span>`);
-  if(cnt("updated"))   parts.push(`<span class="badge badge-updated">↑ ${cnt("updated")} Updated</span>`);
-  if(cnt("onhold"))    parts.push(`<span class="badge badge-onhold">⏸ ${cnt("onhold")} On Hold</span>`);
-  if(cnt("nofile"))    parts.push(`<span class="badge badge-nofile">${cnt("nofile")} No File Needed</span>`);
-  if(cnt("pending"))   parts.push(`<span class="badge badge-missing">${cnt("pending")} Pending</span>`);
+  if(cnt("distributed")) parts.push(`<span class="badge badge-distributed">✓ ${cnt("distributed")} Distributed</span>`);
+  if(cnt("approved"))    parts.push(`<span class="badge badge-approved">✓ ${cnt("approved")} Approved</span>`);
+  if(cnt("updated"))     parts.push(`<span class="badge badge-updated">↑ ${cnt("updated")} Updated</span>`);
+  if(cnt("onhold"))      parts.push(`<span class="badge badge-onhold">⏸ ${cnt("onhold")} On Hold</span>`);
+  if(cnt("nofile"))      parts.push(`<span class="badge badge-nofile">${cnt("nofile")} No File Needed</span>`);
+  if(cnt("pending"))     parts.push(`<span class="badge badge-missing">${cnt("pending")} Pending</span>`);
   return parts.join(" ");
 }
 
@@ -509,11 +513,12 @@ function renderFiles(s){
       </select>
       <input type="text" id="fname-${s.id}-${i}" value="${esc(f.fileName||"")}" placeholder="File name" oninput="markDirty()">
       <select id="fstatus-${s.id}-${i}" onchange="onStatusChange('${s.id}',${i})">
-        <option value="pending"  ${f.status==="pending"?"selected":""}>Pending</option>
-        <option value="approved" ${f.status==="approved"?"selected":""}>Approved</option>
-        <option value="updated"  ${f.status==="updated"?"selected":""}>Updated</option>
-        <option value="onhold"   ${f.status==="onhold"?"selected":""}>On Hold</option>
-        <option value="nofile"   ${f.status==="nofile"?"selected":""}>No File Needed</option>
+        <option value="pending"      ${f.status==="pending"?"selected":""}>Pending</option>
+        <option value="approved"     ${f.status==="approved"?"selected":""}>Approved</option>
+        <option value="updated"      ${f.status==="updated"?"selected":""}>Updated</option>
+        <option value="onhold"       ${f.status==="onhold"?"selected":""}>On Hold</option>
+        <option value="distributed"  ${f.status==="distributed"?"selected":""}>Distributed ✓</option>
+        <option value="nofile"       ${f.status==="nofile"?"selected":""}>No File Needed</option>
       </select>
       <button class="btn-remove" onclick="removeFile('${s.id}',${i})" title="Remove file">×</button>
     </div>
