@@ -61,7 +61,7 @@ a{color:#3b82d4;text-decoration:none}
 /* Session card */
 .session-card{background:#fff;border:1px solid #e5e7eb;border-radius:6px;margin-bottom:10px;overflow:hidden}
 .session-card.in-dashboard{border-left:3px solid #3b82d4}
-.session-head{display:grid;grid-template-columns:80px minmax(0,1fr) 110px 130px 120px 52px;gap:10px;align-items:start;padding:10px 14px 8px;column-gap:14px}
+.session-head{display:grid;grid-template-columns:80px minmax(0,1fr) 110px 130px minmax(120px,1fr) 52px;gap:10px;align-items:start;padding:10px 14px 8px;column-gap:14px}
 .session-head:hover{background:#fafafa}
 /* Dashboard toggle */
 .dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:2px}
@@ -231,9 +231,11 @@ a{color:#3b82d4;text-decoration:none}
 <div class="topbar">
   <span class="logo">ZDC AV Admin</span>
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
+  <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)"
+    style="font-size:12px;padding:4px 10px;border-radius:4px;border:1px solid #4b5563;background:#374151;color:#e5e7eb;width:220px;outline:none">
   <span class="save-status" id="saveStatus"></span>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
-  <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()" disabled style="background:#374151;color:#e5e7eb">↓ Download JSON</button>
+  <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()" style="background:#374151;color:#e5e7eb">↓ Download JSON</button>
   <button class="btn-save btn" id="saveBtn" onclick="saveAll()" disabled>Save to GitHub</button>
 </div>
 
@@ -493,8 +495,8 @@ function renderSession(s){
         <span class="col-val">${esc(s.sessionType)}</span>
       </div>
       <div class="session-col" onclick="toggleCard('${s.id}')">
-        <span class="col-label">Projection</span>
-        <span class="col-val">${esc(s.projection||"N/A")}</span>
+        <span class="col-label">Files</span>
+        <div id="badges-${s.id}" class="session-badges">${fileStatusBadge(s.files)}</div>
       </div>
       <div class="dash-toggle">
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
@@ -810,10 +812,12 @@ function collectFormState(){
 }
 
 function updateCardBadges(sessionId){
-  // Only refresh the stats bar — the session row HTML is not rebuilt dynamically.
-  // File status badges are shown inside the expanded panel, not on the collapsed row.
   renderStats();
   renderDayNav();
+  // Refresh the inline badge summary on the collapsed session row
+  const s = DATA.sessions.find(x=>x.id===sessionId);
+  const el = document.getElementById("badges-"+sessionId);
+  if(s && el) el.innerHTML = fileStatusBadge(s.files);
 }
 
 function appendChangelog(session, fileType, oldStatus, newStatus){
@@ -828,6 +832,23 @@ function appendChangelog(session, fileType, oldStatus, newStatus){
     newStatus
   });
   if(DATA.changelog.length > 50) DATA.changelog = DATA.changelog.slice(0,50);
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+let SEARCH_TERM = "";
+function onSearch(val){
+  SEARCH_TERM = val.trim().toLowerCase();
+  const cards = document.querySelectorAll(".session-card");
+  cards.forEach(card => {
+    if(!SEARCH_TERM){ card.style.display=""; return; }
+    const text = (card.textContent||"").toLowerCase();
+    card.style.display = text.includes(SEARCH_TERM) ? "" : "none";
+  });
+  // Hide day headers when all their cards are hidden
+  document.querySelectorAll(".day-section").forEach(sec => {
+    const visible = [...sec.querySelectorAll(".session-card")].some(c=>c.style.display!=="none");
+    sec.style.display = visible ? "" : "none";
+  });
 }
 
 function scrollToDay(day){
