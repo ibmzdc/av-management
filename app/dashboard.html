@@ -58,9 +58,9 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .session-info { min-width: 0; cursor: default; }
 .session-title { font-weight: 600; font-size: 13px; line-height: 1.3; margin-bottom: 2px; }
 .session-sub { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* Session type badge */
-.session-type-col { display: flex; justify-content: center; }
-.session-type-badge { font-size: 10.5px; font-weight: 600; border-radius: 20px; padding: 2px 9px; white-space: nowrap; text-align: center; }
+/* Room column */
+.session-type-col { display: flex; align-items: center; }
+.session-room-val { font-size: 12px; color: var(--text); font-weight: 500; }
 .badge-general   { background: #ede9fe; color: #6d28d9; }
 .badge-client    { background: #dbeafe; color: #1d4ed8; }
 .badge-solution  { background: #dcfce7; color: #15803d; }
@@ -394,7 +394,7 @@ function buildSessionBlock(s) {
         <div class="session-sub">${s.speakers ? esc(s.speakers.slice(0,80)) : "&nbsp;"}</div>
       </div>
       <div class="session-type-col">
-        <span class="session-type-badge ${badgeClass}">${badgeLabel}</span>
+        <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
       <div>
         <button class="row-btn" id="avbtn-${s.id}" onclick="togglePanel('${s.id}','av')">
