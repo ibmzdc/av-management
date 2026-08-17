@@ -140,6 +140,7 @@ a{color:#3b82d4;text-decoration:none}
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
   <span class="save-status" id="saveStatus"></span>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
+  <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()" disabled style="background:#374151;color:#e5e7eb">↓ Download JSON</button>
   <button class="btn-save btn" id="saveBtn" onclick="saveAll()" disabled>Save to GitHub</button>
 </div>
 
@@ -232,11 +233,27 @@ async function load(){
 // ── Mark dirty ───────────────────────────────────────────────────────────────
 function markDirty(){
   DIRTY = true;
+  document.getElementById("dlBtn").disabled = false;
   document.getElementById("saveBtn").disabled = !getToken();
   setStatus("Unsaved changes", "");
 }
 
-// ── Save ─────────────────────────────────────────────────────────────────────
+// ── Download JSON (local testing — no token needed) ───────────────────────────
+function downloadJSON(){
+  collectFormState();
+  DATA.lastUpdated = new Date().toISOString();
+  const json = JSON.stringify(DATA, null, 2);
+  const blob = new Blob([json], {type:"application/json"});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href = url;
+  a.download = "av-data.json";
+  a.click();
+  URL.revokeObjectURL(url);
+  setStatus("Downloaded av-data.json — copy to av-management/data/", "ok");
+}
+
+// ── Save to GitHub ────────────────────────────────────────────────────────────
 async function saveAll(){
   if(!getToken()){ showTokenModal(); return; }
   setStatus("Saving…", "");
