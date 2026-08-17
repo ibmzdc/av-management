@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18–22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-08-17T19:04:01.103Z",
+  "lastUpdated": "2026-08-17T19:36:10.903Z",
   "changelog": [
     {
       "ts": "2026-08-17T19:03:53.667Z",
@@ -1413,7 +1413,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "wednesday-09-00-tbd-flex-time",
@@ -1437,7 +1437,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "wednesday-10-00-belle-epoque-ballr-ibm-cio-managing-my-db2-im",
@@ -1533,7 +1533,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "wednesday-13-30-teun-streamlining-cobol-moderniza",
