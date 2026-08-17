@@ -92,11 +92,15 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .pill-updated  { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
 .pill-onhold   { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
 .pill-nofile   { background: var(--gray-bg);  color: var(--gray);  border: 1px solid var(--gray-border); }
-.redownload-flag { background: var(--red-bg); color: var(--red); font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; margin-left: 6px; border: 1px solid var(--red-border); }
 
-.download-btn { display: inline-block; background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 600; border-radius: 4px; padding: 4px 12px; text-decoration: none; white-space: nowrap; }
-.download-btn:hover { background: #2563eb; text-decoration: none; }
-.no-link { color: var(--muted); font-size: 11.5px; font-style: italic; }
+/* ── Download button states ───────────────────────────────── */
+.dl-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; border-radius: 4px; padding: 4px 12px; text-decoration: none; white-space: nowrap; cursor: pointer; border: none; }
+.dl-btn:hover { filter: brightness(.92); text-decoration: none; }
+.dl-new      { background: var(--accent); color: #fff; }
+.dl-done     { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.dl-update   { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); animation: dl-pulse 1.6s ease-in-out infinite; }
+.dl-nolink   { color: var(--muted); font-size: 11.5px; font-style: italic; }
+@keyframes dl-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
 .av-note { margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #78350f; }
 .av-note strong { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: #92400e; margin-bottom: 2px; }
@@ -178,7 +182,7 @@ const TYPE_BADGE = {
 };
 
 // ── Download-tracking ─────────────────────────────────────
-// Stored in localStorage: { boxFileId → timestamp of last download }
+// Stored in localStorage: { boxFileId → ISO timestamp of last download }
 function getDownloadLog() {
   try { return JSON.parse(localStorage.getItem("av_downloads") || "{}"); } catch(e) { return {}; }
 }
@@ -186,6 +190,27 @@ function recordDownload(boxFileId) {
   const log = getDownloadLog();
   log[boxFileId] = new Date().toISOString();
   localStorage.setItem("av_downloads", JSON.stringify(log));
+}
+
+// Returns "new" | "done" | "update" for a file object
+function dlState(f) {
+  if (!f.boxFileId) return "nolink";
+  const log = getDownloadLog();
+  const lastDl = log[f.boxFileId];
+  if (!lastDl) return "new";                          // never downloaded
+  if (f.updatedAt && f.updatedAt > lastDl) return "update"; // file changed since last download
+  return "done";
+}
+
+// Called from onclick — records download then flips button to "done"
+function onDownload(boxFileId, btnId) {
+  recordDownload(boxFileId);
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.className = "dl-btn dl-done";
+    btn.innerHTML = "✓ Downloaded";
+    // keep it as a real link so the browser still opens it
+  }
 }
 
 // ── Boot ──────────────────────────────────────────────────
@@ -379,12 +404,14 @@ function buildAVChips(s) {
 
 function buildFilesSummary(files) {
   if (!files.length) return '<span style="font-size:10.5px;color:var(--amber)">no files</span>';
+  const hasUpdate = files.some(f => dlState(f) === "update");
   const a = files.filter(f=>f.status==="approved").length;
   const u = files.filter(f=>f.status==="updated").length;
   const h = files.filter(f=>f.status==="onhold").length;
   const parts = [];
+  if (hasUpdate) parts.push(`<span style="color:var(--amber);font-size:10.5px;font-weight:700">↻ update</span>`);
   if (a) parts.push(`<span style="color:var(--green);font-size:10.5px;font-weight:700">${a}✓</span>`);
-  if (u) parts.push(`<span style="color:var(--blue);font-size:10.5px;font-weight:700">${u}↑</span>`);
+  if (u && !hasUpdate) parts.push(`<span style="color:var(--blue);font-size:10.5px;font-weight:700">${u}↑</span>`);
   if (h) parts.push(`<span style="color:var(--amber);font-size:10.5px;font-weight:700">${h}⏸</span>`);
   return parts.join(" ");
 }
@@ -392,9 +419,8 @@ function buildFilesSummary(files) {
 function buildFilesSection(s) {
   const files = s.files || [];
   if (!files.length) return `<p class="no-files-msg">No files uploaded yet.</p>`;
-  const dlLog = getDownloadLog();
 
-  const rows = files.map(f => {
+  const rows = files.map((f, i) => {
     const pillClass = {
       "approved":"pill-approved","updated":"pill-updated",
       "onhold":"pill-onhold","nofile":"pill-nofile","pending":"pill-nofile"
@@ -405,20 +431,29 @@ function buildFilesSection(s) {
       "nofile":"No File Needed","pending":"Pending"
     }[f.status] || f.status || "—";
 
-    const lastDl = f.boxFileId && dlLog[f.boxFileId];
-    const redownload = f.status === "updated" && lastDl && lastDl < f.updatedAt
-      ? `<span class="redownload-flag">Re-download required</span>` : "";
-
-    const dlBtn = f.boxFileId
-      ? `<a class="download-btn" href="https://ibm.box.com/s/${esc(f.boxFileId)}" target="_blank" rel="noopener" onclick="recordDownload('${esc(f.boxFileId)}')">⬇ Download</a>`
-      : `<span class="no-link">No link yet</span>`;
-
     const updFmt = f.updatedAt ? fmtTs(f.updatedAt) : "—";
+
+    const state = dlState(f);
+    const btnId = `dlbtn-${s.id}-${i}`;
+    let dlBtn;
+    if (state === "nolink") {
+      dlBtn = `<span class="dl-nolink">No link yet</span>`;
+    } else {
+      const href  = `https://ibm.box.com/s/${esc(f.boxFileId)}`;
+      const cls   = state === "update" ? "dl-btn dl-update"
+                  : state === "done"   ? "dl-btn dl-done"
+                                       : "dl-btn dl-new";
+      const label = state === "update" ? "↻ Update Available"
+                  : state === "done"   ? "✓ Downloaded"
+                                       : "⬇ Download";
+      dlBtn = `<a id="${btnId}" class="${cls}" href="${href}" target="_blank" rel="noopener"
+                 onclick="onDownload('${esc(f.boxFileId)}','${btnId}')">${label}</a>`;
+    }
 
     return `<tr>
       <td>${esc(f.fileType||"")}</td>
       <td>${esc(f.fileName||"(unnamed)")}</td>
-      <td><span class="status-pill ${pillClass}">${esc(statusLabel)}</span>${redownload}</td>
+      <td><span class="status-pill ${pillClass}">${esc(statusLabel)}</span></td>
       <td style="font-size:11.5px;color:var(--muted)">${updFmt}</td>
       <td>${dlBtn}</td>
     </tr>`;
@@ -430,7 +465,7 @@ function buildFilesSection(s) {
       <th>Name</th>
       <th style="width:160px">Status</th>
       <th style="width:110px">Updated</th>
-      <th style="width:110px"></th>
+      <th style="width:130px"></th>
     </tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
