@@ -151,11 +151,16 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .legend-bar span { font-size: 10.5px; color: var(--muted); }
 .legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text); }
 .legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; }
-/* AV chips */
-.av-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
-.av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
-.av-chip .chip-k { font-weight: 700; color: var(--muted); margin-right: 2px; }
-.av-chip.chip-roomsetup { background: var(--surface); border-color: var(--border); color: var(--text); max-width: 100%; white-space: normal; line-height: 1.4; }
+/* AV panel sections */
+.av-sections { display: flex; flex-direction: column; gap: 10px; }
+.av-section { }
+.av-section-hdr { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.av-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.av-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; border-radius: 20px; padding: 3px 10px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; font-weight: 500; }
+.av-chip .chip-icon { font-size: 12px; line-height: 1; }
+.av-chip.chip-warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+.av-chip.chip-room { background: var(--surface); border-color: var(--border); color: var(--text); }
+.av-empty { color: var(--muted); font-size: 12px; font-style: italic; }
 /* Sub-panels */
 .sub-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
 .sub-panel.open { display: block; }
@@ -654,20 +659,112 @@ function buildSessionBlock(s) {
 }
 
 function buildAVChips(s) {
-  const rows = [
-    s.room        && `<tr><td class="chip-k">Room</td><td>${esc(s.room)}</td></tr>`,
-    s.projection  && `<tr><td class="chip-k">Projection</td><td>${esc(s.projection)}</td></tr>`,
-    s.microphones && `<tr><td class="chip-k">Mics</td><td>${esc(s.microphones)}</td></tr>`,
-    s.podium      && `<tr><td class="chip-k">Podium</td><td>Yes</td></tr>`,
-    s.timer       && `<tr><td class="chip-k">Timer</td><td>${esc(String(s.timer))} min</td></tr>`,
-    s.monitor     && `<tr><td class="chip-k">Monitor</td><td>${esc(s.monitor)}</td></tr>`,
-    s.roomSetup   && `<tr><td class="chip-k">Room Setup</td><td>${esc(s.roomSetup)}</td></tr>`,
-    s.specialReqs && `<tr><td class="chip-k">Special Reqs</td><td>${esc(s.specialReqs)}</td></tr>`,
-  ].filter(Boolean);
-  if (!rows.length) return `<p style="color:var(--muted);font-size:12px;font-style:italic">No AV details on file.</p>`;
-  return `<table style="font-size:12.5px;border-collapse:collapse;width:100%">
-    ${rows.map(r => r.replace('<tr>','<tr style="border-bottom:1px solid var(--border)">')).join("")}
-  </table>`;
+  // Prefer the new structured s.av object; fall back to legacy flat fields
+  const av = s.av || {};
+
+  // ── Helper: chip builder ──────────────────────────────────────────────────
+  const chip = (icon, label, cls = "") =>
+    `<span class="av-chip${cls ? " "+cls : ""}"><span class="chip-icon">${icon}</span>${esc(label)}</span>`;
+
+  // ── Section 1: AV Requirements ───────────────────────────────────────────
+  const avChips = [];
+
+  // Presentation source (new av.presentationSource or legacy s.projection)
+  const presSource = av.presentationSource || s.projection || null;
+  if (presSource) avChips.push(chip("🖥", presSource));
+
+  // Microphone counts (new structured fields or legacy text)
+  const wh = av.wirelessHandheldMics || 0;
+  const lav = av.wirelessLavalierMics || 0;
+  const hs  = av.headsetMics || 0;
+  const tbl = av.tableMics || 0;
+  const cb  = av.catchBoxMics || 0;
+  const pan = av.panelMics || 0;
+  if (wh)  avChips.push(chip("🎤", `${wh} Handheld`));
+  if (lav) avChips.push(chip("🎤", `${lav} Lavalier`));
+  if (hs)  avChips.push(chip("🎤", `${hs} Headset`));
+  if (tbl) avChips.push(chip("🎤", `${tbl} Table Mic${tbl>1?"s":""}`));
+  if (cb)  avChips.push(chip("🎤", `${cb} Catchbox${cb>1?"es":""}`));
+  if (pan) avChips.push(chip("🎤", `${pan} Panel Mic${pan>1?"s":""}`));
+  // Legacy microphones text fallback (only if no structured mic counts)
+  if (!wh && !lav && !hs && !tbl && !cb && !pan && s.microphones) {
+    avChips.push(chip("🎤", s.microphones));
+  }
+
+  // Confidence monitors
+  const cm = av.confidenceMonitors || (s.monitor ? (parseInt(s.monitor) || 0) : 0);
+  if (cm) avChips.push(chip("📺", `${cm} Confidence Monitor${cm>1?"s":""}`));
+
+  // Boolean AV flags
+  if (av.timer   || s.timer)          avChips.push(chip("⏱", "Timer"));
+  if (av.clicker)                     avChips.push(chip("🖱", "Clicker"));
+  if (av.podium  || s.podium)         avChips.push(chip("🎙", "Podium"));
+  if (av.speakerPreview)              avChips.push(chip("👁", "Speaker Preview"));
+  if (av.teleprompter)                avChips.push(chip("📜", "Teleprompter"));
+  if (av.projector)                   avChips.push(chip("📡", "Projector"));
+  if (av.ledWall)                     avChips.push(chip("🖼", "LED Wall"));
+  if (av.recording)                   avChips.push(chip("🎥", "Recording"));
+  if (av.livestream)                  avChips.push(chip("📡", "Livestream"));
+  if (av.videoPlayback)               avChips.push(chip("▶", "Video Playback"));
+  if (av.audioPlayback)               avChips.push(chip("🔊", "Audio Playback"));
+  if (av.houseMusic)                  avChips.push(chip("🎵", "House Music"));
+
+  // ── Section 2: Room Setup ─────────────────────────────────────────────────
+  const roomChips = [];
+  const roomSetup = av.roomSetup || s.roomSetup || null;
+  if (roomSetup) roomChips.push(chip("🏛", roomSetup, "chip-room"));
+
+  const pc  = av.panelChairs || 0;
+  const st  = av.sideTables  || 0;
+  const ht  = av.highTopTables || 0;
+  const cap = av.roomCapacity || 0;
+  if (pc)  roomChips.push(chip("🪑", `${pc} Panel Chair${pc>1?"s":""}`));
+  if (st)  roomChips.push(chip("🛋", `${st} Side Table${st>1?"s":""}`));
+  if (ht)  roomChips.push(chip("🍸", `${ht} High-top Table${ht>1?"s":""}`));
+  if (cap) roomChips.push(chip("👥", `Capacity ${cap}`));
+  if (av.reservedSeating) roomChips.push(chip("🔖", "Reserved Seating"));
+  if (av.overflowRoom)    roomChips.push(chip("🚪", "Overflow Room"));
+  if (av.easel)           roomChips.push(chip("🎨", "Easel"));
+  if (av.flipChart)       roomChips.push(chip("📋", "Flip Chart"));
+
+  // ── Section 3: Special Requirements ──────────────────────────────────────
+  let specItems = [];
+  if (Array.isArray(av.specialRequirements) && av.specialRequirements.length) {
+    specItems = av.specialRequirements;
+  } else if (s.specialReqs) {
+    specItems = s.specialReqs.split(/[;\n]/).map(x=>x.trim()).filter(Boolean);
+  }
+
+  // ── Assemble ──────────────────────────────────────────────────────────────
+  const hasAny = avChips.length || roomChips.length || specItems.length;
+  if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
+
+  let html = `<div class="av-sections">`;
+
+  if (avChips.length) {
+    html += `<div class="av-section">
+      <div class="av-section-hdr">AV Requirements</div>
+      <div class="av-chips">${avChips.join("")}</div>
+    </div>`;
+  }
+
+  if (roomChips.length) {
+    html += `<div class="av-section">
+      <div class="av-section-hdr">Room Setup</div>
+      <div class="av-chips">${roomChips.join("")}</div>
+    </div>`;
+  }
+
+  if (specItems.length) {
+    const specChips = specItems.map(item => chip("⚠", item, "chip-warn")).join("");
+    html += `<div class="av-section">
+      <div class="av-section-hdr">Special Requirements</div>
+      <div class="av-chips">${specChips}</div>
+    </div>`;
+  }
+
+  html += `</div>`;
+  return html;
 }
 
 // Inline icon-only pills shown on the collapsed session row
