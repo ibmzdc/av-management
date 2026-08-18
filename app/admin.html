@@ -276,9 +276,10 @@ a{color:var(--accent);text-decoration:none}
 <div class="modal-overlay" id="tokenModal">
   <div class="modal">
     <h2>GitHub Token Required</h2>
-    <p>Enter a GitHub personal access token with <strong>repo</strong> scope. It is stored only in <code>sessionStorage</code> and never sent anywhere except the GitHub API.</p>
+    <p>Enter a GitHub personal access token with <strong>repo</strong> scope. It is stored in <code>localStorage</code> on this device and never sent anywhere except the GitHub API.</p>
     <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
     <div class="modal-btns">
+      <button class="btn" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5" onclick="forgetToken()">Forget Token</button>
       <button class="btn btn-primary" onclick="saveToken()">Save &amp; Continue</button>
     </div>
   </div>
@@ -423,15 +424,26 @@ let FILE_SHA = null;     // GitHub blob SHA for PUT
 let DIRTY = false;
 
 // ── Token ───────────────────────────────────────────────────────────────────
-function getToken(){ return sessionStorage.getItem("gh_token") || ""; }
-function showTokenModal(){ document.getElementById("tokenModal").classList.add("open"); }
+function getToken(){ return localStorage.getItem("gh_token") || ""; }
+function showTokenModal(){
+  const existing = localStorage.getItem("gh_token");
+  if(existing) document.getElementById("tokenInput").value = existing;
+  document.getElementById("tokenModal").classList.add("open");
+}
 function saveToken(){
   const v = document.getElementById("tokenInput").value.trim();
   if(!v) return;
-  sessionStorage.setItem("gh_token", v);
+  localStorage.setItem("gh_token", v);
   document.getElementById("tokenModal").classList.remove("open");
-  setStatus("Token saved for this session.", "ok");
+  setStatus("Token saved.", "ok");
   document.getElementById("saveBtn").disabled = false;
+}
+function forgetToken(){
+  localStorage.removeItem("gh_token");
+  document.getElementById("tokenInput").value = "";
+  document.getElementById("tokenModal").classList.remove("open");
+  document.getElementById("saveBtn").disabled = true;
+  setStatus("Token removed.", "");
 }
 
 // ── Embedded fallback data (seeded at build time, overwritten by GitHub on load) ──
