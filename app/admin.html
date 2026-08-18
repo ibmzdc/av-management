@@ -5,133 +5,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZDC 2026 Fall — AV Admin</title>
 <style>
+:root{
+  --bg:#f7f8fa;--surface:#fff;--border:#e5e7eb;--text:#1f2328;--muted:#57606a;--subtle:#9ca3af;
+  --accent:#3b82d4;--accent-hover:#2563eb;
+  --green:#15803d;--green-bg:#dcfce7;--green-border:#86efac;
+  --blue:#1d4ed8;--blue-bg:#dbeafe;--blue-border:#93c5fd;
+  --amber:#92400e;--amber-bg:#fef3c7;--amber-border:#fcd34d;
+  --red:#b91c1c;--red-bg:#fee2e2;--red-border:#fca5a5;
+  --purple:#6d28d9;--purple-bg:#ede9fe;--purple-border:#c4b5fd;
+  --radius:6px;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:13px;line-height:1.5;color:#1f2328;background:#f7f8fa;min-height:100vh}
-a{color:#3b82d4;text-decoration:none}
-/* Top bar */
-.topbar{background:#1f2328;color:#fff;padding:0 20px;display:flex;align-items:center;gap:16px;height:48px;position:sticky;top:0;z-index:100}
-.topbar .logo{font-weight:700;font-size:14px;letter-spacing:.02em}
-.topbar .event{font-size:12px;color:#9ca3af;flex:1}
-.topbar button{font-size:12px;font-weight:600;padding:5px 12px;border-radius:4px;border:none;cursor:pointer}
-.btn-save{background:#3b82d4;color:#fff}
-.btn-save:hover{background:#2563eb}
-.btn-save:disabled{background:#374151;color:#9ca3af;cursor:not-allowed}
-.btn-token{background:#374151;color:#e5e7eb}
-.btn-token:hover{background:#4b5563}
-.save-status{font-size:11px;color:#9ca3af;min-width:180px;text-align:right}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:13px;line-height:1.5;color:var(--text);background:var(--bg);min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+
+/* ── Topbar ─────────────────────────────────────────────────────────── */
+.topbar{background:#161b22;color:#fff;padding:0 20px;display:flex;align-items:center;gap:14px;height:50px;position:sticky;top:0;z-index:100;border-bottom:1px solid #30363d}
+.topbar .logo{font-weight:700;font-size:14px;letter-spacing:.02em;color:#fff;display:flex;align-items:center;gap:7px}
+.topbar .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.topbar .event{font-size:11.5px;color:#8b949e;flex:1;padding-left:4px}
+.topbar button{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;border:none;cursor:pointer}
+.btn-save{background:var(--accent);color:#fff}
+.btn-save:hover{background:var(--accent-hover)}
+.btn-save:disabled{background:#21262d;color:#8b949e;cursor:not-allowed;border:1px solid #30363d}
+.btn-token{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
+.btn-token:hover{background:#30363d}
+.btn-dl{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
+.btn-dl:hover{background:#30363d}
+.save-status{font-size:11px;color:#8b949e;min-width:200px;text-align:right;white-space:nowrap}
 .save-status.ok{color:#4ade80}
 .save-status.err{color:#f87171}
-/* Layout */
-.layout{display:flex;gap:0;min-height:calc(100vh - 48px)}
-/* Sidebar */
-.sidebar{width:180px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;padding:16px 0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto}
-.sidebar h3{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;padding:0 14px 8px}
-.day-link{display:block;padding:7px 14px;font-size:12.5px;color:#374151;cursor:pointer;border-left:3px solid transparent}
-.day-link:hover{background:#f7f8fa;color:#1f2328}
-.day-link.active{background:#eff6ff;color:#1d4ed8;border-left-color:#3b82d4;font-weight:600}
-.day-stats{font-size:10.5px;color:#9ca3af;margin-left:4px}
-/* Main */
-.main{flex:1;padding:24px;overflow-y:auto}
-/* Token modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+
+/* ── Search ──────────────────────────────────────────────────────────── */
+#searchInput{font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;width:230px;outline:none;transition:border-color .15s}
+#searchInput:focus{border-color:var(--accent)}
+#searchInput::placeholder{color:#8b949e}
+
+/* ── Layout ──────────────────────────────────────────────────────────── */
+.layout{display:flex;gap:0;min-height:calc(100vh - 50px)}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────── */
+.sidebar{width:192px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:14px 0;position:sticky;top:50px;height:calc(100vh - 50px);overflow-y:auto}
+.sidebar h3{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--subtle);padding:0 14px 10px;margin-bottom:2px}
+.day-link{display:block;padding:8px 14px 3px;font-size:12.5px;color:#374151;cursor:pointer;border-left:3px solid transparent;transition:background .1s}
+.day-link:hover{background:#f3f4f6;color:var(--text)}
+.day-link.active{background:#eff6ff;color:var(--blue);border-left-color:var(--accent);font-weight:600}
+.day-progress-wrap{padding:0 14px 8px}
+.day-progress{height:3px;background:#f3f4f6;border-radius:2px;overflow:hidden}
+.day-progress-fill{height:100%;border-radius:2px;background:var(--accent);transition:width .3s}
+.day-stats{font-size:10px;color:var(--subtle);font-variant-numeric:tabular-nums}
+
+/* ── Main ────────────────────────────────────────────────────────────── */
+.main{flex:1;padding:24px 28px;overflow-y:auto}
+
+/* ── Modals ──────────────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:8px;padding:24px;width:440px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal h2{font-size:15px;font-weight:700;margin-bottom:8px}
-.modal p{font-size:12.5px;color:#57606a;margin-bottom:14px}
-.modal input,.modal select,.modal textarea{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;font-family:inherit;margin-bottom:12px}
+.modal{background:var(--surface);border-radius:10px;padding:26px;width:450px;box-shadow:0 24px 64px rgba(0,0,0,.18);border:1px solid var(--border)}
+.modal h2{font-size:15px;font-weight:700;margin-bottom:6px}
+.modal p{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.modal input,.modal select,.modal textarea{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;font-family:inherit;margin-bottom:12px;transition:border-color .15s}
 .modal input[type=monospace]{font-family:monospace}
-.modal input:focus,.modal select:focus,.modal textarea:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
-.modal label{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#57606a;margin-bottom:3px}
+.modal input:focus,.modal select:focus,.modal textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.12)}
+.modal label{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:3px}
 .modal textarea{resize:vertical;min-height:52px}
-.modal-btns{display:flex;gap:8px;justify-content:flex-end}
-.modal-wide{width:560px}
-/* Add session button */
-.btn-add-session{font-size:12px;font-weight:600;padding:5px 14px;border-radius:4px;border:1px dashed #d1d5db;background:#fff;cursor:pointer;color:#57606a;margin-top:4px}
-.btn-add-session:hover{background:#f0f4ff;border-color:#93c5fd;color:#1d4ed8}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.modal-wide{width:580px}
+.btn-add-session{font-size:12px;font-weight:600;padding:5px 14px;border-radius:5px;border:1px dashed #d1d5db;background:var(--surface);cursor:pointer;color:var(--muted);margin-top:4px;transition:all .15s}
+.btn-add-session:hover{background:#f0f4ff;border-color:#93c5fd;color:var(--blue)}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-/* Stats bar */
-.stats-bar{display:flex;gap:16px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:12px 16px;margin-bottom:20px;flex-wrap:wrap}
-.stat{display:flex;flex-direction:column;gap:2px}
-.stat .val{font-size:18px;font-weight:700;color:#1f2328;line-height:1}
-.stat .lbl{font-size:10.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em}
-.stat-divider{width:1px;background:#e5e7eb;align-self:stretch}
-/* Day section */
-.day-section{margin-bottom:32px}
-.day-section h2{font-size:15px;font-weight:700;margin-bottom:12px;color:#1f2328}
-/* Session card */
-.session-card{background:#fff;border:1px solid #e5e7eb;border-radius:6px;margin-bottom:10px;overflow:hidden}
-.session-card.in-dashboard{border-left:3px solid #3b82d4}
-.session-head{display:grid;grid-template-columns:80px minmax(0,1fr) 110px 130px minmax(120px,1fr) 52px;gap:10px;align-items:start;padding:10px 14px 8px;column-gap:14px}
-.session-head:hover{background:#fafafa}
-/* Dashboard toggle */
-.dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:2px}
-.dash-toggle label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#9ca3af;cursor:pointer;text-align:center;line-height:1.2}
-.dash-toggle input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#3b82d4}
-/* AV details toggle bar */
-.av-details-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 14px;background:#f7f8fa;border-top:1px solid #e5e7eb;cursor:pointer;user-select:none}
+
+/* ── Stats bar ───────────────────────────────────────────────────────── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:22px}
+.stat-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;display:flex;flex-direction:column;gap:4px;transition:box-shadow .15s}
+.stat-tile:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat-tile.tile-sessions{border-top:3px solid #64748b}
+.stat-tile.tile-files{border-top:3px solid var(--accent)}
+.stat-tile.tile-approved{border-top:3px solid var(--green)}
+.stat-tile.tile-updated{border-top:3px solid var(--blue)}
+.stat-tile.tile-onhold{border-top:3px solid #f59e0b}
+.stat-tile.tile-distributed{border-top:3px solid var(--purple)}
+.stat-tile.tile-missing{border-top:3px solid var(--red)}
+.stat-tile .val{font-size:22px;font-weight:700;line-height:1}
+.stat-tile.tile-sessions .val{color:#475569}
+.stat-tile.tile-files .val{color:var(--accent)}
+.stat-tile.tile-approved .val{color:var(--green)}
+.stat-tile.tile-updated .val{color:var(--blue)}
+.stat-tile.tile-onhold .val{color:#b45309}
+.stat-tile.tile-distributed .val{color:var(--purple)}
+.stat-tile.tile-missing .val{color:var(--red)}
+.stat-tile .lbl{font-size:10px;color:var(--subtle);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+
+/* ── Day section ─────────────────────────────────────────────────────── */
+.day-section{margin-bottom:36px;scroll-margin-top:66px}
+.day-section h2{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text);padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:baseline;gap:8px}
+.day-date-sub{font-size:11px;font-weight:500;color:var(--subtle)}
+
+/* ── Session card ────────────────────────────────────────────────────── */
+.session-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid #e5e7eb;border-radius:var(--radius);margin-bottom:8px;overflow:hidden;transition:border-left-color .2s}
+.session-card.status-approved{border-left-color:var(--green)}
+.session-card.status-updated{border-left-color:var(--blue)}
+.session-card.status-onhold{border-left-color:#f59e0b}
+.session-card.status-missing{border-left-color:var(--red)}
+.session-card.status-distributed{border-left-color:var(--purple)}
+.session-card.status-nofile{border-left-color:#d1d5db}
+.session-card.in-dashboard{outline:2px solid #bfdbfe;outline-offset:-1px}
+.session-head{display:grid;grid-template-columns:76px minmax(0,1fr) 108px 128px minmax(110px,1fr) 54px;gap:0 14px;align-items:start;padding:10px 14px 9px;cursor:pointer}
+.session-head:hover{background:#fafbfc}
+.session-time{font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;padding-top:3px;line-height:1.5}
+.session-time .t-start{display:block;font-size:12.5px;font-weight:600;color:var(--text);line-height:1.2}
+.session-info{min-width:0;padding-top:1px}
+.session-title{font-weight:600;font-size:13px;color:var(--text);margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
+.session-meta{font-size:11px;color:var(--subtle);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.session-col{font-size:11.5px;color:#374151;min-width:0;padding-top:1px}
+.session-col .col-label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);margin-bottom:3px}
+.session-col .col-val{display:block;word-break:break-word;font-size:12px;font-weight:500;color:var(--text)}
+.session-badges{display:flex;gap:4px;align-items:flex-start;padding-top:2px;flex-wrap:wrap}
+
+/* ── Dashboard toggle ────────────────────────────────────────────────── */
+.dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:3px}
+.dash-toggle label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--subtle);cursor:pointer;text-align:center;line-height:1.2}
+.dash-toggle input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--accent)}
+
+/* ── AV details bar ──────────────────────────────────────────────────── */
+.av-details-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 14px;background:#f7f8fa;border-top:1px solid var(--border);cursor:pointer;user-select:none;transition:background .1s}
 .av-details-bar:hover{background:#eff6ff}
-.av-details-bar span{font-size:11px;font-weight:700;color:#374151;letter-spacing:.04em;text-transform:uppercase}
-.av-details-bar .chevron{font-size:10px;color:#9ca3af;transition:transform .2s}
+.av-details-bar span{font-size:10.5px;font-weight:700;color:#4b5563;letter-spacing:.05em;text-transform:uppercase}
+.av-details-bar .chevron{font-size:10px;color:var(--subtle);transition:transform .2s}
 .av-details-bar .chevron.open{transform:rotate(180deg)}
-.session-time{font-size:11.5px;color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums;padding-top:2px}
-.session-info{min-width:0}
-.session-title{font-weight:600;font-size:13px;color:#1f2328;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.session-meta{font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* Inline meta columns */
-.session-col{font-size:11.5px;color:#374151;min-width:0}
-.session-col .col-label{display:block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#9ca3af;margin-bottom:2px}
-.session-col .col-val{display:block;word-break:break-word}
-.session-badges{display:flex;gap:5px;align-items:flex-start;padding-top:2px;flex-wrap:nowrap}
-.badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:600;border-radius:20px;padding:2px 8px}
+
+/* ── Badges ──────────────────────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:600;border-radius:20px;padding:2px 8px;white-space:nowrap}
 .badge-type{background:#f3f4f6;color:#374151}
-.badge-approved{background:#dcfce7;color:#15803d}
-.badge-updated{background:#dbeafe;color:#1d4ed8}
-.badge-onhold{background:#fef3c7;color:#92400e}
-.badge-nofile{background:#f3f4f6;color:#6b7280}
-.badge-missing{background:#fee2e2;color:#b91c1c}
-.badge-av{background:#ede9fe;color:#6d28d9}
-.badge-distributed{background:#f3e8ff;color:#7c3aed}
-.chevron{font-size:10px;color:#9ca3af;transition:transform .2s}
+.badge-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-updated{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.badge-onhold{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.badge-nofile{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.badge-missing{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.badge-av{background:var(--purple-bg);color:var(--purple)}
+.badge-distributed{background:#f3e8ff;color:#7c3aed;border:1px solid var(--purple-border)}
+.chevron{font-size:10px;color:var(--subtle);transition:transform .2s}
 .chevron.open{transform:rotate(180deg)}
-/* Session body */
-.session-body{display:none;border-top:1px solid #e5e7eb;padding:14px}
+
+/* ── Session body ────────────────────────────────────────────────────── */
+.session-body{display:none;border-top:1px solid var(--border);padding:16px}
 .session-body.open{display:block}
-/* AV details button on row */
-.btn-av-details{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #d1d5db;background:#fff;cursor:pointer;color:#374151;white-space:nowrap}
-.btn-av-details:hover{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
-/* AV requirements grid */
-.av-reqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px}
-.av-req{background:#f7f8fa;border:1px solid #e5e7eb;border-radius:4px;padding:8px 10px}
-.av-req .k{display:block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#9ca3af;margin-bottom:4px}
-.av-req input[type=text],.av-req select,.av-req textarea{width:100%;padding:4px 7px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:#fff;font-family:inherit;color:#1f2328}
-.av-req input[type=text]:focus,.av-req select:focus,.av-req textarea:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
+.btn-av-details{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:#374151;white-space:nowrap}
+.btn-av-details:hover{background:#eff6ff;border-color:#93c5fd;color:var(--blue)}
+
+/* ── AV requirements ─────────────────────────────────────────────────── */
+.av-reqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:10px;margin-bottom:16px}
+.av-req{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:9px 11px}
+.av-req .k{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);margin-bottom:5px}
+.av-req input[type=text],.av-req select,.av-req textarea{width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;color:var(--text);transition:border-color .15s}
+.av-req input[type=text]:focus,.av-req select:focus,.av-req textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
 .av-req textarea{resize:vertical;min-height:46px}
 .av-req-check{display:flex;align-items:center;gap:6px;padding:5px 0}
-.av-req-check input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:#3b82d4}
-.av-req-check label{font-size:12px;color:#1f2328;cursor:pointer}
-/* Files section */
+.av-req-check input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
+.av-req-check label{font-size:12px;color:var(--text);cursor:pointer}
+
+/* ── Files section ───────────────────────────────────────────────────── */
 .files-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.files-header span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#57606a}
-.btn-add-file{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #d1d5db;background:#fff;cursor:pointer;color:#374151}
+.files-header span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.btn-add-file{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:#374151;transition:background .1s}
 .btn-add-file:hover{background:#f3f4f6}
-/* File row */
-.file-row{display:grid;grid-template-columns:130px 1fr 130px auto;gap:8px;align-items:center;background:#f7f8fa;border:1px solid #e5e7eb;border-radius:4px;padding:8px 10px;margin-bottom:6px}
-.file-row select,.file-row input{padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:#fff;font-family:inherit}
-.file-row select:focus,.file-row input:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
+.file-row{display:grid;grid-template-columns:130px 1fr 130px auto;gap:8px;align-items:center;background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:8px 10px;margin-bottom:6px}
+.file-row select,.file-row input{padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;transition:border-color .15s}
+.file-row select:focus,.file-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
 .file-row input[type=text]{width:100%}
-.btn-remove{font-size:16px;color:#9ca3af;background:none;border:none;cursor:pointer;line-height:1;padding:2px 4px}
+.btn-remove{font-size:16px;color:var(--subtle);background:none;border:none;cursor:pointer;line-height:1;padding:2px 4px;transition:color .1s}
 .btn-remove:hover{color:#ef4444}
-/* Notes row */
-.notes-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.notes-row label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#57606a;margin-bottom:4px}
-.notes-row textarea{width:100%;padding:6px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;resize:vertical;min-height:56px;font-family:inherit}
-.notes-row textarea:focus{outline:2px solid #3b82d4;border-color:#3b82d4}
-/* Empty state */
-.no-file{font-size:12px;color:#9ca3af;font-style:italic;padding:6px 0}
-/* Buttons */
-.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:4px;border:none;cursor:pointer}
-.btn-primary{background:#3b82d4;color:#fff}
-.btn-primary:hover{background:#2563eb}
+
+/* ── Notes row ───────────────────────────────────────────────────────── */
+.notes-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.notes-row label{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.notes-row textarea{width:100%;padding:7px 9px;border:1px solid #d1d5db;border-radius:5px;font-size:12px;resize:vertical;min-height:58px;font-family:inherit;transition:border-color .15s}
+.notes-row textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
+.no-file{font-size:12px;color:var(--subtle);font-style:italic;padding:6px 0}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:5px;border:none;cursor:pointer;transition:background .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover)}
 .btn-sm{font-size:11px;padding:3px 9px}
 </style>
 </head>
@@ -229,13 +284,12 @@ a{color:#3b82d4;text-decoration:none}
 
 <!-- Top bar -->
 <div class="topbar">
-  <span class="logo">ZDC AV Admin</span>
+  <span class="logo"><span class="logo-dot"></span>ZDC AV Admin</span>
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
-  <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)"
-    style="font-size:12px;padding:4px 10px;border-radius:4px;border:1px solid #4b5563;background:#374151;color:#e5e7eb;width:220px;outline:none">
+  <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)">
   <span class="save-status" id="saveStatus"></span>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
-  <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()" style="background:#374151;color:#e5e7eb">↓ Download JSON</button>
+  <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()">↓ Download JSON</button>
   <button class="btn-save btn" id="saveBtn" onclick="saveAll()" disabled>Save to GitHub</button>
 </div>
 
@@ -398,6 +452,20 @@ function render(){
   renderContent();
 }
 
+// Determine the dominant status color for a session's left border
+function sessionBorderClass(s){
+  if(!s.files || s.files.length === 0) return "status-missing";
+  const statuses = s.files.map(f=>f.status);
+  if(statuses.includes("missing"))     return "status-missing";
+  if(statuses.includes("onhold"))      return "status-onhold";
+  if(statuses.includes("pending"))     return "status-missing";
+  if(statuses.includes("updated"))     return "status-updated";
+  if(statuses.includes("distributed")) return "status-distributed";
+  if(statuses.every(st=>st==="approved"||st==="distributed"||st==="nofile")) return "status-approved";
+  if(statuses.includes("nofile"))      return "status-nofile";
+  return "";
+}
+
 function renderStats(){
   const bar = document.getElementById("statsBar");
   let total=0, approved=0, updated=0, onhold=0, distributed=0, missing=0;
@@ -411,18 +479,15 @@ function renderStats(){
       else if(f.status==="distributed") distributed++;
     }
   }
-  bar.style.display="flex";
+  bar.style.display="grid";
   bar.innerHTML = `
-    <div class="stat"><div class="val">${DATA.sessions.length}</div><div class="lbl">Sessions</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat"><div class="val">${total}</div><div class="lbl">Files tracked</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat"><div class="val" style="color:#15803d">${approved}</div><div class="lbl">Approved</div></div>
-    <div class="stat"><div class="val" style="color:#1d4ed8">${updated}</div><div class="lbl">Updated</div></div>
-    <div class="stat"><div class="val" style="color:#92400e">${onhold}</div><div class="lbl">On Hold</div></div>
-    <div class="stat"><div class="val" style="color:#7c3aed">${distributed}</div><div class="lbl">Distributed</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat"><div class="val" style="color:${missing>0?"#b91c1c":"#9ca3af"}">${missing}</div><div class="lbl">Missing Files</div></div>
+    <div class="stat-tile tile-sessions"><div class="val">${DATA.sessions.length}</div><div class="lbl">Sessions</div></div>
+    <div class="stat-tile tile-files"><div class="val">${total}</div><div class="lbl">Files tracked</div></div>
+    <div class="stat-tile tile-approved"><div class="val">${approved}</div><div class="lbl">Approved</div></div>
+    <div class="stat-tile tile-updated"><div class="val">${updated}</div><div class="lbl">Updated</div></div>
+    <div class="stat-tile tile-onhold"><div class="val">${onhold}</div><div class="lbl">On Hold</div></div>
+    <div class="stat-tile tile-distributed"><div class="val">${distributed}</div><div class="lbl">Distributed</div></div>
+    <div class="stat-tile tile-missing"><div class="val">${missing}</div><div class="lbl">Missing Files</div></div>
   `;
 }
 
@@ -433,9 +498,13 @@ function renderDayNav(){
     const sessions = DATA.sessions.filter(s=>s.day===day);
     const files = sessions.flatMap(s=>s.files);
     const done = files.filter(f=>f.status==="approved"||f.status==="distributed").length;
+    const pct = files.length ? Math.round((done/files.length)*100) : 0;
     return `<a class="day-link" id="nav-${day}" onclick="scrollToDay('${day}')" href="#">
       ${day} <span class="day-stats">${done}/${files.length}</span>
-    </a>`;
+    </a>
+    <div class="day-progress-wrap">
+      <div class="day-progress"><div class="day-progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
   }).join("");
 }
 
@@ -456,9 +525,15 @@ function renderContent(){
 
 function renderDay(day){
   const sessions = DATA.sessions.filter(s=>s.day===day);
-  const dateStr = sessions[0]?.date ? new Date(sessions[0].date+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}) : day;
+  const dateStr = sessions[0]?.date
+    ? new Date(sessions[0].date+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})
+    : day;
+  // Split day name from date for sub-label
+  const parts = dateStr.split(",");
+  const dayName = parts[0];
+  const datePart = parts.slice(1).join(",").trim();
   return `<div class="day-section" id="day-${day}">
-    <h2>${dateStr}</h2>
+    <h2>${esc(dayName)}<span class="day-date-sub">${esc(datePart)}</span></h2>
     ${sessions.map(s=>renderSession(s)).join("")}
     <button class="btn-add-session" onclick="openAddSession('${day}')">+ Add Session</button>
   </div>`;
@@ -479,26 +554,30 @@ function fileStatusBadge(files){
 }
 
 function renderSession(s){
-  return `<div class="session-card${s.showInDashboard?" in-dashboard":""}" id="card-${s.id}">
-    <div class="session-head">
-      <div class="session-time" onclick="toggleCard('${s.id}')">${s.startTime||""}${s.endTime?" – "+s.endTime:""}</div>
-      <div class="session-info" onclick="toggleCard('${s.id}')">
+  const borderCls = sessionBorderClass(s);
+  const endPart = s.endTime ? `<span style="font-weight:400;color:var(--subtle)"> – ${s.endTime}</span>` : "";
+  return `<div class="session-card${borderCls?" "+borderCls:""}${s.showInDashboard?" in-dashboard":""}" id="card-${s.id}">
+    <div class="session-head" onclick="toggleCard('${s.id}')">
+      <div class="session-time">
+        <span class="t-start">${s.startTime||"—"}</span>${endPart}
+      </div>
+      <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-meta">${s.speakers?esc(s.speakers.split(",")[0].trim())+(s.speakers.includes(",")?" et al.":""):""}</div>
       </div>
-      <div class="session-col" onclick="toggleCard('${s.id}')">
+      <div class="session-col">
         <span class="col-label">Room</span>
         <span class="col-val">${esc(s.room||"—")}</span>
       </div>
-      <div class="session-col" onclick="toggleCard('${s.id}')">
+      <div class="session-col">
         <span class="col-label">Session Type</span>
         <span class="col-val">${esc(s.sessionType)}</span>
       </div>
-      <div class="session-col" onclick="toggleCard('${s.id}')">
+      <div class="session-col">
         <span class="col-label">Files</span>
         <div id="badges-${s.id}" class="session-badges">${fileStatusBadge(s.files)}</div>
       </div>
-      <div class="dash-toggle">
+      <div class="dash-toggle" onclick="event.stopPropagation()">
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
         <label for="dash-${s.id}">Dashboard</label>
       </div>
@@ -814,10 +893,17 @@ function collectFormState(){
 function updateCardBadges(sessionId){
   renderStats();
   renderDayNav();
-  // Refresh the inline badge summary on the collapsed session row
+  // Refresh the inline badge summary and border color on the collapsed session row
   const s = DATA.sessions.find(x=>x.id===sessionId);
   const el = document.getElementById("badges-"+sessionId);
   if(s && el) el.innerHTML = fileStatusBadge(s.files);
+  const card = document.getElementById("card-"+sessionId);
+  if(s && card){
+    // remove old status classes, apply new one
+    card.classList.remove("status-approved","status-updated","status-onhold","status-missing","status-distributed","status-nofile");
+    const bc = sessionBorderClass(s);
+    if(bc) card.classList.add(bc);
+  }
 }
 
 function appendChangelog(session, fileType, oldStatus, newStatus){

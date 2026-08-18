@@ -13,27 +13,32 @@
   --border: #e5e7eb;
   --text: #1f2328;
   --muted: #57606a;
+  --subtle: #9ca3af;
   --accent: #3b82d4;
-  --green: #16a34a; --green-bg: #dcfce7; --green-border: #86efac;
-  --blue:  #2563eb; --blue-bg:  #dbeafe; --blue-border:  #93c5fd;
-  --amber: #d97706; --amber-bg: #fef3c7; --amber-border: #fcd34d;
+  --accent-hover: #2563eb;
+  --green: #15803d; --green-bg: #dcfce7; --green-border: #86efac;
+  --blue:  #1d4ed8; --blue-bg:  #dbeafe; --blue-border:  #93c5fd;
+  --amber: #92400e; --amber-bg: #fef3c7; --amber-border: #fcd34d;
   --gray:  #374151; --gray-bg:  #f3f4f6; --gray-border:  #d1d5db;
-  --red:   #dc2626; --red-bg:   #fee2e2; --red-border:   #fca5a5;
+  --red:   #b91c1c; --red-bg:   #fee2e2; --red-border:   #fca5a5;
+  --purple: #6d28d9; --purple-bg: #ede9fe; --purple-border: #c4b5fd;
   --radius: 6px;
 }
 body { font-family: -apple-system,"Segoe UI",system-ui,sans-serif; font-size: 13px; line-height: 1.5; color: var(--text); background: var(--bg); }
 
 /* ── Header ─────────────────────────────────────────────── */
-header { background: var(--text); color: #fff; padding: 0 20px; display: flex; align-items: center; gap: 16px; height: 50px; }
-header h1 { font-size: 15px; font-weight: 700; flex: 1; }
-.refresh-meta { font-size: 11.5px; color: #9ca3af; text-align: right; line-height: 1.4; }
-.refresh-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; margin-right: 5px; animation: pulse 2s ease-in-out infinite; }
+header { background: #161b22; color: #fff; padding: 0 20px; display: flex; align-items: center; gap: 14px; height: 50px; border-bottom: 1px solid #30363d; }
+header h1 { font-size: 14px; font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; }
+header h1::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.refresh-meta { font-size: 11px; color: #8b949e; text-align: right; line-height: 1.4; }
+.refresh-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 4px; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-.btn-header { font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 4px; border: 1px solid #4b5563; background: #374151; color: #e5e7eb; cursor: pointer; white-space: nowrap; }
-.btn-header:hover { background: #4b5563; }
+.btn-header { font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 5px; border: 1px solid #30363d; background: #21262d; color: #c9d1d9; cursor: pointer; white-space: nowrap; transition: background .1s; }
+.btn-header:hover { background: #30363d; }
+
 /* ── Print room rundown ─────────────────────────────────── */
 @media print {
-  header, .summary-bar, .needs-attention, .day-tabs, .room-filter-bar, .sidebar, .row-btn, .files-col, .legend-bar { display: none !important; }
+  header, .summary-bar, .needs-attention, .left-nav, .right-sidebar, .row-btn, .files-col, .legend-bar { display: none !important; }
   .layout { grid-template-columns: 1fr !important; padding: 0 !important; }
   .day-panel { display: block !important; }
   .session-block { break-inside: avoid; margin-bottom: 8px; }
@@ -44,36 +49,76 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 }
 .print-room-header, .print-day-header { display: none; }
 
-/* ── Summary Bar ─────────────────────────────────────────── */
-.summary-bar { display: flex; flex-wrap: wrap; gap: 0; background: var(--surface); border-bottom: 1px solid var(--border); }
-.stat-cell { padding: 10px 20px; border-right: 1px solid var(--border); }
-.stat-cell:last-child { border-right: none; }
+/* ── Summary Bar (stat tiles) ────────────────────────────── */
+.summary-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; padding: 14px 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.stat-tile { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 11px 16px; display: flex; flex-direction: column; gap: 4px; transition: box-shadow .15s; }
+.stat-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.stat-tile.tile-sessions  { border-top: 3px solid #64748b; }
+.stat-tile.tile-files     { border-top: 3px solid var(--accent); }
+.stat-tile.tile-approved  { border-top: 3px solid var(--green); }
+.stat-tile.tile-updated   { border-top: 3px solid var(--blue); }
+.stat-tile.tile-onhold    { border-top: 3px solid #f59e0b; }
+.stat-tile.tile-nofile    { border-top: 3px solid var(--red); }
 .stat-val { font-size: 22px; font-weight: 700; line-height: 1; display: block; }
-.stat-label { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-top: 2px; display: block; }
+.tile-sessions .stat-val  { color: #475569; }
+.tile-files    .stat-val  { color: var(--accent); }
+.tile-approved .stat-val  { color: var(--green); }
+.tile-updated  .stat-val  { color: var(--blue); }
+.tile-onhold   .stat-val  { color: #b45309; }
+.tile-nofile   .stat-val  { color: var(--red); }
+.stat-label { font-size: 10px; color: var(--subtle); text-transform: uppercase; letter-spacing: .07em; font-weight: 600; display: block; margin-top: 1px; }
 .needs-attention { background: var(--amber-bg); border-bottom: 2px solid var(--amber-border); padding: 8px 20px; font-size: 12px; color: #92400e; font-weight: 600; display: none; }
 
 /* ── Layout ─────────────────────────────────────────────── */
-.layout { display: grid; grid-template-columns: 1fr 300px; gap: 0; max-width: 1200px; margin: 0 auto; padding: 20px 20px 40px; }
-@media(max-width: 900px){ .layout { grid-template-columns: 1fr; } }
+.layout { display: grid; grid-template-columns: 192px 1fr 280px; gap: 0; min-height: calc(100vh - 50px); }
+@media(max-width: 1000px){ .layout { grid-template-columns: 160px 1fr; } }
+@media(max-width: 700px)  { .layout { grid-template-columns: 1fr; } }
 
-/* ── Day Tabs ────────────────────────────────────────────── */
-.day-tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 2px solid var(--border); }
-.day-tab { padding: 8px 14px; border-radius: 4px 4px 0 0; font-size: 12px; font-weight: 600; color: var(--muted); background: none; border: 1px solid transparent; border-bottom: none; cursor: pointer; }
-.day-tab:hover { background: var(--surface); }
-.day-tab.active { background: var(--bg); border-color: var(--border); color: var(--text); margin-bottom: -2px; border-bottom-color: var(--bg); }
+/* ── Left Nav Sidebar ────────────────────────────────────── */
+.left-nav { background: var(--bg); border-right: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.left-nav-section { padding: 0 0 16px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.left-nav-section:last-child { border-bottom: none; }
+.left-nav-label { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--subtle); padding: 0 14px 8px; display: block; }
+/* Day links */
+.day-link { display: block; padding: 7px 14px 4px; font-size: 12.5px; color: #374151; cursor: pointer; border-left: 3px solid transparent; transition: background .1s; text-decoration: none; }
+.day-link:hover { background: #f3f4f6; color: var(--text); }
+.day-link.active { background: #eff6ff; color: var(--blue); border-left-color: var(--accent); font-weight: 600; }
+.day-link-sub { font-size: 10px; color: var(--subtle); font-weight: 400; display: block; margin-top: 1px; font-variant-numeric: tabular-nums; }
+/* Room buttons */
+.room-nav-btn { display: block; width: 100%; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--muted); background: none; border: none; cursor: pointer; text-align: left; border-left: 3px solid transparent; transition: background .1s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.room-nav-btn:hover { background: #f3f4f6; color: var(--text); }
+.room-nav-btn.active { background: #eff6ff; color: var(--blue); border-left-color: var(--accent); font-weight: 600; }
+.room-nav-count { font-size: 10px; color: var(--subtle); margin-left: 3px; }
+
+/* ── Main content ────────────────────────────────────────── */
+.main-content { padding: 20px 24px 40px; min-width: 0; overflow-x: hidden; }
+
+/* ── Day panel ───────────────────────────────────────────── */
 .day-panel { display: none; }
 .day-panel.active { display: block; }
+.day-panel-header { font-size: 13px; font-weight: 700; color: var(--text); padding-bottom: 10px; margin-bottom: 14px; border-bottom: 2px solid var(--border); display: flex; align-items: baseline; gap: 8px; }
+.day-panel-date { font-size: 11px; font-weight: 400; color: var(--subtle); }
 
-/* ── Session Rows ────────────────────────────────────────── */
-.session-block { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
-.session-row { display: grid; grid-template-columns: 78px 1fr 120px 116px 200px; align-items: center; gap: 0 12px; padding: 10px 14px; background: var(--surface); }
+/* ── Session Blocks ──────────────────────────────────────── */
+.session-block { border: 1px solid var(--border); border-left: 4px solid #e5e7eb; border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; transition: border-left-color .2s; }
+/* Status-colored left borders */
+.session-block.sb-approved   { border-left-color: var(--green); }
+.session-block.sb-updated    { border-left-color: var(--blue); }
+.session-block.sb-onhold     { border-left-color: #f59e0b; }
+.session-block.sb-nofiles    { border-left-color: var(--red); }
+.session-block.sb-distributed{ border-left-color: var(--purple); }
+.session-block.sb-nofile     { border-left-color: #d1d5db; }
+/* Session row */
+.session-row { display: grid; grid-template-columns: 76px 1fr 118px 110px 196px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); }
 .session-row:hover { background: #eef0f3; }
-.session-time { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.session-time { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.session-time .t-start { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
 .session-info { min-width: 0; cursor: default; }
-.session-title { font-weight: 600; font-size: 13px; line-height: 1.3; margin-bottom: 2px; }
-.session-sub { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.session-title { font-weight: 600; font-size: 13px; line-height: 1.35; margin-bottom: 3px; }
+.session-sub { font-size: 11px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* Room column */
 .session-type-col { display: flex; align-items: center; }
+.session-room-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); margin-bottom: 3px; }
 .session-room-val { font-size: 12px; color: var(--text); font-weight: 500; }
 .badge-general   { background: #ede9fe; color: #6d28d9; }
 .badge-client    { background: #dbeafe; color: #1d4ed8; }
@@ -84,31 +129,31 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 .badge-playback  { background: #f0fdf4; color: #166534; }
 .badge-default   { background: var(--surface); color: var(--muted); }
 /* Action buttons */
-.row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; }
+.row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; transition: all .1s; }
 .row-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
 .row-btn.active { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
 /* Download Status column */
 .files-col { display: flex; flex-direction: column; gap: 3px; }
-.files-col-btn { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; flex-wrap: wrap; }
+.files-col-btn { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; flex-wrap: wrap; transition: all .1s; }
 .files-col-btn:hover { background: #f0f4ff; border-color: #93c5fd; }
 .files-col-btn.active { background: #eff6ff; border-color: #3b82d4; }
-.files-col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); white-space: nowrap; margin-right: 2px; }
+.files-col-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); white-space: nowrap; margin-right: 2px; }
 .fs-pill { display: inline-flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; width: 24px; height: 24px; border-radius: 4px; }
 .fs-update { background: #fde68a; color: #92400e; animation: dl-pulse 1.6s ease-in-out infinite; }
-.fs-new    { background: #dbeafe; color: #1d4ed8; }
+.fs-new    { background: var(--blue-bg); color: var(--blue); }
 .fs-done   { background: var(--green-bg); color: var(--green); }
 .fs-hold   { background: var(--amber-bg); color: var(--amber); }
-.fs-nofile { background: var(--gray-bg);  color: var(--gray); font-size: 10px; }
+.fs-nofile { background: var(--gray-bg); color: var(--gray); font-size: 10px; }
 /* Legend bar */
-.legend-bar { display: flex; align-items: center; gap: 14px; padding: 6px 14px; background: #f7f8fa; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 10px; flex-wrap: wrap; }
+.legend-bar { display: flex; align-items: center; gap: 14px; padding: 6px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; flex-wrap: wrap; }
 .legend-bar span { font-size: 10.5px; color: var(--muted); }
 .legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text); }
 .legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; }
-/* AV chips — inside AV details panel */
+/* AV chips */
 .av-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
 .av-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; border-radius: 4px; padding: 2px 7px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; }
 .av-chip .chip-k { font-weight: 700; color: var(--muted); margin-right: 2px; }
-.av-chip.chip-roomsetup { background: #f7f8fa; border-color: var(--border); color: var(--text); max-width: 100%; white-space: normal; line-height: 1.4; }
+.av-chip.chip-roomsetup { background: var(--surface); border-color: var(--border); color: var(--text); max-width: 100%; white-space: normal; line-height: 1.4; }
 /* Sub-panels */
 .sub-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
 .sub-panel.open { display: block; }
@@ -117,19 +162,18 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 
 /* ── Files Table ─────────────────────────────────────────── */
 .files-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.files-table th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 5px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+.files-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); padding: 5px 8px; border-bottom: 1px solid var(--border); text-align: left; }
 .files-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 .files-table tr:last-child td { border-bottom: none; }
-
 .status-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
 .pill-approved     { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
 .pill-updated      { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
 .pill-onhold       { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
 .pill-nofile       { background: var(--gray-bg);  color: var(--gray);  border: 1px solid var(--gray-border); }
-.pill-distributed  { background: #f3e8ff; color: #7c3aed; border: 1px solid #d8b4fe; }
+.pill-distributed  { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
 
 /* ── Download button states ───────────────────────────────── */
-.dl-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; border-radius: 4px; padding: 4px 12px; text-decoration: none; white-space: nowrap; cursor: pointer; border: none; }
+.dl-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; border-radius: 5px; padding: 4px 12px; text-decoration: none; white-space: nowrap; cursor: pointer; border: none; transition: filter .1s; }
 .dl-btn:hover { filter: brightness(.92); text-decoration: none; }
 .dl-new      { background: var(--accent); color: #fff; }
 .dl-done     { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
@@ -138,29 +182,21 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 @keyframes dl-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
 /* AV table key cells */
-.chip-k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 5px 12px 5px 0; width: 120px; vertical-align: top; white-space: nowrap; }
-.av-note { margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #78350f; }
-.av-note strong { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: #92400e; margin-bottom: 2px; }
-
+.chip-k { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); padding: 5px 12px 5px 0; width: 120px; vertical-align: top; white-space: nowrap; }
+.av-note { margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--radius); font-size: 12px; color: #78350f; }
+.av-note strong { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #92400e; margin-bottom: 2px; }
 .no-files-msg { color: var(--muted); font-size: 12px; font-style: italic; padding: 6px 0; }
 
-/* ── Room Filter ──────────────────────────────────────────── */
-.room-filter-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
-.room-filter-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; white-space: nowrap; }
-.room-btn { font-size: 11.5px; font-weight: 500; padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; white-space: nowrap; transition: background .1s; }
-.room-btn:hover { background: #e5e7eb; color: var(--text); }
-.room-btn.active { background: #1f2328; color: #fff; border-color: #1f2328; font-weight: 600; }
-.room-btn.all-rooms.active { background: var(--accent); border-color: var(--accent); }
 .session-block.room-hidden { display: none; }
 
 /* ── Changelog Sidebar ────────────────────────────────────── */
-.sidebar { padding-left: 20px; }
-@media(max-width: 900px){ .sidebar { padding-left: 0; padding-top: 20px; } }
-.sidebar-header { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+.right-sidebar { border-left: 1px solid var(--border); padding: 20px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+@media(max-width: 1000px){ .right-sidebar { display: none; } }
+.sidebar-header { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--subtle); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
 .changelog-list { list-style: none; }
 .changelog-item { padding: 9px 0; border-bottom: 1px solid var(--border); }
 .changelog-item:last-child { border-bottom: none; }
-.cl-ts { font-size: 10.5px; color: var(--muted); }
+.cl-ts { font-size: 10.5px; color: var(--subtle); }
 .cl-session { font-size: 12px; font-weight: 600; margin: 2px 0 1px; }
 .cl-detail { font-size: 11.5px; color: var(--muted); }
 .cl-pill { font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 5px; display: inline-block; }
@@ -179,7 +215,7 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 <body>
 
 <header>
-  <h1>📺 AV Dashboard — ZDC 2026 Fall · Antwerp</h1>
+  <h1>AV Dashboard — ZDC 2026 Fall · Antwerp</h1>
   <button class="btn-header" id="refreshBtn" onclick="manualRefresh()">↺ Refresh Now</button>
   <button class="btn-header" onclick="printRoomRundown()">🖨 Print Rundown</button>
   <div class="refresh-meta">
@@ -189,12 +225,12 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 </header>
 
 <div class="summary-bar" id="summary-bar" style="display:none">
-  <div class="stat-cell"><span class="stat-val" id="s-sessions">–</span><span class="stat-label">Sessions</span></div>
-  <div class="stat-cell"><span class="stat-val" id="s-files">–</span><span class="stat-label">Files tracked</span></div>
-  <div class="stat-cell"><span class="stat-val" id="s-approved" style="color:var(--green)">–</span><span class="stat-label">Approved</span></div>
-  <div class="stat-cell"><span class="stat-val" id="s-updated"  style="color:var(--blue)">–</span><span class="stat-label">Updated</span></div>
-  <div class="stat-cell"><span class="stat-val" id="s-onhold"   style="color:var(--amber)">–</span><span class="stat-label">On Hold</span></div>
-  <div class="stat-cell"><span class="stat-val" id="s-nofile"   style="color:var(--amber)">–</span><span class="stat-label">Need Files</span></div>
+  <div class="stat-tile tile-sessions"><span class="stat-val" id="s-sessions">–</span><span class="stat-label">Sessions</span></div>
+  <div class="stat-tile tile-files"><span class="stat-val" id="s-files">–</span><span class="stat-label">Files tracked</span></div>
+  <div class="stat-tile tile-approved"><span class="stat-val" id="s-approved">–</span><span class="stat-label">Approved</span></div>
+  <div class="stat-tile tile-updated"><span class="stat-val" id="s-updated">–</span><span class="stat-label">Updated</span></div>
+  <div class="stat-tile tile-onhold"><span class="stat-val" id="s-onhold">–</span><span class="stat-label">On Hold</span></div>
+  <div class="stat-tile tile-nofile"><span class="stat-val" id="s-nofile">–</span><span class="stat-label">Need Files</span></div>
 </div>
 
 <div class="needs-attention" id="needs-attention"></div>
@@ -203,12 +239,21 @@ header h1 { font-size: 15px; font-weight: 700; flex: 1; }
 
 <div id="app" style="display:none">
   <div class="layout">
-    <div>
-      <div class="day-tabs" id="day-tabs"></div>
-      <div id="room-filter-bar" class="room-filter-bar" style="display:none"></div>
+    <!-- Left nav: day + room selection -->
+    <nav class="left-nav" id="left-nav">
+      <div class="left-nav-section" id="nav-days">
+        <span class="left-nav-label">Event Days</span>
+      </div>
+      <div class="left-nav-section" id="nav-rooms">
+        <span class="left-nav-label">Rooms</span>
+      </div>
+    </nav>
+    <!-- Main session content -->
+    <div class="main-content">
       <div id="day-panels"></div>
     </div>
-    <div class="sidebar">
+    <!-- Right: changelog -->
+    <div class="right-sidebar">
       <div class="sidebar-header">Change Log</div>
       <ul class="changelog-list" id="changelog-list"></ul>
     </div>
@@ -318,7 +363,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
   document.getElementById("loading").style.display  = "none";
   document.getElementById("app").style.display      = "block";
-  document.getElementById("summary-bar").style.display = "flex";
+  document.getElementById("summary-bar").style.display = "grid";
+  document.getElementById("left-nav").style.display  = "flex";
+  document.getElementById("left-nav").style.flexDirection = "column";
   setInterval(refresh, REFRESH_MS);
 });
 
@@ -442,14 +489,14 @@ function renderNeedsAttention() {
 function renderDays() {
   const allVendor = vendorSessions();
   const days = DAY_ORDER.filter(d => allVendor.some(s => s.day === d));
-  const tabsEl      = document.getElementById("day-tabs");
-  const panelsEl    = document.getElementById("day-panels");
-  const filterBarEl = document.getElementById("room-filter-bar");
+  const navDaysEl  = document.getElementById("nav-days");
+  const navRoomsEl = document.getElementById("nav-rooms");
+  const panelsEl   = document.getElementById("day-panels");
 
   if (!days.length) {
-    tabsEl.innerHTML = "";
-    filterBarEl.style.display = "none";
-    panelsEl.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:24px 0;text-align:center">No sessions have been marked for the dashboard yet.<br><span style="font-size:11.5px">Use the Dashboard checkbox in the AV Admin to include sessions.</span></p>`;
+    navDaysEl.innerHTML  = `<span class="left-nav-label">Event Days</span>`;
+    navRoomsEl.innerHTML = `<span class="left-nav-label">Rooms</span>`;
+    panelsEl.innerHTML   = `<p style="color:var(--muted);font-size:13px;padding:24px 0;text-align:center">No sessions have been marked for the dashboard yet.<br><span style="font-size:11.5px">Use the Dashboard checkbox in the AV Admin to include sessions.</span></p>`;
     return;
   }
 
@@ -459,31 +506,43 @@ function renderDays() {
   // Validate activeRoom still exists
   if (activeRoom && !rooms.includes(activeRoom)) activeRoom = null;
 
-  // Render room filter bar
-  filterBarEl.style.display = "flex";
-  filterBarEl.innerHTML =
-    `<span class="room-filter-label">Room:</span>` +
-    `<button class="room-btn all-rooms${!activeRoom?" active":""}" onclick="setRoomFilter(null)">All Rooms</button>`;
+  // Preserve active day across refreshes
+  const prevActiveDay = navDaysEl.querySelector(".day-link.active")?.dataset?.day || days[0];
 
-  // Append room buttons via DOM — avoids innerHTML quoting issues with room names
+  // ── Day nav ──────────────────────────────────────────────
+  navDaysEl.innerHTML = `<span class="left-nav-label">Event Days</span>`;
+  days.forEach(day => {
+    const sessions = allVendor.filter(s => s.day === day);
+    const date     = sessions[0]?.date ? fmtDateShort(sessions[0].date) : "";
+    const a = document.createElement("a");
+    a.href = "#";
+    a.className = "day-link" + (day === prevActiveDay ? " active" : "");
+    a.dataset.day = day;
+    a.innerHTML = `${day}<span class="day-link-sub">${date} · ${sessions.length} sessions</span>`;
+    a.addEventListener("click", e => { e.preventDefault(); switchDay(day); });
+    navDaysEl.appendChild(a);
+  });
+
+  // ── Room nav ─────────────────────────────────────────────
+  navRoomsEl.innerHTML = `<span class="left-nav-label">Rooms</span>`;
+  // "All Rooms" button
+  const allBtn = document.createElement("button");
+  allBtn.className = "room-nav-btn" + (!activeRoom ? " active" : "");
+  allBtn.innerHTML = `All Rooms <span class="room-nav-count">${allVendor.length}</span>`;
+  allBtn.addEventListener("click", () => setRoomFilter(null));
+  navRoomsEl.appendChild(allBtn);
+  // Per-room buttons
   rooms.forEach(r => {
     const cnt = allVendor.filter(s => s.room === r).length;
     const btn = document.createElement("button");
-    btn.className = "room-btn" + (activeRoom === r ? " active" : "");
-    btn._roomName = r;                            // store for setRoomFilter matching
-    btn.textContent = `${r} `;
-    const countEl = document.createElement("span");
-    countEl.style.cssText = "font-size:10px;opacity:.7";
-    countEl.textContent = cnt;
-    btn.appendChild(countEl);
+    btn.className = "room-nav-btn" + (activeRoom === r ? " active" : "");
+    btn._roomName = r;
+    btn.innerHTML = `${esc(r)} <span class="room-nav-count">${cnt}</span>`;
     btn.addEventListener("click", () => setRoomFilter(r));
-    filterBarEl.appendChild(btn);
+    navRoomsEl.appendChild(btn);
   });
 
-  // Preserve active day across refreshes
-  const activeDay = (tabsEl.querySelector(".day-tab.active") || {}).dataset?.day || days[0];
-
-  tabsEl.innerHTML = "";
+  // ── Day panels ───────────────────────────────────────────
   panelsEl.innerHTML = `<div class="legend-bar">
     <span class="legend-title">Download Status:</span>
     <span class="legend-item"><span class="fs-pill fs-update" style="width:20px;height:20px;font-size:12px">↻</span> Re-download required</span>
@@ -498,16 +557,15 @@ function renderDays() {
     const sessions = allVendor.filter(s => s.day === day);
     const date     = sessions[0]?.date ? fmtDateShort(sessions[0].date) : "";
 
-    const tab = document.createElement("button");
-    tab.className = "day-tab" + (day === activeDay ? " active" : "");
-    tab.textContent = `${day} ${date}`;
-    tab.dataset.day = day;
-    tab.onclick = () => switchDay(day);
-    tabsEl.appendChild(tab);
-
     const panel = document.createElement("div");
-    panel.className = "day-panel" + (day === activeDay ? " active" : "");
+    panel.className = "day-panel" + (day === prevActiveDay ? " active" : "");
     panel.id = "panel-" + day;
+
+    const hdr = document.createElement("div");
+    hdr.className = "day-panel-header";
+    hdr.innerHTML = `${day}<span class="day-panel-date">${date}</span>`;
+    panel.appendChild(hdr);
+
     sessions.forEach(s => panel.appendChild(buildSessionBlock(s)));
     panelsEl.appendChild(panel);
   });
@@ -518,8 +576,8 @@ function renderDays() {
 
 function setRoomFilter(room) {
   activeRoom = room;
-  document.querySelectorAll(".room-btn").forEach(b => {
-    const isAll = b.classList.contains("all-rooms");
+  document.querySelectorAll(".room-nav-btn").forEach(b => {
+    const isAll = !b._roomName;
     b.classList.toggle("active", room === null ? isAll : b._roomName === room);
   });
   applyRoomFilter();
@@ -532,21 +590,40 @@ function applyRoomFilter() {
   });
 }
 
+// Returns a border-class based on the dominant file status of a session
+function sessionBlockClass(s) {
+  const files = s.files || [];
+  if (!files.length) return "sb-nofiles";
+  const statuses = files.map(f => f.status);
+  if (statuses.includes("onhold"))                                                   return "sb-onhold";
+  if (statuses.includes("pending"))                                                  return "sb-nofiles";
+  if (statuses.includes("updated"))                                                  return "sb-updated";
+  if (statuses.includes("distributed"))                                              return "sb-distributed";
+  if (statuses.every(st => st === "approved" || st === "distributed" || st === "nofile")) return "sb-approved";
+  if (statuses.includes("nofile"))                                                   return "sb-nofile";
+  return "";
+}
+
 function buildSessionBlock(s) {
   const block = document.createElement("div");
-  block.className = "session-block";
+  const sbCls = sessionBlockClass(s);
+  block.className = "session-block" + (sbCls ? " " + sbCls : "");
   if (s.room) block.dataset.room = s.room;
   const [badgeClass, badgeLabel] = TYPE_BADGE[s.sessionType] || ["badge-default", s.sessionType];
   const files = s.files || [];
+  const endPart = s.endTime ? `<span style="font-weight:400;color:var(--subtle)"> – ${esc(s.endTime)}</span>` : "";
 
   block.innerHTML = `
     <div class="session-row">
-      <span class="session-time">${s.startTime || ""}${s.endTime?"–"+s.endTime:""}</span>
+      <div class="session-time">
+        <span class="t-start">${esc(s.startTime || "—")}</span>${endPart}
+      </div>
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-sub">${s.speakers ? esc(s.speakers.slice(0,80)) : "&nbsp;"}</div>
       </div>
-      <div class="session-type-col">
+      <div class="session-type-col" style="flex-direction:column;align-items:flex-start">
+        <span class="session-room-label">Room</span>
         <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
       <div>
@@ -766,8 +843,8 @@ function buildRowFilePillsLive(files) {
 }
 
 function switchDay(day) {
-  document.querySelectorAll(".day-tab").forEach(t => {
-    t.classList.toggle("active", t.dataset.day === day);
+  document.querySelectorAll(".day-link").forEach(a => {
+    a.classList.toggle("active", a.dataset.day === day);
   });
   document.querySelectorAll(".day-panel").forEach(p => {
     p.classList.toggle("active", p.id === "panel-" + day);
