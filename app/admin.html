@@ -74,6 +74,14 @@ a{color:var(--accent);text-decoration:none}
 .modal textarea{resize:vertical;min-height:52px}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
 .modal-wide{width:580px}
+.modal-xl{width:880px;max-width:96vw;max-height:90vh;overflow-y:auto}
+/* modal section header — reuses av-group look inside the modal */
+.modal-section{margin-bottom:14px}
+.modal-section-hdr{display:flex;align-items:center;gap:6px;padding:6px 0 5px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:10px}
+.modal-section-hdr .g-icon{font-size:11px}
+.modal-section-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.modal-section-grid.wide{grid-template-columns:1fr}
+.modal-num{width:72px !important}
 .btn-add-session{font-size:12px;font-weight:600;padding:5px 14px;border-radius:5px;border:1px dashed #d1d5db;background:var(--surface);cursor:pointer;color:var(--muted);margin-top:4px;transition:all .15s}
 .btn-add-session:hover{background:#f0f4ff;border-color:#93c5fd;color:var(--blue)}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
@@ -301,75 +309,290 @@ a{color:var(--accent);text-decoration:none}
 
 <!-- Add Session modal -->
 <div class="modal-overlay" id="addSessionModal">
-  <div class="modal modal-wide">
+  <div class="modal modal-xl">
     <h2>Add Session</h2>
-    <div class="modal-grid">
-      <div>
-        <label>Day</label>
-        <select id="ns-day">
-          <option value="Sunday">Sunday</option>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thursday">Thursday</option>
-        </select>
-      </div>
-      <div>
-        <label>Date (YYYY-MM-DD)</label>
-        <input type="text" id="ns-date" placeholder="2026-10-19">
-      </div>
-      <div>
-        <label>Start Time (HH:MM)</label>
-        <input type="text" id="ns-start" placeholder="09:00">
-      </div>
-      <div>
-        <label>End Time (HH:MM)</label>
-        <input type="text" id="ns-end" placeholder="09:30">
-      </div>
-    </div>
-    <label>Session Title</label>
-    <input type="text" id="ns-title" placeholder="Session title">
-    <label>Speakers</label>
-    <input type="text" id="ns-speakers" placeholder="First Last, First Last">
-    <div class="modal-grid">
-      <div>
-        <label>Room</label>
-        <input type="text" id="ns-room" placeholder="Belle Epoque Ballroom">
-      </div>
-      <div>
-        <label>Session Type</label>
-        <select id="ns-type">
-          <option>General Session</option>
-          <option>Client Experience</option>
-          <option>Solution Review</option>
-          <option>Z Design Fair</option>
-          <option>Client Roundtable</option>
-          <option>Collaborative Session</option>
-          <option>Registration</option>
-          <option>Meal</option>
-          <option>Networking</option>
-          <option>Break</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div>
-        <label>Projection</label>
-        <select id="ns-projection">
-          <option value="">— not required —</option>
-          <option value="AV team">AV team</option>
-          <option value="AV team - LED">AV team – LED</option>
-          <option value="Presenter">Presenter</option>
-          <option value="not required">not required</option>
-          <option value="Design Fair Station">Design Fair Station</option>
-        </select>
-      </div>
-      <div>
-        <label>Microphones</label>
-        <input type="text" id="ns-mics" placeholder="e.g. 2 wireless">
+
+    <!-- ── Basic info ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr">Session Details</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Day</label>
+          <select id="ns-day">
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+          </select>
+        </div>
+        <div>
+          <label>Date (YYYY-MM-DD)</label>
+          <input type="text" id="ns-date" placeholder="2026-10-19">
+        </div>
+        <div>
+          <label>Start Time (HH:MM)</label>
+          <input type="text" id="ns-start" placeholder="09:00">
+        </div>
+        <div>
+          <label>End Time (HH:MM)</label>
+          <input type="text" id="ns-end" placeholder="09:30">
+        </div>
+        <div>
+          <label>Session Type</label>
+          <select id="ns-type">
+            <option>General Session</option>
+            <option>Client Experience</option>
+            <option>Solution Review</option>
+            <option>Z Design Fair</option>
+            <option>Client Roundtable</option>
+            <option>Collaborative Session</option>
+            <option>Registration</option>
+            <option>Meal</option>
+            <option>Networking</option>
+            <option>Break</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Room</label>
+          <input type="text" id="ns-room" placeholder="Belle Epoque Ballroom">
+        </div>
+        <div style="grid-column:1/-1">
+          <label>Session Title</label>
+          <input type="text" id="ns-title" placeholder="Session title">
+        </div>
+        <div style="grid-column:1/-1">
+          <label>Speakers</label>
+          <input type="text" id="ns-speakers" placeholder="First Last, First Last">
+        </div>
       </div>
     </div>
-    <label>Room Setup</label>
-    <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
+
+    <!-- ── 🎞 Presentation ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">🎞</span> Presentation</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Presentation Required</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-presRequired" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-presRequired" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Source</label>
+          <select id="ns-presentationSource">
+            <option value="">— none —</option>
+            <option value="AV Team">AV Team</option>
+            <option value="AV team - LED">AV Team – LED</option>
+            <option value="Presenter Laptop">Presenter Laptop</option>
+            <option value="LED Wall">LED Wall</option>
+            <option value="Design Fair Station">Design Fair Station</option>
+          </select>
+        </div>
+        <div>
+          <label>Clicker</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-clicker" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-clicker" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Confidence Monitors</label>
+          <input type="number" id="ns-confidenceMonitors" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Timer</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-timer" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-timer" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Speaker Preview</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-speakerPreview" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-speakerPreview" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Teleprompter</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-teleprompter" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-teleprompter" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 🎙 Audio ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">🎙</span> Audio</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Wireless Handheld</label>
+          <input type="number" id="ns-wirelessHandheld" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Lavalier</label>
+          <input type="number" id="ns-wirelessLavalier" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Headset</label>
+          <input type="number" id="ns-headsetMics" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Table Mics</label>
+          <input type="number" id="ns-tableMics" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Catchbox</label>
+          <input type="number" id="ns-catchBoxMics" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Panel Mics</label>
+          <input type="number" id="ns-panelMics" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Audio Playback</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-audioPlayback" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-audioPlayback" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>House Music</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-houseMusic" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-houseMusic" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 📽 Video ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">📽</span> Video</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Projector</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-projector" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-projector" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>LED Wall</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-ledWall" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-ledWall" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Recording</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-recording" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-recording" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Livestream</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-livestream" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-livestream" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Video Playback</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-videoPlayback" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-videoPlayback" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 🎭 Staging ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">🎭</span> Staging</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Podium</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-podium" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-podium" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Panel Chairs</label>
+          <input type="number" id="ns-panelChairs" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Side Tables</label>
+          <input type="number" id="ns-sideTables" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>High-top Tables</label>
+          <input type="number" id="ns-highTopTables" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Easel</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-easel" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-easel" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Flip Chart</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-flipChart" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-flipChart" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 🏛 Room ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">🏛</span> Room</div>
+      <div class="modal-section-grid">
+        <div>
+          <label>Capacity</label>
+          <input type="number" id="ns-roomCapacity" min="0" value="0" class="modal-num">
+        </div>
+        <div>
+          <label>Reserved Seating</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-reservedSeating" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-reservedSeating" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div>
+          <label>Overflow Room</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="ns-overflowRoom" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-overflowRoom" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>
+        <div style="grid-column:1/-1">
+          <label>Room Setup</label>
+          <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ⚡ Special Requirements ── -->
+    <div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
+      <div class="modal-section-grid wide">
+        <div>
+          <label>Notes (one per line)</label>
+          <textarea id="ns-specialRequirements" rows="3" placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician"></textarea>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-btns">
       <button class="btn" style="background:#f3f4f6;color:#374151" onclick="closeAddSession()">Cancel</button>
       <button class="btn btn-primary" onclick="confirmAddSession()">Add Session</button>
@@ -1136,18 +1359,53 @@ const DAY_DATES = {
 };
 
 function openAddSession(day){
-  // Pre-fill day and its date
-  document.getElementById("ns-day").value  = day;
-  document.getElementById("ns-date").value = DAY_DATES[day] || "";
-  document.getElementById("ns-start").value = "";
-  document.getElementById("ns-end").value   = "";
-  document.getElementById("ns-title").value = "";
-  document.getElementById("ns-speakers").value = "";
-  document.getElementById("ns-room").value  = "";
-  document.getElementById("ns-type").value  = "General Session";
-  document.getElementById("ns-projection").value = "";
-  document.getElementById("ns-mics").value  = "";
-  document.getElementById("ns-roomsetup").value = "";
+  // Session details
+  document.getElementById("ns-day").value             = day;
+  document.getElementById("ns-date").value            = DAY_DATES[day] || "";
+  document.getElementById("ns-start").value           = "";
+  document.getElementById("ns-end").value             = "";
+  document.getElementById("ns-title").value           = "";
+  document.getElementById("ns-speakers").value        = "";
+  document.getElementById("ns-room").value            = "";
+  document.getElementById("ns-type").value            = "General Session";
+  // Presentation
+  document.getElementById("ns-presRequired").checked       = false;
+  document.getElementById("ns-presentationSource").value   = "";
+  document.getElementById("ns-clicker").checked            = false;
+  document.getElementById("ns-confidenceMonitors").value   = 0;
+  document.getElementById("ns-timer").checked              = false;
+  document.getElementById("ns-speakerPreview").checked     = false;
+  document.getElementById("ns-teleprompter").checked       = false;
+  // Audio
+  document.getElementById("ns-wirelessHandheld").value     = 0;
+  document.getElementById("ns-wirelessLavalier").value     = 0;
+  document.getElementById("ns-headsetMics").value          = 0;
+  document.getElementById("ns-tableMics").value            = 0;
+  document.getElementById("ns-catchBoxMics").value         = 0;
+  document.getElementById("ns-panelMics").value            = 0;
+  document.getElementById("ns-audioPlayback").checked      = false;
+  document.getElementById("ns-houseMusic").checked         = false;
+  // Video
+  document.getElementById("ns-projector").checked          = false;
+  document.getElementById("ns-ledWall").checked            = false;
+  document.getElementById("ns-recording").checked          = false;
+  document.getElementById("ns-livestream").checked         = false;
+  document.getElementById("ns-videoPlayback").checked      = false;
+  // Staging
+  document.getElementById("ns-podium").checked             = false;
+  document.getElementById("ns-panelChairs").value          = 0;
+  document.getElementById("ns-sideTables").value           = 0;
+  document.getElementById("ns-highTopTables").value        = 0;
+  document.getElementById("ns-easel").checked              = false;
+  document.getElementById("ns-flipChart").checked          = false;
+  // Room
+  document.getElementById("ns-roomCapacity").value         = 0;
+  document.getElementById("ns-reservedSeating").checked    = false;
+  document.getElementById("ns-overflowRoom").checked       = false;
+  document.getElementById("ns-roomsetup").value            = "";
+  // Special reqs
+  document.getElementById("ns-specialRequirements").value  = "";
+
   document.getElementById("addSessionModal").classList.add("open");
   setTimeout(()=>document.getElementById("ns-title").focus(), 50);
 }
@@ -1172,24 +1430,65 @@ function confirmAddSession(){
   let id = baseId, n = 2;
   while(DATA.sessions.find(s=>s.id===id)) id = `${baseId}-${n++}`;
 
+  // Read all AV requirement fields from modal
+  const nsInt  = (id) => parseInt(document.getElementById(id).value) || 0;
+  const nsBool = (id) => document.getElementById(id).checked;
+  const nsStr  = (id) => document.getElementById(id).value.trim() || null;
+  const roomSetupVal = nsStr("ns-roomsetup");
+  const specRaw = document.getElementById("ns-specialRequirements").value.trim();
+  const specArr = specRaw ? specRaw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
+  const podiumVal = nsBool("ns-podium");
+
+  const av = {
+    presentationRequired:  nsBool("ns-presRequired"),
+    presentationSource:    nsStr("ns-presentationSource"),
+    clicker:               nsBool("ns-clicker"),
+    confidenceMonitors:    nsInt("ns-confidenceMonitors"),
+    timer:                 nsBool("ns-timer"),
+    speakerPreview:        nsBool("ns-speakerPreview"),
+    teleprompter:          nsBool("ns-teleprompter"),
+    wirelessHandheldMics:  nsInt("ns-wirelessHandheld"),
+    wirelessLavalierMics:  nsInt("ns-wirelessLavalier"),
+    headsetMics:           nsInt("ns-headsetMics"),
+    tableMics:             nsInt("ns-tableMics"),
+    catchBoxMics:          nsInt("ns-catchBoxMics"),
+    panelMics:             nsInt("ns-panelMics"),
+    audioPlayback:         nsBool("ns-audioPlayback"),
+    houseMusic:            nsBool("ns-houseMusic"),
+    projector:             nsBool("ns-projector"),
+    ledWall:               nsBool("ns-ledWall"),
+    recording:             nsBool("ns-recording"),
+    livestream:            nsBool("ns-livestream"),
+    videoPlayback:         nsBool("ns-videoPlayback"),
+    podium:                podiumVal,
+    panelChairs:           nsInt("ns-panelChairs"),
+    sideTables:            nsInt("ns-sideTables"),
+    highTopTables:         nsInt("ns-highTopTables"),
+    easel:                 nsBool("ns-easel"),
+    flipChart:             nsBool("ns-flipChart"),
+    roomCapacity:          nsInt("ns-roomCapacity"),
+    reservedSeating:       nsBool("ns-reservedSeating"),
+    overflowRoom:          nsBool("ns-overflowRoom"),
+    roomSetup:             roomSetupVal,
+    specialRequirements:   specArr
+  };
+
   const newSession = {
     id,
     day,
-    date:         document.getElementById("ns-date").value.trim()       || DAY_DATES[day] || null,
+    date:         document.getElementById("ns-date").value.trim()  || DAY_DATES[day] || null,
     startTime,
     endTime,
     sessionType:  document.getElementById("ns-type").value,
     track:        null,
     title,
     description:  null,
-    speakers:     document.getElementById("ns-speakers").value.trim()   || null,
+    speakers:     nsStr("ns-speakers"),
     room,
-    roomSetup:    document.getElementById("ns-roomsetup").value.trim()  || null,
-    projection:   document.getElementById("ns-projection").value        || null,
-    microphones:  document.getElementById("ns-mics").value.trim()       || null,
-    podium:       false,
-    specialReqs:  null,
-    av:           {},
+    roomSetup:    roomSetupVal,
+    podium:       podiumVal,
+    specialReqs:  specArr.join("; ") || null,
+    av,
     showInDashboard: false,
     files:        [],
     avNote:       null,
