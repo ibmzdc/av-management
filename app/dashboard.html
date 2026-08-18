@@ -548,8 +548,8 @@ function renderDays() {
     <span class="legend-item"><span class="fs-pill fs-update" style="width:20px;height:20px;font-size:12px">↻</span> Re-download required</span>
     <span class="legend-item"><span class="fs-pill fs-new"    style="width:20px;height:20px;font-size:12px">⬇</span> Download needed</span>
     <span class="legend-item"><span class="fs-pill fs-done"   style="width:20px;height:20px;font-size:12px">✓</span> Downloaded / Distributed</span>
-    <span class="legend-item"><span class="fs-pill fs-hold"   style="width:20px;height:20px;font-size:12px">⏸</span> On Hold — awaiting file</span>
-    <span class="legend-item"><span class="fs-pill fs-nofile" style="width:20px;height:20px;font-size:12px">—</span> No file attached</span>
+    <span class="legend-item"><span class="fs-pill fs-hold"   style="width:20px;height:20px;font-size:12px">⏸</span> On Hold — awaiting upload</span>
+    <span class="legend-item"><span class="fs-pill fs-nofile" style="width:20px;height:20px;font-size:12px">—</span> Awaiting File</span>
     <span style="margin-left:4px;font-style:italic">· Hover a pill to see file name · Click Download Status to open/close full details</span>
   </div>`;
 
@@ -667,7 +667,7 @@ function buildAVChips(s) {
 
 // Inline icon-only pills shown on the collapsed session row
 function buildRowFilePills(files) {
-  if (!files.length) return `<span class="fs-pill fs-nofile" title="No files attached">—</span>`;
+  if (!files.length) return `<span class="fs-pill fs-nofile" title="Awaiting File">—</span>`;
   return files.map(f => {
     const state = dlState(f);
     const tip   = f.fileName || f.fileType || "file";
@@ -676,12 +676,12 @@ function buildRowFilePills(files) {
     if (state === "distributed") return `<span class="fs-pill fs-done"   title="✓ Distributed: ${tip}">✓</span>`;
     if (state === "done")        return `<span class="fs-pill fs-done"   title="✓ Downloaded: ${tip}">✓</span>`;
     if (f.status === "onhold")   return `<span class="fs-pill fs-hold"   title="⏸ On Hold: ${tip}">⏸</span>`;
-    return `<span class="fs-pill fs-nofile" title="${tip}">—</span>`;
+    return `<span class="fs-pill fs-nofile" title="Awaiting File: ${tip}">—</span>`;
   }).join("");
 }
 
 function buildFilesSummary(files) {
-  if (!files.length) return '<span style="font-size:10.5px;color:var(--amber)">no files</span>';
+  if (!files.length) return '<span style="font-size:10.5px;color:var(--amber)">Awaiting File</span>';
   const hasUpdate = files.some(f => dlState(f) === "update");
   const d = files.filter(f=>f.status==="distributed").length;
   const a = files.filter(f=>f.status==="approved").length;
@@ -698,7 +698,7 @@ function buildFilesSummary(files) {
 
 function buildFilesSection(s) {
   const files = s.files || [];
-  if (!files.length) return `<p class="no-files-msg">No files uploaded yet.</p>`;
+  if (!files.length) return `<p class="no-files-msg">Awaiting File — no files uploaded yet.</p>`;
 
   const rows = files.map((f, i) => {
     const pillClass = {
@@ -708,7 +708,7 @@ function buildFilesSection(s) {
 
     const statusLabel = {
       "approved":"Approved","updated":"Updated","onhold":"On Hold",
-      "distributed":"Distributed","nofile":"No File Needed","pending":"Pending"
+      "distributed":"Distributed","nofile":"No File Needed","pending":"Awaiting File"
     }[f.status] || f.status || "—";
 
     const updFmt = f.updatedAt ? fmtTs(f.updatedAt) : "—";
@@ -771,7 +771,7 @@ function renderChangelog() {
     const toClass = {
       "approved":"cl-pill-to-approved","updated":"cl-pill-to-updated","onhold":"cl-pill-to-onhold"
     }[to] || "";
-    const fmtStatus = s => ({"approved":"Approved","updated":"Updated","onhold":"On Hold","pending":"Pending","nofile":"No File Needed","removed":"Removed"}[s] || s);
+    const fmtStatus = s => ({"approved":"Approved","updated":"Updated","onhold":"On Hold","pending":"Awaiting File","nofile":"No File Needed","removed":"Removed"}[s] || s);
     return `<li class="changelog-item">
       <div class="cl-ts">${fmtTs(e.ts)}</div>
       <div class="cl-session">${esc(e.day)} · ${esc(e.sessionTitle||"").slice(0,50)}</div>
@@ -823,7 +823,7 @@ function onDownload(boxFileId, btnId) {
 }
 
 function buildRowFilePillsLive(files) {
-  if (!files.length) return `<span class="fs-pill fs-nofile" title="No files attached">—</span>`;
+  if (!files.length) return `<span class="fs-pill fs-nofile" title="Awaiting File">—</span>`;
   const log = getDownloadLog();
   return files.map(f => {
     const tip    = f.fileName || f.fileType || "file";

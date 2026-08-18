@@ -1011,7 +1011,7 @@ function onStatusChange(sessionId, idx){
     // Change 4: store for undo and show toast
     _lastStatusChange = { sessionId, idx, oldStatus };
     const fname = s.files[idx].fileName || s.files[idx].fileType || "File";
-    const statusLabel = {approved:"Approved",distributed:"Distributed",updated:"Updated",onhold:"On Hold",pending:"Pending",nofile:"No File Needed"}[newStatus]||newStatus;
+    const statusLabel = {approved:"Approved",distributed:"Distributed",updated:"Updated",onhold:"On Hold",pending:"Awaiting File",nofile:"No File Needed"}[newStatus]||newStatus;
     showToast(`${esc(fname)} → ${statusLabel}`, true);
   }
   updateCardBadges(sessionId);
