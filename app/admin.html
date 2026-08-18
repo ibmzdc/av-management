@@ -168,15 +168,29 @@ a{color:var(--accent);text-decoration:none}
 .session-info-cell.full{grid-column:1/-1}
 
 /* ── AV requirements ─────────────────────────────────────────────────── */
-.av-reqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;padding:10px}
-.av-req{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:9px 11px}
+.av-groups{display:flex;flex-direction:column;gap:10px;padding:10px}
+.av-group{border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.av-group-hdr{display:flex;align-items:center;gap:6px;padding:6px 10px;background:#f6f8fa;border-bottom:1px solid var(--border);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.av-group-hdr .g-icon{font-size:11px}
+.av-group-body{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;padding:10px}
+.av-group-body.av-special{grid-template-columns:1fr}
+.av-req{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:8px 10px}
+.av-req.av-req-full{grid-column:1/-1}
 .av-req .k{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);margin-bottom:5px}
-.av-req input[type=text],.av-req select,.av-req textarea{width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;color:var(--text);transition:border-color .15s}
-.av-req input[type=text]:focus,.av-req select:focus,.av-req textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
+.av-req input[type=text],.av-req input[type=number],.av-req select,.av-req textarea{width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;color:var(--text);transition:border-color .15s}
+.av-req input[type=text]:focus,.av-req input[type=number]:focus,.av-req select:focus,.av-req textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
+.av-req input[type=number]{-moz-appearance:textfield}
+.av-req input[type=number]::-webkit-inner-spin-button{opacity:1}
 .av-req textarea{resize:vertical;min-height:46px}
-.av-req-check{display:flex;align-items:center;gap:6px;padding:5px 0}
+.av-req-check{display:flex;align-items:center;gap:6px;padding:4px 0}
 .av-req-check input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
 .av-req-check label{font-size:12px;color:var(--text);cursor:pointer}
+/* Compact req chips row (read-only summary strip) */
+.av-chip-row{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px 6px}
+.av-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;white-space:nowrap}
+.av-chip.chip-on{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
+.av-chip.chip-num{background:#ede9fe;color:#6d28d9;border-color:#c4b5fd}
+.av-chip.chip-warn{background:#fef3c7;color:#92400e;border-color:#fcd34d}
 
 /* ── Files section ───────────────────────────────────────────────────── */
 .files-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -740,12 +754,36 @@ function renderSession(s){
   </div>`;
 }
 
-// ── Change 5: Split Session Info from AV Requirements ────────────────────────
+// ── AV Requirements — grouped schema ─────────────────────────────────────────
+// Helper: numeric field (blank = 0)
+function avNum(s, field, def=0){ return (s.av && s.av[field] != null) ? s.av[field] : def; }
+function avBool(s, field, def=false){ return (s.av && s.av[field] != null) ? s.av[field] : def; }
+function avStr(s, field, def=""){ return (s.av && s.av[field] != null) ? s.av[field] : def; }
+
+function chk(id, checked){ return `<input type="checkbox" id="${id}" ${checked?"checked":""} onchange="markDirty()">`; }
+function numInput(id, val, placeholder=""){ return `<input type="number" min="0" id="${id}" value="${val||0}" placeholder="${placeholder}" oninput="markDirty()" style="width:72px">`; }
+function selOpt(val, cur, label){ return `<option value="${val}" ${cur===val?"selected":""}>${label}</option>`; }
+
 function renderAVReqs(s){
   const id = s.id;
+  // Migrate legacy flat fields into s.av on first render (non-destructive)
+  if(!s.av) s.av = {};
+  // Legacy migration: projection → av.presentationSource, microphones → legacy text, podium → av.podium
+  if(s.projection  && !s.av.presentationSource) s.av.presentationSource = s.projection;
+  if(s.podium      && !s.av.podium)             s.av.podium = s.podium;
+  if(s.timer       && !s.av.timer)              s.av.timer  = !!s.timer;
+  if(s.monitor     && !s.av.confidenceMonitors) s.av.confidenceMonitors = parseInt(s.monitor)||0;
+  if(s.specialReqs && !s.av.specialRequirements)s.av.specialRequirements = s.specialReqs;
+  if(s.roomSetup   && !s.av.roomSetup)          s.av.roomSetup = s.roomSetup;
+
+  const av = s.av;
   const speakers = s.speakers||"—";
   const sessionType = s.sessionType||"—";
   const track = s.track||"—";
+
+  const presSource = avStr(s,"presentationSource","");
+  const presRequired = avBool(s,"presentationRequired", !!presSource);
+
   return `
   <div class="body-two-col">
     <!-- Left: Session Information (read-only) -->
@@ -766,53 +804,240 @@ function renderAVReqs(s){
         </div>
       </div>
     </div>
-    <!-- Right: AV Requirements (editable) -->
+    <!-- Right: AV Requirements (editable — grouped) -->
     <div class="body-section">
       <div class="body-section-hdr">AV Requirements</div>
-      <div class="av-reqs">
-        <div class="av-req">
-          <span class="k">Room</span>
-          <input type="text" id="avf-room-${id}" value="${esc(s.room||"")}" placeholder="—" oninput="markDirty()">
-        </div>
-        <div class="av-req">
-          <span class="k">Projection</span>
-          <select id="avf-projection-${id}" onchange="markDirty()">
-            <option value=""                   ${!s.projection?"selected":""}>— not required —</option>
-            <option value="AV team"            ${s.projection==="AV team"?"selected":""}>AV team</option>
-            <option value="AV team - LED"      ${s.projection==="AV team - LED"?"selected":""}>AV team – LED</option>
-            <option value="Presenter"          ${s.projection==="Presenter"?"selected":""}>Presenter</option>
-            <option value="not required"       ${s.projection==="not required"?"selected":""}>not required</option>
-            <option value="Design Fair Station"${s.projection==="Design Fair Station"?"selected":""}>Design Fair Station</option>
-          </select>
-        </div>
-        <div class="av-req">
-          <span class="k">Microphones</span>
-          <input type="text" id="avf-microphones-${id}" value="${esc(s.microphones||"")}" placeholder="—" oninput="markDirty()">
-        </div>
-        <div class="av-req">
-          <span class="k">Podium</span>
-          <div class="av-req-check">
-            <input type="checkbox" id="avf-podium-${id}" ${s.podium?"checked":""} onchange="markDirty()">
-            <label for="avf-podium-${id}">Yes</label>
+      <div class="av-groups">
+
+        <!-- ① Presentation -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">🎞</span> Presentation</div>
+          <div class="av-group-body">
+            <div class="av-req">
+              <span class="k">Required</span>
+              <div class="av-req-check">
+                ${chk(`avf-presRequired-${id}`, presRequired)}
+                <label for="avf-presRequired-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Source</span>
+              <select id="avf-presentationSource-${id}" onchange="markDirty()">
+                ${selOpt("","",           "— none —")}
+                ${selOpt("AV Team",presSource,        "AV Team")}
+                ${selOpt("AV team - LED",presSource,  "AV Team – LED")}
+                ${selOpt("Presenter Laptop",presSource,"Presenter Laptop")}
+                ${selOpt("LED Wall",presSource,       "LED Wall")}
+                ${selOpt("Design Fair Station",presSource,"Design Fair Station")}
+              </select>
+            </div>
+            <div class="av-req">
+              <span class="k">Clicker</span>
+              <div class="av-req-check">
+                ${chk(`avf-clicker-${id}`, avBool(s,"clicker"))}
+                <label for="avf-clicker-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Confidence Monitors</span>
+              ${numInput(`avf-confidenceMonitors-${id}`, avNum(s,"confidenceMonitors"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Timer</span>
+              <div class="av-req-check">
+                ${chk(`avf-timer-${id}`, avBool(s,"timer"))}
+                <label for="avf-timer-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Speaker Preview</span>
+              <div class="av-req-check">
+                ${chk(`avf-speakerPreview-${id}`, avBool(s,"speakerPreview"))}
+                <label for="avf-speakerPreview-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Teleprompter</span>
+              <div class="av-req-check">
+                ${chk(`avf-teleprompter-${id}`, avBool(s,"teleprompter"))}
+                <label for="avf-teleprompter-${id}">Yes</label>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="av-req">
-          <span class="k">Timer (min)</span>
-          <input type="text" id="avf-timer-${id}" value="${esc(s.timer||"")}" placeholder="—" oninput="markDirty()">
+
+        <!-- ② Audio -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">🎙</span> Audio</div>
+          <div class="av-group-body">
+            <div class="av-req">
+              <span class="k">Wireless Handheld</span>
+              ${numInput(`avf-wirelessHandheld-${id}`, avNum(s,"wirelessHandheldMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Lavalier</span>
+              ${numInput(`avf-wirelessLavalier-${id}`, avNum(s,"wirelessLavalierMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Headset</span>
+              ${numInput(`avf-headsetMics-${id}`, avNum(s,"headsetMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Table Mics</span>
+              ${numInput(`avf-tableMics-${id}`, avNum(s,"tableMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Catchbox</span>
+              ${numInput(`avf-catchBoxMics-${id}`, avNum(s,"catchBoxMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Panel Mics</span>
+              ${numInput(`avf-panelMics-${id}`, avNum(s,"panelMics"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Audio Playback</span>
+              <div class="av-req-check">
+                ${chk(`avf-audioPlayback-${id}`, avBool(s,"audioPlayback"))}
+                <label for="avf-audioPlayback-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">House Music</span>
+              <div class="av-req-check">
+                ${chk(`avf-houseMusic-${id}`, avBool(s,"houseMusic"))}
+                <label for="avf-houseMusic-${id}">Yes</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="av-req">
-          <span class="k">Monitor</span>
-          <input type="text" id="avf-monitor-${id}" value="${esc(s.monitor||"")}" placeholder="—" oninput="markDirty()">
+
+        <!-- ③ Video -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">📽</span> Video</div>
+          <div class="av-group-body">
+            <div class="av-req">
+              <span class="k">Projector</span>
+              <div class="av-req-check">
+                ${chk(`avf-projector-${id}`, avBool(s,"projector"))}
+                <label for="avf-projector-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">LED Wall</span>
+              <div class="av-req-check">
+                ${chk(`avf-ledWall-${id}`, avBool(s,"ledWall"))}
+                <label for="avf-ledWall-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Recording</span>
+              <div class="av-req-check">
+                ${chk(`avf-recording-${id}`, avBool(s,"recording"))}
+                <label for="avf-recording-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Livestream</span>
+              <div class="av-req-check">
+                ${chk(`avf-livestream-${id}`, avBool(s,"livestream"))}
+                <label for="avf-livestream-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Video Playback</span>
+              <div class="av-req-check">
+                ${chk(`avf-videoPlayback-${id}`, avBool(s,"videoPlayback"))}
+                <label for="avf-videoPlayback-${id}">Yes</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="av-req" style="grid-column:1/-1">
-          <span class="k">Special Requirements</span>
-          <textarea id="avf-specialReqs-${id}" oninput="markDirty()" rows="2">${esc(s.specialReqs||"")}</textarea>
+
+        <!-- ④ Staging -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">🎭</span> Staging</div>
+          <div class="av-group-body">
+            <div class="av-req">
+              <span class="k">Podium</span>
+              <div class="av-req-check">
+                ${chk(`avf-podium-${id}`, avBool(s,"podium", s.podium||false))}
+                <label for="avf-podium-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Panel Chairs</span>
+              ${numInput(`avf-panelChairs-${id}`, avNum(s,"panelChairs"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Side Tables</span>
+              ${numInput(`avf-sideTables-${id}`, avNum(s,"sideTables"))}
+            </div>
+            <div class="av-req">
+              <span class="k">High-top Tables</span>
+              ${numInput(`avf-highTopTables-${id}`, avNum(s,"highTopTables"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Easel</span>
+              <div class="av-req-check">
+                ${chk(`avf-easel-${id}`, avBool(s,"easel"))}
+                <label for="avf-easel-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Flip Chart</span>
+              <div class="av-req-check">
+                ${chk(`avf-flipChart-${id}`, avBool(s,"flipChart"))}
+                <label for="avf-flipChart-${id}">Yes</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="av-req" style="grid-column:1/-1">
-          <span class="k">Room Setup</span>
-          <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(s.roomSetup||"")}</textarea>
+
+        <!-- ⑤ Room -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
+          <div class="av-group-body">
+            <div class="av-req">
+              <span class="k">Room</span>
+              <input type="text" id="avf-room-${id}" value="${esc(s.room||"")}" placeholder="—" oninput="markDirty()">
+            </div>
+            <div class="av-req">
+              <span class="k">Capacity</span>
+              ${numInput(`avf-roomCapacity-${id}`, avNum(s,"roomCapacity"))}
+            </div>
+            <div class="av-req">
+              <span class="k">Reserved Seating</span>
+              <div class="av-req-check">
+                ${chk(`avf-reservedSeating-${id}`, avBool(s,"reservedSeating"))}
+                <label for="avf-reservedSeating-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req">
+              <span class="k">Overflow Room</span>
+              <div class="av-req-check">
+                ${chk(`avf-overflowRoom-${id}`, avBool(s,"overflowRoom"))}
+                <label for="avf-overflowRoom-${id}">Yes</label>
+              </div>
+            </div>
+            <div class="av-req av-req-full">
+              <span class="k">Room Setup</span>
+              <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"roomSetup", s.roomSetup||""))}</textarea>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- ⑥ Special Requirements -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
+          <div class="av-group-body av-special">
+            <div class="av-req av-req-full">
+              <span class="k">Notes (one per line)</span>
+              <textarea id="avf-specialRequirements-${id}" oninput="markDirty()" rows="3" placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician">${esc(Array.isArray(av.specialRequirements) ? av.specialRequirements.join("\n") : (av.specialRequirements||s.specialReqs||""))}</textarea>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /av-groups -->
     </div>
   </div>`;
 }
@@ -820,16 +1045,61 @@ function renderAVReqs(s){
 function collectAVReqs(sessionId){
   const s = DATA.sessions.find(x=>x.id===sessionId);
   if(!s) return;
+  if(!s.av) s.av = {};
   const g = (field) => document.getElementById(`avf-${field}-${sessionId}`);
-  if(g("room"))         s.room         = g("room").value.trim()||null;
-  if(g("projection"))   s.projection   = g("projection").value||null;
-  if(g("microphones"))  s.microphones  = g("microphones").value.trim()||null;
-  if(g("podium"))       s.podium       = g("podium").checked;
-  if(g("timer"))        s.timer        = g("timer").value.trim()||null;
-  if(g("monitor"))      s.monitor      = g("monitor").value.trim()||null;
-  if(g("track"))        s.track        = g("track").value.trim()||null;
-  if(g("specialReqs"))  s.specialReqs  = g("specialReqs").value.trim()||null;
-  if(g("roomSetup"))    s.roomSetup    = g("roomSetup").value.trim()||null;
+  const gv  = (field) => { const el=g(field); return el ? el.value.trim()||null : undefined; };
+  const gn  = (field) => { const el=g(field); return el ? (parseInt(el.value)||0) : undefined; };
+  const gb  = (field) => { const el=g(field); return el ? el.checked : undefined; };
+
+  // Top-level room (still stored on session root for display in card header)
+  if(g("room")) s.room = gv("room");
+
+  // av object — Presentation
+  if(g("presRequired"))         s.av.presentationRequired  = gb("presRequired");
+  if(g("presentationSource"))   s.av.presentationSource    = gv("presentationSource");
+  if(g("clicker"))              s.av.clicker               = gb("clicker");
+  if(g("confidenceMonitors"))   s.av.confidenceMonitors    = gn("confidenceMonitors");
+  if(g("timer"))                s.av.timer                 = gb("timer");
+  if(g("speakerPreview"))       s.av.speakerPreview        = gb("speakerPreview");
+  if(g("teleprompter"))         s.av.teleprompter          = gb("teleprompter");
+
+  // Audio
+  if(g("wirelessHandheld"))     s.av.wirelessHandheldMics  = gn("wirelessHandheld");
+  if(g("wirelessLavalier"))     s.av.wirelessLavalierMics  = gn("wirelessLavalier");
+  if(g("headsetMics"))          s.av.headsetMics           = gn("headsetMics");
+  if(g("tableMics"))            s.av.tableMics             = gn("tableMics");
+  if(g("catchBoxMics"))         s.av.catchBoxMics          = gn("catchBoxMics");
+  if(g("panelMics"))            s.av.panelMics             = gn("panelMics");
+  if(g("audioPlayback"))        s.av.audioPlayback         = gb("audioPlayback");
+  if(g("houseMusic"))           s.av.houseMusic            = gb("houseMusic");
+
+  // Video
+  if(g("projector"))            s.av.projector             = gb("projector");
+  if(g("ledWall"))              s.av.ledWall               = gb("ledWall");
+  if(g("recording"))            s.av.recording             = gb("recording");
+  if(g("livestream"))           s.av.livestream            = gb("livestream");
+  if(g("videoPlayback"))        s.av.videoPlayback         = gb("videoPlayback");
+
+  // Staging
+  if(g("podium"))               s.av.podium = s.podium     = gb("podium");
+  if(g("panelChairs"))          s.av.panelChairs           = gn("panelChairs");
+  if(g("sideTables"))           s.av.sideTables            = gn("sideTables");
+  if(g("highTopTables"))        s.av.highTopTables         = gn("highTopTables");
+  if(g("easel"))                s.av.easel                 = gb("easel");
+  if(g("flipChart"))            s.av.flipChart             = gb("flipChart");
+
+  // Room
+  if(g("roomCapacity"))         s.av.roomCapacity          = gn("roomCapacity");
+  if(g("reservedSeating"))      s.av.reservedSeating       = gb("reservedSeating");
+  if(g("overflowRoom"))         s.av.overflowRoom          = gb("overflowRoom");
+  if(g("roomSetup"))            s.av.roomSetup = s.roomSetup = gv("roomSetup");
+
+  // Special Requirements — stored as array
+  if(g("specialRequirements")){
+    const raw = g("specialRequirements").value.trim();
+    s.av.specialRequirements = raw ? raw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
+    s.specialReqs = s.av.specialRequirements.join("; ")||null; // legacy compat
+  }
 }
 
 function renderFiles(s){
@@ -918,9 +1188,8 @@ function confirmAddSession(){
     projection:   document.getElementById("ns-projection").value        || null,
     microphones:  document.getElementById("ns-mics").value.trim()       || null,
     podium:       false,
-    timer:        null,
-    monitor:      null,
     specialReqs:  null,
+    av:           {},
     showInDashboard: false,
     files:        [],
     avNote:       null,
