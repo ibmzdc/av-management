@@ -57,15 +57,17 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .stat-tile.tile-files     { border-top: 3px solid var(--accent); }
 .stat-tile.tile-approved  { border-top: 3px solid var(--green); }
 .stat-tile.tile-updated   { border-top: 3px solid var(--blue); }
-.stat-tile.tile-onhold    { border-top: 3px solid #f59e0b; }
-.stat-tile.tile-nofile    { border-top: 3px solid var(--red); }
+.stat-tile.tile-onhold       { border-top: 3px solid #f59e0b; }
+.stat-tile.tile-distributed  { border-top: 3px solid var(--purple); }
+.stat-tile.tile-nofile       { border-top: 3px solid var(--red); }
 .stat-val { font-size: 22px; font-weight: 700; line-height: 1; display: block; }
-.tile-sessions .stat-val  { color: #475569; }
-.tile-files    .stat-val  { color: var(--accent); }
-.tile-approved .stat-val  { color: var(--green); }
-.tile-updated  .stat-val  { color: var(--blue); }
-.tile-onhold   .stat-val  { color: #b45309; }
-.tile-nofile   .stat-val  { color: var(--red); }
+.tile-sessions     .stat-val { color: #475569; }
+.tile-files        .stat-val { color: var(--accent); }
+.tile-approved     .stat-val { color: var(--green); }
+.tile-updated      .stat-val { color: var(--blue); }
+.tile-onhold       .stat-val { color: #b45309; }
+.tile-distributed  .stat-val { color: var(--purple); }
+.tile-nofile       .stat-val { color: var(--red); }
 .stat-label { font-size: 10px; color: var(--subtle); text-transform: uppercase; letter-spacing: .07em; font-weight: 600; display: block; margin-top: 1px; }
 .needs-attention { background: var(--amber-bg); border-bottom: 2px solid var(--amber-border); padding: 8px 20px; font-size: 12px; color: #92400e; font-weight: 600; display: none; }
 
@@ -226,11 +228,12 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 
 <div class="summary-bar" id="summary-bar" style="display:none">
   <div class="stat-tile tile-sessions"><span class="stat-val" id="s-sessions">–</span><span class="stat-label">Sessions</span></div>
-  <div class="stat-tile tile-files"><span class="stat-val" id="s-files">–</span><span class="stat-label">Files tracked</span></div>
+  <div class="stat-tile tile-files"><span class="stat-val" id="s-files">–</span><span class="stat-label">Files Tracked</span></div>
   <div class="stat-tile tile-approved"><span class="stat-val" id="s-approved">–</span><span class="stat-label">Approved</span></div>
   <div class="stat-tile tile-updated"><span class="stat-val" id="s-updated">–</span><span class="stat-label">Updated</span></div>
   <div class="stat-tile tile-onhold"><span class="stat-val" id="s-onhold">–</span><span class="stat-label">On Hold</span></div>
-  <div class="stat-tile tile-nofile"><span class="stat-val" id="s-nofile">–</span><span class="stat-label">Need Files</span></div>
+  <div class="stat-tile tile-distributed"><span class="stat-val" id="s-distributed">–</span><span class="stat-label">Distributed</span></div>
+  <div class="stat-tile tile-nofile"><span class="stat-val" id="s-nofile">–</span><span class="stat-label">Awaiting File</span></div>
 </div>
 
 <div class="needs-attention" id="needs-attention"></div>
@@ -457,21 +460,23 @@ function vendorSessions() {
 
 function renderSummary() {
   const sessions = vendorSessions();
-  let files=0, approved=0, updated=0, onhold=0, noFile=0;
+  let files=0, approved=0, updated=0, onhold=0, distributed=0, noFile=0;
   for (const s of sessions) {
     const sf = s.files || [];
-    files    += sf.length;
-    approved += sf.filter(f=>f.status==="approved").length;
-    updated  += sf.filter(f=>f.status==="updated").length;
-    onhold   += sf.filter(f=>f.status==="onhold").length;
-    if (sf.length === 0) noFile++;
+    files       += sf.length;
+    approved    += sf.filter(f=>f.status==="approved").length;
+    updated     += sf.filter(f=>f.status==="updated").length;
+    onhold      += sf.filter(f=>f.status==="onhold").length;
+    distributed += sf.filter(f=>f.status==="distributed").length;
+    if (sf.length === 0 || sf.some(f=>f.status==="pending")) noFile++;
   }
-  document.getElementById("s-sessions").textContent = sessions.length;
-  document.getElementById("s-files").textContent    = files;
-  document.getElementById("s-approved").textContent = approved;
-  document.getElementById("s-updated").textContent  = updated;
-  document.getElementById("s-onhold").textContent   = onhold;
-  document.getElementById("s-nofile").textContent   = noFile;
+  document.getElementById("s-sessions").textContent    = sessions.length;
+  document.getElementById("s-files").textContent       = files;
+  document.getElementById("s-approved").textContent    = approved;
+  document.getElementById("s-updated").textContent     = updated;
+  document.getElementById("s-onhold").textContent      = onhold;
+  document.getElementById("s-distributed").textContent = distributed;
+  document.getElementById("s-nofile").textContent      = noFile;
 }
 
 function renderNeedsAttention() {

@@ -30,7 +30,6 @@ av-management/
 │   ├── av-data.json            ← Single source of truth (85 sessions)
 │   ├── import-agenda.js        ← Re-seed script (requires xlsx npm pkg)
 │   └── patch-admin.js          ← Re-embeds av-data.json into both HTML files
-└── docs/                       ← Reference guides (admin, AV team, project spec)
 ```
 
 ---
@@ -41,7 +40,7 @@ av-management/
 
 ```
 ZDC_Agenda_Master_2026_Fall.xlsx
-        ↓ (import-agenda.js or extract-all-sessions.mjs)
+        ↓ (import-agenda.js)
 data/av-data.json   ←──── AV Lead edits via admin.html ────→ GitHub (via Contents API)
         ↓ (patch-admin.js)                                         ↓
 admin.html (embedded fallback)                        dashboard.html auto-refreshes
@@ -63,20 +62,27 @@ Both `admin.html` and `dashboard.html` load data in this priority order:
 ### Features
 
 - **85 sessions** across 5 event days (Sunday–Thursday), all sourced from the XLSX agenda
-- **Session row** shows: Time · Title/Speaker · Room · Session Type · Projection · Dashboard checkbox · AV DETAILS button
-- **Dashboard checkbox** — tick to include a session in the vendor dashboard; untick to hide it
-- **AV DETAILS panel** (expandable) — all AV fields are editable inline:
-  - Room, Projection (dropdown), Microphones, Podium (checkbox), Timer, Monitor, Track, Special Requirements, Room Setup
-  - Changes write back to `DATA` in memory; saved on "Save to GitHub"
+- **Session cards** show at a glance: Time · Title/Speakers · Room · Session Type · overall Status pill · Dashboard toggle
+- **Status-colored left border** on each card indicates the dominant file state at a glance
+- **⭐ Dashboard filter** (topbar) — click to show only sessions flagged for the vendor dashboard
+- **Search bar** (topbar) — free-text filter across all session cards; works alongside the dashboard filter
+- **Dashboard toggle** — checkbox on each card; tick to include a session in the vendor dashboard
+- **Bulk actions** — hover cards to reveal checkboxes; select multiple sessions to **Approve All Files**, **Mark Distributed**, or **Mark On Hold** in one click; a sticky bar shows count and actions
+- **AV Details panel** (expandable per card) — split into two side-by-side sections:
+  - **Session Information** (read-only): Speakers · Session Type · Track
+  - **AV Requirements** (editable): Room · Projection · Microphones · Podium · Timer · Monitor · Special Requirements · Room Setup
 - **File tracking per session** — add multiple files, each with:
   - File type (Presentation / Video / Backup / Run-of-Show)
   - File name
   - IBM Box file ID (paste the full Box URL or bare ID — auto-stripped on paste)
-  - Status: Pending / Approved / Updated / On Hold / **Distributed** / No File Needed
+  - Status: Awaiting File / Approved / Updated / On Hold / Distributed / No File Needed
 - **AV Note** — visible to the vendor team on the dashboard
 - **Operator Note** — internal only, never shown on dashboard
-- **Stats bar** — live counts: Sessions · Files tracked · Approved · Updated · On Hold · Distributed · Missing Files
-- **Sidebar day nav** — shows approved+distributed / total file counts per day; click to scroll
+- **Stats bar** — live counts: Sessions · Files Tracked · Approved · Updated · On Hold · Distributed · No Files
+- **Sidebar day nav** — shows approved+distributed / total file counts per day with a progress bar; click to scroll
+- **Toast notifications** — status change confirmation appears bottom-right with a single-step **Undo** option
+- **Leave-page protection** — browser warns before closing or refreshing when there are unsaved changes
+- **Responsive layout** — sidebar collapses to a slide-in drawer (☰ button) below 1024px; card columns reflow at 900px
 
 ### Saving
 
@@ -89,14 +95,27 @@ Both `admin.html` and `dashboard.html` load data in this priority order:
 
 ### File Status Values
 
-| Status | Meaning |
-|--------|---------|
-| `pending` | File expected but not yet received |
-| `approved` | File received and approved for use |
-| `updated` | File has been replaced with a newer version |
-| `onhold` | File is on hold — awaiting action |
-| `distributed` | AV lead confirmed the file has been sent to the vendor team (**shared global state**) |
-| `nofile` | No file needed for this session |
+| Status (data value) | Display label | Meaning |
+|---------------------|--------------|---------|
+| `pending` | ⚠ Awaiting File | File expected but not yet received |
+| `approved` | ✓ Approved | File received and approved for use |
+| `updated` | ↑ Updated | File has been replaced with a newer version — re-download required |
+| `onhold` | ⏸ On Hold | File is on hold — awaiting action |
+| `distributed` | ⬆ Distributed | AV lead confirmed the file has been sent to the vendor team (**global shared state**) |
+| `nofile` | — No File Needed | No file required for this session |
+
+### Session Status Pill (collapsed card)
+
+The single pill on each collapsed card summarises all file statuses for that session:
+
+| Pill | Condition |
+|------|-----------|
+| ✓ Ready | All files approved, distributed, or no-file |
+| ⬆ Distributed | All files distributed |
+| ↑ Review Required | Any file is `updated` |
+| ⏸ On Hold | Any file is `onhold` |
+| — No Files Needed | All files are `nofile` |
+| ⚠ No Files | Session has no files, or any file is `pending` |
 
 ---
 
@@ -104,10 +123,13 @@ Both `admin.html` and `dashboard.html` load data in this priority order:
 
 ### Features
 
-- **Shows only sessions flagged with Dashboard ✓ in admin** — currently 26 sessions
+- **Shows only sessions flagged with Dashboard ✓ in admin**
 - **Auto-refreshes every 60 seconds** from GitHub raw URL with `cache: "no-store"`
-- **Room filter bar** — filter all sessions by room with one click; persists across auto-refreshes
-- **Day tabs** — Sunday through Thursday; filter + day tabs work independently
+- **↺ Refresh Now** button for immediate manual refresh
+- **Left nav sidebar** — day links and room filter; click a day or room to filter the main panel
+- **Stats bar** — Sessions · Files Tracked · Approved · Updated · On Hold · Distributed · Awaiting File
+- **Needs-Attention banner** — highlights sessions with `updated` files requiring re-download
+- **🖨 Print Rundown** — prints a clean room-by-room rundown (hides nav and interactive elements)
 
 ### Session Row Layout
 
@@ -130,8 +152,8 @@ Each file attached to a session appears as a small icon pill — hover to see th
 | `↻` amber pulsing | Update available — file changed since last download | Re-download |
 | `⬇` blue | Not yet downloaded | Download |
 | `✓` green | Downloaded or Distributed | None |
-| `⏸` amber | On Hold | None — await AV lead |
-| `—` grey | No file attached | Contact AV lead |
+| `⏸` amber | On Hold — awaiting upload | None — await AV lead |
+| `—` grey | Awaiting File | Contact AV lead |
 
 **State logic:**
 - `distributed` status (set by AV lead) → always shows `✓` for all viewers — **global shared state**
@@ -175,6 +197,26 @@ git push
 3. Dashboard auto-refreshes within 60 seconds — done
 
 > ⚠️ If you use Option A, **always commit `data/av-data.json`** along with the HTML files. The dashboard reads from the GitHub raw URL — if only the HTML is pushed, the JSON on GitHub stays stale.
+
+---
+
+## `import-agenda.js`
+
+Seeds `av-data.json` from the XLSX agenda spreadsheet. Run once at the start of each event cycle.
+
+```bash
+# Run from the workspace root (one level above av-management/)
+node av-management/data/import-agenda.js
+```
+
+**Requirements:** `npm install xlsx` (SheetJS community edition)
+
+**What it does:**
+- Reads `Data/ZDC_Agenda_Master_2026_Fall.xlsx`, sheet `ZDC Agenda Master`
+- Filters to sessions with an AV projection need (`AV team` or `Presenter`) and excludes Meals, Breaks, Networking, etc.
+- Generates a stable slug `id` for each session (day + start time + room + title)
+- **Merge-safe:** re-running preserves all admin-edited fields (`files`, `avNote`, `operatorNote`, `showInDashboard`, and all AV requirement overrides) for any session whose `id` is unchanged
+- New sessions added to the spreadsheet are picked up automatically; removed sessions are dropped
 
 ---
 
@@ -241,28 +283,6 @@ Paste either the full URL or the bare ID into the Box ID field in admin — it a
   "operatorNote": "Internal only — not shown on dashboard"
 }
 ```
-
----
-
-## Changelog (this session)
-
-| Commit | Change |
-|--------|--------|
-| Editable AV fields | AV DETAILS panel replaced read-only cards with editable inputs for all 9 AV fields; writes back to JSON on save |
-| Dashboard status fix | Fixed status case mismatch (admin wrote lowercase, dashboard expected Title Case) |
-| Dashboard session filter | Dashboard now shows only sessions with `showInDashboard: true` (set by AV lead checkbox) |
-| Dashboard checkbox | Per-session Dashboard checkbox on admin row; sets `showInDashboard` field; blue left border on checked cards |
-| Download JSON button | Admin: ↓ Download JSON button for local testing without GitHub token |
-| Smart download button | Dashboard: download button shows ⬇ New / ✓ Downloaded / ↻ Update Available based on localStorage vs `updatedAt` |
-| Distributed status | New `distributed` file status — set by AV lead, globally visible to all dashboard viewers |
-| Dashboard row redesign | Session row now has fixed columns: Time · Title · Room · AV Details button · Download Status button |
-| AV chips moved to panel | AV details (Room/Proj/Mics/etc.) moved from always-visible row into expandable AV Details sub-panel |
-| Download Status column | Renamed from "Files"; shows icon-only pills (↻⬇✓⏸—) per file; hover shows file name; legend bar added |
-| Room filter | Filter bar above sessions; click any room to show only that room's sessions across all day tabs |
-| Box URL auto-strip | Admin Box ID field now accepts full Box URLs and strips to bare ID automatically |
-| cache: no-store | Dashboard fetch uses `cache: "no-store"` to defeat GitHub CDN caching |
-| patch-admin.js rewrite | Handles both HTML files; graceful no-op when content already matches; fails fast on missing constant |
-| Room filter bug fix | Fixed onclick quoting bug (JSON.stringify double-quotes broke HTML attribute); switched to DOM addEventListener |
 
 ---
 

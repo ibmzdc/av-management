@@ -558,7 +558,6 @@ function render(){
 function sessionBorderClass(s){
   if(!s.files || s.files.length === 0) return "status-missing";
   const statuses = s.files.map(f=>f.status);
-  if(statuses.includes("missing"))     return "status-missing";
   if(statuses.includes("onhold"))      return "status-onhold";
   if(statuses.includes("pending"))     return "status-missing";
   if(statuses.includes("updated"))     return "status-updated";
@@ -641,15 +640,16 @@ function renderDay(day){
   </div>`;
 }
 
-// ── Change 2: Single session status pill ─────────────────────────────────────
+// ── Single session status pill (collapsed row) ───────────────────────────────
 function sessionStatusPill(files){
   if(!files || files.length===0) return `<span class="session-status-pill pill-missing">⚠ No Files</span>`;
   const st = files.map(f=>f.status);
-  if(st.every(s=>s==="distributed"))                                                   return `<span class="session-status-pill pill-distributed">⬆ Distributed</span>`;
-  if(st.every(s=>s==="approved"||s==="distributed"||s==="nofile"))                     return `<span class="session-status-pill pill-ready">✓ Ready</span>`;
-  if(st.includes("updated"))                                                            return `<span class="session-status-pill pill-review">↑ Review Required</span>`;
-  if(st.includes("onhold"))                                                             return `<span class="session-status-pill pill-onhold">⏸ On Hold</span>`;
-  if(st.every(s=>s==="nofile"))                                                         return `<span class="session-status-pill pill-nofile">— No Files Needed</span>`;
+  if(st.every(s=>s==="distributed"))                                                        return `<span class="session-status-pill pill-distributed">⬆ Distributed</span>`;
+  if(st.every(s=>s==="approved"||s==="distributed"||s==="nofile"))                          return `<span class="session-status-pill pill-ready">✓ Ready</span>`;
+  if(st.every(s=>s==="nofile"))                                                             return `<span class="session-status-pill pill-nofile">— No Files Needed</span>`;
+  if(st.includes("updated"))                                                                return `<span class="session-status-pill pill-review">↑ Review Required</span>`;
+  if(st.includes("onhold"))                                                                 return `<span class="session-status-pill pill-onhold">⏸ On Hold</span>`;
+  if(st.includes("pending"))                                                                return `<span class="session-status-pill pill-missing">⚠ No Files</span>`;
   return `<span class="session-status-pill pill-missing">⚠ No Files</span>`;
 }
 
@@ -663,8 +663,8 @@ function fileStatusBadge(files){
   if(cnt("approved"))    parts.push(`<span class="badge badge-approved">✓ ${cnt("approved")} Approved</span>`);
   if(cnt("updated"))     parts.push(`<span class="badge badge-updated">↑ ${cnt("updated")} Updated</span>`);
   if(cnt("onhold"))      parts.push(`<span class="badge badge-onhold">⏸ ${cnt("onhold")} On Hold</span>`);
-  if(cnt("nofile"))      parts.push(`<span class="badge badge-nofile">${cnt("nofile")} No File Needed</span>`);
-  if(cnt("pending"))     parts.push(`<span class="badge badge-missing">${cnt("pending")} Pending</span>`);
+  if(cnt("nofile"))      parts.push(`<span class="badge badge-nofile">${cnt("nofile")} No Files Needed</span>`);
+  if(cnt("pending"))     parts.push(`<span class="badge badge-missing">⚠ ${cnt("pending")} Awaiting File</span>`);
   return parts.join(" ");
 }
 
