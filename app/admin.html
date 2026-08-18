@@ -110,7 +110,7 @@ a{color:var(--accent);text-decoration:none}
 .session-card.status-distributed{border-left-color:var(--purple)}
 .session-card.status-nofile{border-left-color:#d1d5db}
 .session-card.in-dashboard{outline:2px solid #bfdbfe;outline-offset:-1px}
-.session-head{display:grid;grid-template-columns:76px minmax(0,1fr) 108px 128px minmax(110px,1fr) 54px;gap:0 14px;align-items:start;padding:10px 14px 9px;cursor:pointer}
+.session-head{display:grid;grid-template-columns:26px 76px minmax(0,1fr) 108px 128px minmax(100px,1fr) 54px;gap:0 12px;align-items:start;padding:10px 14px 9px;cursor:pointer}
 .session-head:hover{background:#fafbfc}
 .session-time{font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;padding-top:3px;line-height:1.5}
 .session-time .t-start{display:block;font-size:12.5px;font-weight:600;color:var(--text);line-height:1.2}
@@ -153,8 +153,19 @@ a{color:var(--accent);text-decoration:none}
 .btn-av-details{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:#374151;white-space:nowrap}
 .btn-av-details:hover{background:#eff6ff;border-color:#93c5fd;color:var(--blue)}
 
+/* ── Change 5: Session Info / AV Reqs split ──────────────────────────── */
+.body-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.body-section{border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.body-section-hdr{background:#f6f8fa;border-bottom:1px solid var(--border);padding:7px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.session-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.session-info-cell{padding:7px 12px;border-bottom:1px solid #f3f4f6}
+.session-info-cell:nth-last-child(-n+2){border-bottom:none}
+.session-info-cell .k{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);margin-bottom:2px}
+.session-info-cell .v{font-size:12px;color:var(--text);font-weight:500}
+.session-info-cell.full{grid-column:1/-1}
+
 /* ── AV requirements ─────────────────────────────────────────────────── */
-.av-reqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:10px;margin-bottom:16px}
+.av-reqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;padding:10px}
 .av-req{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:9px 11px}
 .av-req .k{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);margin-bottom:5px}
 .av-req input[type=text],.av-req select,.av-req textarea{width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;color:var(--text);transition:border-color .15s}
@@ -170,6 +181,8 @@ a{color:var(--accent);text-decoration:none}
 .btn-add-file{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:#374151;transition:background .1s}
 .btn-add-file:hover{background:#f3f4f6}
 .file-row{display:grid;grid-template-columns:130px 1fr 130px auto;gap:8px;align-items:center;background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:8px 10px;margin-bottom:6px}
+@media(max-width:600px){.file-row{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}}
+@media(max-width:400px){.file-row{grid-template-columns:1fr}}
 .file-row select,.file-row input{padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;background:var(--surface);font-family:inherit;transition:border-color .15s}
 .file-row select:focus,.file-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
 .file-row input[type=text]{width:100%}
@@ -178,6 +191,7 @@ a{color:var(--accent);text-decoration:none}
 
 /* ── Notes row ───────────────────────────────────────────────────────── */
 .notes-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media(max-width:600px){.notes-row{grid-template-columns:1fr}}
 .notes-row label{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
 .notes-row textarea{width:100%;padding:7px 9px;border:1px solid #d1d5db;border-radius:5px;font-size:12px;resize:vertical;min-height:58px;font-family:inherit;transition:border-color .15s}
 .notes-row textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
@@ -188,6 +202,69 @@ a{color:var(--accent);text-decoration:none}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover{background:var(--accent-hover)}
 .btn-sm{font-size:11px;padding:3px 9px}
+
+/* ── Change 2: Session status pill ──────────────────────────────────── */
+.session-status-pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;display:inline-block;line-height:1.5}
+.pill-ready       {background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.pill-missing     {background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.pill-review      {background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.pill-onhold      {background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.pill-distributed {background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
+.pill-nofile      {background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+
+/* ── Change 1: Bulk actions ──────────────────────────────────────────── */
+.bulk-bar{display:none;align-items:center;gap:8px;padding:9px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;margin-bottom:12px;position:sticky;top:58px;z-index:50}
+.bulk-bar.visible{display:flex}
+.bulk-count-badge{background:var(--blue);color:#fff;border-radius:20px;padding:1px 9px;font-size:11.5px;font-weight:700}
+.bulk-bar-label{font-size:12px;font-weight:600;color:var(--blue)}
+.bulk-spacer{flex:1}
+.bulk-btn{font-size:11px;font-weight:600;padding:4px 11px;border-radius:4px;border:1px solid;cursor:pointer;white-space:nowrap;background:var(--surface)}
+.bulk-btn-approve{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.bulk-btn-approve:hover{filter:brightness(.94)}
+.bulk-btn-dist{color:var(--purple);border-color:var(--purple-border);background:var(--purple-bg)}
+.bulk-btn-dist:hover{filter:brightness(.94)}
+.bulk-btn-hold{color:var(--amber);border-color:var(--amber-border);background:var(--amber-bg)}
+.bulk-btn-hold:hover{filter:brightness(.94)}
+.bulk-btn-clear{color:var(--muted);border-color:var(--border)}
+.bulk-btn-clear:hover{background:#f3f4f6}
+.bulk-feedback{font-size:11px;color:var(--green);font-weight:600;transition:opacity .4s;opacity:0}
+.bulk-feedback.show{opacity:1}
+.session-select-wrap{display:flex;align-items:center;justify-content:center;padding-top:3px}
+.session-select{width:15px;height:15px;cursor:pointer;accent-color:var(--accent);opacity:0;transition:opacity .1s}
+.session-card:hover .session-select{opacity:1}
+.session-select:checked{opacity:1}
+
+/* ── Change 3: Responsive layout ─────────────────────────────────────── */
+.btn-menu{display:none;background:none;border:none;cursor:pointer;color:#c9d1d9;font-size:20px;padding:2px 6px;line-height:1;flex-shrink:0}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:85}
+.sidebar-backdrop.open{display:block}
+@media(max-width:1024px){
+  .btn-menu{display:flex;align-items:center}
+  .sidebar{position:fixed;left:0;top:50px;height:calc(100vh - 50px);transform:translateX(-100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:90;box-shadow:4px 0 24px rgba(0,0,0,.14)}
+  .sidebar.open{transform:translateX(0)}
+}
+@media(max-width:900px){
+  .session-head{grid-template-columns:20px 1fr auto 54px;grid-template-rows:auto auto;row-gap:3px;column-gap:10px}
+  .session-time{grid-row:2;grid-column:2;display:flex;gap:6px;align-items:center;font-size:11px;color:var(--muted);padding-top:0}
+  .session-time .t-start{font-size:11px;font-weight:500;color:var(--muted)}
+  .session-info{grid-row:1;grid-column:2}
+  .session-col-room{grid-row:2;grid-column:2;font-size:11px;color:var(--muted)}
+  .session-col-type{display:none}
+  .session-col-status{grid-row:1;grid-column:3;align-self:center}
+  .dash-toggle{grid-row:1;grid-column:4;grid-row-end:span 2}
+  .session-select-wrap{grid-row:1;grid-column:1;grid-row-end:span 2}
+}
+@media(max-width:600px){
+  .av-reqs{grid-template-columns:1fr}
+  .body-two-col{grid-template-columns:1fr}
+}
+
+/* ── Change 4: Toast ──────────────────────────────────────────────────── */
+#toast{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;align-items:center;gap:10px;background:#1f2328;color:#fff;padding:10px 16px;border-radius:7px;font-size:12.5px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+#toast.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+#toast .t-icon{color:#4ade80;font-weight:800;font-size:13px}
+#toast .t-undo{font-size:11px;color:#93c5fd;text-decoration:underline;cursor:pointer;margin-left:2px;border:none;background:none;font-family:inherit;font-weight:600;padding:0}
+#toast .t-undo:hover{color:#bfdbfe}
 </style>
 </head>
 <body>
@@ -284,6 +361,7 @@ a{color:var(--accent);text-decoration:none}
 
 <!-- Top bar -->
 <div class="topbar">
+  <button class="btn-menu" id="menuBtn" onclick="toggleSidebar()" title="Toggle day navigation">☰</button>
   <span class="logo"><span class="logo-dot"></span>ZDC AV Admin</span>
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
   <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)">
@@ -293,9 +371,12 @@ a{color:var(--accent);text-decoration:none}
   <button class="btn-save btn" id="saveBtn" onclick="saveAll()" disabled>Save to GitHub</button>
 </div>
 
+<!-- Sidebar backdrop (mobile/tablet) -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
 <div class="layout">
   <!-- Sidebar -->
-  <nav class="sidebar">
+  <nav class="sidebar" id="sidebar">
     <h3>Event Days</h3>
     <div id="daynav"></div>
   </nav>
@@ -303,8 +384,25 @@ a{color:var(--accent);text-decoration:none}
   <!-- Main -->
   <main class="main" id="main">
     <div id="statsBar" class="stats-bar" style="display:none"></div>
+    <!-- Bulk action bar (Change 1) -->
+    <div class="bulk-bar" id="bulkBar">
+      <span class="bulk-count-badge" id="bulkCount">0</span>
+      <span class="bulk-bar-label">sessions selected</span>
+      <span class="bulk-spacer"></span>
+      <span class="bulk-feedback" id="bulkFeedback"></span>
+      <button class="bulk-btn bulk-btn-approve" onclick="applyBulkAction('approved')">✓ Approve All Files</button>
+      <button class="bulk-btn bulk-btn-dist"    onclick="applyBulkAction('distributed')">⬆ Mark Distributed</button>
+      <button class="bulk-btn bulk-btn-hold"    onclick="applyBulkAction('onhold')">⏸ On Hold</button>
+      <button class="bulk-btn bulk-btn-clear"   onclick="clearBulkSelection()">✕ Deselect</button>
+    </div>
     <div id="content"></div>
   </main>
+</div>
+
+<!-- Toast (Change 4) -->
+<div id="toast">
+  <span class="t-icon">✓</span>
+  <span id="toastMsg"></span>
 </div>
 
 <script>
@@ -539,6 +637,19 @@ function renderDay(day){
   </div>`;
 }
 
+// ── Change 2: Single session status pill ─────────────────────────────────────
+function sessionStatusPill(files){
+  if(!files || files.length===0) return `<span class="session-status-pill pill-missing">⚠ Missing Files</span>`;
+  const st = files.map(f=>f.status);
+  if(st.every(s=>s==="distributed"))                                                   return `<span class="session-status-pill pill-distributed">⬆ Distributed</span>`;
+  if(st.every(s=>s==="approved"||s==="distributed"||s==="nofile"))                     return `<span class="session-status-pill pill-ready">✓ Ready</span>`;
+  if(st.includes("updated"))                                                            return `<span class="session-status-pill pill-review">↑ Review Required</span>`;
+  if(st.includes("onhold"))                                                             return `<span class="session-status-pill pill-onhold">⏸ On Hold</span>`;
+  if(st.every(s=>s==="nofile"))                                                         return `<span class="session-status-pill pill-nofile">— No Files Needed</span>`;
+  return `<span class="session-status-pill pill-missing">⚠ Missing Files</span>`;
+}
+
+// Detail badges (used inside the expanded body)
 function fileStatusBadge(files){
   if(!files || files.length===0) return `<span class="badge badge-missing">No file</span>`;
   const statuses = files.map(f=>f.status);
@@ -558,6 +669,10 @@ function renderSession(s){
   const endPart = s.endTime ? `<span style="font-weight:400;color:var(--subtle)"> – ${s.endTime}</span>` : "";
   return `<div class="session-card${borderCls?" "+borderCls:""}${s.showInDashboard?" in-dashboard":""}" id="card-${s.id}">
     <div class="session-head" onclick="toggleCard('${s.id}')">
+      <!-- Change 1: select checkbox (opacity controlled by CSS hover/checked) -->
+      <div class="session-select-wrap" onclick="event.stopPropagation()">
+        <input type="checkbox" class="session-select" id="sel-${s.id}" onchange="onSelectSession('${s.id}')">
+      </div>
       <div class="session-time">
         <span class="t-start">${s.startTime||"—"}</span>${endPart}
       </div>
@@ -565,17 +680,19 @@ function renderSession(s){
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-meta">${s.speakers?esc(s.speakers.split(",")[0].trim())+(s.speakers.includes(",")?" et al.":""):""}</div>
       </div>
-      <div class="session-col">
+      <!-- Change 3: room gets its own class for responsive grid placement -->
+      <div class="session-col session-col-room">
         <span class="col-label">Room</span>
         <span class="col-val">${esc(s.room||"—")}</span>
       </div>
-      <div class="session-col">
+      <div class="session-col session-col-type">
         <span class="col-label">Session Type</span>
         <span class="col-val">${esc(s.sessionType)}</span>
       </div>
-      <div class="session-col">
-        <span class="col-label">Files</span>
-        <div id="badges-${s.id}" class="session-badges">${fileStatusBadge(s.files)}</div>
+      <!-- Change 2: single status pill replaces multi-badge strip on collapsed row -->
+      <div class="session-col session-col-status">
+        <span class="col-label">Status</span>
+        <div id="pill-${s.id}">${sessionStatusPill(s.files)}</div>
       </div>
       <div class="dash-toggle" onclick="event.stopPropagation()">
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
@@ -589,7 +706,7 @@ function renderSession(s){
     <div class="session-body" id="body-${s.id}">
       ${renderAVReqs(s)}
       <div class="files-header">
-        <span>Files</span>
+        <span>Files <span id="badges-${s.id}" style="margin-left:6px">${fileStatusBadge(s.files)}</span></span>
         <button class="btn-add-file" onclick="addFile('${s.id}')">+ Add file</button>
       </div>
       <div id="files-${s.id}">${renderFiles(s)}</div>
@@ -607,54 +724,79 @@ function renderSession(s){
   </div>`;
 }
 
+// ── Change 5: Split Session Info from AV Requirements ────────────────────────
 function renderAVReqs(s){
   const id = s.id;
-  return `<div class="av-reqs">
-    <div class="av-req">
-      <span class="k">Room</span>
-      <input type="text" id="avf-room-${id}" value="${esc(s.room||"")}" placeholder="—" oninput="markDirty()">
-    </div>
-    <div class="av-req">
-      <span class="k">Projection</span>
-      <select id="avf-projection-${id}" onchange="markDirty()">
-        <option value=""             ${!s.projection?"selected":""}>— not required —</option>
-        <option value="AV team"      ${s.projection==="AV team"?"selected":""}>AV team</option>
-        <option value="AV team - LED"${s.projection==="AV team - LED"?"selected":""}>AV team – LED</option>
-        <option value="Presenter"    ${s.projection==="Presenter"?"selected":""}>Presenter</option>
-        <option value="not required" ${s.projection==="not required"?"selected":""}>not required</option>
-        <option value="Design Fair Station"${s.projection==="Design Fair Station"?"selected":""}>Design Fair Station</option>
-      </select>
-    </div>
-    <div class="av-req">
-      <span class="k">Microphones</span>
-      <input type="text" id="avf-microphones-${id}" value="${esc(s.microphones||"")}" placeholder="—" oninput="markDirty()">
-    </div>
-    <div class="av-req">
-      <span class="k">Podium</span>
-      <div class="av-req-check">
-        <input type="checkbox" id="avf-podium-${id}" ${s.podium?"checked":""} onchange="markDirty()">
-        <label for="avf-podium-${id}">Yes</label>
+  const speakers = s.speakers||"—";
+  const sessionType = s.sessionType||"—";
+  const track = s.track||"—";
+  return `
+  <div class="body-two-col">
+    <!-- Left: Session Information (read-only) -->
+    <div class="body-section">
+      <div class="body-section-hdr">Session Information</div>
+      <div class="session-info-grid">
+        <div class="session-info-cell full">
+          <span class="k">Speakers</span>
+          <span class="v">${esc(speakers)}</span>
+        </div>
+        <div class="session-info-cell">
+          <span class="k">Session Type</span>
+          <span class="v">${esc(sessionType)}</span>
+        </div>
+        <div class="session-info-cell">
+          <span class="k">Track</span>
+          <span class="v">${esc(track)}</span>
+        </div>
       </div>
     </div>
-    <div class="av-req">
-      <span class="k">Timer (min)</span>
-      <input type="text" id="avf-timer-${id}" value="${esc(s.timer||"")}" placeholder="—" oninput="markDirty()">
-    </div>
-    <div class="av-req">
-      <span class="k">Monitor</span>
-      <input type="text" id="avf-monitor-${id}" value="${esc(s.monitor||"")}" placeholder="—" oninput="markDirty()">
-    </div>
-    <div class="av-req">
-      <span class="k">Track</span>
-      <input type="text" id="avf-track-${id}" value="${esc(s.track||"")}" placeholder="—" oninput="markDirty()">
-    </div>
-    <div class="av-req">
-      <span class="k">Special Requirements</span>
-      <textarea id="avf-specialReqs-${id}" oninput="markDirty()" rows="2">${esc(s.specialReqs||"")}</textarea>
-    </div>
-    <div class="av-req" style="grid-column:1/-1">
-      <span class="k">Room Setup</span>
-      <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(s.roomSetup||"")}</textarea>
+    <!-- Right: AV Requirements (editable) -->
+    <div class="body-section">
+      <div class="body-section-hdr">AV Requirements</div>
+      <div class="av-reqs">
+        <div class="av-req">
+          <span class="k">Room</span>
+          <input type="text" id="avf-room-${id}" value="${esc(s.room||"")}" placeholder="—" oninput="markDirty()">
+        </div>
+        <div class="av-req">
+          <span class="k">Projection</span>
+          <select id="avf-projection-${id}" onchange="markDirty()">
+            <option value=""                   ${!s.projection?"selected":""}>— not required —</option>
+            <option value="AV team"            ${s.projection==="AV team"?"selected":""}>AV team</option>
+            <option value="AV team - LED"      ${s.projection==="AV team - LED"?"selected":""}>AV team – LED</option>
+            <option value="Presenter"          ${s.projection==="Presenter"?"selected":""}>Presenter</option>
+            <option value="not required"       ${s.projection==="not required"?"selected":""}>not required</option>
+            <option value="Design Fair Station"${s.projection==="Design Fair Station"?"selected":""}>Design Fair Station</option>
+          </select>
+        </div>
+        <div class="av-req">
+          <span class="k">Microphones</span>
+          <input type="text" id="avf-microphones-${id}" value="${esc(s.microphones||"")}" placeholder="—" oninput="markDirty()">
+        </div>
+        <div class="av-req">
+          <span class="k">Podium</span>
+          <div class="av-req-check">
+            <input type="checkbox" id="avf-podium-${id}" ${s.podium?"checked":""} onchange="markDirty()">
+            <label for="avf-podium-${id}">Yes</label>
+          </div>
+        </div>
+        <div class="av-req">
+          <span class="k">Timer (min)</span>
+          <input type="text" id="avf-timer-${id}" value="${esc(s.timer||"")}" placeholder="—" oninput="markDirty()">
+        </div>
+        <div class="av-req">
+          <span class="k">Monitor</span>
+          <input type="text" id="avf-monitor-${id}" value="${esc(s.monitor||"")}" placeholder="—" oninput="markDirty()">
+        </div>
+        <div class="av-req" style="grid-column:1/-1">
+          <span class="k">Special Requirements</span>
+          <textarea id="avf-specialReqs-${id}" oninput="markDirty()" rows="2">${esc(s.specialReqs||"")}</textarea>
+        </div>
+        <div class="av-req" style="grid-column:1/-1">
+          <span class="k">Room Setup</span>
+          <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(s.roomSetup||"")}</textarea>
+        </div>
+      </div>
     </div>
   </div>`;
 }
@@ -860,7 +1002,14 @@ function onStatusChange(sessionId, idx){
   const newStatus = document.getElementById(`fstatus-${sessionId}-${idx}`).value;
   s.files[idx].status = newStatus;
   s.files[idx].updatedAt = new Date().toISOString();
-  if(oldStatus !== newStatus) appendChangelog(s, s.files[idx].fileType||"file", oldStatus, newStatus);
+  if(oldStatus !== newStatus){
+    appendChangelog(s, s.files[idx].fileType||"file", oldStatus, newStatus);
+    // Change 4: store for undo and show toast
+    _lastStatusChange = { sessionId, idx, oldStatus };
+    const fname = s.files[idx].fileName || s.files[idx].fileType || "File";
+    const statusLabel = {approved:"Approved",distributed:"Distributed",updated:"Updated",onhold:"On Hold",pending:"Pending",nofile:"No File Needed"}[newStatus]||newStatus;
+    showToast(`${esc(fname)} → ${statusLabel}`, true);
+  }
   updateCardBadges(sessionId);
   markDirty();
 }
@@ -893,13 +1042,16 @@ function collectFormState(){
 function updateCardBadges(sessionId){
   renderStats();
   renderDayNav();
-  // Refresh the inline badge summary and border color on the collapsed session row
   const s = DATA.sessions.find(x=>x.id===sessionId);
-  const el = document.getElementById("badges-"+sessionId);
-  if(s && el) el.innerHTML = fileStatusBadge(s.files);
+  // Change 2: update status pill on collapsed row
+  const pill = document.getElementById("pill-"+sessionId);
+  if(s && pill) pill.innerHTML = sessionStatusPill(s.files);
+  // Detail badges inside the body
+  const badges = document.getElementById("badges-"+sessionId);
+  if(s && badges) badges.innerHTML = fileStatusBadge(s.files);
+  // Left border color
   const card = document.getElementById("card-"+sessionId);
   if(s && card){
-    // remove old status classes, apply new one
     card.classList.remove("status-approved","status-updated","status-onhold","status-missing","status-distributed","status-nofile");
     const bc = sessionBorderClass(s);
     if(bc) card.classList.add(bc);
@@ -918,6 +1070,103 @@ function appendChangelog(session, fileType, oldStatus, newStatus){
     newStatus
   });
   if(DATA.changelog.length > 50) DATA.changelog = DATA.changelog.slice(0,50);
+}
+
+// ── Change 1: Bulk actions ────────────────────────────────────────────────────
+const SELECTED_IDS = new Set();
+
+function onSelectSession(id){
+  const cb = document.getElementById("sel-"+id);
+  if(cb.checked) SELECTED_IDS.add(id);
+  else SELECTED_IDS.delete(id);
+  updateBulkBar();
+}
+
+function updateBulkBar(){
+  const bar = document.getElementById("bulkBar");
+  const countEl = document.getElementById("bulkCount");
+  const n = SELECTED_IDS.size;
+  countEl.textContent = n;
+  bar.classList.toggle("visible", n > 0);
+}
+
+function clearBulkSelection(){
+  SELECTED_IDS.forEach(id => {
+    const cb = document.getElementById("sel-"+id);
+    if(cb) cb.checked = false;
+  });
+  SELECTED_IDS.clear();
+  updateBulkBar();
+}
+
+function applyBulkAction(status){
+  let changed = 0;
+  SELECTED_IDS.forEach(sessionId => {
+    const s = DATA.sessions.find(x=>x.id===sessionId);
+    if(!s) return;
+    s.files.forEach((f,i) => {
+      // Approve only touches pending/updated; distribute/hold touch all non-nofile
+      const shouldChange =
+        status === "approved"     ? (f.status==="pending"||f.status==="updated") :
+        status === "distributed"  ? f.status !== "nofile" :
+        status === "onhold"       ? f.status !== "nofile" : true;
+      if(!shouldChange) return;
+      const old = f.status;
+      f.status = status;
+      f.updatedAt = new Date().toISOString();
+      if(old !== status){ appendChangelog(s, f.fileType||"file", old, status); changed++; }
+    });
+    updateCardBadges(sessionId);
+  });
+  markDirty();
+  // Brief feedback in the bar
+  const fb = document.getElementById("bulkFeedback");
+  fb.textContent = `Updated ${changed} file${changed!==1?"s":""}`;
+  fb.classList.add("show");
+  setTimeout(()=>fb.classList.remove("show"), 2500);
+}
+
+// ── Change 3: Sidebar toggle (mobile/tablet) ─────────────────────────────────
+function toggleSidebar(){
+  const sidebar  = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  const isOpen   = sidebar.classList.toggle("open");
+  backdrop.classList.toggle("open", isOpen);
+}
+
+// ── Change 4: Toast notifications ────────────────────────────────────────────
+let _toastTimer   = null;
+let _lastStatusChange = null; // { sessionId, idx, oldStatus } for undo
+
+function showToast(msg, canUndo){
+  const el    = document.getElementById("toast");
+  const msgEl = document.getElementById("toastMsg");
+  clearTimeout(_toastTimer);
+  msgEl.textContent = msg;
+  // Show or hide undo button
+  let undoBtn = el.querySelector(".t-undo");
+  if(canUndo){
+    if(!undoBtn){ undoBtn = document.createElement("button"); undoBtn.className="t-undo"; undoBtn.textContent="Undo"; undoBtn.onclick=undoLastStatusChange; el.appendChild(undoBtn); }
+  } else {
+    if(undoBtn) undoBtn.remove();
+  }
+  el.classList.add("visible");
+  _toastTimer = setTimeout(()=>el.classList.remove("visible"), 3500);
+}
+
+function undoLastStatusChange(){
+  if(!_lastStatusChange) return;
+  const { sessionId, idx, oldStatus } = _lastStatusChange;
+  _lastStatusChange = null;
+  const s = DATA.sessions.find(x=>x.id===sessionId);
+  if(!s||!s.files[idx]) return;
+  s.files[idx].status = oldStatus;
+  // Sync the select element if the body is open
+  const sel = document.getElementById(`fstatus-${sessionId}-${idx}`);
+  if(sel) sel.value = oldStatus;
+  updateCardBadges(sessionId);
+  markDirty();
+  document.getElementById("toast").classList.remove("visible");
 }
 
 // ── Search ────────────────────────────────────────────────────────────────────
@@ -965,6 +1214,11 @@ window.addEventListener("DOMContentLoaded", ()=>{
       }
     }
   }, {passive:true});
+
+  // Change 4: Leave-page protection when there are unsaved changes
+  window.addEventListener("beforeunload", e => {
+    if(DIRTY){ e.preventDefault(); e.returnValue = ""; }
+  });
 });
 </script>
 </body>
