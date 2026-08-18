@@ -40,6 +40,9 @@ a{color:var(--accent);text-decoration:none}
 #searchInput{font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;width:230px;outline:none;transition:border-color .15s}
 #searchInput:focus{border-color:var(--accent)}
 #searchInput::placeholder{color:#8b949e}
+#dashFilterBtn{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;border:1px solid #30363d;background:#21262d;color:#8b949e;cursor:pointer;white-space:nowrap;transition:background .1s,color .1s,border-color .1s}
+#dashFilterBtn:hover{background:#30363d;color:#c9d1d9}
+#dashFilterBtn.active{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
 
 /* ── Layout ──────────────────────────────────────────────────────────── */
 .layout{display:flex;gap:0;min-height:calc(100vh - 50px)}
@@ -365,6 +368,7 @@ a{color:var(--accent);text-decoration:none}
   <span class="logo"><span class="logo-dot"></span>ZDC AV Admin</span>
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
   <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)">
+  <button id="dashFilterBtn" onclick="toggleDashFilter()" title="Show only dashboard sessions">⭐ Dashboard</button>
   <span class="save-status" id="saveStatus"></span>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
   <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()">↓ Download JSON</button>
@@ -1169,15 +1173,26 @@ function undoLastStatusChange(){
   document.getElementById("toast").classList.remove("visible");
 }
 
-// ── Search ────────────────────────────────────────────────────────────────────
+// ── Search & Dashboard filter ─────────────────────────────────────────────────
 let SEARCH_TERM = "";
+let DASH_FILTER = false;
+
+function toggleDashFilter(){
+  DASH_FILTER = !DASH_FILTER;
+  document.getElementById("dashFilterBtn").classList.toggle("active", DASH_FILTER);
+  applyFilters();
+}
+
 function onSearch(val){
   SEARCH_TERM = val.trim().toLowerCase();
-  const cards = document.querySelectorAll(".session-card");
-  cards.forEach(card => {
-    if(!SEARCH_TERM){ card.style.display=""; return; }
-    const text = (card.textContent||"").toLowerCase();
-    card.style.display = text.includes(SEARCH_TERM) ? "" : "none";
+  applyFilters();
+}
+
+function applyFilters(){
+  document.querySelectorAll(".session-card").forEach(card => {
+    const matchSearch = !SEARCH_TERM || (card.textContent||"").toLowerCase().includes(SEARCH_TERM);
+    const matchDash   = !DASH_FILTER  || card.classList.contains("in-dashboard");
+    card.style.display = (matchSearch && matchDash) ? "" : "none";
   });
   // Hide day headers when all their cards are hidden
   document.querySelectorAll(".day-section").forEach(sec => {
