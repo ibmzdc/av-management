@@ -739,7 +739,9 @@ function migrateSession(s){
     av.headsetMics          = pick([/(\d+)\s*headset/]);
     av.tableMics            = pick([/(\d+)\s*table/]);
     // Store the original text as a note for any unstructured remainder
-    av.legacyMicsNote = s.microphones;
+    // Only store as a visible note if it's not a "no mic" indicator
+    const noMicPattern = /^\s*(no\s*mic|none|n\/a|not\s*required|-+)\s*$/i;
+    av.legacyMicsNote = noMicPattern.test(s.microphones) ? null : s.microphones;
   }
 }
 
