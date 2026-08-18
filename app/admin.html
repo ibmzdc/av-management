@@ -1061,37 +1061,11 @@ function renderAVReqs(s){
   if(!s.av) migrateSession(s);
 
   const av = s.av;
-  const speakers = s.speakers||"—";
-  const sessionType = s.sessionType||"—";
-  const track = s.track||"—";
-
   const presSource = avStr(s,"presentationSource","");
   const presRequired = avBool(s,"presentationRequired", !!presSource);
 
   return `
-  <div class="body-two-col">
-    <!-- Left: Session Information (read-only) -->
-    <div class="body-section">
-      <div class="body-section-hdr">Session Information</div>
-      <div class="session-info-grid">
-        <div class="session-info-cell full">
-          <span class="k">Speakers</span>
-          <span class="v">${esc(speakers)}</span>
-        </div>
-        <div class="session-info-cell">
-          <span class="k">Session Type</span>
-          <span class="v">${esc(sessionType)}</span>
-        </div>
-        <div class="session-info-cell">
-          <span class="k">Track</span>
-          <span class="v">${esc(track)}</span>
-        </div>
-      </div>
-    </div>
-    <!-- Right: AV Requirements (editable — grouped) -->
-    <div class="body-section">
-      <div class="body-section-hdr">AV Requirements</div>
-      <div class="av-groups">
+  <div class="av-groups">
 
         <!-- ① Presentation -->
         <div class="av-group">
@@ -1321,8 +1295,6 @@ function renderAVReqs(s){
           </div>
         </div>
 
-      </div><!-- /av-groups -->
-    </div>
   </div>`;
 }
 
