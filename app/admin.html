@@ -403,24 +403,14 @@ a{color:var(--accent);text-decoration:none}
           <input type="number" id="ns-confidenceMonitors" min="0" value="0" class="modal-num">
         </div>
         <div>
-          <label>Timer</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-timer" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-timer" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
+          <label>Timer (min)</label>
+          <input type="number" id="ns-timerMins" min="0" value="0" class="modal-num">
         </div>
         <div>
           <label>Speaker Preview</label>
           <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
             <input type="checkbox" id="ns-speakerPreview" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
             <label for="ns-speakerPreview" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Teleprompter</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-teleprompter" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-teleprompter" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
           </div>
         </div>
       </div>
@@ -431,28 +421,16 @@ a{color:var(--accent);text-decoration:none}
       <div class="modal-section-hdr"><span class="g-icon">🎙</span> Audio</div>
       <div class="modal-section-grid">
         <div>
-          <label>Wireless Handheld</label>
+          <label>Handheld Mics</label>
           <input type="number" id="ns-wirelessHandheld" min="0" value="0" class="modal-num">
         </div>
         <div>
-          <label>Lavalier</label>
-          <input type="number" id="ns-wirelessLavalier" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Headset</label>
-          <input type="number" id="ns-headsetMics" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Table Mics</label>
-          <input type="number" id="ns-tableMics" min="0" value="0" class="modal-num">
+          <label>Lavalier / Headset</label>
+          <input type="number" id="ns-lavalierHeadset" min="0" value="0" class="modal-num">
         </div>
         <div>
           <label>Catchbox</label>
           <input type="number" id="ns-catchBoxMics" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Panel Mics</label>
-          <input type="number" id="ns-panelMics" min="0" value="0" class="modal-num">
         </div>
         <div>
           <label>Audio Playback</label>
@@ -462,10 +440,10 @@ a{color:var(--accent);text-decoration:none}
           </div>
         </div>
         <div>
-          <label>House Music</label>
+          <label>XLR Audio Feed</label>
           <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-houseMusic" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-houseMusic" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+            <input type="checkbox" id="ns-xlrAudioFeed" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="ns-xlrAudioFeed" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
           </div>
         </div>
       </div>
@@ -480,27 +458,6 @@ a{color:var(--accent);text-decoration:none}
           <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
             <input type="checkbox" id="ns-projector" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
             <label for="ns-projector" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>LED Wall</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-ledWall" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-ledWall" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Recording</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-recording" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-recording" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Livestream</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-livestream" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-livestream" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
           </div>
         </div>
         <div>
@@ -560,20 +517,6 @@ a{color:var(--accent);text-decoration:none}
         <div>
           <label>Capacity</label>
           <input type="number" id="ns-roomCapacity" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Reserved Seating</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-reservedSeating" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-reservedSeating" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Overflow Room</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-overflowRoom" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-overflowRoom" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
         </div>
         <div style="grid-column:1/-1">
           <label>Room Setup</label>
@@ -1101,24 +1044,14 @@ function renderAVReqs(s){
               ${numInput(`avf-confidenceMonitors-${id}`, avNum(s,"confidenceMonitors"))}
             </div>
             <div class="av-req">
-              <span class="k">Timer</span>
-              <div class="av-req-check">
-                ${chk(`avf-timer-${id}`, avBool(s,"timer"))}
-                <label for="avf-timer-${id}">Yes</label>
-              </div>
+              <span class="k">Timer (min)</span>
+              ${numInput(`avf-timerMins-${id}`, avNum(s,"timerMins"))}
             </div>
             <div class="av-req">
               <span class="k">Speaker Preview</span>
               <div class="av-req-check">
                 ${chk(`avf-speakerPreview-${id}`, avBool(s,"speakerPreview"))}
                 <label for="avf-speakerPreview-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Teleprompter</span>
-              <div class="av-req-check">
-                ${chk(`avf-teleprompter-${id}`, avBool(s,"teleprompter"))}
-                <label for="avf-teleprompter-${id}">Yes</label>
               </div>
             </div>
           </div>
@@ -1129,28 +1062,16 @@ function renderAVReqs(s){
           <div class="av-group-hdr"><span class="g-icon">🎙</span> Audio</div>
           <div class="av-group-body">
             <div class="av-req">
-              <span class="k">Wireless Handheld</span>
+              <span class="k">Handheld Mics</span>
               ${numInput(`avf-wirelessHandheld-${id}`, avNum(s,"wirelessHandheldMics"))}
             </div>
             <div class="av-req">
-              <span class="k">Lavalier</span>
-              ${numInput(`avf-wirelessLavalier-${id}`, avNum(s,"wirelessLavalierMics"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Headset</span>
-              ${numInput(`avf-headsetMics-${id}`, avNum(s,"headsetMics"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Table Mics</span>
-              ${numInput(`avf-tableMics-${id}`, avNum(s,"tableMics"))}
+              <span class="k">Lavalier / Headset</span>
+              ${numInput(`avf-lavalierHeadset-${id}`, avNum(s,"lavalierHeadsetMics", (avNum(s,"wirelessLavalierMics")||0)+(avNum(s,"headsetMics")||0)))}
             </div>
             <div class="av-req">
               <span class="k">Catchbox</span>
               ${numInput(`avf-catchBoxMics-${id}`, avNum(s,"catchBoxMics"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Panel Mics</span>
-              ${numInput(`avf-panelMics-${id}`, avNum(s,"panelMics"))}
             </div>
             <div class="av-req">
               <span class="k">Audio Playback</span>
@@ -1160,10 +1081,10 @@ function renderAVReqs(s){
               </div>
             </div>
             <div class="av-req">
-              <span class="k">House Music</span>
+              <span class="k">XLR Audio Feed</span>
               <div class="av-req-check">
-                ${chk(`avf-houseMusic-${id}`, avBool(s,"houseMusic"))}
-                <label for="avf-houseMusic-${id}">Yes</label>
+                ${chk(`avf-xlrAudioFeed-${id}`, avBool(s,"xlrAudioFeed"))}
+                <label for="avf-xlrAudioFeed-${id}">Yes</label>
               </div>
             </div>
           </div>
@@ -1178,27 +1099,6 @@ function renderAVReqs(s){
               <div class="av-req-check">
                 ${chk(`avf-projector-${id}`, avBool(s,"projector"))}
                 <label for="avf-projector-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">LED Wall</span>
-              <div class="av-req-check">
-                ${chk(`avf-ledWall-${id}`, avBool(s,"ledWall"))}
-                <label for="avf-ledWall-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Recording</span>
-              <div class="av-req-check">
-                ${chk(`avf-recording-${id}`, avBool(s,"recording"))}
-                <label for="avf-recording-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Livestream</span>
-              <div class="av-req-check">
-                ${chk(`avf-livestream-${id}`, avBool(s,"livestream"))}
-                <label for="avf-livestream-${id}">Yes</label>
               </div>
             </div>
             <div class="av-req">
@@ -1263,20 +1163,6 @@ function renderAVReqs(s){
               <span class="k">Capacity</span>
               ${numInput(`avf-roomCapacity-${id}`, avNum(s,"roomCapacity"))}
             </div>
-            <div class="av-req">
-              <span class="k">Reserved Seating</span>
-              <div class="av-req-check">
-                ${chk(`avf-reservedSeating-${id}`, avBool(s,"reservedSeating"))}
-                <label for="avf-reservedSeating-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Overflow Room</span>
-              <div class="av-req-check">
-                ${chk(`avf-overflowRoom-${id}`, avBool(s,"overflowRoom"))}
-                <label for="avf-overflowRoom-${id}">Yes</label>
-              </div>
-            </div>
             <div class="av-req av-req-full">
               <span class="k">Room Setup</span>
               <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"roomSetup", s.roomSetup||""))}</textarea>
@@ -1315,25 +1201,18 @@ function collectAVReqs(sessionId){
   if(g("presentationSource"))   s.av.presentationSource    = gv("presentationSource");
   if(g("clicker"))              s.av.clicker               = gb("clicker");
   if(g("confidenceMonitors"))   s.av.confidenceMonitors    = gn("confidenceMonitors");
-  if(g("timer"))                s.av.timer                 = gb("timer");
+  if(g("timerMins"))            s.av.timerMins             = gn("timerMins");
   if(g("speakerPreview"))       s.av.speakerPreview        = gb("speakerPreview");
-  if(g("teleprompter"))         s.av.teleprompter          = gb("teleprompter");
 
   // Audio
   if(g("wirelessHandheld"))     s.av.wirelessHandheldMics  = gn("wirelessHandheld");
-  if(g("wirelessLavalier"))     s.av.wirelessLavalierMics  = gn("wirelessLavalier");
-  if(g("headsetMics"))          s.av.headsetMics           = gn("headsetMics");
-  if(g("tableMics"))            s.av.tableMics             = gn("tableMics");
+  if(g("lavalierHeadset"))      s.av.lavalierHeadsetMics   = gn("lavalierHeadset");
   if(g("catchBoxMics"))         s.av.catchBoxMics          = gn("catchBoxMics");
-  if(g("panelMics"))            s.av.panelMics             = gn("panelMics");
   if(g("audioPlayback"))        s.av.audioPlayback         = gb("audioPlayback");
-  if(g("houseMusic"))           s.av.houseMusic            = gb("houseMusic");
+  if(g("xlrAudioFeed"))         s.av.xlrAudioFeed          = gb("xlrAudioFeed");
 
   // Video
   if(g("projector"))            s.av.projector             = gb("projector");
-  if(g("ledWall"))              s.av.ledWall               = gb("ledWall");
-  if(g("recording"))            s.av.recording             = gb("recording");
-  if(g("livestream"))           s.av.livestream            = gb("livestream");
   if(g("videoPlayback"))        s.av.videoPlayback         = gb("videoPlayback");
 
   // Staging
@@ -1346,8 +1225,6 @@ function collectAVReqs(sessionId){
 
   // Room
   if(g("roomCapacity"))         s.av.roomCapacity          = gn("roomCapacity");
-  if(g("reservedSeating"))      s.av.reservedSeating       = gb("reservedSeating");
-  if(g("overflowRoom"))         s.av.overflowRoom          = gb("overflowRoom");
   if(g("roomSetup"))            s.av.roomSetup = s.roomSetup = gv("roomSetup");
 
   // Special Requirements — stored as array
@@ -1406,23 +1283,16 @@ function openAddSession(day){
   document.getElementById("ns-presentationSource").value   = "";
   document.getElementById("ns-clicker").checked            = false;
   document.getElementById("ns-confidenceMonitors").value   = 0;
-  document.getElementById("ns-timer").checked              = false;
+  document.getElementById("ns-timerMins").value            = 0;
   document.getElementById("ns-speakerPreview").checked     = false;
-  document.getElementById("ns-teleprompter").checked       = false;
   // Audio
   document.getElementById("ns-wirelessHandheld").value     = 0;
-  document.getElementById("ns-wirelessLavalier").value     = 0;
-  document.getElementById("ns-headsetMics").value          = 0;
-  document.getElementById("ns-tableMics").value            = 0;
+  document.getElementById("ns-lavalierHeadset").value      = 0;
   document.getElementById("ns-catchBoxMics").value         = 0;
-  document.getElementById("ns-panelMics").value            = 0;
   document.getElementById("ns-audioPlayback").checked      = false;
-  document.getElementById("ns-houseMusic").checked         = false;
+  document.getElementById("ns-xlrAudioFeed").checked       = false;
   // Video
   document.getElementById("ns-projector").checked          = false;
-  document.getElementById("ns-ledWall").checked            = false;
-  document.getElementById("ns-recording").checked          = false;
-  document.getElementById("ns-livestream").checked         = false;
   document.getElementById("ns-videoPlayback").checked      = false;
   // Staging
   document.getElementById("ns-podium").checked             = false;
@@ -1433,8 +1303,6 @@ function openAddSession(day){
   document.getElementById("ns-flipChart").checked          = false;
   // Room
   document.getElementById("ns-roomCapacity").value         = 0;
-  document.getElementById("ns-reservedSeating").checked    = false;
-  document.getElementById("ns-overflowRoom").checked       = false;
   document.getElementById("ns-roomsetup").value            = "";
   // Special reqs
   document.getElementById("ns-specialRequirements").value  = "";
@@ -1477,21 +1345,14 @@ function confirmAddSession(){
     presentationSource:    nsStr("ns-presentationSource"),
     clicker:               nsBool("ns-clicker"),
     confidenceMonitors:    nsInt("ns-confidenceMonitors"),
-    timer:                 nsBool("ns-timer"),
+    timerMins:             nsInt("ns-timerMins"),
     speakerPreview:        nsBool("ns-speakerPreview"),
-    teleprompter:          nsBool("ns-teleprompter"),
     wirelessHandheldMics:  nsInt("ns-wirelessHandheld"),
-    wirelessLavalierMics:  nsInt("ns-wirelessLavalier"),
-    headsetMics:           nsInt("ns-headsetMics"),
-    tableMics:             nsInt("ns-tableMics"),
+    lavalierHeadsetMics:   nsInt("ns-lavalierHeadset"),
     catchBoxMics:          nsInt("ns-catchBoxMics"),
-    panelMics:             nsInt("ns-panelMics"),
     audioPlayback:         nsBool("ns-audioPlayback"),
-    houseMusic:            nsBool("ns-houseMusic"),
+    xlrAudioFeed:          nsBool("ns-xlrAudioFeed"),
     projector:             nsBool("ns-projector"),
-    ledWall:               nsBool("ns-ledWall"),
-    recording:             nsBool("ns-recording"),
-    livestream:            nsBool("ns-livestream"),
     videoPlayback:         nsBool("ns-videoPlayback"),
     podium:                podiumVal,
     panelChairs:           nsInt("ns-panelChairs"),
@@ -1500,8 +1361,6 @@ function confirmAddSession(){
     easel:                 nsBool("ns-easel"),
     flipChart:             nsBool("ns-flipChart"),
     roomCapacity:          nsInt("ns-roomCapacity"),
-    reservedSeating:       nsBool("ns-reservedSeating"),
-    overflowRoom:          nsBool("ns-overflowRoom"),
     roomSetup:             roomSetupVal,
     specialRequirements:   specArr
   };
