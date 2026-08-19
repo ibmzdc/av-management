@@ -734,7 +734,7 @@ function buildAVChips(s) {
     || av.audioPlayback || av.xlrAudioFeed
     || av.projector || av.videoPlayback
     || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
-    || av.roomSetup
+    || av.roomSetup || s.speakers
     || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
@@ -786,6 +786,16 @@ function buildAVChips(s) {
         ${num("High-top Tables",  av.highTopTables || null)}
         ${bool("Easel",           av.easel)}
         ${bool("Flip Chart",      av.flipChart)}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
+      <div class="av-group-body av-special">
+        ${s.speakers
+          ? s.speakers.split(",").map(n => n.trim()).filter(Boolean).map(n =>
+              `<div class="av-req"><span class="v">${esc(n)}</span></div>`).join("")
+          : `<div class="av-req"><span class="v-muted">—</span></div>`}
       </div>
     </div>
 

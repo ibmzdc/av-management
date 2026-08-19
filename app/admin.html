@@ -1126,7 +1126,22 @@ function renderAVReqs(s){
           </div>
         </div>
 
-        <!-- ⑤ Room -->
+        <!-- ⑤ Speakers -->
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
+          <div class="av-group-body av-special">
+            ${(()=>{
+              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()) : [];
+              return [0,1,2,3,4].map(i=>`
+            <div class="av-req">
+              <span class="k">Speaker ${i+1}</span>
+              <input type="text" id="avf-speaker${i}-${id}" value="${esc(names[i]||"")}" placeholder="First Last" oninput="markDirty()">
+            </div>`).join("");
+            })()}
+          </div>
+        </div>
+
+        <!-- ⑥ Room -->
         <div class="av-group">
           <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
           <div class="av-group-body">
@@ -1188,6 +1203,12 @@ function collectAVReqs(sessionId){
   if(g("highTopTables"))        s.av.highTopTables         = gn("highTopTables");
   if(g("easel"))                s.av.easel                 = gb("easel");
   if(g("flipChart"))            s.av.flipChart             = gb("flipChart");
+
+  // Speakers — collect up to 5 inputs back into s.speakers
+  const speakerNames = [0,1,2,3,4]
+    .map(i => { const el = document.getElementById(`avf-speaker${i}-${sessionId}`); return el ? el.value.trim() : ""; })
+    .filter(Boolean);
+  s.speakers = speakerNames.join(", ") || null;
 
   // Room
   if(g("roomSetup"))            s.av.roomSetup = s.roomSetup = gv("roomSetup");
