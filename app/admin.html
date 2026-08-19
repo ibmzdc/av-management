@@ -206,6 +206,8 @@ a{color:var(--accent);text-decoration:none}
 .file-row input[type=text]{width:100%}
 .btn-remove{font-size:16px;color:var(--subtle);background:none;border:none;cursor:pointer;line-height:1;padding:2px 4px;transition:color .1s}
 .btn-remove:hover{color:#ef4444}
+.speaker-row{display:flex;align-items:center;gap:6px}
+.speaker-row input{flex:1}
 
 /* ── Notes row ───────────────────────────────────────────────────────── */
 .notes-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
@@ -1128,14 +1130,17 @@ function renderAVReqs(s){
 
         <!-- ⑤ Speakers -->
         <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
-          <div class="av-group-body av-special">
+          <div class="av-group-hdr" style="justify-content:space-between">
+            <span><span class="g-icon">👤</span> Speakers</span>
+            <button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addSpeaker('${id}')">+ Add Speaker</button>
+          </div>
+          <div class="av-group-body av-special" id="avf-speakers-list-${id}">
             ${(()=>{
-              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()) : [];
-              return [0,1,2,3,4].map(i=>`
-            <div class="av-req">
-              <span class="k">Speaker ${i+1}</span>
-              <input type="text" id="avf-speaker${i}-${id}" value="${esc(names[i]||"")}" placeholder="First Last" oninput="markDirty()">
+              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()).filter(Boolean) : [""];
+              return names.map((name,i)=>`
+            <div class="av-req speaker-row" id="avf-speaker-row-${id}-${i}">
+              <input type="text" class="avf-speaker-input" data-session="${id}" value="${esc(name)}" placeholder="First Last" oninput="markDirty()">
+              <button class="btn-remove" onclick="removeSpeaker('${id}',${i})" title="Remove">×</button>
             </div>`).join("");
             })()}
           </div>
@@ -1204,10 +1209,9 @@ function collectAVReqs(sessionId){
   if(g("easel"))                s.av.easel                 = gb("easel");
   if(g("flipChart"))            s.av.flipChart             = gb("flipChart");
 
-  // Speakers — collect up to 5 inputs back into s.speakers
-  const speakerNames = [0,1,2,3,4]
-    .map(i => { const el = document.getElementById(`avf-speaker${i}-${sessionId}`); return el ? el.value.trim() : ""; })
-    .filter(Boolean);
+  // Speakers — collect all dynamic inputs
+  const speakerInputs = document.querySelectorAll(`#avf-speakers-list-${sessionId} .avf-speaker-input`);
+  const speakerNames = Array.from(speakerInputs).map(el => el.value.trim()).filter(Boolean);
   s.speakers = speakerNames.join(", ") || null;
 
   // Room
@@ -1246,6 +1250,26 @@ function renderFiles(s){
       <input type="text" id="fboxid-${s.id}-${i}" value="${esc(f.boxFileId||"")}" placeholder="IBM Box file ID or full Box URL" oninput="onBoxIdInput(this)" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:11.5px;font-family:monospace">
     </div>
   `).join("");
+}
+
+// ── Speaker add/remove ───────────────────────────────────────────────────────
+function addSpeaker(sessionId){
+  const list = document.getElementById(`avf-speakers-list-${sessionId}`);
+  if(!list) return;
+  const idx = list.querySelectorAll(".speaker-row").length;
+  const row = document.createElement("div");
+  row.className = "av-req speaker-row";
+  row.id = `avf-speaker-row-${sessionId}-${idx}`;
+  row.innerHTML = `<input type="text" class="avf-speaker-input" data-session="${sessionId}" value="" placeholder="First Last" oninput="markDirty()">
+    <button class="btn-remove" onclick="this.closest('.speaker-row').remove();markDirty();" title="Remove">×</button>`;
+  list.appendChild(row);
+  row.querySelector("input").focus();
+  markDirty();
+}
+
+function removeSpeaker(sessionId, idx){
+  const row = document.getElementById(`avf-speaker-row-${sessionId}-${idx}`);
+  if(row) { row.remove(); markDirty(); }
 }
 
 // ── Add Session ───────────────────────────────────────────────────────────────
