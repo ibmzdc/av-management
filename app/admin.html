@@ -406,13 +406,6 @@ a{color:var(--accent);text-decoration:none}
           <label>Timer (min)</label>
           <input type="number" id="ns-timerMins" min="0" value="0" class="modal-num">
         </div>
-        <div>
-          <label>Speaker Preview</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-speakerPreview" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-speakerPreview" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1284,7 +1277,6 @@ function openAddSession(day){
   document.getElementById("ns-clicker").checked            = false;
   document.getElementById("ns-confidenceMonitors").value   = 0;
   document.getElementById("ns-timerMins").value            = 0;
-  document.getElementById("ns-speakerPreview").checked     = false;
   // Audio
   document.getElementById("ns-wirelessHandheld").value     = 0;
   document.getElementById("ns-lavalierHeadset").value      = 0;
@@ -1346,7 +1338,6 @@ function confirmAddSession(){
     clicker:               nsBool("ns-clicker"),
     confidenceMonitors:    nsInt("ns-confidenceMonitors"),
     timerMins:             nsInt("ns-timerMins"),
-    speakerPreview:        nsBool("ns-speakerPreview"),
     wirelessHandheldMics:  nsInt("ns-wirelessHandheld"),
     lavalierHeadsetMics:   nsInt("ns-lavalierHeadset"),
     catchBoxMics:          nsInt("ns-catchBoxMics"),

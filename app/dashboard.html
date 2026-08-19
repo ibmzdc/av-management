@@ -730,11 +730,11 @@ function buildAVChips(s) {
     ? av.lavalierHeadsetMics
     : (av.wirelessLavalierMics||0) + (av.headsetMics||0);
 
-  // Timer: prefer timerMins number, fall back to legacy bool
-  const timerDisplay = av.timerMins ? `${av.timerMins} min` : (av.timer ? "Yes" : null);
+  // Timer: prefer timerMins number; legacy bool shows as "Yes" only if no number available
+  const timerDisplay = av.timerMins ? `${av.timerMins} min` : null;
 
   const hasAny = av.presentationSource || av.wirelessHandheldMics || lhVal || av.catchBoxMics
-    || av.confidenceMonitors || timerDisplay || av.clicker || av.speakerPreview
+    || av.confidenceMonitors || timerDisplay || av.timer || av.clicker
     || av.audioPlayback || av.xlrAudioFeed
     || av.projector || av.videoPlayback
     || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
@@ -759,9 +759,8 @@ function buildAVChips(s) {
         ${num("Lavalier / Headset",  lhVal || null)}
         ${num("Catchbox",            av.catchBoxMics || null)}
         ${num("Confidence Monitors", av.confidenceMonitors || null)}
-        ${num("Timer (min)",         timerDisplay)}
+        ${num("Timer (min)",         timerDisplay || (av.timer ? "set in admin" : null))}
         ${bool("Clicker",            av.clicker)}
-        ${bool("Speaker Preview",    av.speakerPreview)}
         ${micsNote}
       </div>
     </div>
