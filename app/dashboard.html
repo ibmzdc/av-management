@@ -151,15 +151,19 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .legend-bar span { font-size: 10.5px; color: var(--muted); }
 .legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text); }
 .legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 4px; }
-/* AV panel sections */
-.av-sections { display: flex; flex-direction: column; gap: 10px; }
-.av-section { }
-.av-section-hdr { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
-.av-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.av-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; border-radius: 20px; padding: 3px 10px; background: #f0f4ff; border: 1px solid #dbeafe; color: #1e3a8a; white-space: nowrap; font-weight: 500; }
-.av-chip .chip-icon { font-size: 12px; line-height: 1; }
-.av-chip.chip-warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
-.av-chip.chip-room { background: var(--surface); border-color: var(--border); color: var(--text); }
+/* AV panel — mirrors admin av-groups layout, read-only */
+.av-groups { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+.av-group { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.av-group-hdr { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f6f8fa; border-bottom: 1px solid var(--border); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.av-group-hdr .g-icon { font-size: 11px; }
+.av-group-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 8px; padding: 10px; }
+.av-group-body.av-special { grid-template-columns: 1fr; }
+.av-req { background: #f9fafb; border: 1px solid var(--border); border-radius: 5px; padding: 8px 10px; }
+.av-req.av-req-full { grid-column: 1 / -1; }
+.av-req .k { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); margin-bottom: 5px; }
+.av-req .v { display: block; font-size: 12px; font-weight: 500; color: var(--text); }
+.av-req .v-muted { display: block; font-size: 12px; color: var(--subtle); font-style: italic; }
+.av-req .v-yes { display: block; font-size: 12px; font-weight: 600; color: var(--green); }
 .av-empty { color: var(--muted); font-size: 12px; font-style: italic; }
 /* Sub-panels */
 .sub-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
@@ -716,81 +720,99 @@ function buildAVChips(s) {
   // migrateAll() guarantees s.av is fully populated at load time
   const av = s.av || {};
 
-  const chip = (icon, label, cls = "") =>
-    `<span class="av-chip${cls ? " "+cls : ""}"><span class="chip-icon">${icon}</span>${esc(label)}</span>`;
+  // Helpers — render a labeled read-only field tile identical to admin .av-req
+  const num  = (k, v)    => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v">${v}</span>` : `<span class="v-muted">—</span>`}</div>`;
+  const bool = (k, v)    => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v-yes">✓ Yes</span>` : `<span class="v-muted">—</span>`}</div>`;
+  const txt  = (k, v, full) => `<div class="av-req${full?" av-req-full":""}"><span class="k">${k}</span>${v ? `<span class="v">${esc(v)}</span>` : `<span class="v-muted">—</span>`}</div>`;
 
-  const sections = [];
+  // Lavalier/Headset: prefer new combined field, fall back to sum of legacy
+  const lhVal = av.lavalierHeadsetMics != null
+    ? av.lavalierHeadsetMics
+    : (av.wirelessLavalierMics||0) + (av.headsetMics||0);
 
-  // ── 🎞 Presentation ──────────────────────────────────────────────────────
-  const presChips = [];
-  if (av.presentationSource) presChips.push(chip("🖥", av.presentationSource));
+  // Timer: prefer timerMins number, fall back to legacy bool
+  const timerDisplay = av.timerMins ? `${av.timerMins} min` : (av.timer ? "Yes" : null);
 
-  const wh  = av.wirelessHandheldMics || 0;
-  const lh  = av.lavalierHeadsetMics  || 0;
-  const cb  = av.catchBoxMics || 0;
-  if (wh) presChips.push(chip("🎤", `${wh} Handheld Mic${wh>1?"s":""}`));
-  if (lh) presChips.push(chip("🎤", `${lh} Lavalier / Headset`));
-  if (cb) presChips.push(chip("🎤", `${cb} Catchbox${cb>1?"es":""}`));
-  // Legacy mic fallback (old free-text that parser couldn't structure)
-  if (!wh && !lh && !cb && av.legacyMicsNote)
-    presChips.push(chip("🎤", av.legacyMicsNote));
+  const hasAny = av.presentationSource || av.wirelessHandheldMics || lhVal || av.catchBoxMics
+    || av.confidenceMonitors || timerDisplay || av.clicker || av.speakerPreview
+    || av.audioPlayback || av.xlrAudioFeed
+    || av.projector || av.videoPlayback
+    || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
+    || av.roomSetup || av.roomCapacity || s.room
+    || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
-  const cm = av.confidenceMonitors || 0;
-  if (cm) presChips.push(chip("📺", `${cm} Confidence Monitor${cm>1?"s":""}`));
+  if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
 
-  const tm = av.timerMins || (av.timer ? 1 : 0); // show legacy bool as just "Timer"
-  if (tm) presChips.push(chip("⏱", av.timerMins ? `${av.timerMins} min timer` : "Timer"));
-  if (av.clicker)        presChips.push(chip("🖱", "Clicker"));
-  if (av.speakerPreview) presChips.push(chip("👁", "Speaker Preview"));
-  if (presChips.length) sections.push({ hdr: "🎞 Presentation", chips: presChips });
+  // Legacy mic note fallback (free-text that couldn't be parsed into counts)
+  const micsNote = (!av.wirelessHandheldMics && !lhVal && !av.catchBoxMics && av.legacyMicsNote)
+    ? `<div class="av-req av-req-full"><span class="k">Microphones</span><span class="v">${esc(av.legacyMicsNote)}</span></div>` : "";
 
-  // ── 🎙 Audio ─────────────────────────────────────────────────────────────
-  const audioChips = [];
-  if (av.audioPlayback) audioChips.push(chip("🔊", "Audio Playback"));
-  if (av.xlrAudioFeed)  audioChips.push(chip("🔌", "XLR Audio Feed"));
-  if (audioChips.length) sections.push({ hdr: "🎙 Audio", chips: audioChips });
-
-  // ── 📽 Video ─────────────────────────────────────────────────────────────
-  const videoChips = [];
-  if (av.projector)     videoChips.push(chip("📡", "Projector"));
-  if (av.videoPlayback) videoChips.push(chip("▶", "Video Playback"));
-  if (videoChips.length) sections.push({ hdr: "📽 Video", chips: videoChips });
-
-  // ── 🎭 Staging ───────────────────────────────────────────────────────────
-  const stagingChips = [];
-  if (av.podium)   stagingChips.push(chip("🎙", "Podium"));
-  const pc = av.panelChairs  || 0;
-  const st = av.sideTables   || 0;
-  const ht = av.highTopTables|| 0;
-  if (pc) stagingChips.push(chip("🪑", `${pc} Panel Chair${pc>1?"s":""}`));
-  if (st) stagingChips.push(chip("🛋", `${st} Side Table${st>1?"s":""}`));
-  if (ht) stagingChips.push(chip("🍸", `${ht} High-top Table${ht>1?"s":""}`));
-  if (av.easel)     stagingChips.push(chip("🎨", "Easel"));
-  if (av.flipChart) stagingChips.push(chip("📋", "Flip Chart"));
-  if (stagingChips.length) sections.push({ hdr: "🎭 Staging", chips: stagingChips });
-
-  // ── 🏛 Room Setup ────────────────────────────────────────────────────────
-  const roomChips = [];
-  if (av.roomSetup) roomChips.push(chip("🏛", av.roomSetup, "chip-room"));
-  const cap = av.roomCapacity || 0;
-  if (cap) roomChips.push(chip("👥", `Capacity ${cap}`));
-  if (roomChips.length) sections.push({ hdr: "🏛 Room Setup", chips: roomChips });
-
-  // ── ⚡ Special Requirements ───────────────────────────────────────────────
   const specItems = Array.isArray(av.specialRequirements) ? av.specialRequirements : [];
-  if (specItems.length) {
-    sections.push({ hdr: "⚡ Special Requirements", chips: specItems.map(i => chip("⚠", i, "chip-warn")) });
-  }
 
-  // ── Assemble ──────────────────────────────────────────────────────────────
-  if (!sections.length) return `<p class="av-empty">No AV details on file.</p>`;
+  return `<div class="av-groups">
 
-  return `<div class="av-sections">${
-    sections.map(sec => `<div class="av-section">
-      <div class="av-section-hdr">${sec.hdr}</div>
-      <div class="av-chips">${sec.chips.join("")}</div>
-    </div>`).join("")
-  }</div>`;
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">🎞</span> Presentation</div>
+      <div class="av-group-body">
+        ${txt("Source",              av.presentationSource)}
+        ${num("Handheld Mics",       av.wirelessHandheldMics || null)}
+        ${num("Lavalier / Headset",  lhVal || null)}
+        ${num("Catchbox",            av.catchBoxMics || null)}
+        ${num("Confidence Monitors", av.confidenceMonitors || null)}
+        ${num("Timer (min)",         timerDisplay)}
+        ${bool("Clicker",            av.clicker)}
+        ${bool("Speaker Preview",    av.speakerPreview)}
+        ${micsNote}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">🎙</span> Audio</div>
+      <div class="av-group-body">
+        ${bool("Audio Playback", av.audioPlayback)}
+        ${bool("XLR Audio Feed", av.xlrAudioFeed)}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">📽</span> Video</div>
+      <div class="av-group-body">
+        ${bool("Projector",      av.projector)}
+        ${bool("Video Playback", av.videoPlayback)}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">🎭</span> Staging</div>
+      <div class="av-group-body">
+        ${bool("Podium",          av.podium || s.podium)}
+        ${num("Panel Chairs",     av.panelChairs || null)}
+        ${num("Side Tables",      av.sideTables  || null)}
+        ${num("High-top Tables",  av.highTopTables || null)}
+        ${bool("Easel",           av.easel)}
+        ${bool("Flip Chart",      av.flipChart)}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
+      <div class="av-group-body">
+        ${txt("Room",      s.room)}
+        ${num("Capacity",  av.roomCapacity || null)}
+        ${txt("Room Setup", av.roomSetup || s.roomSetup, true)}
+      </div>
+    </div>
+
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
+      <div class="av-group-body av-special">
+        ${specItems.length
+          ? `<div class="av-req av-req-full"><span class="k">Notes</span><span class="v">${specItems.map(i => esc(i)).join("<br>")}</span></div>`
+          : `<div class="av-req av-req-full"><span class="v-muted">None</span></div>`}
+      </div>
+    </div>
+
+  </div>`;
 }
 
 // Inline icon-only pills shown on the collapsed session row
