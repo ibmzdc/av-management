@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18–22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-08-17T19:36:10.903Z",
+  "lastUpdated": "2026-08-19T18:03:55.664Z",
   "changelog": [
     {
       "ts": "2026-08-17T19:03:53.667Z",
@@ -28,9 +28,9 @@
       "speakers": null,
       "room": "Ballroom Foyer",
       "roomSetup": "Registration Tables - 4 tables with 4 chairs and storage to hold notebooks + wastebaskets & power strips",
-      "projection": null,
+      "projection": "Rehearsal in ballroom to take place at this time",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -40,7 +40,7 @@
       "showInDashboard": false
     },
     {
-      "id": "sunday-16-00-belle-epoque-ballr-introduction-to-the-zdc",
+      "id": "sunday-16-00-belle-epoque-ballroom-introduction-to-the-zdc",
       "day": "Sunday",
       "date": "2026-10-18",
       "startTime": "16:00",
@@ -55,18 +55,10 @@
       "projection": "AV team - LED",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "60",
+      "timer": 60,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
-      "files": [
-        {
-          "fileType": "presentation",
-          "fileName": "Introduction to ZDC",
-          "boxFileId": "skonjkg1tiv1pxr5epph4l30xv0aj2oe",
-          "status": "approved",
-          "updatedAt": "2026-08-17T19:03:53.667Z"
-        }
-      ],
+      "files": [],
       "avNote": null,
       "operatorNote": null,
       "showInDashboard": true
@@ -86,7 +78,7 @@
       "roomSetup": "High boys",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -108,9 +100,9 @@
       "speakers": null,
       "room": "Restaurant",
       "roomSetup": "See seating plan",
-      "projection": null,
+      "projection": "",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -120,7 +112,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-08-30-belle-epoque-ballr-welcome-plan-for-the-week",
+      "id": "monday-08-30-belle-epoque-ballroom-welcome-plan-for-the-week",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "08:30",
@@ -135,7 +127,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "30",
+      "timer": 30,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -144,7 +136,7 @@
       "showInDashboard": true
     },
     {
-      "id": "monday-09-00-belle-epoque-ballr-from-manual-processes-to-int",
+      "id": "monday-09-00-belle-epoque-ballroom-from-manual-processes-to-intelligent-wor",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "09:00",
@@ -159,7 +151,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "30",
+      "timer": 30,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -182,7 +174,7 @@
       "roomSetup": "High boys",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -192,7 +184,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-10-00-cullinan-atlas-for-ibm-z-discover-ev",
+      "id": "monday-10-00-cullinan-atlas-for-ibm-z-discover-everything-pred",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "10:00",
@@ -201,10 +193,10 @@
       "track": "Application/Infrastructure",
       "title": "Atlas for IBM Z: discover everything, predict and prevent issues, prove every change with confidence, and normalize your environments",
       "description": "Design Thinking Activities",
-      "speakers": "Roger Bales, Andrew, Bowker, Andrew Sica, Meghan McGrath",
+      "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -213,10 +205,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-10-00-sancy-from-analysis-to-action-the",
+      "id": "monday-10-00-sancy-from-analysis-to-action-the-software-dev",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "10:00",
@@ -225,10 +217,10 @@
       "track": "Application",
       "title": "From Analysis to Action: The Software Development Lifecycle with IBM Bob Premium Package for Z",
       "description": "Design Thinking Activities",
-      "speakers": "Ryley Wharton, Latrell Freeman, Casey Shea",
+      "speakers": "Ryley Wharton\nLatrell Freeman, Casey Shea",
       "room": "Sancy",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -237,10 +229,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-10-00-groenplaats-2-ai-powered-event-integration",
+      "id": "monday-10-00-groenplaats-2-ai-powered-event-integration-for-ibm-z",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "10:00",
@@ -249,10 +241,10 @@
       "track": "Application/Data & AI",
       "title": "AI-Powered Event Integration for IBM Z",
       "description": "Design Thinking Activities",
-      "speakers": "Anubhuti Kaushik,  Daniel Martin",
+      "speakers": "Anubhuti Kaushik,  Daniel Martin, Stefanie Lauria",
       "room": "Groenplaats 2",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -261,10 +253,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-10-00-florentine-fit-for-purpose-agentic-ai-f",
+      "id": "monday-10-00-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "10:00",
@@ -276,7 +268,7 @@
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -285,7 +277,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "monday-10-00-groenplaats-3-multiple-shared-pools",
@@ -300,7 +292,7 @@
       "speakers": "Ray Newsom, Charles Webb,  Don Spangler",
       "room": "Groenplaats 3",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -312,7 +304,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-10-00-groenplaats-1-intelligent-database-operati",
+      "id": "monday-10-00-groenplaats-1-intelligent-database-operations",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "10:00",
@@ -324,7 +316,7 @@
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -333,7 +325,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "monday-10-00-hope-from-signals-to-action",
@@ -348,7 +340,7 @@
       "speakers": "Bryan Childs, Madhu BA",
       "room": "Hope",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -360,7 +352,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-12-00-hotel-restaurant-lunch",
+      "id": "monday-12-00-hotel-restaurant-lijn-lunch",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "12:00",
@@ -374,7 +366,7 @@
       "roomSetup": "See seating plan",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -384,7 +376,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-13-30-cullinan-atlas-for-ibm-z-discover-ev",
+      "id": "monday-13-30-cullinan-atlas-for-ibm-z-discover-everything-pred",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "13:30",
@@ -393,10 +385,10 @@
       "track": "Application/Infrastructure",
       "title": "Atlas for IBM Z: discover everything, predict and prevent issues, prove every change with confidence, and normalize your environments",
       "description": "Design Thinking Activities",
-      "speakers": "Roger Bales, Andrew, Bowker, Andrew Sica, Meghan McGrath",
+      "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -405,10 +397,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-13-30-sancy-from-analysis-to-action-the",
+      "id": "monday-13-30-sancy-from-analysis-to-action-the-software-dev",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "13:30",
@@ -417,10 +409,10 @@
       "track": "Application",
       "title": "From Analysis to Action: The Software Development Lifecycle with IBM Bob Premium Package for Z",
       "description": "Design Thinking Activities",
-      "speakers": "Ryley Wharton, Latrell Freeman, Casey Shea",
+      "speakers": "Ryley Wharton\nLatrell Freeman, Casey Shea",
       "room": "Sancy",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -429,10 +421,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-13-30-groenplaats-2-ai-powered-event-integration",
+      "id": "monday-13-30-groenplaats-2-ai-powered-event-integration-for-ibm-z",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "13:30",
@@ -444,7 +436,7 @@
       "speakers": "Anubhuti Kaushik,  Daniel Martin",
       "room": "Groenplaats 2",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -453,10 +445,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-13-30-florentine-fit-for-purpose-agentic-ai-f",
+      "id": "monday-13-30-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "13:30",
@@ -468,7 +460,7 @@
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -477,7 +469,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "monday-13-30-groenplaats-3-multiple-shared-pools",
@@ -492,7 +484,7 @@
       "speakers": "Ray Newsom, Charles Webb,  Don Spangler",
       "room": "Groenplaats 3",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -504,7 +496,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-13-30-groenplaats-1-intelligent-database-operati",
+      "id": "monday-13-30-groenplaats-1-intelligent-database-operations",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "13:30",
@@ -516,7 +508,7 @@
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -525,7 +517,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "monday-13-30-hope-from-signals-to-action",
@@ -540,7 +532,7 @@
       "speakers": "Bryan Childs, Madhu BA",
       "room": "Hope",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -566,7 +558,7 @@
       "roomSetup": "High top tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -576,7 +568,7 @@
       "showInDashboard": false
     },
     {
-      "id": "monday-16-00-belle-epoque-ballr-flex-time-kickoff",
+      "id": "monday-16-00-belle-epoque-ballroom-flex-time-kickoff",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:00",
@@ -591,7 +583,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "15",
+      "timer": 15,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -600,7 +592,7 @@
       "showInDashboard": true
     },
     {
-      "id": "monday-16-15-belle-epoque-ballr-generic-data-architecture-d",
+      "id": "monday-16-15-belle-epoque-ballroom-generic-data-architecture-data-discovery",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -621,17 +613,17 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-teun-untitled",
+      "id": "monday-16-15-teun-client-roundtable",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
       "endTime": "17:00",
       "sessionType": "Client Roundtable",
       "track": null,
-      "title": "(Untitled)",
+      "title": "Client Roundtable",
       "description": null,
       "speakers": null,
       "room": "Teun",
@@ -645,10 +637,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-ibm-atlas-system-intelligen",
+      "id": "monday-16-15-ballroom-foyer-ibm-atlas-system-intelligence-that-disco",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -659,20 +651,20 @@
       "description": "See IBM Atlas in action as it discovers and maps relationships across your IT environment, from hardware and operating systems to middleware, software, and business applications. Through a live demonstration, attendees will explore Atlas’s dynamic topology visualization and AI-powered chat experience, enabling users to quickly understand dependencies, answer environment questions, and gain actionable insights. Learn how organizations are leveraging Atlas for change management, audit readiness, application refactoring, business service mapping, and drift detection, while also helping shape the future of the platform through direct feedback.",
       "speakers": "Meghan McGrath",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-would-you-trust-an-ai-agent",
+      "id": "monday-16-15-ballroom-foyer-would-you-trust-an-ai-agent-with-this",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -680,23 +672,23 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Would You Trust an AI Agent With This?",
-      "description": "Experience Agentic AI in action within IBM Concert for Z and see how AI can accelerate problem determination by analyzing system signals, identifying likely causes, gathering evidence, and recommending next steps. After the live demonstration, participate in a quick interactive voting exercise where you'll decide whether specific operational tasks should be automated by AI, assisted by AI, or remain under human control. This engaging session explores the evolving relationship between human expertise and AI-driven operations, highlighting how Agentic AI can help address knowledge gaps,reduce reliance on specialized experts, and improve decision-making across complex environments. Attendees will gain insight into the practical applications of autonomous operations while helping shape the future direction of Concert for Z's Agentic AI capabilities.",
+      "description": "Experience Agentic AI in action within IBM Concert for Z and see how AI can accelerate problem determination by analyzing system signals, identifying likely causes, gathering evidence, and recommending next steps. After the live demonstration, participate in a quick interactive voting exercise where you'll decide whether specific operational tasks should be automated by AI, assisted by AI, or remain under human control.\nThis engaging session explores the evolving relationship between human expertise and AI-driven operations, highlighting how Agentic AI can help address knowledge gaps,reduce reliance on specialized experts, and improve decision-making across complex environments. Attendees will gain insight into the practical applications of autonomous operations while helping shape the future direction of Concert for Z's Agentic AI capabilities.",
       "speakers": "Nadia Fendrich",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-project-brain-bank-turning",
+      "id": "monday-16-15-ballroom-foyer-project-brain-bank-turning-ibm-z-knowled",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -704,23 +696,23 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Project Brain Bank: Turning IBM Z knowledge into trusted AI-ready guidance",
-      "description": "Discover Project Brain Bank, an early concept for transforming scattered IBM Z knowledge—from documentation and support insights to product expertise and operational learnings—into structured, AI-generated guidance backed by trusted sources. Attendees will see a simple before-and-after demonstration showing how information can be consolidated into actionable answers with supporting evidence, recommended next steps, and source transparency. Visitors will be invited to evaluate an AI-generated response and share what would make it trustworthy enough for real-world use. Through a quick interactive activity, participants will help shape the future of AI-assisted IBM Z guidance by identifying the trust signals, evidence, and transparency mechanisms needed to confidently leverage AI in enterprise environments.",
+      "description": "Discover Project Brain Bank, an early concept for transforming scattered IBM Z knowledge—from documentation and support insights to product expertise and operational learnings—into structured, AI-generated guidance backed by trusted sources. Attendees will see a simple before-and-after demonstration showing how information can be consolidated into actionable answers with supporting evidence, recommended next steps, and source transparency.\nVisitors will be invited to evaluate an AI-generated response and share what would make it trustworthy enough for real-world use. Through a quick interactive activity, participants will help shape the future of AI-assisted IBM Z guidance by identifying the trust signals, evidence, and transparency mechanisms needed to confidently leverage AI in enterprise environments.",
       "speakers": "Ivan Dovgan",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-software-management-as-code",
+      "id": "monday-16-15-ballroom-foyer-software-management-as-code---ibm-z-inst",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -728,23 +720,23 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Software Management-as-Code - IBM Z Install",
-      "description": "Experience a hands-on demonstration of IBM Z Install and see how software management can be transformed through a GitOps-driven, software management-as-code approach. Attendees will explore a prototype that uses standard repositories to configure, deploy, and track z/OS software across partitions, providing a centralized inventory of what is installed, where it is running, and how it was deployed. The session showcases a self-service, AI-assisted experience that brings together software installation, governance, and auditability using industry-standard workflows. Learn how IBM is extending Infrastructure-as-Code, Configuration-as-Code, and Policy-as-Code principles to z/OS software management, helping organizations improve visibility, streamline operations, and accelerate time to value while maintaining business controls and compliance.",
+      "description": "Experience a hands-on demonstration of IBM Z Install and see how software management can be transformed through a GitOps-driven, software management-as-code approach. Attendees will explore a prototype that uses standard repositories to configure, deploy, and track z/OS software across partitions, providing a centralized inventory of what is installed, where it is running, and how it was deployed.\n\nThe session showcases a self-service, AI-assisted experience that brings together software installation, governance, and auditability using industry-standard workflows. Learn how IBM is extending Infrastructure-as-Code, Configuration-as-Code, and Policy-as-Code principles to z/OS software management, helping organizations improve visibility, streamline operations, and accelerate time to value while maintaining business controls and compliance.",
       "speakers": "Andrew Sica",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-ibm-project-polaris-tech-pre",
+      "id": "monday-16-15-ballroom-foyer-ibm-project-polaris-tech-preview-20-and-",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -752,23 +744,23 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "IBM Project Polaris Tech Preview 2.0 and Beyond",
-      "description": "Explore how IBM Project Polaris is extending As-Code practices across z/OS, moving beyond isolated configuration tasks to support Networking, Storage Management, Workload Manager (WLM), and other core system domains. Through a hands-on demonstration, attendees will see how configurations and policies can be defined, validated, and managed using modern workflows, with guidance from intelligent automation and agentic AI. The session highlights how Polaris helps both new and experienced system programmers adopt industry-standard As-Code approaches to improve consistency, governance, reviewability, and confidence when managing change. Visitors will have the opportunity to interact with the experience, provide feedback, and help shape the future of As-Code management for enterprise z/OS environments.",
+      "description": "Explore how IBM Project Polaris is extending As-Code practices across z/OS, moving beyond isolated configuration tasks to support Networking, Storage Management, Workload Manager (WLM), and other core system domains. Through a hands-on demonstration, attendees will see how configurations and policies can be defined, validated, and managed using modern workflows, with guidance from intelligent automation and agentic AI.\nThe session highlights how Polaris helps both new and experienced system programmers adopt industry-standard As-Code approaches to improve consistency, governance, reviewability, and confidence when managing change. Visitors will have the opportunity to interact with the experience, provide feedback, and help shape the future of As-Code management for enterprise z/OS environments.",
       "speakers": "Roger Bales",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-workload-expansion-the-futu",
+      "id": "monday-16-15-ballroom-foyer-workload-expansion-the-future-of-ibm-z",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -776,23 +768,23 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Workload Expansion: The Future of IBM Z",
-      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBM’s vision for a more secure, scalable, and versatile platform, highlighting how emerging technologies—including architectures such as ARM—can complement traditional workloads and create new opportunities for innovation on IBM Z. Attendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
+      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBM’s vision for a more secure, scalable, and versatile platform, highlighting how emerging technologies—including architectures such as ARM—can complement traditional workloads and create new opportunities for innovation on IBM Z.\n\nAttendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
       "speakers": "Anthony Cocuzza",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "monday-16-15-ballroom-foyer-from-client-configuration-da",
+      "id": "monday-16-15-ballroom-foyer-from-client-configuration-data-to-simpli",
       "day": "Monday",
       "date": "2026-10-19",
       "startTime": "16:15",
@@ -800,20 +792,44 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "From Client Configuration Data to Simplification Signals",
-      "description": "The IBM Z Configuration Collection Program demonstrates how real-world client configuration data can be used to identify opportunities for simplification across the platform. This exhibit showcases how IBM has analyzed customer configuration data and identified a subset of configuration settings as candidates for simplification, helping teams better understand where complexity exists and where focused improvements may provide the greatest value. Attendees will see how these insights are already being used to inform IBM Z simplification efforts and explore how configuration intelligence could influence future capabilities such as Project Polaris and the z/OS configuration registry. Visitors will also have the opportunity to discuss their own configuration challenges and help shape future priorities for reducing friction, improving usability, and simplifying system management.",
+      "description": "The IBM Z Configuration Collection Program demonstrates how real-world client configuration data can be used to identify opportunities for simplification across the platform. This exhibit showcases how IBM has analyzed customer configuration data and identified a subset of configuration settings as candidates for simplification, helping teams better understand where complexity exists and where focused improvements may provide the greatest value.\n\nAttendees will see how these insights are already being used to inform IBM Z simplification efforts and explore how configuration intelligence could influence future capabilities such as Project Polaris and the z/OS configuration registry. Visitors will also have the opportunity to discuss their own configuration challenges and help shape future priorities for reducing friction, improving usability, and simplifying system management.",
       "speakers": "Shelley Brand",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
+    },
+    {
+      "id": "monday-16-15-ballroom-foyer-bob-and-confluent-for-z",
+      "day": "Monday",
+      "date": "2026-10-19",
+      "startTime": "16:15",
+      "endTime": "19:00",
+      "sessionType": "Z Design Fair",
+      "track": null,
+      "title": "Bob and Confluent for Z",
+      "description": null,
+      "speakers": null,
+      "room": "Ballroom Foyer",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel – to be set up before 3:30pm",
+      "projection": "Design Fair Station",
+      "microphones": null,
+      "podium": null,
+      "timer": null,
+      "monitor": "Flatscreen on floorstand",
+      "specialReqs": "Will need large sticky pad for easel",
+      "files": [],
+      "avNote": null,
+      "operatorNote": null,
+      "showInDashboard": true
     },
     {
       "id": "monday-18-00-ballroom-foyer-reception",
@@ -830,7 +846,7 @@
       "roomSetup": "High top tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -854,7 +870,7 @@
       "roomSetup": "See seating plan",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -864,7 +880,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-08-30-belle-epoque-ballr-opening-keynote",
+      "id": "tuesday-08-30-belle-epoque-ballroom-opening-keynote",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "08:30",
@@ -879,7 +895,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "60",
+      "timer": 60,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -888,7 +904,7 @@
       "showInDashboard": true
     },
     {
-      "id": "tuesday-09-30-tbd-break",
+      "id": "tuesday-09-30--break",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "09:30",
@@ -902,7 +918,7 @@
       "roomSetup": "High top tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -912,7 +928,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-10-00-cullinan-atlas-for-ibm-z-discover-ev",
+      "id": "tuesday-10-00-cullinan-atlas-for-ibm-z-discover-everything-pred",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "10:00",
@@ -921,10 +937,10 @@
       "track": "Application/Infrastructure",
       "title": "Atlas for IBM Z: discover everything, predict and prevent issues, prove every change with confidence, and normalize your environments",
       "description": "Design Thinking Activities",
-      "speakers": "Roger Bales, Andrew, Bowker, Andrew Sica, Meghan McGrath",
+      "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -933,10 +949,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-10-00-sancy-from-analysis-to-action-the",
+      "id": "tuesday-10-00-sancy-from-analysis-to-action-the-software-dev",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "10:00",
@@ -945,10 +961,10 @@
       "track": "Application",
       "title": "From Analysis to Action: The Software Development Lifecycle with IBM Bob Premium Package for Z",
       "description": "Design Thinking Activities",
-      "speakers": "Ryley Wharton, Latrell Freeman, Casey Shea",
+      "speakers": "Ryley Wharton\nLatrell Freeman, Casey Shea",
       "room": "Sancy",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -957,10 +973,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-10-00-groenplaats-2-ai-powered-event-integration",
+      "id": "tuesday-10-00-groenplaats-2-ai-powered-event-integration-for-ibm-z",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "10:00",
@@ -969,10 +985,10 @@
       "track": "Application/Data & AI",
       "title": "AI-Powered Event Integration for IBM Z",
       "description": "Design Thinking Activities",
-      "speakers": "Anubhuti Kaushik,  Daniel Martin",
+      "speakers": "Anubhuti Kaushik,  Daniel Martin,Stefanie Lauria",
       "room": "Groenplaats 2",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -981,10 +997,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-10-00-florentine-fit-for-purpose-agentic-ai-f",
+      "id": "tuesday-10-00-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "10:00",
@@ -996,7 +1012,7 @@
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1005,7 +1021,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "tuesday-10-00-groenplaats-3-multiple-shared-pools",
@@ -1020,7 +1036,7 @@
       "speakers": "Ray Newsom, Charle Webb,  Don Spangler",
       "room": "Groenplaats 3",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1032,7 +1048,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-10-00-groenplaats-1-intelligent-database-operati",
+      "id": "tuesday-10-00-groenplaats-1-intelligent-database-operations",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "10:00",
@@ -1044,7 +1060,7 @@
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1053,7 +1069,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "tuesday-10-00-hope-from-signals-to-action",
@@ -1068,7 +1084,7 @@
       "speakers": "Bryan Childs, Madhu BA",
       "room": "Hope",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1094,7 +1110,7 @@
       "roomSetup": "See seating plan",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": "buffet lunch - be sure to label all foods for allergens (nuts, dairy, vegan, gluten)",
@@ -1104,7 +1120,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-13-30-cullinan-atlas-for-ibm-z-discover-ev",
+      "id": "tuesday-13-30-cullinan-atlas-for-ibm-z-discover-everything-pred",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "13:30",
@@ -1113,10 +1129,10 @@
       "track": "Application/Infrastructure",
       "title": "Atlas for IBM Z: discover everything, predict and prevent issues, prove every change with confidence, and normalize your environments",
       "description": "Design Thinking Activities",
-      "speakers": "Roger Bales, Andrew, Bowker, Andrew Sica, Meghan McGrath",
+      "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1125,10 +1141,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-13-30-sancy-from-analysis-to-action-the",
+      "id": "tuesday-13-30-sancy-from-analysis-to-action-the-software-dev",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "13:30",
@@ -1137,10 +1153,10 @@
       "track": "Application",
       "title": "From Analysis to Action: The Software Development Lifecycle with IBM Bob Premium Package for Z",
       "description": "Design Thinking Activities",
-      "speakers": "Ryley Wharton, Latrell Freeman, Casey Shea",
+      "speakers": "Ryley Wharton\nLatrell Freeman, Casey Shea",
       "room": "Sancy",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1149,10 +1165,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-13-30-groenplaats-2-ai-powered-event-integration",
+      "id": "tuesday-13-30-groenplaats-2-ai-powered-event-integration-for-ibm-z",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "13:30",
@@ -1161,10 +1177,10 @@
       "track": "Application/Data & AI",
       "title": "AI-Powered Event Integration for IBM Z",
       "description": "Design Thinking Activities",
-      "speakers": "Anubhuti Kaushik,  Daniel Martin",
+      "speakers": "Anubhuti Kaushik,  Daniel Martin, Stefanie Lauria",
       "room": "Groenplaats 2",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1173,10 +1189,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "tuesday-13-30-florentine-fit-for-purpose-agentic-ai-f",
+      "id": "tuesday-13-30-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "13:30",
@@ -1188,7 +1204,7 @@
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1197,7 +1213,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "tuesday-13-30-groenplaats-3-multiple-shared-pools",
@@ -1212,7 +1228,7 @@
       "speakers": "Ray Newsom, Charles Webb,  Don Spangler",
       "room": "Groenplaats 3",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1224,7 +1240,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-13-30-groenplaats-1-intelligent-database-operati",
+      "id": "tuesday-13-30-groenplaats-1-intelligent-database-operations",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "13:30",
@@ -1236,7 +1252,7 @@
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1245,7 +1261,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
       "id": "tuesday-13-30-hope-from-signals-to-action",
@@ -1260,7 +1276,7 @@
       "speakers": "Bryan Childs, Madhu BA",
       "room": "Hope",
       "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
-      "projection": null,
+      "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
       "timer": null,
@@ -1286,7 +1302,7 @@
       "roomSetup": "High top tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1296,7 +1312,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-16-00-belle-epoque-ballr-simplification",
+      "id": "tuesday-16-00-belle-epoque-ballroom-simplification",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "16:00",
@@ -1311,16 +1327,16 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "60",
+      "timer": 60,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "tuesday-17-00-belle-epoque-ballr-reimagining-mainframe-engine",
+      "id": "tuesday-17-00-belle-epoque-ballroom-reimagining-mainframe-engineering-across",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "17:00",
@@ -1329,13 +1345,13 @@
       "track": null,
       "title": "Reimagining Mainframe Engineering Across the Stack",
       "description": "IBM Z is no longer a platform apart. ABN AMRO and Atruvia will share how they are modernizing mainframe engineering across the full stack—from application development and testing to platform operations and infrastructure management—using DevOps, CI/CD, GitOps, new ways of working, and industry-standard tooling.",
-      "speakers": "Shelley Brand,  ABN AMRO (Marcel van Ree), Atruvia (TBD)",
+      "speakers": "Shelley Brand,  ABN AMRO: Marcel van Ree, Atruvia:(tbd)",
       "room": "Belle Epoque Ballroom",
       "roomSetup": "Stage with podium, 4 soft chairs and side tables, schoolroom 240",
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "45",
+      "timer": 45,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -1358,7 +1374,7 @@
       "roomSetup": null,
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1368,7 +1384,7 @@
       "showInDashboard": false
     },
     {
-      "id": "tuesday-19-00-botanic-sanctuary-council-dinner",
+      "id": "tuesday-19-00-botanic-sanctuary-antwerp-council-dinner",
       "day": "Tuesday",
       "date": "2026-10-20",
       "startTime": "19:00",
@@ -1382,7 +1398,7 @@
       "roomSetup": null,
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1406,7 +1422,7 @@
       "roomSetup": null,
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1416,11 +1432,11 @@
       "showInDashboard": false
     },
     {
-      "id": "wednesday-09-00-tbd-flex-time",
+      "id": "wednesday-09-00--flex-time",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "09:00",
-      "endTime": "10:00",
+      "endTime": "09:45",
       "sessionType": "General Session",
       "track": null,
       "title": "Flex Time",
@@ -1430,20 +1446,20 @@
       "roomSetup": null,
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false
+      "showInDashboard": true
     },
     {
-      "id": "wednesday-10-00-belle-epoque-ballr-ibm-cio-managing-my-db2-im",
+      "id": "wednesday-09-45-belle-epoque-ballroom-ibm-cio-managing-my-db2-ims-systems-with",
       "day": "Wednesday",
       "date": "2026-10-21",
-      "startTime": "10:00",
+      "startTime": "09:45",
       "endTime": "10:30",
       "sessionType": "Client Experience",
       "track": null,
@@ -1455,7 +1471,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "30",
+      "timer": 30,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -1478,7 +1494,7 @@
       "roomSetup": "High top tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1488,7 +1504,7 @@
       "showInDashboard": false
     },
     {
-      "id": "wednesday-11-00-belle-epoque-ballr-znext",
+      "id": "wednesday-11-00-belle-epoque-ballroom-znext",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "11:00",
@@ -1503,7 +1519,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "Yes",
+      "timer": null,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -1536,7 +1552,7 @@
       "showInDashboard": false
     },
     {
-      "id": "wednesday-13-30-teun-streamlining-cobol-moderniza",
+      "id": "wednesday-13-30-teun-streamlining-cobol-modernization-with-ib",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "13:30",
@@ -1557,10 +1573,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-13-30-belle-epoque-ballr-project-polaris-roadmap-lea",
+      "id": "wednesday-13-30-belle-epoque-ballroom-project-polaris-roadmap-leading-to-the-z",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "13:30",
@@ -1581,10 +1597,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-13-30-sancy-z-database-assistant-update",
+      "id": "wednesday-13-30-sancy-z-database-assistant-update-and-journey",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "13:30",
@@ -1605,10 +1621,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-13-30-tiffany-shah-part-1-ibm-z-security-trans",
+      "id": "wednesday-13-30-tiffanyshah-part-1-ibm-z-security-transformation",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "13:30",
@@ -1617,7 +1633,7 @@
       "track": "Security",
       "title": "Part 1: IBM Z Security Transformation",
       "description": "As AI and frontier models accelerate the speed, scale, and sophistication of cyber threats, organizations can no longer rely on isolated controls or human speed response. This Part 1 IBM ZDC session explores IBM Z's security transformation strategy across the entire hardware and software stack, delivering continuous protection throughout the application, data, and platform lifecycle. Attendees will gain insight into a full stack, NIST aligned approach that integrates security, compliance, cyber resilience, and AI-driven automation to identify, protect, detect, respond, and recover at system speed.",
-      "speakers": "Bryan Childs, Robert Enochs",
+      "speakers": "Bryan Childs\nRobert Enochs",
       "room": "Tiffany/Shah",
       "roomSetup": "Podium, classroom 75",
       "projection": "Presenter",
@@ -1629,10 +1645,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-14-30-belle-epoque-ballr-ibm-research",
+      "id": "wednesday-14-30-belle-epoque-ballroom-ibm-research",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "14:30",
@@ -1647,7 +1663,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "60",
+      "timer": 60,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -1656,21 +1672,21 @@
       "showInDashboard": true
     },
     {
-      "id": "wednesday-15-30-ballroom-foyer-untitled",
+      "id": "wednesday-15-30-ballroom-foyer-break",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "15:30",
       "endTime": "16:00",
       "sessionType": "Break",
       "track": null,
-      "title": "(Untitled)",
+      "title": "Break",
       "description": null,
       "speakers": null,
       "room": "Ballroom Foyer",
       "roomSetup": null,
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1680,7 +1696,7 @@
       "showInDashboard": false
     },
     {
-      "id": "wednesday-16-00-belle-epoque-ballr-expedite-problem-diagnosis-i",
+      "id": "wednesday-16-00-belle-epoque-ballroom-expedite-problem-diagnosis-in-z-operatio",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "16:00",
@@ -1695,16 +1711,16 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "45",
+      "timer": 45,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-16-00-tiffany-shah-out-of-the-box-ai",
+      "id": "wednesday-16-00-tiffanyshah-out-of-the-box-ai",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "16:00",
@@ -1712,7 +1728,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Out-of-the-box-AI",
-      "description": "AI that helps configure an IBM Z box upon delivery. What does out-of-the-box AI mean to you? “Like a power button - you don’t ask why it exists.” That insight was powerful and we took it seriously.",
+      "description": "AI that helps configure an IBM Z box upon delivery. \nWhat does out-of-the-box AI mean to you? “Like a power button - you don’t ask why it exists.” That insight was powerful and we took it seriously.",
       "speakers": "Stefanie Lauria",
       "room": "Tiffany/Shah",
       "roomSetup": "Podium, classroom 75",
@@ -1725,10 +1741,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-16-00-teun-advancing-agentic-ai-governa",
+      "id": "wednesday-16-00-teun-advancing-agentic-ai-governance-with-sec",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "16:00",
@@ -1749,7 +1765,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "wednesday-16-00-sancy-agentic-security",
@@ -1760,7 +1776,7 @@
       "sessionType": "Solution Review",
       "track": "Security",
       "title": "Agentic Security",
-      "description": "Execution-capable AI agents introduce new z/OS privilege-management challenges because they can submit jobs, invoke APIs, modify resources, and delegate work. Traditional Identity and Access Management (IAM) is not enough; each action must be governed across its lifecycle and tied to identity, task intent, RACF enforcement, and audit reconstruction. We invite you to help shape what comes next as we design AI IAM mechanisms that enable safe and secure development, deployment and operation of execution-capable AI agents on z/OS.",
+      "description": "Execution-capable AI agents introduce new z/OS privilege-management challenges because they can submit jobs, invoke APIs, modify resources, and delegate work. Traditional Identity and Access Management (IAM) is not enough; each action must be governed across its lifecycle and tied to identity, task intent, RACF enforcement, and audit reconstruction.\nWe invite you to help shape what comes next as we design AI IAM mechanisms that enable safe and secure development, deployment and operation of execution-capable AI agents on z/OS.",
       "speakers": "Pradeep Parameshwaran",
       "room": "Sancy",
       "roomSetup": "Podium, classroom 44",
@@ -1776,7 +1792,7 @@
       "showInDashboard": true
     },
     {
-      "id": "wednesday-17-00-teun-bringing-agentic-workflows-t",
+      "id": "wednesday-17-00-teun-bringing-agentic-workflows-to-cicd-with-",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "17:00",
@@ -1784,7 +1800,7 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Bringing agentic workflows to CI/CD with IBM Pipeline Automation for Z to accelerate how apps are built, validated, and deployed",
-      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflows​. Identify adoption barriers and gaps in enabling end-to-end pipeline integration​. Prioritize enhancements to improve usability, interoperability, and release coordination​.",
+      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflows​.\nIdentify adoption barriers and gaps in enabling end-to-end pipeline integration​.\nPrioritize enhancements to improve usability, interoperability, and release coordination​.",
       "speakers": "Rich Larin",
       "room": "Teun",
       "roomSetup": "Podium, classroom 80",
@@ -1797,10 +1813,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-17-00-belle-epoque-ballr-agentic-management-of-infras",
+      "id": "wednesday-17-00-belle-epoque-ballroom-agentic-management-of-infrastructure-res",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "17:00",
@@ -1815,16 +1831,16 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "45",
+      "timer": 45,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-17-00-tiffany-shah-unlocking-ibm-z-data-for-ai",
+      "id": "wednesday-17-00-tiffanyshah-unlocking-ibm-z-data-for-ai-and-real-tim",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "17:00",
@@ -1845,10 +1861,10 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "wednesday-17-00-sancy-part-2-new-product-innovati",
+      "id": "wednesday-17-00-sancy-part-2-new-product-innovation-in-ibm-z-s",
       "day": "Wednesday",
       "date": "2026-10-21",
       "startTime": "17:00",
@@ -1869,7 +1885,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "wednesday-18-00-ballroom-foyer-reception",
@@ -1886,7 +1902,7 @@
       "roomSetup": "High boy tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1910,7 +1926,7 @@
       "roomSetup": "See seating plans",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1920,7 +1936,7 @@
       "showInDashboard": false
     },
     {
-      "id": "thursday-08-30-belle-epoque-ballr-how-bob-helped-ibm-cio-moder",
+      "id": "thursday-08-30-belle-epoque-ballroom-how-bob-helped-ibm-cio-modernize-mainfra",
       "day": "Thursday",
       "date": "2026-10-22",
       "startTime": "08:30",
@@ -1929,13 +1945,13 @@
       "track": null,
       "title": "How Bob helped IBM CIO modernize mainframe applications",
       "description": "Hear about how IBM CIO adopted Bob and the Z premium package to help them modernize their mainframe applications and what they learned about working with AI during their software development life cycle.",
-      "speakers": "Kathryn Briscoe, TBD",
+      "speakers": "Rich Larin",
       "room": "Belle Epoque Ballroom",
       "roomSetup": "Stage with podium, 3 soft chairs and side tables, schoolroom 240",
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "30",
+      "timer": 30,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -1944,7 +1960,7 @@
       "showInDashboard": true
     },
     {
-      "id": "thursday-09-00-belle-epoque-ballr-collaborative-session-playba",
+      "id": "thursday-09-00-belle-epoque-ballroom-collaborative-session-playbacks",
       "day": "Thursday",
       "date": "2026-10-22",
       "startTime": "09:00",
@@ -1959,13 +1975,13 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "15x4",
+      "timer": null,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
       "id": "thursday-10-00-ballroom-foyer-break",
@@ -1982,7 +1998,7 @@
       "roomSetup": "High boy tables",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": null,
@@ -1992,7 +2008,7 @@
       "showInDashboard": false
     },
     {
-      "id": "thursday-10-30-belle-epoque-ballr-collaborative-session-playba",
+      "id": "thursday-10-30-belle-epoque-ballroom-collaborative-session-playbacks",
       "day": "Thursday",
       "date": "2026-10-22",
       "startTime": "10:30",
@@ -2007,16 +2023,16 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "15x4",
+      "timer": null,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": true
+      "showInDashboard": false
     },
     {
-      "id": "thursday-11-30-belle-epoque-ballr-final-wrap-up",
+      "id": "thursday-11-30-belle-epoque-ballroom-final-wrap-up",
       "day": "Thursday",
       "date": "2026-10-22",
       "startTime": "11:30",
@@ -2031,7 +2047,7 @@
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
-      "timer": "30",
+      "timer": 30,
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
@@ -2040,7 +2056,7 @@
       "showInDashboard": true
     },
     {
-      "id": "thursday-12-00-lijn-tiffany-sha-lunch",
+      "id": "thursday-12-00-lijn-tiffanyshah-lunch",
       "day": "Thursday",
       "date": "2026-10-22",
       "startTime": "12:00",
@@ -2054,7 +2070,7 @@
       "roomSetup": "See seating plans",
       "projection": null,
       "microphones": null,
-      "podium": false,
+      "podium": null,
       "timer": null,
       "monitor": null,
       "specialReqs": "buffet lunch - be sure to label all foods for allergens (nuts, dairy, vegan, gluten)",
