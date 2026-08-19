@@ -507,10 +507,6 @@ a{color:var(--accent);text-decoration:none}
     <div class="modal-section">
       <div class="modal-section-hdr"><span class="g-icon">🏛</span> Room</div>
       <div class="modal-section-grid">
-        <div>
-          <label>Capacity</label>
-          <input type="number" id="ns-roomCapacity" min="0" value="0" class="modal-num">
-        </div>
         <div style="grid-column:1/-1">
           <label>Room Setup</label>
           <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
@@ -1040,13 +1036,6 @@ function renderAVReqs(s){
               <span class="k">Timer (min)</span>
               ${numInput(`avf-timerMins-${id}`, avNum(s,"timerMins"))}
             </div>
-            <div class="av-req">
-              <span class="k">Speaker Preview</span>
-              <div class="av-req-check">
-                ${chk(`avf-speakerPreview-${id}`, avBool(s,"speakerPreview"))}
-                <label for="avf-speakerPreview-${id}">Yes</label>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -1148,14 +1137,6 @@ function renderAVReqs(s){
         <div class="av-group">
           <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
           <div class="av-group-body">
-            <div class="av-req">
-              <span class="k">Room</span>
-              <input type="text" id="avf-room-${id}" value="${esc(s.room||"")}" placeholder="—" oninput="markDirty()">
-            </div>
-            <div class="av-req">
-              <span class="k">Capacity</span>
-              ${numInput(`avf-roomCapacity-${id}`, avNum(s,"roomCapacity"))}
-            </div>
             <div class="av-req av-req-full">
               <span class="k">Room Setup</span>
               <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"roomSetup", s.roomSetup||""))}</textarea>
@@ -1195,7 +1176,6 @@ function collectAVReqs(sessionId){
   if(g("clicker"))              s.av.clicker               = gb("clicker");
   if(g("confidenceMonitors"))   s.av.confidenceMonitors    = gn("confidenceMonitors");
   if(g("timerMins"))            s.av.timerMins             = gn("timerMins");
-  if(g("speakerPreview"))       s.av.speakerPreview        = gb("speakerPreview");
 
   // Audio
   if(g("wirelessHandheld"))     s.av.wirelessHandheldMics  = gn("wirelessHandheld");
@@ -1217,7 +1197,6 @@ function collectAVReqs(sessionId){
   if(g("flipChart"))            s.av.flipChart             = gb("flipChart");
 
   // Room
-  if(g("roomCapacity"))         s.av.roomCapacity          = gn("roomCapacity");
   if(g("roomSetup"))            s.av.roomSetup = s.roomSetup = gv("roomSetup");
 
   // Special Requirements — stored as array
@@ -1294,7 +1273,6 @@ function openAddSession(day){
   document.getElementById("ns-easel").checked              = false;
   document.getElementById("ns-flipChart").checked          = false;
   // Room
-  document.getElementById("ns-roomCapacity").value         = 0;
   document.getElementById("ns-roomsetup").value            = "";
   // Special reqs
   document.getElementById("ns-specialRequirements").value  = "";
@@ -1351,7 +1329,6 @@ function confirmAddSession(){
     highTopTables:         nsInt("ns-highTopTables"),
     easel:                 nsBool("ns-easel"),
     flipChart:             nsBool("ns-flipChart"),
-    roomCapacity:          nsInt("ns-roomCapacity"),
     roomSetup:             roomSetupVal,
     specialRequirements:   specArr
   };

@@ -72,7 +72,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .needs-attention { background: var(--amber-bg); border-bottom: 2px solid var(--amber-border); padding: 8px 20px; font-size: 12px; color: #92400e; font-weight: 600; display: none; }
 
 /* ── Layout ─────────────────────────────────────────────── */
-.layout { display: grid; grid-template-columns: 192px 1fr 280px; gap: 0; min-height: calc(100vh - 50px); }
+.layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; min-height: calc(100vh - 50px); }
 @media(max-width: 1000px){ .layout { grid-template-columns: 160px 1fr; } }
 @media(max-width: 700px)  { .layout { grid-template-columns: 1fr; } }
 
@@ -200,22 +200,19 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 
 .session-block.room-hidden { display: none; }
 
-/* ── Changelog Sidebar ────────────────────────────────────── */
-.right-sidebar { border-left: 1px solid var(--border); padding: 20px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-@media(max-width: 1000px){ .right-sidebar { display: none; } }
-.sidebar-header { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--subtle); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+/* ── Changelog (in left nav) ──────────────────────────────── */
 .changelog-list { list-style: none; }
-.changelog-item { padding: 9px 0; border-bottom: 1px solid var(--border); }
+.changelog-item { padding: 7px 14px; border-bottom: 1px solid var(--border); }
 .changelog-item:last-child { border-bottom: none; }
-.cl-ts { font-size: 10.5px; color: var(--subtle); }
-.cl-session { font-size: 12px; font-weight: 600; margin: 2px 0 1px; }
-.cl-detail { font-size: 11.5px; color: var(--muted); }
-.cl-pill { font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 5px; display: inline-block; }
+.cl-ts { font-size: 10px; color: var(--subtle); }
+.cl-session { font-size: 11px; font-weight: 600; margin: 2px 0 1px; }
+.cl-detail { font-size: 10.5px; color: var(--muted); }
+.cl-pill { font-size: 9.5px; font-weight: 700; border-radius: 3px; padding: 1px 5px; display: inline-block; }
 .cl-pill-from { background: var(--gray-bg); color: var(--gray); }
 .cl-pill-to-approved { background: var(--green-bg); color: var(--green); }
 .cl-pill-to-updated  { background: var(--blue-bg);  color: var(--blue); }
 .cl-pill-to-onhold   { background: var(--amber-bg); color: var(--amber); }
-.cl-empty { color: var(--muted); font-size: 12px; font-style: italic; }
+.cl-empty { color: var(--muted); font-size: 11px; font-style: italic; padding: 6px 14px; display: block; }
 
 /* ── Loading / Error ─────────────────────────────────────── */
 #loading { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
@@ -251,7 +248,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 
 <div id="app" style="display:none">
   <div class="layout">
-    <!-- Left nav: day + room selection -->
+    <!-- Left nav: day + room selection + changelog -->
     <nav class="left-nav" id="left-nav">
       <div class="left-nav-section" id="nav-days">
         <span class="left-nav-label">Event Days</span>
@@ -259,15 +256,14 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
       <div class="left-nav-section" id="nav-rooms">
         <span class="left-nav-label">Rooms</span>
       </div>
+      <div class="left-nav-section" id="nav-changelog">
+        <span class="left-nav-label">Change Log</span>
+        <ul class="changelog-list" id="changelog-list"></ul>
+      </div>
     </nav>
     <!-- Main session content -->
     <div class="main-content">
       <div id="day-panels"></div>
-    </div>
-    <!-- Right: changelog -->
-    <div class="right-sidebar">
-      <div class="sidebar-header">Change Log</div>
-      <ul class="changelog-list" id="changelog-list"></ul>
     </div>
   </div>
 </div>
@@ -738,7 +734,7 @@ function buildAVChips(s) {
     || av.audioPlayback || av.xlrAudioFeed
     || av.projector || av.videoPlayback
     || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
-    || av.roomSetup || av.roomCapacity || s.room
+    || av.roomSetup
     || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
@@ -796,8 +792,6 @@ function buildAVChips(s) {
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
       <div class="av-group-body">
-        ${txt("Room",      s.room)}
-        ${num("Capacity",  av.roomCapacity || null)}
         ${txt("Room Setup", av.roomSetup || s.roomSetup, true)}
       </div>
     </div>
