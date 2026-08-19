@@ -121,7 +121,7 @@ a{color:var(--accent);text-decoration:none}
 .session-card.status-distributed{border-left-color:var(--purple)}
 .session-card.status-nofile{border-left-color:#d1d5db}
 .session-card.in-dashboard{outline:2px solid #bfdbfe;outline-offset:-1px}
-.session-head{display:grid;grid-template-columns:26px 76px minmax(0,1fr) 108px 128px minmax(100px,1fr) 54px;gap:0 12px;align-items:start;padding:10px 14px 9px;cursor:pointer}
+.session-head{display:grid;grid-template-columns:26px 76px minmax(0,1fr) 108px 128px minmax(100px,1fr) 100px 54px;gap:0 12px;align-items:start;padding:10px 14px 9px;cursor:pointer}
 .session-head:hover{background:#fafbfc}
 .session-time{font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;padding-top:3px;line-height:1.5}
 .session-time .t-start{display:block;font-size:12.5px;font-weight:600;color:var(--text);line-height:1.2}
@@ -137,13 +137,6 @@ a{color:var(--accent);text-decoration:none}
 .dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:3px}
 .dash-toggle label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--subtle);cursor:pointer;text-align:center;line-height:1.2}
 .dash-toggle input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--accent)}
-
-/* ── AV details bar ──────────────────────────────────────────────────── */
-.av-details-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 14px;background:#f7f8fa;border-top:1px solid var(--border);cursor:pointer;user-select:none;transition:background .1s}
-.av-details-bar:hover{background:#eff6ff}
-.av-details-bar span{font-size:10.5px;font-weight:700;color:#4b5563;letter-spacing:.05em;text-transform:uppercase}
-.av-details-bar .chevron{font-size:10px;color:var(--subtle);transition:transform .2s}
-.av-details-bar .chevron.open{transform:rotate(180deg)}
 
 /* ── Badges ──────────────────────────────────────────────────────────── */
 .badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:600;border-radius:20px;padding:2px 8px;white-space:nowrap}
@@ -276,6 +269,7 @@ a{color:var(--accent);text-decoration:none}
   .session-col-room{grid-row:2;grid-column:2;font-size:11px;color:var(--muted)}
   .session-col-type{display:none}
   .session-col-status{grid-row:1;grid-column:3;align-self:center}
+  .session-col-status + .session-col{display:none}
   .dash-toggle{grid-row:1;grid-column:4;grid-row-end:span 2}
   .session-select-wrap{grid-row:1;grid-column:1;grid-row-end:span 2}
 }
@@ -943,17 +937,16 @@ function renderSession(s){
       </div>
       <!-- Change 2: single status pill replaces multi-badge strip on collapsed row -->
       <div class="session-col session-col-status">
-        <span class="col-label">Status</span>
+        <span class="col-label">File Status</span>
         <div id="pill-${s.id}">${sessionStatusPill(s.files)}</div>
+      </div>
+      <div class="session-col" onclick="event.stopPropagation()" style="display:flex;align-items:center;padding-top:0">
+        <button class="btn-av-details" onclick="toggleCard('${s.id}')">AV Details <span class="chevron" id="chev-${s.id}">▼</span></button>
       </div>
       <div class="dash-toggle" onclick="event.stopPropagation()">
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
         <label for="dash-${s.id}">Dashboard</label>
       </div>
-    </div>
-    <div class="av-details-bar" onclick="toggleCard('${s.id}')">
-      <span>AV Details</span>
-      <span class="chevron" id="chev-${s.id}">▼</span>
     </div>
     <div class="session-body" id="body-${s.id}">
       ${renderAVReqs(s)}
