@@ -994,7 +994,25 @@ function renderAVReqs(s){
   return `
   <div class="av-groups">
 
-        <!-- ① Presentation -->
+        <!-- ① Speakers -->
+        <div class="av-group">
+          <div class="av-group-hdr" style="justify-content:space-between">
+            <span><span class="g-icon">👤</span> Speakers</span>
+            <button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addSpeaker('${id}')">+ Add Speaker</button>
+          </div>
+          <div class="av-group-body av-special" id="avf-speakers-list-${id}">
+            ${(()=>{
+              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()).filter(Boolean) : [""];
+              return names.map((name,i)=>`
+            <div class="av-req speaker-row" id="avf-speaker-row-${id}-${i}">
+              <input type="text" class="avf-speaker-input" data-session="${id}" value="${esc(name)}" placeholder="First Last" oninput="markDirty()">
+              <button class="btn-remove" onclick="removeSpeaker('${id}',${i})" title="Remove">×</button>
+            </div>`).join("");
+            })()}
+          </div>
+        </div>
+
+        <!-- ② Presentation -->
         <div class="av-group">
           <div class="av-group-hdr"><span class="g-icon">🎞</span> Presentation</div>
           <div class="av-group-body">
@@ -1125,24 +1143,6 @@ function renderAVReqs(s){
                 <label for="avf-flipChart-${id}">Yes</label>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- ⑤ Speakers -->
-        <div class="av-group">
-          <div class="av-group-hdr" style="justify-content:space-between">
-            <span><span class="g-icon">👤</span> Speakers</span>
-            <button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addSpeaker('${id}')">+ Add Speaker</button>
-          </div>
-          <div class="av-group-body av-special" id="avf-speakers-list-${id}">
-            ${(()=>{
-              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()).filter(Boolean) : [""];
-              return names.map((name,i)=>`
-            <div class="av-req speaker-row" id="avf-speaker-row-${id}-${i}">
-              <input type="text" class="avf-speaker-input" data-session="${id}" value="${esc(name)}" placeholder="First Last" oninput="markDirty()">
-              <button class="btn-remove" onclick="removeSpeaker('${id}',${i})" title="Remove">×</button>
-            </div>`).join("");
-            })()}
           </div>
         </div>
 
