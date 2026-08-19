@@ -32,6 +32,8 @@ a{color:var(--accent);text-decoration:none}
 .btn-token:hover{background:#30363d}
 .btn-dl{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
 .btn-dl:hover{background:#30363d}
+.btn-dash-open{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
+.btn-dash-open:hover{background:#30363d}
 .save-status{font-size:11px;color:#8b949e;min-width:120px;max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .save-status.ok{color:#4ade80}
 .save-status.err{color:#f87171}
@@ -536,6 +538,7 @@ a{color:var(--accent);text-decoration:none}
   <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)">
   <button id="dashFilterBtn" onclick="toggleDashFilter()" title="Show only dashboard sessions">⭐ Dashboard</button>
   <span class="save-status" id="saveStatus"></span>
+  <button class="btn-dash-open btn" onclick="openDashboard()" title="Open dashboard in new tab">↗ Dashboard</button>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
   <button class="btn-dl btn" id="dlBtn" onclick="downloadJSON()">↓ Download JSON</button>
   <button class="btn-save btn" id="saveBtn" onclick="saveAll()" disabled>Save to GitHub</button>
@@ -748,6 +751,13 @@ function markDirty(){
   document.getElementById("dlBtn").disabled = false;
   document.getElementById("saveBtn").disabled = !getToken();
   setStatus("Unsaved changes", "");
+}
+
+// ── Open dashboard in new tab ─────────────────────────────────────────────────
+function openDashboard(){
+  // Resolve dashboard.html relative to admin.html (same directory)
+  const base = window.location.href.replace(/\/[^\/]*$/, "/");
+  window.open(base + "dashboard.html", "_blank", "noopener");
 }
 
 // ── Download JSON (local testing — no token needed) ───────────────────────────
