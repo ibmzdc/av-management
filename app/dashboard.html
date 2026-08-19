@@ -316,6 +316,9 @@ function onDownload(boxFileId, btnId) {
 }
 
 // ── Legacy → structured av migration (mirrors admin.html) ─────────────────
+// Runs once per session at load time. Non-destructive: only sets av.* fields that
+// are not already populated. Once a session is saved through the admin UI, all
+// canonical fields live in s.av and the legacy root fields are no longer used.
 function migrateSession(s) {
   if (!s.av) s.av = {};
   const av = s.av;
@@ -341,8 +344,9 @@ function migrateSession(s) {
     av.specialRequirements = s.specialReqs.split(/[;\n]/).map(x => x.trim()).filter(Boolean);
   }
 
-  const hasMicCounts = av.wirelessHandheldMics || av.wirelessLavalierMics ||
-                       av.headsetMics || av.tableMics || av.catchBoxMics || av.panelMics;
+  const hasMicCounts = av.wirelessHandheldMics || av.lavalierHeadsetMics ||
+                       av.wirelessLavalierMics || av.headsetMics ||
+                       av.tableMics || av.catchBoxMics || av.panelMics;
   if (s.microphones && !hasMicCounts) {
     const t = s.microphones.toLowerCase();
     const pick = (patterns) => {
@@ -355,6 +359,8 @@ function migrateSession(s) {
     av.panelMics            = pick([/(\d+)\s*panel/, /panel[^0-9]*(\d+)/]);
     av.headsetMics          = pick([/(\d+)\s*headset/]);
     av.tableMics            = pick([/(\d+)\s*table/]);
+    // Combined lavalier+headset for the new UI field (used by lhVal fallback)
+    av.lavalierHeadsetMics  = (av.wirelessLavalierMics||0) + (av.headsetMics||0) || undefined;
     // Only store as a visible note if it's not a "no mic" indicator
     const noMicPattern = /^\s*(no\s*mic|none|n\/a|not\s*required|-+)\s*$/i;
     av.legacyMicsNote = noMicPattern.test(s.microphones) ? null : s.microphones;
