@@ -268,7 +268,39 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
   </div>
 </div>
 
-<script src="av-config.js"></script>
+<script>
+// ── AV_CONFIG — inlined from av-config.js (inline required for file:// compatibility) ──
+const AV_GROUPS = [
+  { key: "presentation", icon: "🎞",  label: "Presentation" },
+  { key: "audio",        icon: "🎙",  label: "Audio"        },
+  { key: "video",        icon: "📽",  label: "Video"        },
+  { key: "staging",      icon: "🎭",  label: "Staging"      },
+  { key: "room",         icon: "🏛",  label: "Room"         },
+];
+const AV_CONFIG = [
+  { group:"presentation", label:"Presentation Required", id:"presentationRequired", modalId:"ns-presRequired",       type:"bool" },
+  { group:"presentation", label:"Source",                id:"presentationSource",   modalId:"ns-presentationSource", type:"select",
+    options:[{value:"",label:"— none —"},{value:"AV Team",label:"AV Team"},{value:"AV team - LED",label:"AV Team – LED"},{value:"Presenter Laptop",label:"Presenter Laptop"},{value:"LED Wall",label:"LED Wall"},{value:"Design Fair Station",label:"Design Fair Station"}] },
+  { group:"presentation", label:"Clicker",               id:"clicker",              modalId:"ns-clicker",            type:"bool" },
+  { group:"presentation", label:"Confidence Monitors",   id:"confidenceMonitors",   modalId:"ns-confidenceMonitors", type:"num"  },
+  { group:"presentation", label:"Timer (min)",           id:"timerMins",            modalId:"ns-timerMins",          type:"num"  },
+  { group:"audio",        label:"Handheld Mics",         id:"wirelessHandheldMics", modalId:"ns-wirelessHandheld",   type:"num"  },
+  { group:"audio",        label:"Lavalier / Headset",    id:"lavalierHeadsetMics",  modalId:"ns-lavalierHeadset",    type:"num"  },
+  { group:"audio",        label:"Catchbox",              id:"catchBoxMics",         modalId:"ns-catchBoxMics",       type:"num"  },
+  { group:"audio",        label:"Audio Playback",        id:"audioPlayback",        modalId:"ns-audioPlayback",      type:"bool" },
+  { group:"audio",        label:"XLR Audio Feed",        id:"xlrAudioFeed",         modalId:"ns-xlrAudioFeed",       type:"bool" },
+  { group:"video",        label:"Projector",             id:"projector",            modalId:"ns-projector",          type:"bool" },
+  { group:"video",        label:"Video Playback",        id:"videoPlayback",        modalId:"ns-videoPlayback",      type:"bool" },
+  { group:"staging",      label:"Podium",                id:"podium",               modalId:"ns-podium",             type:"bool" },
+  { group:"staging",      label:"Panel Chairs",          id:"panelChairs",          modalId:"ns-panelChairs",        type:"num"  },
+  { group:"staging",      label:"Side Tables",           id:"sideTables",           modalId:"ns-sideTables",         type:"num"  },
+  { group:"staging",      label:"High-top Tables",       id:"highTopTables",        modalId:"ns-highTopTables",      type:"num"  },
+  { group:"staging",      label:"Easel",                 id:"easel",                modalId:"ns-easel",              type:"bool" },
+  { group:"staging",      label:"Flip Chart",            id:"flipChart",            modalId:"ns-flipChart",          type:"bool" },
+  { group:"room",         label:"Room Setup",            id:"roomSetup",            modalId:"ns-roomsetup",          type:"text", full:true, rows:2, placeholder:"Stage with podium, schoolroom 240…" },
+  { group:"room",         label:"Stage Setup",           id:"stageSetup",           modalId:"ns-stagesetup",         type:"text", full:true, rows:2, placeholder:"Stage setup details…" },
+];
+</script>
 <script>
 // ── Config ────────────────────────────────────────────────
 const DATA_URL = "https://raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json";
