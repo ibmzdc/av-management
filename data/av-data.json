@@ -1,8 +1,8 @@
 {
   "event": "ZDC 2026 Fall",
-  "eventDates": "Oct 18â22, 2026",
+  "eventDates": "Oct 18Ã¢ÂÂ22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-08-20T13:39:22.183Z",
+  "lastUpdated": "2026-08-20T14:26:32.372Z",
   "changelog": [
     {
       "ts": "2026-08-17T19:03:53.667Z",
@@ -52,12 +52,14 @@
         "roomSetup": null,
         "specialRequirements": [
           "Show when the room is not presenting content (pre-session, breaks, and post-session)."
-        ]
+        ],
+        "stageSetup": null
       },
       "showInDashboard": true,
       "files": [],
       "avNote": null,
-      "operatorNote": null
+      "operatorNote": null,
+      "stageSetup": null
     },
     {
       "id": "sunday-15-00-ballroom-foyer-registration",
@@ -102,8 +104,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "sunday-16-00-belle-epoque-ballroom-introduction-to-the-zdc",
@@ -154,8 +158,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "sunday-17-00-ballroom-foyer-reception",
@@ -200,8 +206,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-07-30-restaurant-breakfast",
@@ -246,8 +254,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-08-30-belle-epoque-ballroom-welcome-plan-for-the-week",
@@ -261,7 +271,7 @@
       "description": null,
       "speakers": "Jeff Neely, Rick Schoonmaker",
       "room": "Belle Epoque Ballroom",
-      "roomSetup": "Main tent - Schoolroom Style for 180",
+      "roomSetup": "Main Tent Ballroom\nSchoolroom style seating for 180 attendees\nCenter and side aisles for attendee access",
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
@@ -277,7 +287,7 @@
         "podium": true,
         "timer": true,
         "confidenceMonitors": 2,
-        "roomSetup": "Main tent - Schoolroom Style for 180",
+        "roomSetup": "Main Tent Ballroom\nSchoolroom style seating for 180 attendees\nCenter and side aisles for attendee access",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 3,
@@ -293,13 +303,15 @@
         "xlrAudioFeed": false,
         "projector": false,
         "videoPlayback": false,
-        "panelChairs": 0,
-        "sideTables": 0,
+        "panelChairs": 3,
+        "sideTables": 2,
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": "Three soft chairs centered on stage in a conversational panel layout\nSmall side table between the chairs stocked with water.\nFor panel sessions, focus stage lighting on the seating area"
+      },
+      "stageSetup": "Three soft chairs centered on stage in a conversational panel layout\nSmall side table between the chairs stocked with water.\nFor panel sessions, focus stage lighting on the seating area"
     },
     {
       "id": "monday-09-00-belle-epoque-ballroom-from-manual-processes-to-intelligent-wor",
@@ -313,7 +325,7 @@
       "description": "Join IBM and Citi for an engaging client-led discussion on the practical application of Agentic AI on IBM z17. In this session, Citi representatives will share insights from a recently completed proof of concept that leveraged Agentic AI to automate a critical business workload, reducing manual, repetitive tasks and improving workflow efficiency and customer experience as well.",
       "speakers": "Purvi Patel, Citi: Atanas Bogdanovski, Citi: Mandeep Kapoor",
       "room": "Belle Epoque Ballroom",
-      "roomSetup": "Schoolroom style seating for 180 attendees\nCenter and side aisles for attendee access",
+      "roomSetup": "Schoolroom style seating for 180 attendees\nCenter and side aisles for attendee access\nPlace a wireless handheld microphone at the center seat of the front row for quick access by event hosts and facilitators",
       "projection": "AV team",
       "microphones": "5 wireless mics plus 3 catchboxes",
       "podium": true,
@@ -329,8 +341,8 @@
         "podium": true,
         "timer": true,
         "confidenceMonitors": 2,
-        "roomSetup": "Schoolroom style seating for 180 attendees\nCenter and side aisles for attendee access",
-        "wirelessHandheldMics": 5,
+        "roomSetup": "Schoolroom style seating for 180 attendees\nCenter and side aisles for attendee access\nPlace a wireless handheld microphone at the center seat of the front row for quick access by event hosts and facilitators",
+        "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 3,
         "panelMics": 0,
@@ -350,8 +362,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": "Three soft chairs centered on stage in a conversational panel layout\nSmall side table between the chairs stocked with water.\nFor panel sessions, focus stage lighting on the seating area"
+      },
+      "stageSetup": "Three soft chairs centered on stage in a conversational panel layout\nSmall side table between the chairs stocked with water.\nFor panel sessions, focus stage lighting on the seating area"
     },
     {
       "id": "monday-09-30-ballroom-foyer-break",
@@ -396,8 +410,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-cullinan-atlas-for-ibm-z-discover-everything-pred",
@@ -411,7 +427,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -426,7 +442,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -435,20 +451,22 @@
         "tableMics": 0,
         "lavalierHeadsetMics": 0,
         "legacyMicsNote": null,
-        "presentationRequired": true,
+        "presentationRequired": false,
         "clicker": false,
         "timerMins": 0,
         "audioPlayback": false,
         "xlrAudioFeed": false,
-        "projector": false,
+        "projector": true,
         "videoPlayback": false,
         "panelChairs": 0,
         "sideTables": 0,
         "highTopTables": 0,
-        "easel": false,
-        "flipChart": false,
-        "specialRequirements": []
-      }
+        "easel": true,
+        "flipChart": true,
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-sancy-from-analysis-to-action-the-software-dev",
@@ -462,7 +480,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ryley WhartonLatrell Freeman, Casey Shea",
       "room": "Sancy",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -474,10 +492,10 @@
       "operatorNote": null,
       "showInDashboard": true,
       "av": {
-        "presentationSource": null,
+        "presentationSource": "Presenter Laptop",
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -491,15 +509,17 @@
         "timerMins": 0,
         "audioPlayback": false,
         "xlrAudioFeed": false,
-        "projector": false,
+        "projector": true,
         "videoPlayback": false,
         "panelChairs": 0,
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-groenplaats-2-ai-powered-event-integration-for-ibm-z",
@@ -513,7 +533,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Anubhuti Kaushik, Daniel Martin, Stefanie Lauria",
       "room": "Groenplaats 2",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -528,7 +548,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -549,8 +569,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
@@ -564,7 +586,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -579,7 +601,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -600,8 +622,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-groenplaats-3-multiple-shared-pools",
@@ -651,8 +675,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-groenplaats-1-intelligent-database-operations",
@@ -666,7 +692,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -681,7 +707,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -702,8 +728,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-10-00-hope-from-signals-to-action",
@@ -753,8 +781,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-12-00-hotel-restaurant-lijn-lunch",
@@ -799,8 +829,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-cullinan-atlas-for-ibm-z-discover-everything-pred",
@@ -814,7 +846,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -829,7 +861,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -850,8 +882,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-sancy-from-analysis-to-action-the-software-dev",
@@ -865,7 +899,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ryley WhartonLatrell Freeman, Casey Shea",
       "room": "Sancy",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -880,7 +914,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -901,8 +935,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-groenplaats-2-ai-powered-event-integration-for-ibm-z",
@@ -916,7 +952,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Anubhuti Kaushik, Daniel Martin",
       "room": "Groenplaats 2",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -931,7 +967,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -952,8 +988,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
@@ -967,7 +1005,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -982,7 +1020,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -1003,8 +1041,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-groenplaats-3-multiple-shared-pools",
@@ -1054,8 +1094,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-groenplaats-1-intelligent-database-operations",
@@ -1069,7 +1111,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -1084,7 +1126,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -1105,8 +1147,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-13-30-hope-from-signals-to-action",
@@ -1156,8 +1200,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-15-30-ballroom-foyer-break",
@@ -1202,8 +1248,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-00-belle-epoque-ballroom-flex-time-kickoff",
@@ -1254,8 +1302,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-belle-epoque-ballroom-generic-data-architecture-data-discovery",
@@ -1305,8 +1355,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-teun-client-roundtable",
@@ -1356,8 +1408,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-ibm-atlas-system-intelligence-that-disco",
@@ -1368,10 +1422,10 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "IBM Atlas: System intelligence that discovers everything so you can understand anything",
-      "description": "See IBM Atlas in action as it discovers and maps relationships across your IT environment, from hardware and operating systems to middleware, software, and business applications. Through a live demonstration, attendees will explore Atlasâs dynamic topology visualization and AI-powered chat experience, enabling users to quickly understand dependencies, answer environment questions, and gain actionable insights. Learn how organizations are leveraging Atlas for change management, audit readiness, application refactoring, business service mapping, and drift detection, while also helping shape the future of the platform through direct feedback.",
+      "description": "See IBM Atlas in action as it discovers and maps relationships across your IT environment, from hardware and operating systems to middleware, software, and business applications. Through a live demonstration, attendees will explore AtlasÃ¢ÂÂs dynamic topology visualization and AI-powered chat experience, enabling users to quickly understand dependencies, answer environment questions, and gain actionable insights. Learn how organizations are leveraging Atlas for change management, audit readiness, application refactoring, business service mapping, and drift detection, while also helping shape the future of the platform through direct feedback.",
       "speakers": "Meghan McGrath",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1385,7 +1439,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1404,8 +1458,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-would-you-trust-an-ai-agent-with-this",
@@ -1419,7 +1475,7 @@
       "description": "Experience Agentic AI in action within IBM Concert for Z and see how AI can accelerate problem determination by analyzing system signals, identifying likely causes, gathering evidence, and recommending next steps. After the live demonstration, participate in a quick interactive voting exercise where you'll decide whether specific operational tasks should be automated by AI, assisted by AI, or remain under human control.\nThis engaging session explores the evolving relationship between human expertise and AI-driven operations, highlighting how Agentic AI can help address knowledge gaps,reduce reliance on specialized experts, and improve decision-making across complex environments. Attendees will gain insight into the practical applications of autonomous operations while helping shape the future direction of Concert for Z's Agentic AI capabilities.",
       "speakers": "Nadia Fendrich",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1433,7 +1489,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1452,8 +1508,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-project-brain-bank-turning-ibm-z-knowled",
@@ -1464,10 +1522,10 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Project Brain Bank: Turning IBM Z knowledge into trusted AI-ready guidance",
-      "description": "Discover Project Brain Bank, an early concept for transforming scattered IBM Z knowledgeâfrom documentation and support insights to product expertise and operational learningsâinto structured, AI-generated guidance backed by trusted sources. Attendees will see a simple before-and-after demonstration showing how information can be consolidated into actionable answers with supporting evidence, recommended next steps, and source transparency.\nVisitors will be invited to evaluate an AI-generated response and share what would make it trustworthy enough for real-world use. Through a quick interactive activity, participants will help shape the future of AI-assisted IBM Z guidance by identifying the trust signals, evidence, and transparency mechanisms needed to confidently leverage AI in enterprise environments.",
+      "description": "Discover Project Brain Bank, an early concept for transforming scattered IBM Z knowledgeÃ¢ÂÂfrom documentation and support insights to product expertise and operational learningsÃ¢ÂÂinto structured, AI-generated guidance backed by trusted sources. Attendees will see a simple before-and-after demonstration showing how information can be consolidated into actionable answers with supporting evidence, recommended next steps, and source transparency.\nVisitors will be invited to evaluate an AI-generated response and share what would make it trustworthy enough for real-world use. Through a quick interactive activity, participants will help shape the future of AI-assisted IBM Z guidance by identifying the trust signals, evidence, and transparency mechanisms needed to confidently leverage AI in enterprise environments.",
       "speakers": "Ivan Dovgan",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1481,7 +1539,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1500,8 +1558,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-software-management-as-code---ibm-z-inst",
@@ -1515,7 +1575,7 @@
       "description": "Experience a hands-on demonstration of IBM Z Install and see how software management can be transformed through a GitOps-driven, software management-as-code approach. Attendees will explore a prototype that uses standard repositories to configure, deploy, and track z/OS software across partitions, providing a centralized inventory of what is installed, where it is running, and how it was deployed.\n\nThe session showcases a self-service, AI-assisted experience that brings together software installation, governance, and auditability using industry-standard workflows. Learn how IBM is extending Infrastructure-as-Code, Configuration-as-Code, and Policy-as-Code principles to z/OS software management, helping organizations improve visibility, streamline operations, and accelerate time to value while maintaining business controls and compliance.",
       "speakers": "Andrew Sica",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1529,7 +1589,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1548,8 +1608,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-ibm-project-polaris-tech-preview-20-and-",
@@ -1563,7 +1625,7 @@
       "description": "Explore how IBM Project Polaris is extending As-Code practices across z/OS, moving beyond isolated configuration tasks to support Networking, Storage Management, Workload Manager (WLM), and other core system domains. Through a hands-on demonstration, attendees will see how configurations and policies can be defined, validated, and managed using modern workflows, with guidance from intelligent automation and agentic AI.\nThe session highlights how Polaris helps both new and experienced system programmers adopt industry-standard As-Code approaches to improve consistency, governance, reviewability, and confidence when managing change. Visitors will have the opportunity to interact with the experience, provide feedback, and help shape the future of As-Code management for enterprise z/OS environments.",
       "speakers": "Roger Bales",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1577,7 +1639,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1596,8 +1658,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-workload-expansion-the-future-of-ibm-z",
@@ -1608,10 +1672,10 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Workload Expansion: The Future of IBM Z",
-      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBMâs vision for a more secure, scalable, and versatile platform, highlighting how emerging technologiesâincluding architectures such as ARMâcan complement traditional workloads and create new opportunities for innovation on IBM Z.\n\nAttendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
+      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBMÃ¢ÂÂs vision for a more secure, scalable, and versatile platform, highlighting how emerging technologiesÃ¢ÂÂincluding architectures such as ARMÃ¢ÂÂcan complement traditional workloads and create new opportunities for innovation on IBM Z.\n\nAttendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
       "speakers": "Anthony Cocuzza",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1625,7 +1689,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1644,8 +1708,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-from-client-configuration-data-to-simpli",
@@ -1659,7 +1725,7 @@
       "description": "The IBM Z Configuration Collection Program demonstrates how real-world client configuration data can be used to identify opportunities for simplification across the platform. This exhibit showcases how IBM has analyzed customer configuration data and identified a subset of configuration settings as candidates for simplification, helping teams better understand where complexity exists and where focused improvements may provide the greatest value.\n\nAttendees will see how these insights are already being used to inform IBM Z simplification efforts and explore how configuration intelligence could influence future capabilities such as Project Polaris and the z/OS configuration registry. Visitors will also have the opportunity to discuss their own configuration challenges and help shape future priorities for reducing friction, improving usability, and simplifying system management.",
       "speakers": "Shelley Brand",
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1673,7 +1739,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1692,8 +1758,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-16-15-ballroom-foyer-bob-and-confluent-for-z",
@@ -1707,7 +1775,7 @@
       "description": null,
       "speakers": null,
       "room": "Ballroom Foyer",
-      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+      "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
       "projection": "Design Fair Station",
       "microphones": null,
       "podium": false,
@@ -1721,7 +1789,7 @@
       "av": {
         "presentationSource": "Design Fair Station",
         "confidenceMonitors": 0,
-        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel â to be set up before 3:30pm",
+        "roomSetup": "Each station needs  monitor, monitor stand, high-top table, chair and easel Ã¢ÂÂ to be set up before 3:30pm",
         "specialRequirements": [
           "Will need large sticky pad for easel"
         ],
@@ -1740,8 +1808,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "monday-18-00-ballroom-foyer-reception",
@@ -1786,8 +1856,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-07-30-restaurant-breakfast",
@@ -1832,8 +1904,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-08-30-belle-epoque-ballroom-opening-keynote",
@@ -1884,8 +1958,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-09-30--break",
@@ -1930,8 +2006,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-cullinan-atlas-for-ibm-z-discover-everything-pred",
@@ -1945,7 +2023,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -1960,7 +2038,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -1981,8 +2059,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-sancy-from-analysis-to-action-the-software-dev",
@@ -1996,7 +2076,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ryley WhartonLatrell Freeman, Casey Shea",
       "room": "Sancy",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2011,7 +2091,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2032,8 +2112,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-groenplaats-2-ai-powered-event-integration-for-ibm-z",
@@ -2047,7 +2129,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Anubhuti Kaushik, Daniel Martin, Stefanie Lauria",
       "room": "Groenplaats 2",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2062,7 +2144,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2083,8 +2165,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
@@ -2098,7 +2182,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2113,7 +2197,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2134,8 +2218,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-groenplaats-3-multiple-shared-pools",
@@ -2185,8 +2271,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-groenplaats-1-intelligent-database-operations",
@@ -2200,10 +2288,10 @@
       "description": "Design Thinking Activities",
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
-      "podium": true,
+      "podium": false,
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
@@ -2213,9 +2301,9 @@
       "showInDashboard": true,
       "av": {
         "presentationSource": null,
-        "podium": true,
+        "podium": false,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2236,8 +2324,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-10-00-hope-from-signals-to-action",
@@ -2287,8 +2377,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-12-00-restaurant-lijn-lunch",
@@ -2335,8 +2427,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-cullinan-atlas-for-ibm-z-discover-everything-pred",
@@ -2350,7 +2444,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Roger Bales, Andrew\tBowker, Andrew Sica, Meghan McGrath",
       "room": "Cullinan",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2365,7 +2459,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2386,8 +2480,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-sancy-from-analysis-to-action-the-software-dev",
@@ -2401,7 +2497,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ryley WhartonLatrell Freeman, Casey Shea",
       "room": "Sancy",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2416,7 +2512,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2437,8 +2533,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-groenplaats-2-ai-powered-event-integration-for-ibm-z",
@@ -2452,7 +2550,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Anubhuti Kaushik, Daniel Martin, Stefanie Lauria",
       "room": "Groenplaats 2",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2467,7 +2565,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2488,8 +2586,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-florentine-fit-for-purpose-agentic-ai-for-ibm-z",
@@ -2503,7 +2603,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Ivan Dovgan, Nadia Fendrich",
       "room": "Florentine",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2518,7 +2618,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2539,8 +2639,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-groenplaats-3-multiple-shared-pools",
@@ -2590,8 +2692,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-groenplaats-1-intelligent-database-operations",
@@ -2605,7 +2709,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Sueli Almeida, Haakon Roberts",
       "room": "Groenplaats 1",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2620,7 +2724,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 1,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2641,8 +2745,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-13-30-hope-from-signals-to-action",
@@ -2656,7 +2762,7 @@
       "description": "Design Thinking Activities",
       "speakers": "Bryan Childs, Madhu BA",
       "room": "Hope",
-      "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+      "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
       "projection": "Collaborative",
       "microphones": "No mic",
       "podium": true,
@@ -2671,7 +2777,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "15 Chairs, 1 table for laptop, 1 table for supplies, wastebasket, large serving bowl for candy (we will provide the candy)",
+        "roomSetup": "15 chairs arranged in a collaborative circle or U-shape\n1 table (or podium) for facilitator laptop and presentation materials, with HDMI connection to projector\n1 supply table for workshop materials, sticky notes, markers, and handouts.\n1 wastebasket\n1 large serving bowl for candy (candy will be provided by the event team)",
         "wirelessHandheldMics": 0,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -2692,8 +2798,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-15-30-ballroom-foyer-break",
@@ -2738,8 +2846,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-16-00-belle-epoque-ballroom-simplification",
@@ -2790,8 +2900,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-17-00-belle-epoque-ballroom-reimagining-mainframe-engineering-across",
@@ -2802,7 +2914,7 @@
       "sessionType": "Client Experience",
       "track": null,
       "title": "Reimagining Mainframe Engineering Across the Stack",
-      "description": "IBM Z is no longer a platform apart. ABN AMRO and Atruvia will share how they are modernizing mainframe engineering across the full stackâfrom application development and testing to platform operations and infrastructure managementâusing DevOps, CI/CD, GitOps, new ways of working, and industry-standard tooling.",
+      "description": "IBM Z is no longer a platform apart. ABN AMRO and Atruvia will share how they are modernizing mainframe engineering across the full stackÃ¢ÂÂfrom application development and testing to platform operations and infrastructure managementÃ¢ÂÂusing DevOps, CI/CD, GitOps, new ways of working, and industry-standard tooling.",
       "speakers": "Shelley Brand, ABN AMRO: Marcel van Ree, Atruvia:(tbd)",
       "room": "Belle Epoque Ballroom",
       "roomSetup": "Stage with podium, 4 soft chairs and side tables, schoolroom 240",
@@ -2842,8 +2954,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-18-30-hotel-lobby-depart-for-council-dinner",
@@ -2888,8 +3002,10 @@
         "easel": false,
         "flipChart": false,
         "roomSetup": null,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "tuesday-19-00-botanic-sanctuary-antwerp-council-dinner",
@@ -2934,8 +3050,10 @@
         "easel": false,
         "flipChart": false,
         "roomSetup": null,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-07-30-restaurant-breakfast",
@@ -2980,8 +3098,10 @@
         "easel": false,
         "flipChart": false,
         "roomSetup": null,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-09-00--flex-time",
@@ -3026,8 +3146,10 @@
         "easel": false,
         "flipChart": false,
         "roomSetup": null,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-09-45-belle-epoque-ballroom-ibm-cio-managing-my-db2-ims-systems-with",
@@ -3078,8 +3200,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-10-30-ballroom-foyer-break",
@@ -3124,8 +3248,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-11-00-belle-epoque-ballroom-znext",
@@ -3175,8 +3301,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-12-00-restaurant-lijn-lunch",
@@ -3221,8 +3349,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-13-30-teun-streamlining-cobol-modernization-with-ib",
@@ -3233,7 +3363,7 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Streamlining COBOL Modernization with IBM COBOL Elevate for z/OS",
-      "description": "Enterprise clients face fragmentedCOBOL modernization workflowsrequiring many hours of setup,specialized skills, and manualcoordination across compilerupgrades, performance analysis, andoptimization.This complexity delays modernizationinitiatives and increases technicaldebt.IBM COBOL Elevate for z/OSstreamlines the entire process with anintegrated, end-to-end modernizationexperience that accelerates COBOLapplication performance, upgradesCOBOL compiler versions, andgenerates actionable modernizationinsightsâall within a unified platformbuilt for speed and simplicity.",
+      "description": "Enterprise clients face fragmentedCOBOL modernization workflowsrequiring many hours of setup,specialized skills, and manualcoordination across compilerupgrades, performance analysis, andoptimization.This complexity delays modernizationinitiatives and increases technicaldebt.IBM COBOL Elevate for z/OSstreamlines the entire process with anintegrated, end-to-end modernizationexperience that accelerates COBOLapplication performance, upgradesCOBOL compiler versions, andgenerates actionable modernizationinsightsÃ¢ÂÂall within a unified platformbuilt for speed and simplicity.",
       "speakers": "Reid Copeland",
       "room": "Teun",
       "roomSetup": "Podium, classroom 80",
@@ -3246,7 +3376,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
@@ -3272,8 +3402,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-13-30-belle-epoque-ballroom-project-polaris-roadmap-leading-to-the-z",
@@ -3297,7 +3429,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
@@ -3318,8 +3450,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-13-30-sancy-z-database-assistant-update-and-journey",
@@ -3330,10 +3464,10 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Z Database Assistant Update and Journey",
-      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:â¢ Enhancements to core capabilitiesbased on feedback in 2Q.â¢ Sponsor user feedback, particularlyaround installation and configurationexperienceâ¢ Progress on tooling integration,including key priorities and upcominginvestmentsâ¢ Updates to Db2 distributedconnection management, includingrecent enhancements",
+      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:Ã¢ÂÂ¢ Enhancements to core capabilitiesbased on feedback in 2Q.Ã¢ÂÂ¢ Sponsor user feedback, particularlyaround installation and configurationexperienceÃ¢ÂÂ¢ Progress on tooling integration,including key priorities and upcominginvestmentsÃ¢ÂÂ¢ Updates to Db2 distributedconnection management, includingrecent enhancements",
       "speakers": "Sueli Almeida",
       "room": "Sancy",
-      "roomSetup": "Podium, classroom 44",
+      "roomSetup": "Classroom-style seating for 40 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3343,12 +3477,12 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 44",
+        "roomSetup": "Classroom-style seating for 40 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3369,8 +3503,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-13-30-tiffanyshah-part-1-ibm-z-security-transformation",
@@ -3384,7 +3520,7 @@
       "description": "As AI and frontier models accelerate the speed, scale, and sophistication of cyber threats, organizations can no longer rely on isolated controls or human speed response. This Part 1 IBM ZDC session explores IBM Z's security transformation strategy across the entire hardware and software stack, delivering continuous protection throughout the application, data, and platform lifecycle. Attendees will gain insight into a full stack, NIST aligned approach that integrates security, compliance, cyber resilience, and AI-driven automation to identify, protect, detect, respond, and recover at system speed.",
       "speakers": "Bryan ChildsRobert Enochs",
       "room": "Tiffany/Shah",
-      "roomSetup": "Podium, classroom 75",
+      "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3394,12 +3530,12 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 75",
+        "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3420,8 +3556,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-14-30-belle-epoque-ballroom-ibm-research",
@@ -3472,8 +3610,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-15-30-ballroom-foyer-break",
@@ -3518,8 +3658,10 @@
         "easel": false,
         "flipChart": false,
         "roomSetup": null,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-16-00-belle-epoque-ballroom-expedite-problem-diagnosis-in-z-operatio",
@@ -3543,7 +3685,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
@@ -3570,8 +3712,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-16-00-tiffanyshah-out-of-the-box-ai",
@@ -3582,112 +3726,10 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Out-of-the-box-AI",
-      "description": "AI that helps configure an IBM Z box upon delivery. \nWhat does out-of-the-box AI mean to you? âLike a power button - you donât ask why it exists.â That insight was powerful and we took it seriously.",
+      "description": "AI that helps configure an IBM Z box upon delivery. \nWhat does out-of-the-box AI mean to you? Ã¢ÂÂLike a power button - you donÃ¢ÂÂt ask why it exists.Ã¢ÂÂ That insight was powerful and we took it seriously.",
       "speakers": "Stefanie Lauria",
       "room": "Tiffany/Shah",
-      "roomSetup": "Podium, classroom 75",
-      "projection": "Presenter",
-      "microphones": "4 wireless mics plus 2 handheld mics",
-      "podium": true,
-      "timer": null,
-      "monitor": "venue provided screen; 1 monitor for speaker",
-      "specialReqs": null,
-      "files": [],
-      "avNote": null,
-      "operatorNote": null,
-      "showInDashboard": false,
-      "av": {
-        "presentationSource": null,
-        "podium": true,
-        "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 75",
-        "wirelessHandheldMics": 2,
-        "wirelessLavalierMics": 0,
-        "catchBoxMics": 0,
-        "panelMics": 0,
-        "headsetMics": 0,
-        "tableMics": 0,
-        "lavalierHeadsetMics": 0,
-        "legacyMicsNote": "4 wireless mics plus 2 handheld mics",
-        "presentationRequired": true,
-        "clicker": false,
-        "timerMins": 0,
-        "audioPlayback": false,
-        "xlrAudioFeed": false,
-        "projector": false,
-        "videoPlayback": false,
-        "panelChairs": 0,
-        "sideTables": 0,
-        "highTopTables": 0,
-        "easel": false,
-        "flipChart": false,
-        "specialRequirements": []
-      }
-    },
-    {
-      "id": "wednesday-16-00-teun-advancing-agentic-ai-governance-with-sec",
-      "day": "Wednesday",
-      "date": "2026-10-21",
-      "startTime": "16:00",
-      "endTime": "16:45",
-      "sessionType": "Solution Review",
-      "track": "Data & AI",
-      "title": "Advancing Agentic AI Governance with Security, Traceability, and Transparency",
-      "description": "In this playback, weâll present more insight on how governance - spanning transparency, traceability, accountability, and security - can be embedded into real-world Agentic AI systems.",
-      "speakers": "Madhu B A, Elpida Tzortzatos",
-      "room": "Teun",
-      "roomSetup": "Podium, classroom 80",
-      "projection": "Presenter",
-      "microphones": "4 wireless mics plus 2 handheld mics",
-      "podium": true,
-      "timer": null,
-      "monitor": "venue provided screen; 1 monitor for speaker",
-      "specialReqs": null,
-      "files": [],
-      "avNote": null,
-      "operatorNote": null,
-      "showInDashboard": false,
-      "av": {
-        "presentationSource": null,
-        "podium": true,
-        "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 80",
-        "wirelessHandheldMics": 2,
-        "wirelessLavalierMics": 0,
-        "catchBoxMics": 0,
-        "panelMics": 0,
-        "headsetMics": 0,
-        "tableMics": 0,
-        "lavalierHeadsetMics": 0,
-        "legacyMicsNote": "4 wireless mics plus 2 handheld mics",
-        "presentationRequired": true,
-        "clicker": false,
-        "timerMins": 0,
-        "audioPlayback": false,
-        "xlrAudioFeed": false,
-        "projector": false,
-        "videoPlayback": false,
-        "panelChairs": 0,
-        "sideTables": 0,
-        "highTopTables": 0,
-        "easel": false,
-        "flipChart": false,
-        "specialRequirements": []
-      }
-    },
-    {
-      "id": "wednesday-16-00-sancy-agentic-security",
-      "day": "Wednesday",
-      "date": "2026-10-21",
-      "startTime": "16:00",
-      "endTime": "16:45",
-      "sessionType": "Solution Review",
-      "track": "Security",
-      "title": "Agentic Security",
-      "description": "Execution-capable AI agents introduce new z/OS privilege-management challenges because they can submit jobs, invoke APIs, modify resources, and delegate work. Traditional Identity and Access Management (IAM) is not enough; each action must be governed across its lifecycle and tied to identity, task intent, RACF enforcement, and audit reconstruction.\nWe invite you to help shape what comes next as we design AI IAM mechanisms that enable safe and secure development, deployment and operation of execution-capable AI agents on z/OS.",
-      "speakers": "Pradeep Parameshwaran",
-      "room": "Sancy",
-      "roomSetup": "Podium, classroom 44",
+      "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3702,7 +3744,7 @@
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 44",
+        "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3723,8 +3765,116 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
+    },
+    {
+      "id": "wednesday-16-00-teun-advancing-agentic-ai-governance-with-sec",
+      "day": "Wednesday",
+      "date": "2026-10-21",
+      "startTime": "16:00",
+      "endTime": "16:45",
+      "sessionType": "Solution Review",
+      "track": "Data & AI",
+      "title": "Advancing Agentic AI Governance with Security, Traceability, and Transparency",
+      "description": "In this playback, weÃ¢ÂÂll present more insight on how governance - spanning transparency, traceability, accountability, and security - can be embedded into real-world Agentic AI systems.",
+      "speakers": "Madhu B A, Elpida Tzortzatos",
+      "room": "Teun",
+      "roomSetup": "Classroom-style seating for 80 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
+      "projection": "Presenter",
+      "microphones": "4 wireless mics plus 2 handheld mics",
+      "podium": true,
+      "timer": null,
+      "monitor": "venue provided screen; 1 monitor for speaker",
+      "specialReqs": null,
+      "files": [],
+      "avNote": null,
+      "operatorNote": null,
+      "showInDashboard": true,
+      "av": {
+        "presentationSource": null,
+        "podium": true,
+        "confidenceMonitors": 0,
+        "roomSetup": "Classroom-style seating for 80 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
+        "wirelessHandheldMics": 2,
+        "wirelessLavalierMics": 0,
+        "catchBoxMics": 0,
+        "panelMics": 0,
+        "headsetMics": 0,
+        "tableMics": 0,
+        "lavalierHeadsetMics": 0,
+        "legacyMicsNote": "4 wireless mics plus 2 handheld mics",
+        "presentationRequired": true,
+        "clicker": false,
+        "timerMins": 0,
+        "audioPlayback": false,
+        "xlrAudioFeed": false,
+        "projector": false,
+        "videoPlayback": false,
+        "panelChairs": 0,
+        "sideTables": 0,
+        "highTopTables": 0,
+        "easel": false,
+        "flipChart": false,
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
+    },
+    {
+      "id": "wednesday-16-00-sancy-agentic-security",
+      "day": "Wednesday",
+      "date": "2026-10-21",
+      "startTime": "16:00",
+      "endTime": "16:45",
+      "sessionType": "Solution Review",
+      "track": "Security",
+      "title": "Agentic Security",
+      "description": "Execution-capable AI agents introduce new z/OS privilege-management challenges because they can submit jobs, invoke APIs, modify resources, and delegate work. Traditional Identity and Access Management (IAM) is not enough; each action must be governed across its lifecycle and tied to identity, task intent, RACF enforcement, and audit reconstruction.\nWe invite you to help shape what comes next as we design AI IAM mechanisms that enable safe and secure development, deployment and operation of execution-capable AI agents on z/OS.",
+      "speakers": "Pradeep Parameshwaran",
+      "room": "Sancy",
+      "roomSetup": "Classroom-style seating for 44 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
+      "projection": "Presenter",
+      "microphones": "4 wireless mics plus 2 handheld mics",
+      "podium": true,
+      "timer": null,
+      "monitor": "venue provided screen; 1 monitor for speaker",
+      "specialReqs": null,
+      "files": [],
+      "avNote": null,
+      "operatorNote": null,
+      "showInDashboard": true,
+      "av": {
+        "presentationSource": null,
+        "podium": true,
+        "confidenceMonitors": 0,
+        "roomSetup": "Classroom-style seating for 44 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
+        "wirelessHandheldMics": 2,
+        "wirelessLavalierMics": 0,
+        "catchBoxMics": 0,
+        "panelMics": 0,
+        "headsetMics": 0,
+        "tableMics": 0,
+        "lavalierHeadsetMics": 0,
+        "legacyMicsNote": "4 wireless mics plus 2 handheld mics",
+        "presentationRequired": true,
+        "clicker": false,
+        "timerMins": 0,
+        "audioPlayback": false,
+        "xlrAudioFeed": false,
+        "projector": false,
+        "videoPlayback": false,
+        "panelChairs": 0,
+        "sideTables": 0,
+        "highTopTables": 0,
+        "easel": false,
+        "flipChart": false,
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-17-00-teun-bringing-agentic-workflows-to-cicd-with-",
@@ -3735,10 +3885,10 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Bringing agentic workflows to CI/CD with IBM Pipeline Automation for Z to accelerate how apps are built, validated, and deployed",
-      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflowsâ.\nIdentify adoption barriers and gaps in enabling end-to-end pipeline integrationâ.\nPrioritize enhancements to improve usability, interoperability, and release coordinationâ.",
+      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflowsÃ¢ÂÂ.\nIdentify adoption barriers and gaps in enabling end-to-end pipeline integrationÃ¢ÂÂ.\nPrioritize enhancements to improve usability, interoperability, and release coordinationÃ¢ÂÂ.",
       "speakers": "Rich Larin",
       "room": "Teun",
-      "roomSetup": "Podium, classroom 80",
+      "roomSetup": "Classroom-style seating for 80 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3748,12 +3898,12 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 80",
+        "roomSetup": "Classroom-style seating for 80 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3774,8 +3924,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-17-00-belle-epoque-ballroom-agentic-management-of-infrastructure-res",
@@ -3786,7 +3938,7 @@
       "sessionType": "Solution Review",
       "track": "Infrastructure",
       "title": "Agentic management of infrastructure resources in a sovereign compute environment",
-      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure âas-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
+      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure Ã¢ÂÂas-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
       "speakers": "Christopher Byrnes",
       "room": "Belle Epoque Ballroom",
       "roomSetup": "Stage with podium, 4 soft chairs and side tables, schoolroom 240",
@@ -3799,7 +3951,7 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
@@ -3826,8 +3978,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-17-00-tiffanyshah-unlocking-ibm-z-data-for-ai-and-real-tim",
@@ -3838,10 +3992,10 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Unlocking IBM Z Data for AI and Real-Time Decisioning",
-      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includesâ¢ Bring AI into the coreâ¢ Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focusesâ¢ How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.â¢ How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
+      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includesÃ¢ÂÂ¢ Bring AI into the coreÃ¢ÂÂ¢ Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focusesÃ¢ÂÂ¢ How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.Ã¢ÂÂ¢ How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
       "speakers": "Daniel Martin",
       "room": "Tiffany/Shah",
-      "roomSetup": "Podium, classroom 75",
+      "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3851,12 +4005,12 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 75",
+        "roomSetup": "Classroom-style seating for 75 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3877,8 +4031,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-17-00-sancy-part-2-new-product-innovation-in-ibm-z-s",
@@ -3889,10 +4045,10 @@
       "sessionType": "Solution Review",
       "track": "Security",
       "title": "Part 2: New product innovation in IBM Z Security SW: A Briefing on portfolio simplification with comprehensive resiliency for the AI age",
-      "description": "Building on the strategic vision from Part 1, this deep dive session explores how IBM Z Security software transforms cyber resilience into measurable outcomes. Through IBM zSecure Secret Manager, zSecure Detection, zSecure Compliance, and the newly introduced zSecure Access, attendees will learn how to automate certificate lifecycle management, detect anomalous behavior at machine speed, maintain continuous compliance, and enforce least privilege access across z/OS environments. Together, these capabilities help reduce operational risk, accelerate threat response, simplify audit readiness, and strengthen resilience against AI driven attacks. Interactive discussions and readiness focused assessments will help participants benchmark their organizationâs security maturity and cyber resilience posture.",
+      "description": "Building on the strategic vision from Part 1, this deep dive session explores how IBM Z Security software transforms cyber resilience into measurable outcomes. Through IBM zSecure Secret Manager, zSecure Detection, zSecure Compliance, and the newly introduced zSecure Access, attendees will learn how to automate certificate lifecycle management, detect anomalous behavior at machine speed, maintain continuous compliance, and enforce least privilege access across z/OS environments. Together, these capabilities help reduce operational risk, accelerate threat response, simplify audit readiness, and strengthen resilience against AI driven attacks. Interactive discussions and readiness focused assessments will help participants benchmark their organizationÃ¢ÂÂs security maturity and cyber resilience posture.",
       "speakers": "Madhu B A",
       "room": "Sancy",
-      "roomSetup": "Podium, classroom 44",
+      "roomSetup": "Classroom-style seating for 44 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
       "projection": "Presenter",
       "microphones": "4 wireless mics plus 2 handheld mics",
       "podium": true,
@@ -3902,12 +4058,12 @@
       "files": [],
       "avNote": null,
       "operatorNote": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationSource": null,
         "podium": true,
         "confidenceMonitors": 0,
-        "roomSetup": "Podium, classroom 44",
+        "roomSetup": "Classroom-style seating for 44 attendees \nPodium at the front of the room \nPower and connectivity for the presenter laptop and ensure it is connected to the room projection system",
         "wirelessHandheldMics": 2,
         "wirelessLavalierMics": 0,
         "catchBoxMics": 0,
@@ -3928,8 +4084,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "wednesday-18-00-ballroom-foyer-reception",
@@ -3974,8 +4132,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-07-30-restaurant-breakfast",
@@ -4020,8 +4180,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-08-30-belle-epoque-ballroom-how-bob-helped-ibm-cio-modernize-mainfra",
@@ -4072,8 +4234,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-09-00-belle-epoque-ballroom-collaborative-session-playbacks",
@@ -4123,8 +4287,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-10-00-ballroom-foyer-break",
@@ -4169,8 +4335,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-10-30-belle-epoque-ballroom-collaborative-session-playbacks",
@@ -4220,8 +4388,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-11-30-belle-epoque-ballroom-final-wrap-up",
@@ -4272,8 +4442,10 @@
         "highTopTables": 0,
         "easel": false,
         "flipChart": false,
-        "specialRequirements": []
-      }
+        "specialRequirements": [],
+        "stageSetup": null
+      },
+      "stageSetup": null
     },
     {
       "id": "thursday-12-00-lijn-tiffanyshah-lunch",
@@ -4320,8 +4492,10 @@
         "sideTables": 0,
         "highTopTables": 0,
         "easel": false,
-        "flipChart": false
-      }
+        "flipChart": false,
+        "stageSetup": null
+      },
+      "stageSetup": null
     }
   ]
 }
