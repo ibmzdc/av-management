@@ -740,7 +740,7 @@ function buildAVChips(s) {
     || av.audioPlayback || av.xlrAudioFeed
     || av.projector || av.videoPlayback
     || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
-    || av.roomSetup || s.speakers
+    || av.roomSetup || av.stageSetup || s.speakers
     || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
@@ -808,7 +808,8 @@ function buildAVChips(s) {
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
       <div class="av-group-body">
-        ${txt("Room Setup", av.roomSetup || s.roomSetup, true)}
+        ${txt("Room Setup",   av.roomSetup  || s.roomSetup,  true)}
+        ${txt("Stage setup",  av.stageSetup || s.stageSetup, true)}
       </div>
     </div>
 

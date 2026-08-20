@@ -509,6 +509,10 @@ a{color:var(--accent);text-decoration:none}
           <label>Room Setup</label>
           <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
         </div>
+        <div style="grid-column:1/-1">
+          <label>Stage setup</label>
+          <textarea id="ns-stagesetup" rows="2" placeholder="Stage setup details…"></textarea>
+        </div>
       </div>
     </div>
 
@@ -1181,6 +1185,10 @@ function renderAVReqs(s){
               <span class="k">Room Setup</span>
               <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"roomSetup", s.roomSetup||""))}</textarea>
             </div>
+            <div class="av-req av-req-full">
+              <span class="k">Stage setup</span>
+              <textarea id="avf-stageSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"stageSetup",""))}</textarea>
+            </div>
           </div>
         </div>
 
@@ -1239,7 +1247,8 @@ function collectAVReqs(sessionId){
   s.speakers = speakerNames.join(", ") || null;
 
   // Room
-  if(g("roomSetup"))            s.av.roomSetup = s.roomSetup = gv("roomSetup");
+  if(g("roomSetup"))            s.av.roomSetup  = s.roomSetup  = gv("roomSetup");
+  if(g("stageSetup"))           s.av.stageSetup = s.stageSetup = gv("stageSetup");
 
   // Special Requirements — stored as array
   if(g("specialRequirements")){
@@ -1336,6 +1345,7 @@ function openAddSession(day){
   document.getElementById("ns-flipChart").checked          = false;
   // Room
   document.getElementById("ns-roomsetup").value            = "";
+  document.getElementById("ns-stagesetup").value           = "";
   // Special reqs
   document.getElementById("ns-specialRequirements").value  = "";
 
@@ -1367,7 +1377,8 @@ function confirmAddSession(){
   const nsInt  = (id) => parseInt(document.getElementById(id).value) || 0;
   const nsBool = (id) => document.getElementById(id).checked;
   const nsStr  = (id) => document.getElementById(id).value.trim() || null;
-  const roomSetupVal = nsStr("ns-roomsetup");
+  const roomSetupVal  = nsStr("ns-roomsetup");
+  const stageSetupVal = nsStr("ns-stagesetup");
   const specRaw = document.getElementById("ns-specialRequirements").value.trim();
   const specArr = specRaw ? specRaw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
   const podiumVal = nsBool("ns-podium");
@@ -1392,6 +1403,7 @@ function confirmAddSession(){
     easel:                 nsBool("ns-easel"),
     flipChart:             nsBool("ns-flipChart"),
     roomSetup:             roomSetupVal,
+    stageSetup:            stageSetupVal,
     specialRequirements:   specArr
   };
 
@@ -1408,6 +1420,7 @@ function confirmAddSession(){
     speakers:     nsStr("ns-speakers"),
     room,
     roomSetup:    roomSetupVal,
+    stageSetup:   stageSetupVal,
     podium:       podiumVal,
     specialReqs:  specArr.join("; ") || null,
     av,
