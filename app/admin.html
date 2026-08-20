@@ -877,83 +877,73 @@ function renderAVReqs(s){
   const presSource = avStr(s,"presentationSource","");
   const presRequired = avBool(s,"presentationRequired", !!presSource);
 
-  return `
-  <div class="av-groups">
+  // ── Speakers group ────────────────────────────────────────────────────────
+  const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()).filter(Boolean) : [""];
+  const speakerRows = names.map((name,i) =>
+    '<div class="av-req speaker-row" id="avf-speaker-row-' + id + '-' + i + '">' +
+      '<input type="text" class="avf-speaker-input" data-session="' + id + '" value="' + esc(name) + '" placeholder="First Last" oninput="markDirty()">' +
+      '<button class="btn-remove" onclick="removeSpeaker(\'' + id + '\',' + i + ')" title="Remove">\u00d7</button>' +
+    '</div>'
+  ).join("");
 
-        <!-- ① Speakers -->
-        <div class="av-group">
-          <div class="av-group-hdr" style="justify-content:space-between">
-            <span><span class="g-icon">👤</span> Speakers</span>
-            <button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addSpeaker('${id}')">+ Add Speaker</button>
-          </div>
-          <div class="av-group-body av-special" id="avf-speakers-list-${id}">
-            ${(()=>{
-              const names = s.speakers ? s.speakers.split(",").map(n=>n.trim()).filter(Boolean) : [""];
-              return names.map((name,i)=>`
-            <div class="av-req speaker-row" id="avf-speaker-row-${id}-${i}">
-              <input type="text" class="avf-speaker-input" data-session="${id}" value="${esc(name)}" placeholder="First Last" oninput="markDirty()">
-              <button class="btn-remove" onclick="removeSpeaker('${id}',${i})" title="Remove">×</button>
-            </div>`).join("");
-            })()}
-          </div>
-        </div>
+  let html = '<div class="av-groups">'
+    + '<div class="av-group">'
+    + '<div class="av-group-hdr" style="justify-content:space-between">'
+    + '<span><span class="g-icon">👤</span> Speakers</span>'
+    + '<button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addSpeaker(\'' + id + '\')">+ Add Speaker</button>'
+    + '</div>'
+    + '<div class="av-group-body av-special" id="avf-speakers-list-' + id + '">'
+    + speakerRows
+    + '</div></div>';
 
-        ${AV_GROUPS.map(grp => {
-          const fields = AV_CONFIG.filter(f => f.group === grp.key);
-          return `
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
-          <div class="av-group-body">
-            ${fields.map(f => {
-              const elId = \`avf-\${f.id}-\${id}\`;
-              if(f.type === "bool"){
-                const checked = f.id === "presentationRequired" ? presRequired : avBool(s, f.id);
-                // podium: also check legacy s.podium
-                const chkVal = f.id === "podium" ? avBool(s, "podium", s.podium||false) : checked;
-                return \`<div class="av-req"><span class="k">\${f.label}</span>
-                  <div class="av-req-check">
-                    \${chk(elId, chkVal)}
-                    <label for="\${elId}">Yes</label>
-                  </div></div>\`;
-              }
-              if(f.type === "num"){
-                const val = f.id === "lavalierHeadsetMics"
-                  ? avNum(s, "lavalierHeadsetMics", (avNum(s,"wirelessLavalierMics")||0)+(avNum(s,"headsetMics")||0))
-                  : avNum(s, f.id);
-                return \`<div class="av-req"><span class="k">\${f.label}</span>\${numInput(elId, val)}</div>\`;
-              }
-              if(f.type === "select"){
-                const cur = avStr(s, f.id, "");
-                return \`<div class="av-req"><span class="k">\${f.label}</span>
-                  <select id="\${elId}" onchange="markDirty()">
-                    \${f.options.map(o => selOpt(o.value, cur, o.label)).join("")}
-                  </select></div>\`;
-              }
-              if(f.type === "text"){
-                const val = f.id === "roomSetup"
-                  ? esc(avStr(s, "roomSetup", s.roomSetup||""))
-                  : esc(avStr(s, f.id, ""));
-                return \`<div class="av-req\${f.full?" av-req-full":""}"><span class="k">\${f.label}</span>
-                  <textarea id="\${elId}" oninput="markDirty()" rows="\${f.rows||2}"\${f.placeholder?\` placeholder="\${f.placeholder}"\`:""}>\${val}</textarea></div>\`;
-              }
-              return "";
-            }).join("")}
-          </div>
-        </div>\`;
-        }).join("")}
+  // ── AV groups from config ─────────────────────────────────────────────────
+  for(const grp of AV_GROUPS){
+    const fields = AV_CONFIG.filter(f => f.group === grp.key);
+    let fieldsHTML = "";
+    for(const f of fields){
+      const elId = "avf-" + f.id + "-" + id;
+      if(f.type === "bool"){
+        const checked = f.id === "presentationRequired" ? presRequired
+                      : f.id === "podium" ? avBool(s,"podium", s.podium||false)
+                      : avBool(s, f.id);
+        fieldsHTML += '<div class="av-req"><span class="k">' + f.label + '</span>'
+          + '<div class="av-req-check">' + chk(elId, checked)
+          + '<label for="' + elId + '">Yes</label></div></div>';
+      } else if(f.type === "num"){
+        const val = f.id === "lavalierHeadsetMics"
+          ? avNum(s,"lavalierHeadsetMics",(avNum(s,"wirelessLavalierMics")||0)+(avNum(s,"headsetMics")||0))
+          : avNum(s, f.id);
+        fieldsHTML += '<div class="av-req"><span class="k">' + f.label + '</span>' + numInput(elId, val) + '</div>';
+      } else if(f.type === "select"){
+        const cur = avStr(s, f.id, "");
+        const opts = f.options.map(o => selOpt(o.value, cur, o.label)).join("");
+        fieldsHTML += '<div class="av-req"><span class="k">' + f.label + '</span>'
+          + '<select id="' + elId + '" onchange="markDirty()">' + opts + '</select></div>';
+      } else if(f.type === "text"){
+        const val = f.id === "roomSetup" ? esc(avStr(s,"roomSetup",s.roomSetup||"")) : esc(avStr(s,f.id,""));
+        const cls = f.full ? ' av-req-full' : '';
+        const ph  = f.placeholder ? ' placeholder="' + f.placeholder + '"' : '';
+        fieldsHTML += '<div class="av-req' + cls + '"><span class="k">' + f.label + '</span>'
+          + '<textarea id="' + elId + '" oninput="markDirty()" rows="' + (f.rows||2) + '"' + ph + '>' + val + '</textarea></div>';
+      }
+    }
+    html += '<div class="av-group">'
+      + '<div class="av-group-hdr"><span class="g-icon">' + grp.icon + '</span> ' + grp.label + '</div>'
+      + '<div class="av-group-body">' + fieldsHTML + '</div>'
+      + '</div>';
+  }
 
-        <!-- Special Requirements -->
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
-          <div class="av-group-body av-special">
-            <div class="av-req av-req-full">
-              <span class="k">Notes (one per line)</span>
-              <textarea id="avf-specialRequirements-${id}" oninput="markDirty()" rows="3" placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician">${esc(Array.isArray(av.specialRequirements) ? av.specialRequirements.join("\n") : (av.specialRequirements||s.specialReqs||""))}</textarea>
-            </div>
-          </div>
-        </div>
+  // ── Special Requirements ──────────────────────────────────────────────────
+  const specVal = esc(Array.isArray(av.specialRequirements) ? av.specialRequirements.join("\n") : (av.specialRequirements||s.specialReqs||""));
+  html += '<div class="av-group">'
+    + '<div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>'
+    + '<div class="av-group-body av-special"><div class="av-req av-req-full"><span class="k">Notes (one per line)</span>'
+    + '<textarea id="avf-specialRequirements-' + id + '" oninput="markDirty()" rows="3"'
+    + ' placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician">' + specVal + '</textarea>'
+    + '</div></div></div>';
 
-  </div>`;
+  html += '</div>';
+  return html;
 }
 
 function collectAVReqs(sessionId){
