@@ -282,6 +282,23 @@ a{color:var(--accent);text-decoration:none}
   .body-two-col{grid-template-columns:1fr}
 }
 
+/* ── Room Setup Picker ───────────────────────────────────────────────── */
+.rs-picker{grid-column:1/-1;display:flex;flex-direction:column;gap:8px}
+.rs-picker-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:2px}
+.rs-preset-row{display:flex;gap:8px;flex-wrap:wrap}
+.rs-preset{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.rs-preset:hover{background:#f0f4ff;border-color:#93c5fd;color:var(--blue)}
+.rs-preset.active{background:#dbeafe;border-color:#3b82d4;color:#1d4ed8}
+.rs-preset input[type=checkbox]{width:13px;height:13px;accent-color:var(--accent);pointer-events:none;flex-shrink:0}
+.rs-options{display:flex;flex-direction:column;gap:4px;padding:8px 10px;background:#f9fafb;border:1px solid var(--border);border-radius:5px}
+.rs-option{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);cursor:pointer;padding:2px 0}
+.rs-option input[type=checkbox]{width:13px;height:13px;accent-color:var(--accent);flex-shrink:0;cursor:pointer}
+.rs-option.rs-capacity{align-items:center;gap:6px}
+.rs-capacity-input{width:64px;padding:3px 7px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit;text-align:center;transition:border-color .15s}
+.rs-capacity-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
+.rs-textarea{width:100%;padding:6px 9px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit;resize:vertical;min-height:44px;margin-top:4px;transition:border-color .15s}
+.rs-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,212,.1)}
+
 /* ── Change 4: Toast ──────────────────────────────────────────────────── */
 #toast{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;align-items:center;gap:10px;background:#1f2328;color:#fff;padding:10px 16px;border-radius:7px;font-size:12.5px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
 #toast.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -465,8 +482,50 @@ const AV_CONFIG = [
   { group:"staging",      label:"High-top Tables",       id:"highTopTables",        modalId:"ns-highTopTables",      type:"num"  },
   { group:"staging",      label:"Easel",                 id:"easel",                modalId:"ns-easel",              type:"bool" },
   { group:"staging",      label:"Flip Chart",            id:"flipChart",            modalId:"ns-flipChart",          type:"bool" },
-  { group:"room",         label:"Room Setup",            id:"roomSetup",            modalId:"ns-roomsetup",          type:"text", full:true, rows:2, placeholder:"Stage with podium, schoolroom 240…" },
+  { group:"room",         label:"Room Setup",            id:"roomSetup",            modalId:"ns-roomsetup",          type:"room-picker" },
   { group:"room",         label:"Stage Setup",           id:"stageSetup",           modalId:"ns-stagesetup",         type:"text", full:true, rows:2, placeholder:"Stage setup details…" },
+];
+
+// ── Room Setup Presets ────────────────────────────────────────────────────────
+// Each preset has: key, label, defaultCapacity, options[]
+// options: { id, label, isCapacity (bool) }
+const ROOM_SETUP_PRESETS = [
+  {
+    key: "ballroom",
+    label: "Main Tent / Ballroom",
+    defaultCapacity: 200,
+    options: [
+      { id: "schoolroom",   label: "Schoolroom style seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "aisles",       label: "Center and side aisles for attendee access" },
+      { id: "water",        label: "Water stations" },
+    ]
+  },
+  {
+    key: "breakout",
+    label: "Breakout Room",
+    defaultCapacity: 80,
+    options: [
+      { id: "schoolroom",   label: "Schoolroom style seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "podium",       label: "Table / Podium for facilitator laptop and presentation materials" },
+      { id: "hdmi",         label: "Power and HDMI connection to projector" },
+    ]
+  },
+  {
+    key: "collab",
+    label: "Collab Room",
+    defaultCapacity: 30,
+    options: [
+      { id: "seating",      label: "Collaborative circle or U-shape seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "podium",       label: "Table / Podium for facilitator laptop and presentation materials" },
+      { id: "hdmi",         label: "Power and HDMI connection to projector" },
+      { id: "supplies",     label: "Supply table for workshop materials (sticky notes, markers, and handouts)" },
+      { id: "waste",        label: "Waste Basket" },
+      { id: "candy",        label: "Serving bowl for candy (to be provided by the event team)" },
+    ]
+  },
 ];
 </script>
 <script>
@@ -899,6 +958,132 @@ function chk(id, checked){ return `<input type="checkbox" id="${id}" ${checked?"
 function numInput(id, val, placeholder=""){ return `<input type="number" min="0" id="${id}" value="${val||0}" placeholder="${placeholder}" oninput="markDirty()" style="width:72px">`; }
 function selOpt(val, cur, label){ return `<option value="${val}" ${cur===val?"selected":""}>${label}</option>`; }
 
+// ── Room Setup Picker ─────────────────────────────────────────────────────────
+// Renders the structured picker. ns = element-id namespace prefix (e.g. "rs" for modal, "avf-rs-{sid}" for detail panel).
+// existing = saved roomSetup string (may be null/empty).
+function renderRoomSetupPicker(ns, existing) {
+  // Parse existing value back into state: "Ballroom|schoolroom,capacity:200,aisles|extra notes"
+  // Format on save: "<presetKey>|<opt1>,<opt2>,capacity:<n>|<freetext>"
+  let activePreset = "", activeOpts = {}, capacityVal = {}, freeText = "";
+  if(existing) {
+    const parts = existing.split("|");
+    activePreset = parts[0] || "";
+    if(parts[1]) {
+      parts[1].split(",").forEach(o => {
+        const cap = o.match(/^capacity:(\d+)$/);
+        if(cap) { activeOpts["capacity"] = true; capacityVal[activePreset] = cap[1]; }
+        else { activeOpts[o] = true; }
+      });
+    }
+    freeText = parts[2] || "";
+  }
+
+  let html = '<div class="rs-picker">';
+
+  // Preset selector row
+  html += '<div class="rs-preset-row">';
+  for(const p of ROOM_SETUP_PRESETS) {
+    const isActive = activePreset === p.key;
+    html += '<label class="rs-preset' + (isActive ? ' active' : '') + '" onclick="rsSelectPreset(\'' + ns + '\',\'' + p.key + '\')">'
+      + '<input type="checkbox"' + (isActive ? ' checked' : '') + ' id="' + ns + '-preset-' + p.key + '" style="pointer-events:none">'
+      + p.label + '</label>';
+  }
+  html += '</div>';
+
+  // Options panel (shown for active preset)
+  for(const p of ROOM_SETUP_PRESETS) {
+    const isActive = activePreset === p.key;
+    const capDefault = (capacityVal[p.key]) ? capacityVal[p.key] : p.defaultCapacity;
+    html += '<div class="rs-options" id="' + ns + '-opts-' + p.key + '" style="display:' + (isActive ? 'flex' : 'none') + '">';
+    for(const o of p.options) {
+      if(o.isCapacity) {
+        const checked = activeOpts["capacity"] ? ' checked' : ' checked'; // always pre-checked per spec
+        html += '<label class="rs-option rs-capacity">'
+          + '<input type="checkbox" id="' + ns + '-opt-' + p.key + '-capacity"' + checked + ' onchange="markDirty()">'
+          + 'Capacity: <input type="number" class="rs-capacity-input" id="' + ns + '-cap-' + p.key + '" value="' + capDefault + '" min="1" oninput="markDirty()">'
+          + '</label>';
+      } else {
+        const checked = isActive ? ' checked' : ''; // pre-check all on preset select
+        html += '<label class="rs-option">'
+          + '<input type="checkbox" id="' + ns + '-opt-' + p.key + '-' + o.id + '"' + (activeOpts[o.id] ? ' checked' : (isActive ? ' checked' : '')) + ' onchange="markDirty()">'
+          + o.label + '</label>';
+      }
+    }
+    html += '</div>';
+  }
+
+  // Free-text notes
+  html += '<textarea class="rs-textarea" id="' + ns + '-notes" rows="2" placeholder="Additional room notes…" oninput="markDirty()">' + esc(freeText) + '</textarea>';
+  html += '</div>';
+  return html;
+}
+
+// Called when a preset button is clicked — toggles it and shows/hides the options panel
+function rsSelectPreset(ns, key) {
+  const allActive = document.querySelectorAll('#' + ns + ' .rs-preset.active, [id^="' + ns + '-preset"]');
+  // Determine if already active
+  const presetBtn = document.querySelector('.rs-preset input#' + ns + '-preset-' + key);
+  const wasActive = presetBtn && presetBtn.closest('.rs-preset').classList.contains('active');
+
+  // Deactivate all presets
+  for(const p of ROOM_SETUP_PRESETS) {
+    const btn = document.querySelector('.rs-preset:has(#' + ns + '-preset-' + p.key + ')');
+    if(btn) { btn.classList.remove('active'); btn.querySelector('input').checked = false; }
+    const panel = document.getElementById(ns + '-opts-' + p.key);
+    if(panel) panel.style.display = 'none';
+  }
+
+  if(!wasActive) {
+    // Activate selected
+    const btn = document.querySelector('.rs-preset:has(#' + ns + '-preset-' + key + ')');
+    if(btn) { btn.classList.add('active'); btn.querySelector('input').checked = true; }
+    const panel = document.getElementById(ns + '-opts-' + key);
+    if(panel) { panel.style.display = 'flex'; }
+    // Pre-check all options for this preset
+    const preset = ROOM_SETUP_PRESETS.find(p => p.key === key);
+    if(preset) {
+      for(const o of preset.options) {
+        const el = document.getElementById(ns + '-opt-' + key + '-' + o.id);
+        if(el) el.checked = true;
+      }
+      // Set default capacity
+      const capEl = document.getElementById(ns + '-cap-' + key);
+      if(capEl && !capEl.value) capEl.value = preset.defaultCapacity;
+    }
+  }
+  markDirty();
+}
+
+// Reads the picker DOM and returns a serialised string: "presetKey|opt1,opt2,capacity:N|notes"
+// Returns null if nothing selected.
+function roomSetupValue(ns) {
+  let activePreset = "";
+  for(const p of ROOM_SETUP_PRESETS) {
+    const btn = document.querySelector('.rs-preset:has(#' + ns + '-preset-' + p.key + ')');
+    if(btn && btn.classList.contains('active')) { activePreset = p.key; break; }
+  }
+  const notes = (document.getElementById(ns + '-notes') || {}).value || "";
+  if(!activePreset && !notes.trim()) return null;
+
+  let opts = [];
+  if(activePreset) {
+    const preset = ROOM_SETUP_PRESETS.find(p => p.key === activePreset);
+    if(preset) {
+      for(const o of preset.options) {
+        if(o.isCapacity) {
+          const cb = document.getElementById(ns + '-opt-' + activePreset + '-capacity');
+          const cap = document.getElementById(ns + '-cap-' + activePreset);
+          if(cb && cb.checked && cap) opts.push('capacity:' + (cap.value || preset.defaultCapacity));
+        } else {
+          const cb = document.getElementById(ns + '-opt-' + activePreset + '-' + o.id);
+          if(cb && cb.checked) opts.push(o.id);
+        }
+      }
+    }
+  }
+  return [activePreset, opts.join(","), notes.trim()].join("|");
+}
+
 function renderAVReqs(s){
   const id = s.id;
   // Migration is guaranteed by migrateAll() at load time.
@@ -951,8 +1136,15 @@ function renderAVReqs(s){
         const opts = f.options.map(o => selOpt(o.value, cur, o.label)).join("");
         fieldsHTML += '<div class="av-req"><span class="k">' + f.label + '</span>'
           + '<select id="' + elId + '" onchange="markDirty()">' + opts + '</select></div>';
+      } else if(f.type === "room-picker"){
+        const existing = avStr(s,"roomSetup",s.roomSetup||"");
+        const ns = 'avf-rs-' + id;
+        fieldsHTML += '<div class="av-req av-req-full" id="' + ns + '-wrap">'
+          + '<span class="k">' + f.label + '</span>'
+          + renderRoomSetupPicker(ns, existing)
+          + '</div>';
       } else if(f.type === "text"){
-        const val = f.id === "roomSetup" ? esc(avStr(s,"roomSetup",s.roomSetup||"")) : esc(avStr(s,f.id,""));
+        const val = esc(avStr(s,f.id,""));
         const cls = f.full ? ' av-req-full' : '';
         const ph  = f.placeholder ? ' placeholder="' + f.placeholder + '"' : '';
         fieldsHTML += '<div class="av-req' + cls + '"><span class="k">' + f.label + '</span>'
@@ -996,9 +1188,12 @@ function collectAVReqs(sessionId){
       if(f.id === "podium") s.podium = s.av.podium; // mirror legacy root
     } else if(f.type === "num") {
       s.av[f.id] = gn(f.id);
+    } else if(f.type === "room-picker") {
+      const ns = 'avf-rs-' + sessionId;
+      s.av.roomSetup = roomSetupValue(ns);
+      s.roomSetup    = s.av.roomSetup;
     } else if(f.type === "select" || f.type === "text") {
       s.av[f.id] = gv(f.id);
-      if(f.id === "roomSetup")  s.roomSetup  = s.av.roomSetup;  // mirror legacy root
       if(f.id === "stageSetup") s.stageSetup = s.av.stageSetup; // mirror legacy root
     }
   }
@@ -1096,6 +1291,7 @@ function buildModalAVSections(){
             ${f.options.map(o => `<option value="${o.value}">${o.label}</option>`).join("")}
           </select>
         </div>`;
+      if(f.type === "room-picker") return '<div style="grid-column:1/-1" id="ns-rs-wrap"><label>' + f.label + '</label>' + renderRoomSetupPicker("ns-rs", "") + '</div>';
       if(f.type === "text") return `
         <div style="grid-column:1/-1">
           <label>${f.label}</label>
@@ -1112,10 +1308,8 @@ function buildModalAVSections(){
 }
 
 function openAddSession(day){
-  // Build modal AV sections from config (idempotent — only renders once)
-  if(!document.getElementById(AV_CONFIG[0].modalId)){
-    buildModalAVSections();
-  }
+  // Build modal AV sections from config (always rebuild to reset room picker state)
+  buildModalAVSections();
   // Session details
   document.getElementById("ns-day").value    = day;
   document.getElementById("ns-date").value   = DAY_DATES[day] || "";
@@ -1172,6 +1366,7 @@ function confirmAddSession(){
     else if(f.type === "num")            av[f.id] = nsInt(f.modalId);
     else if(f.type === "select")         av[f.id] = nsStr(f.modalId);
     else if(f.type === "text")           av[f.id] = nsStr(f.modalId);
+    else if(f.type === "room-picker")    av[f.id] = roomSetupValue("ns-rs");
   }
   const specRaw = document.getElementById("ns-specialRequirements").value.trim();
   const specArr = specRaw ? specRaw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
@@ -1189,7 +1384,7 @@ function confirmAddSession(){
     description:  null,
     speakers:     nsStr("ns-speakers"),
     room,
-    roomSetup:    av.roomSetup   || null,
+    roomSetup:    av.roomSetup || null,
     stageSetup:   av.stageSetup  || null,
     podium:       av.podium      || false,
     specialReqs:  specArr.join("; ") || null,
