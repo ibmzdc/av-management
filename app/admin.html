@@ -958,6 +958,9 @@ function renderSession(s){
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-meta">${s.speakers?esc(s.speakers.split(",")[0].trim())+(s.speakers.includes(",")?" et al.":""):""}</div>
+        <div onclick="event.stopPropagation()" style="margin-top:5px">
+          <button class="btn-av-details" onclick="toggleCard('${s.id}')">AV Details <span class="chevron" id="chev-${s.id}">▼</span></button>
+        </div>
       </div>
       <!-- Change 3: room gets its own class for responsive grid placement -->
       <div class="session-col session-col-room">
@@ -972,9 +975,6 @@ function renderSession(s){
       <div class="session-col session-col-status">
         <span class="col-label">File Status</span>
         <div id="pill-${s.id}">${sessionStatusPill(s.files)}</div>
-      </div>
-      <div class="session-col" onclick="event.stopPropagation()" style="display:flex;align-items:center;padding-top:0">
-        <button class="btn-av-details" onclick="toggleCard('${s.id}')">AV Details <span class="chevron" id="chev-${s.id}">▼</span></button>
       </div>
       <div class="dash-toggle" onclick="event.stopPropagation()">
         <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
