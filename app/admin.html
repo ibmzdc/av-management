@@ -367,154 +367,8 @@ a{color:var(--accent);text-decoration:none}
       </div>
     </div>
 
-    <!-- ── 🎞 Presentation ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">🎞</span> Presentation</div>
-      <div class="modal-section-grid">
-        <div>
-          <label>Presentation Required</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-presRequired" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-presRequired" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Source</label>
-          <select id="ns-presentationSource">
-            <option value="">— none —</option>
-            <option value="AV Team">AV Team</option>
-            <option value="AV team - LED">AV Team – LED</option>
-            <option value="Presenter Laptop">Presenter Laptop</option>
-            <option value="LED Wall">LED Wall</option>
-            <option value="Design Fair Station">Design Fair Station</option>
-          </select>
-        </div>
-        <div>
-          <label>Clicker</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-clicker" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-clicker" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Confidence Monitors</label>
-          <input type="number" id="ns-confidenceMonitors" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Timer (min)</label>
-          <input type="number" id="ns-timerMins" min="0" value="0" class="modal-num">
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 🎙 Audio ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">🎙</span> Audio</div>
-      <div class="modal-section-grid">
-        <div>
-          <label>Handheld Mics</label>
-          <input type="number" id="ns-wirelessHandheld" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Lavalier / Headset</label>
-          <input type="number" id="ns-lavalierHeadset" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Catchbox</label>
-          <input type="number" id="ns-catchBoxMics" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Audio Playback</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-audioPlayback" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-audioPlayback" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>XLR Audio Feed</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-xlrAudioFeed" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-xlrAudioFeed" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 📽 Video ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">📽</span> Video</div>
-      <div class="modal-section-grid">
-        <div>
-          <label>Projector</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-projector" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-projector" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Video Playback</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-videoPlayback" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-videoPlayback" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 🎭 Staging ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">🎭</span> Staging</div>
-      <div class="modal-section-grid">
-        <div>
-          <label>Podium</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-podium" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-podium" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Panel Chairs</label>
-          <input type="number" id="ns-panelChairs" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Side Tables</label>
-          <input type="number" id="ns-sideTables" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>High-top Tables</label>
-          <input type="number" id="ns-highTopTables" min="0" value="0" class="modal-num">
-        </div>
-        <div>
-          <label>Easel</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-easel" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-easel" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-        <div>
-          <label>Flip Chart</label>
-          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
-            <input type="checkbox" id="ns-flipChart" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
-            <label for="ns-flipChart" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 🏛 Room ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">🏛</span> Room</div>
-      <div class="modal-section-grid">
-        <div style="grid-column:1/-1">
-          <label>Room Setup</label>
-          <textarea id="ns-roomsetup" rows="2" placeholder="Stage with podium, schoolroom 240…"></textarea>
-        </div>
-        <div style="grid-column:1/-1">
-          <label>Stage setup</label>
-          <textarea id="ns-stagesetup" rows="2" placeholder="Stage setup details…"></textarea>
-        </div>
-      </div>
-    </div>
+    <!-- AV sections generated from AV_CONFIG by buildModalAVSections() -->
+    <div id="ns-av-sections"></div>
 
     <!-- ── ⚡ Special Requirements ── -->
     <div class="modal-section">
@@ -582,6 +436,7 @@ a{color:var(--accent);text-decoration:none}
   <span id="toastMsg"></span>
 </div>
 
+<script src="av-config.js"></script>
 <script>
 // ── Config ──────────────────────────────────────────────────────────────────
 const REPO  = "ibmzdc/av-management";
@@ -1043,156 +898,51 @@ function renderAVReqs(s){
           </div>
         </div>
 
-        <!-- ② Presentation -->
+        ${AV_GROUPS.map(grp => {
+          const fields = AV_CONFIG.filter(f => f.group === grp.key);
+          return `
         <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">🎞</span> Presentation</div>
+          <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
           <div class="av-group-body">
-            <div class="av-req">
-              <span class="k">Required</span>
-              <div class="av-req-check">
-                ${chk(`avf-presRequired-${id}`, presRequired)}
-                <label for="avf-presRequired-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Source</span>
-              <select id="avf-presentationSource-${id}" onchange="markDirty()">
-                ${selOpt("","",           "— none —")}
-                ${selOpt("AV Team",presSource,        "AV Team")}
-                ${selOpt("AV team - LED",presSource,  "AV Team – LED")}
-                ${selOpt("Presenter Laptop",presSource,"Presenter Laptop")}
-                ${selOpt("LED Wall",presSource,       "LED Wall")}
-                ${selOpt("Design Fair Station",presSource,"Design Fair Station")}
-              </select>
-            </div>
-            <div class="av-req">
-              <span class="k">Clicker</span>
-              <div class="av-req-check">
-                ${chk(`avf-clicker-${id}`, avBool(s,"clicker"))}
-                <label for="avf-clicker-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Confidence Monitors</span>
-              ${numInput(`avf-confidenceMonitors-${id}`, avNum(s,"confidenceMonitors"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Timer (min)</span>
-              ${numInput(`avf-timerMins-${id}`, avNum(s,"timerMins"))}
-            </div>
+            ${fields.map(f => {
+              const elId = \`avf-\${f.id}-\${id}\`;
+              if(f.type === "bool"){
+                const checked = f.id === "presentationRequired" ? presRequired : avBool(s, f.id);
+                // podium: also check legacy s.podium
+                const chkVal = f.id === "podium" ? avBool(s, "podium", s.podium||false) : checked;
+                return \`<div class="av-req"><span class="k">\${f.label}</span>
+                  <div class="av-req-check">
+                    \${chk(elId, chkVal)}
+                    <label for="\${elId}">Yes</label>
+                  </div></div>\`;
+              }
+              if(f.type === "num"){
+                const val = f.id === "lavalierHeadsetMics"
+                  ? avNum(s, "lavalierHeadsetMics", (avNum(s,"wirelessLavalierMics")||0)+(avNum(s,"headsetMics")||0))
+                  : avNum(s, f.id);
+                return \`<div class="av-req"><span class="k">\${f.label}</span>\${numInput(elId, val)}</div>\`;
+              }
+              if(f.type === "select"){
+                const cur = avStr(s, f.id, "");
+                return \`<div class="av-req"><span class="k">\${f.label}</span>
+                  <select id="\${elId}" onchange="markDirty()">
+                    \${f.options.map(o => selOpt(o.value, cur, o.label)).join("")}
+                  </select></div>\`;
+              }
+              if(f.type === "text"){
+                const val = f.id === "roomSetup"
+                  ? esc(avStr(s, "roomSetup", s.roomSetup||""))
+                  : esc(avStr(s, f.id, ""));
+                return \`<div class="av-req\${f.full?" av-req-full":""}"><span class="k">\${f.label}</span>
+                  <textarea id="\${elId}" oninput="markDirty()" rows="\${f.rows||2}"\${f.placeholder?\` placeholder="\${f.placeholder}"\`:"")}>\${val}</textarea></div>\`;
+              }
+              return "";
+            }).join("")}
           </div>
-        </div>
+        </div>\`;
+        }).join("")}
 
-        <!-- ② Audio -->
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">🎙</span> Audio</div>
-          <div class="av-group-body">
-            <div class="av-req">
-              <span class="k">Handheld Mics</span>
-              ${numInput(`avf-wirelessHandheld-${id}`, avNum(s,"wirelessHandheldMics"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Lavalier / Headset</span>
-              ${numInput(`avf-lavalierHeadset-${id}`, avNum(s,"lavalierHeadsetMics", (avNum(s,"wirelessLavalierMics")||0)+(avNum(s,"headsetMics")||0)))}
-            </div>
-            <div class="av-req">
-              <span class="k">Catchbox</span>
-              ${numInput(`avf-catchBoxMics-${id}`, avNum(s,"catchBoxMics"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Audio Playback</span>
-              <div class="av-req-check">
-                ${chk(`avf-audioPlayback-${id}`, avBool(s,"audioPlayback"))}
-                <label for="avf-audioPlayback-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">XLR Audio Feed</span>
-              <div class="av-req-check">
-                ${chk(`avf-xlrAudioFeed-${id}`, avBool(s,"xlrAudioFeed"))}
-                <label for="avf-xlrAudioFeed-${id}">Yes</label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ③ Video -->
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">📽</span> Video</div>
-          <div class="av-group-body">
-            <div class="av-req">
-              <span class="k">Projector</span>
-              <div class="av-req-check">
-                ${chk(`avf-projector-${id}`, avBool(s,"projector"))}
-                <label for="avf-projector-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Video Playback</span>
-              <div class="av-req-check">
-                ${chk(`avf-videoPlayback-${id}`, avBool(s,"videoPlayback"))}
-                <label for="avf-videoPlayback-${id}">Yes</label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ④ Staging -->
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">🎭</span> Staging</div>
-          <div class="av-group-body">
-            <div class="av-req">
-              <span class="k">Podium</span>
-              <div class="av-req-check">
-                ${chk(`avf-podium-${id}`, avBool(s,"podium", s.podium||false))}
-                <label for="avf-podium-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Panel Chairs</span>
-              ${numInput(`avf-panelChairs-${id}`, avNum(s,"panelChairs"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Side Tables</span>
-              ${numInput(`avf-sideTables-${id}`, avNum(s,"sideTables"))}
-            </div>
-            <div class="av-req">
-              <span class="k">High-top Tables</span>
-              ${numInput(`avf-highTopTables-${id}`, avNum(s,"highTopTables"))}
-            </div>
-            <div class="av-req">
-              <span class="k">Easel</span>
-              <div class="av-req-check">
-                ${chk(`avf-easel-${id}`, avBool(s,"easel"))}
-                <label for="avf-easel-${id}">Yes</label>
-              </div>
-            </div>
-            <div class="av-req">
-              <span class="k">Flip Chart</span>
-              <div class="av-req-check">
-                ${chk(`avf-flipChart-${id}`, avBool(s,"flipChart"))}
-                <label for="avf-flipChart-${id}">Yes</label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ⑥ Room -->
-        <div class="av-group">
-          <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
-          <div class="av-group-body">
-            <div class="av-req av-req-full">
-              <span class="k">Room Setup</span>
-              <textarea id="avf-roomSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"roomSetup", s.roomSetup||""))}</textarea>
-            </div>
-            <div class="av-req av-req-full">
-              <span class="k">Stage setup</span>
-              <textarea id="avf-stageSetup-${id}" oninput="markDirty()" rows="2">${esc(avStr(s,"stageSetup",""))}</textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- ⑥ Special Requirements -->
+        <!-- Special Requirements -->
         <div class="av-group">
           <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
           <div class="av-group-body av-special">
@@ -1210,45 +960,31 @@ function collectAVReqs(sessionId){
   const s = DATA.sessions.find(x=>x.id===sessionId);
   if(!s) return;
   if(!s.av) s.av = {};
-  const g = (field) => document.getElementById(`avf-${field}-${sessionId}`);
-  const gv  = (field) => { const el=g(field); return el ? el.value.trim()||null : undefined; };
-  const gn  = (field) => { const el=g(field); return el ? (parseInt(el.value)||0) : undefined; };
-  const gb  = (field) => { const el=g(field); return el ? el.checked : undefined; };
+  const g  = (field) => document.getElementById(`avf-${field}-${sessionId}`);
+  const gv = (field) => { const el=g(field); return el ? el.value.trim()||null : undefined; };
+  const gn = (field) => { const el=g(field); return el ? (parseInt(el.value)||0) : undefined; };
+  const gb = (field) => { const el=g(field); return el ? el.checked : undefined; };
 
-  // av object — Presentation
-  if(g("presRequired"))         s.av.presentationRequired  = gb("presRequired");
-  if(g("presentationSource"))   s.av.presentationSource    = gv("presentationSource");
-  if(g("clicker"))              s.av.clicker               = gb("clicker");
-  if(g("confidenceMonitors"))   s.av.confidenceMonitors    = gn("confidenceMonitors");
-  if(g("timerMins"))            s.av.timerMins             = gn("timerMins");
-
-  // Audio
-  if(g("wirelessHandheld"))     s.av.wirelessHandheldMics  = gn("wirelessHandheld");
-  if(g("lavalierHeadset"))      s.av.lavalierHeadsetMics   = gn("lavalierHeadset");
-  if(g("catchBoxMics"))         s.av.catchBoxMics          = gn("catchBoxMics");
-  if(g("audioPlayback"))        s.av.audioPlayback         = gb("audioPlayback");
-  if(g("xlrAudioFeed"))         s.av.xlrAudioFeed          = gb("xlrAudioFeed");
-
-  // Video
-  if(g("projector"))            s.av.projector             = gb("projector");
-  if(g("videoPlayback"))        s.av.videoPlayback         = gb("videoPlayback");
-
-  // Staging
-  if(g("podium"))               s.av.podium = s.podium     = gb("podium");
-  if(g("panelChairs"))          s.av.panelChairs           = gn("panelChairs");
-  if(g("sideTables"))           s.av.sideTables            = gn("sideTables");
-  if(g("highTopTables"))        s.av.highTopTables         = gn("highTopTables");
-  if(g("easel"))                s.av.easel                 = gb("easel");
-  if(g("flipChart"))            s.av.flipChart             = gb("flipChart");
+  // Read all AV fields from config
+  for(const f of AV_CONFIG){
+    const el = g(f.id);
+    if(!el) continue;
+    if(f.type === "bool") {
+      s.av[f.id] = gb(f.id);
+      if(f.id === "podium") s.podium = s.av.podium; // mirror legacy root
+    } else if(f.type === "num") {
+      s.av[f.id] = gn(f.id);
+    } else if(f.type === "select" || f.type === "text") {
+      s.av[f.id] = gv(f.id);
+      if(f.id === "roomSetup")  s.roomSetup  = s.av.roomSetup;  // mirror legacy root
+      if(f.id === "stageSetup") s.stageSetup = s.av.stageSetup; // mirror legacy root
+    }
+  }
 
   // Speakers — collect all dynamic inputs
   const speakerInputs = document.querySelectorAll(`#avf-speakers-list-${sessionId} .avf-speaker-input`);
   const speakerNames = Array.from(speakerInputs).map(el => el.value.trim()).filter(Boolean);
   s.speakers = speakerNames.join(", ") || null;
-
-  // Room
-  if(g("roomSetup"))            s.av.roomSetup  = s.roomSetup  = gv("roomSetup");
-  if(g("stageSetup"))           s.av.stageSetup = s.stageSetup = gv("stageSetup");
 
   // Special Requirements — stored as array
   if(g("specialRequirements")){
@@ -1311,43 +1047,73 @@ const DAY_DATES = {
   Wednesday:"2026-10-21", Thursday:"2026-10-22"
 };
 
+function buildModalAVSections(){
+  const container = document.getElementById("ns-av-sections");
+  if(!container) return;
+  const groups = AV_GROUPS.map(grp => {
+    const fields = AV_CONFIG.filter(f => f.group === grp.key);
+    const fieldHTML = fields.map(f => {
+      const mid = f.modalId;
+      if(f.type === "bool") return `
+        <div>
+          <label>${f.label}</label>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 0">
+            <input type="checkbox" id="${mid}" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent)">
+            <label for="${mid}" style="font-size:12px;text-transform:none;letter-spacing:0;font-weight:500">Yes</label>
+          </div>
+        </div>`;
+      if(f.type === "num") return `
+        <div>
+          <label>${f.label}</label>
+          <input type="number" id="${mid}" min="0" value="0" class="modal-num">
+        </div>`;
+      if(f.type === "select") return `
+        <div>
+          <label>${f.label}</label>
+          <select id="${mid}">
+            ${f.options.map(o => `<option value="${o.value}">${o.label}</option>`).join("")}
+          </select>
+        </div>`;
+      if(f.type === "text") return `
+        <div style="grid-column:1/-1">
+          <label>${f.label}</label>
+          <textarea id="${mid}" rows="${f.rows||2}"${f.placeholder?` placeholder="${f.placeholder}"`:""}></textarea>
+        </div>`;
+      return "";
+    }).join("");
+    return `<div class="modal-section">
+      <div class="modal-section-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
+      <div class="modal-section-grid">${fieldHTML}</div>
+    </div>`;
+  }).join("");
+  container.innerHTML = groups;
+}
+
 function openAddSession(day){
+  // Build modal AV sections from config (idempotent — only renders once)
+  if(!document.getElementById(AV_CONFIG[0].modalId)){
+    buildModalAVSections();
+  }
   // Session details
-  document.getElementById("ns-day").value             = day;
-  document.getElementById("ns-date").value            = DAY_DATES[day] || "";
-  document.getElementById("ns-start").value           = "";
-  document.getElementById("ns-end").value             = "";
-  document.getElementById("ns-title").value           = "";
-  document.getElementById("ns-speakers").value        = "";
-  document.getElementById("ns-room").value            = "";
-  document.getElementById("ns-type").value            = "General Session";
-  // Presentation
-  document.getElementById("ns-presRequired").checked       = false;
-  document.getElementById("ns-presentationSource").value   = "";
-  document.getElementById("ns-clicker").checked            = false;
-  document.getElementById("ns-confidenceMonitors").value   = 0;
-  document.getElementById("ns-timerMins").value            = 0;
-  // Audio
-  document.getElementById("ns-wirelessHandheld").value     = 0;
-  document.getElementById("ns-lavalierHeadset").value      = 0;
-  document.getElementById("ns-catchBoxMics").value         = 0;
-  document.getElementById("ns-audioPlayback").checked      = false;
-  document.getElementById("ns-xlrAudioFeed").checked       = false;
-  // Video
-  document.getElementById("ns-projector").checked          = false;
-  document.getElementById("ns-videoPlayback").checked      = false;
-  // Staging
-  document.getElementById("ns-podium").checked             = false;
-  document.getElementById("ns-panelChairs").value          = 0;
-  document.getElementById("ns-sideTables").value           = 0;
-  document.getElementById("ns-highTopTables").value        = 0;
-  document.getElementById("ns-easel").checked              = false;
-  document.getElementById("ns-flipChart").checked          = false;
-  // Room
-  document.getElementById("ns-roomsetup").value            = "";
-  document.getElementById("ns-stagesetup").value           = "";
+  document.getElementById("ns-day").value    = day;
+  document.getElementById("ns-date").value   = DAY_DATES[day] || "";
+  document.getElementById("ns-start").value  = "";
+  document.getElementById("ns-end").value    = "";
+  document.getElementById("ns-title").value  = "";
+  document.getElementById("ns-speakers").value = "";
+  document.getElementById("ns-room").value   = "";
+  document.getElementById("ns-type").value   = "General Session";
+  // Reset all AV config fields
+  for(const f of AV_CONFIG){
+    const el = document.getElementById(f.modalId);
+    if(!el) continue;
+    if(f.type === "bool")   el.checked = false;
+    if(f.type === "num")    el.value   = 0;
+    if(f.type === "select") el.value   = "";
+    if(f.type === "text")   el.value   = "";
+  }
   // Special reqs
-  document.getElementById("ns-specialRequirements").value  = "";
+  document.getElementById("ns-specialRequirements").value = "";
 
   document.getElementById("addSessionModal").classList.add("open");
   setTimeout(()=>document.getElementById("ns-title").focus(), 50);
@@ -1373,39 +1139,21 @@ function confirmAddSession(){
   let id = baseId, n = 2;
   while(DATA.sessions.find(s=>s.id===id)) id = `${baseId}-${n++}`;
 
-  // Read all AV requirement fields from modal
-  const nsInt  = (id) => parseInt(document.getElementById(id).value) || 0;
-  const nsBool = (id) => document.getElementById(id).checked;
-  const nsStr  = (id) => document.getElementById(id).value.trim() || null;
-  const roomSetupVal  = nsStr("ns-roomsetup");
-  const stageSetupVal = nsStr("ns-stagesetup");
+  // Read all AV fields from config
+  const nsStr  = (elId) => { const el=document.getElementById(elId); return el ? el.value.trim()||null : null; };
+  const nsBool = (elId) => { const el=document.getElementById(elId); return el ? el.checked : false; };
+  const nsInt  = (elId) => { const el=document.getElementById(elId); return el ? (parseInt(el.value)||0) : 0; };
+
+  const av = {};
+  for(const f of AV_CONFIG){
+    if(f.type === "bool")                av[f.id] = nsBool(f.modalId);
+    else if(f.type === "num")            av[f.id] = nsInt(f.modalId);
+    else if(f.type === "select")         av[f.id] = nsStr(f.modalId);
+    else if(f.type === "text")           av[f.id] = nsStr(f.modalId);
+  }
   const specRaw = document.getElementById("ns-specialRequirements").value.trim();
   const specArr = specRaw ? specRaw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
-  const podiumVal = nsBool("ns-podium");
-
-  const av = {
-    presentationRequired:  nsBool("ns-presRequired"),
-    presentationSource:    nsStr("ns-presentationSource"),
-    clicker:               nsBool("ns-clicker"),
-    confidenceMonitors:    nsInt("ns-confidenceMonitors"),
-    timerMins:             nsInt("ns-timerMins"),
-    wirelessHandheldMics:  nsInt("ns-wirelessHandheld"),
-    lavalierHeadsetMics:   nsInt("ns-lavalierHeadset"),
-    catchBoxMics:          nsInt("ns-catchBoxMics"),
-    audioPlayback:         nsBool("ns-audioPlayback"),
-    xlrAudioFeed:          nsBool("ns-xlrAudioFeed"),
-    projector:             nsBool("ns-projector"),
-    videoPlayback:         nsBool("ns-videoPlayback"),
-    podium:                podiumVal,
-    panelChairs:           nsInt("ns-panelChairs"),
-    sideTables:            nsInt("ns-sideTables"),
-    highTopTables:         nsInt("ns-highTopTables"),
-    easel:                 nsBool("ns-easel"),
-    flipChart:             nsBool("ns-flipChart"),
-    roomSetup:             roomSetupVal,
-    stageSetup:            stageSetupVal,
-    specialRequirements:   specArr
-  };
+  av.specialRequirements = specArr;
 
   const newSession = {
     id,
@@ -1419,9 +1167,9 @@ function confirmAddSession(){
     description:  null,
     speakers:     nsStr("ns-speakers"),
     room,
-    roomSetup:    roomSetupVal,
-    stageSetup:   stageSetupVal,
-    podium:       podiumVal,
+    roomSetup:    av.roomSetup   || null,
+    stageSetup:   av.stageSetup  || null,
+    podium:       av.podium      || false,
     specialReqs:  specArr.join("; ") || null,
     av,
     showInDashboard: false,

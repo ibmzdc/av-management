@@ -268,6 +268,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
   </div>
 </div>
 
+<script src="av-config.js"></script>
 <script>
 // ── Config ────────────────────────────────────────────────
 const DATA_URL = "https://raw.githubusercontent.com/ibmzdc/av-management/main/data/av-data.json";
@@ -722,25 +723,28 @@ function buildAVChips(s) {
   // migrateAll() guarantees s.av is fully populated at load time
   const av = s.av || {};
 
-  // Helpers — render a labeled read-only field tile identical to admin .av-req
-  const num  = (k, v)    => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v">${v}</span>` : `<span class="v-muted">—</span>`}</div>`;
-  const bool = (k, v)    => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v-yes">✓ Yes</span>` : `<span class="v-muted">—</span>`}</div>`;
-  const txt  = (k, v, full) => `<div class="av-req${full?" av-req-full":""}"><span class="k">${k}</span>${v ? `<span class="v">${esc(v)}</span>` : `<span class="v-muted">—</span>`}</div>`;
+  // Helpers — render a labeled read-only field tile
+  const num  = (k, v)       => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v">${v}</span>` : `<span class="v-muted">—</span>`}</div>`;
+  const bool = (k, v)       => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v-yes">✓ Yes</span>` : `<span class="v-muted">—</span>`}</div>`;
+  const txt  = (k, v, full) => `<div class="av-req${full ? " av-req-full" : ""}"><span class="k">${k}</span>${v ? `<span class="v">${esc(v)}</span>` : `<span class="v-muted">—</span>`}</div>`;
 
   // Lavalier/Headset: prefer new combined field, fall back to sum of legacy
   const lhVal = av.lavalierHeadsetMics != null
     ? av.lavalierHeadsetMics
-    : (av.wirelessLavalierMics||0) + (av.headsetMics||0);
+    : (av.wirelessLavalierMics || 0) + (av.headsetMics || 0);
 
-  // Timer: prefer timerMins number; legacy bool shows as "Yes" only if no number available
+  // Timer: prefer timerMins number; legacy bool shows as fallback
   const timerDisplay = av.timerMins ? `${av.timerMins} min` : null;
 
-  const hasAny = av.presentationSource || av.wirelessHandheldMics || lhVal || av.catchBoxMics
-    || av.confidenceMonitors || timerDisplay || av.timer || av.clicker
-    || av.audioPlayback || av.xlrAudioFeed
-    || av.projector || av.videoPlayback
-    || av.podium || av.panelChairs || av.sideTables || av.highTopTables || av.easel || av.flipChart
-    || av.roomSetup || av.stageSetup || s.speakers
+  // hasAny: check all config fields plus speakers and special requirements
+  const hasAny = AV_CONFIG.some(f => {
+    const v = av[f.id];
+    if(f.type === "bool")   return !!v;
+    if(f.type === "num")    return !!v;
+    if(f.type === "select") return !!v;
+    if(f.type === "text")   return !!v;
+    return false;
+  }) || av.timer || s.speakers
     || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
@@ -750,6 +754,38 @@ function buildAVChips(s) {
     ? `<div class="av-req av-req-full"><span class="k">Microphones</span><span class="v">${esc(av.legacyMicsNote)}</span></div>` : "";
 
   const specItems = Array.isArray(av.specialRequirements) ? av.specialRequirements : [];
+
+  // Build each group from AV_CONFIG
+  const groupsHTML = AV_GROUPS.map(grp => {
+    const fields = AV_CONFIG.filter(f => f.group === grp.key);
+    const fieldsHTML = fields.map(f => {
+      if(f.type === "bool") {
+        const val = f.id === "podium" ? (av.podium || s.podium) : av[f.id];
+        return bool(f.label, val);
+      }
+      if(f.type === "num") {
+        let val;
+        if(f.id === "lavalierHeadsetMics") val = lhVal || null;
+        else if(f.id === "timerMins")      val = timerDisplay || (av.timer ? "set in admin" : null);
+        else                               val = av[f.id] || null;
+        return num(f.label, val);
+      }
+      if(f.type === "select") return txt(f.label, av[f.id]);
+      if(f.type === "text") {
+        const val = f.id === "roomSetup" ? (av.roomSetup || s.roomSetup) : av[f.id];
+        return txt(f.label, val, f.full);
+      }
+      return "";
+    }).join("") + (grp.key === "presentation" ? micsNote : "");
+
+    return `
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
+      <div class="av-group-body${grp.key === "presentation" ? "" : ""}">
+        ${fieldsHTML}
+      </div>
+    </div>`;
+  }).join("");
 
   return `<div class="av-groups">
 
@@ -763,55 +799,7 @@ function buildAVChips(s) {
       </div>
     </div>
 
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">🎞</span> Presentation</div>
-      <div class="av-group-body">
-        ${txt("Source",              av.presentationSource)}
-        ${num("Handheld Mics",       av.wirelessHandheldMics || null)}
-        ${num("Lavalier / Headset",  lhVal || null)}
-        ${num("Catchbox",            av.catchBoxMics || null)}
-        ${num("Confidence Monitors", av.confidenceMonitors || null)}
-        ${num("Timer (min)",         timerDisplay || (av.timer ? "set in admin" : null))}
-        ${bool("Clicker",            av.clicker)}
-        ${micsNote}
-      </div>
-    </div>
-
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">🎙</span> Audio</div>
-      <div class="av-group-body">
-        ${bool("Audio Playback", av.audioPlayback)}
-        ${bool("XLR Audio Feed", av.xlrAudioFeed)}
-      </div>
-    </div>
-
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">📽</span> Video</div>
-      <div class="av-group-body">
-        ${bool("Projector",      av.projector)}
-        ${bool("Video Playback", av.videoPlayback)}
-      </div>
-    </div>
-
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">🎭</span> Staging</div>
-      <div class="av-group-body">
-        ${bool("Podium",          av.podium || s.podium)}
-        ${num("Panel Chairs",     av.panelChairs || null)}
-        ${num("Side Tables",      av.sideTables  || null)}
-        ${num("High-top Tables",  av.highTopTables || null)}
-        ${bool("Easel",           av.easel)}
-        ${bool("Flip Chart",      av.flipChart)}
-      </div>
-    </div>
-
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">🏛</span> Room</div>
-      <div class="av-group-body">
-        ${txt("Room Setup",   av.roomSetup  || s.roomSetup,  true)}
-        ${txt("Stage setup",  av.stageSetup || s.stageSetup, true)}
-      </div>
-    </div>
+    ${groupsHTML}
 
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
