@@ -934,7 +934,7 @@ function renderAVReqs(s){
                   ? esc(avStr(s, "roomSetup", s.roomSetup||""))
                   : esc(avStr(s, f.id, ""));
                 return \`<div class="av-req\${f.full?" av-req-full":""}"><span class="k">\${f.label}</span>
-                  <textarea id="\${elId}" oninput="markDirty()" rows="\${f.rows||2}"\${f.placeholder?\` placeholder="\${f.placeholder}"\`:"")}>\${val}</textarea></div>\`;
+                  <textarea id="\${elId}" oninput="markDirty()" rows="\${f.rows||2}"\${f.placeholder?\` placeholder="\${f.placeholder}"\`:""}>\${val}</textarea></div>\`;
               }
               return "";
             }).join("")}
