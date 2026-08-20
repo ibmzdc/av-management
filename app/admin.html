@@ -940,20 +940,25 @@ function renderSession(s){
       </div>
     </div>
     <div class="session-body" id="body-${s.id}">
-      ${renderAVReqs(s)}
-      <div class="files-header">
-        <span>Files <span id="badges-${s.id}" style="margin-left:6px">${fileStatusBadge(s.files)}</span></span>
-        <button class="btn-add-file" onclick="addFile('${s.id}')">+ Add file</button>
-      </div>
-      <div id="files-${s.id}">${renderFiles(s)}</div>
-      <div class="notes-row">
-        <div>
-          <label>AV Note <small style="font-weight:400;text-transform:none;letter-spacing:0">(visible to vendor team)</small></label>
-          <textarea id="avnote-${s.id}" oninput="markDirty()" rows="2">${esc(s.avNote||"")}</textarea>
+      <div class="av-groups">
+        <div class="av-group">
+          <div class="av-group-hdr" style="justify-content:space-between">
+            <span><span class="g-icon">📁</span> Files</span>
+            <span id="badges-${s.id}">${fileStatusBadge(s.files)}</span>
+            <button class="btn-add-file" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();addFile('${s.id}')">+ Add file</button>
+          </div>
+          <div class="av-group-body av-special" style="padding:10px">
+            <div id="files-${s.id}">${renderFiles(s)}</div>
+          </div>
         </div>
-        <div>
-          <label>Operator Note <small style="font-weight:400;text-transform:none;letter-spacing:0">(internal only)</small></label>
-          <textarea id="opnote-${s.id}" oninput="markDirty()" rows="2">${esc(s.operatorNote||"")}</textarea>
+      </div>
+      ${renderAVReqs(s)}
+      <div class="av-groups" style="margin-top:0;padding-top:0">
+        <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">📝</span> AV Note <small style="font-size:9px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--subtle)">(visible to vendor team)</small></div>
+          <div class="av-group-body av-special" style="padding:10px">
+            <textarea id="avnote-${s.id}" oninput="markDirty()" rows="2" style="width:100%;padding:7px 9px;border:1px solid #d1d5db;border-radius:5px;font-size:12px;resize:vertical;font-family:inherit;transition:border-color .15s" placeholder="Notes for the AV vendor team…">${esc(s.avNote||"")}</textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -1547,9 +1552,7 @@ function collectFormState(){
     collectAVReqs(s.id);
     collectSessionFiles(s.id);
     const an = document.getElementById("avnote-"+s.id);
-    const on = document.getElementById("opnote-"+s.id);
     if(an) s.avNote = an.value.trim()||null;
-    if(on) s.operatorNote = on.value.trim()||null;
   }
 }
 
