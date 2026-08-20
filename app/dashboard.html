@@ -165,11 +165,12 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .av-req .v-muted { display: block; font-size: 12px; color: var(--subtle); font-style: italic; }
 .av-req .v-yes { display: block; font-size: 12px; font-weight: 600; color: var(--green); }
 .av-empty { color: var(--muted); font-size: 12px; font-style: italic; }
-/* Sub-panels */
-.sub-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
-.sub-panel.open { display: block; }
-.sub-panel-av { background: #fafbff; }
-.sub-panel-files { background: #fff; }
+/* Expanded session body */
+.session-expanded { border-top: 1px solid var(--border); padding: 10px 14px 14px; background: #fff; }
+/* AV Note card */
+.av-note-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.av-note-card .av-group-hdr { background: #f6f8fa; border-bottom: 1px solid var(--border); }
+.av-note-card .av-note-body { padding: 10px; font-size: 12px; color: var(--text); white-space: pre-wrap; line-height: 1.5; }
 
 /* ── Files Table ─────────────────────────────────────────── */
 .files-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
@@ -297,8 +298,39 @@ const AV_CONFIG = [
   { group:"staging",      label:"High-top Tables",       id:"highTopTables",        modalId:"ns-highTopTables",      type:"num"  },
   { group:"staging",      label:"Easel",                 id:"easel",                modalId:"ns-easel",              type:"bool" },
   { group:"staging",      label:"Flip Chart",            id:"flipChart",            modalId:"ns-flipChart",          type:"bool" },
-  { group:"room",         label:"Room Setup",            id:"roomSetup",            modalId:"ns-roomsetup",          type:"text", full:true, rows:2, placeholder:"Stage with podium, schoolroom 240…" },
-  { group:"room",         label:"Stage Setup",           id:"stageSetup",           modalId:"ns-stagesetup",         type:"text", full:true, rows:2, placeholder:"Stage setup details…" },
+  { group:"room",         label:"Room Setup",            id:"roomSetup",            modalId:"ns-roomsetup",          type:"room-picker" },
+  { group:"room",         label:"Stage Setup",           id:"stageSetup",           modalId:"ns-stagesetup",         type:"stage-picker" },
+];
+
+const ROOM_SETUP_PRESETS = [
+  { key:"ballroom", label:"Main Tent / Ballroom",  defaultCapacity:200, options:[
+    { id:"schoolroom", label:"Schoolroom style seating" },
+    { id:"capacity",   label:"Capacity", isCapacity:true },
+    { id:"aisles",     label:"Center and side aisles for attendee access" },
+    { id:"water",      label:"Water stations" },
+  ]},
+  { key:"breakout", label:"Breakout Room",          defaultCapacity:80,  options:[
+    { id:"schoolroom", label:"Schoolroom style seating" },
+    { id:"capacity",   label:"Capacity", isCapacity:true },
+    { id:"podium",     label:"Table / Podium for facilitator laptop and presentation materials" },
+    { id:"hdmi",       label:"Power and HDMI connection to projector" },
+  ]},
+  { key:"collab",   label:"Collab Room",            defaultCapacity:30,  options:[
+    { id:"seating",    label:"Collaborative circle or U-shape seating" },
+    { id:"capacity",   label:"Capacity", isCapacity:true },
+    { id:"podium",     label:"Table / Podium for facilitator laptop and presentation materials" },
+    { id:"hdmi",       label:"Power and HDMI connection to projector" },
+    { id:"supplies",   label:"Supply table for workshop materials (sticky notes, markers, and handouts)" },
+    { id:"waste",      label:"Waste Basket" },
+    { id:"candy",      label:"Serving bowl for candy (to be provided by the event team)" },
+  ]},
+];
+
+const STAGE_SETUP_PRESETS = [
+  { key:"panel", label:"Panel Stage", options:[
+    { id:"chairs", label:"Soft chairs centered on stage in a conversational panel layout" },
+    { id:"table",  label:"Small side / Coffee table between the chairs stocked with water" },
+  ]},
 ];
 </script>
 <script>
@@ -729,24 +761,29 @@ function buildSessionBlock(s) {
         <span class="session-room-label">Room</span>
         <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
-      <div>
-        <button class="row-btn" id="avbtn-${s.id}" onclick="togglePanel('${s.id}','av')">
-          AV Details
-        </button>
-      </div>
-      <div class="files-col">
-        <button class="files-col-btn" id="filesbtn-${s.id}" onclick="togglePanel('${s.id}','files')">
-          <span class="files-col-label">Download Status</span>
-          ${buildRowFilePills(files)}
-        </button>
+      <div style="grid-column:4/-1;display:flex;align-items:center;gap:6px;justify-content:flex-end">
+        ${buildRowFilePills(files)}
       </div>
     </div>
-    <div class="sub-panel sub-panel-av" id="av-panel-${s.id}">
+    <div class="session-expanded">
+      <div class="av-groups">
+        <div class="av-group">
+          <div class="av-group-hdr" style="justify-content:space-between">
+            <span><span class="g-icon">📁</span> Files</span>
+          </div>
+          <div class="av-group-body av-special" style="padding:10px">
+            ${buildFilesSection(s)}
+          </div>
+        </div>
+      </div>
       ${buildAVChips(s)}
-      ${s.avNote ? `<div class="av-note" style="margin-top:8px"><strong>AV Note</strong>${esc(s.avNote)}</div>` : ""}
-    </div>
-    <div class="sub-panel sub-panel-files" id="files-panel-${s.id}">
-      ${buildFilesSection(s)}
+      ${s.avNote ? `
+      <div class="av-groups" style="margin-top:0">
+        <div class="av-note-card">
+          <div class="av-group-hdr"><span class="g-icon">📝</span> AV Note <span style="font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--subtle);margin-left:4px">(visible to vendor team)</span></div>
+          <div class="av-note-body">${esc(s.avNote)}</div>
+        </div>
+      </div>` : ""}
     </div>`;
   return block;
 }
@@ -768,15 +805,37 @@ function buildAVChips(s) {
   // Timer: prefer timerMins number; legacy bool shows as fallback
   const timerDisplay = av.timerMins ? `${av.timerMins} min` : null;
 
+  // Decode a picker-serialised value ("presetKey|opt1,opt2,capacity:N|notes") into readable HTML
+  function decodePickerValue(raw, presets) {
+    if(!raw) return null;
+    const parts = raw.split("|");
+    const presetKey = parts[0];
+    const optKeys   = parts[1] ? parts[1].split(",").filter(Boolean) : [];
+    const notes     = parts[2] || "";
+    const preset    = presets ? presets.find(p => p.key === presetKey) : null;
+    const lines = [];
+    if(preset) {
+      for(const o of preset.options) {
+        if(o.isCapacity) {
+          const capMatch = optKeys.find(k => k.startsWith("capacity:"));
+          if(capMatch) lines.push("Capacity: " + capMatch.replace("capacity:", ""));
+        } else if(optKeys.includes(o.id)) {
+          lines.push(o.label);
+        }
+      }
+    } else if(presetKey) {
+      // Unknown preset — show raw
+      lines.push(presetKey);
+    }
+    if(notes) lines.push(notes);
+    return lines.length ? lines.join("\n") : null;
+  }
+
   // hasAny: check all config fields plus speakers and special requirements
   const hasAny = AV_CONFIG.some(f => {
     const v = av[f.id];
-    if(f.type === "bool")   return !!v;
-    if(f.type === "num")    return !!v;
-    if(f.type === "select") return !!v;
-    if(f.type === "text")   return !!v;
-    return false;
-  }) || av.timer || s.speakers
+    return !!v;
+  }) || av.timer || s.speakers || s.roomSetup
     || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
@@ -803,17 +862,24 @@ function buildAVChips(s) {
         return num(f.label, val);
       }
       if(f.type === "select") return txt(f.label, av[f.id]);
-      if(f.type === "text") {
-        const val = f.id === "roomSetup" ? (av.roomSetup || s.roomSetup) : av[f.id];
-        return txt(f.label, val, f.full);
+      if(f.type === "room-picker") {
+        const raw = av.roomSetup || s.roomSetup;
+        const decoded = decodePickerValue(raw, typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null) || raw;
+        return txt(f.label, decoded, true);
       }
+      if(f.type === "stage-picker") {
+        const raw = av.stageSetup || s.stageSetup;
+        const decoded = decodePickerValue(raw, typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null) || raw;
+        return txt(f.label, decoded, true);
+      }
+      if(f.type === "text") return txt(f.label, av[f.id], f.full);
       return "";
     }).join("") + (grp.key === "presentation" ? micsNote : "");
 
     return `
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
-      <div class="av-group-body${grp.key === "presentation" ? "" : ""}">
+      <div class="av-group-body">
         ${fieldsHTML}
       </div>
     </div>`;
