@@ -38,12 +38,12 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 
 /* ── Print room rundown ─────────────────────────────────── */
 @media print {
-  header, .summary-bar, .needs-attention, .left-nav, .right-sidebar, .row-btn, .files-col, .legend-bar { display: none !important; }
+  header, .summary-bar, .needs-attention, .left-nav, .right-sidebar, .legend-bar { display: none !important; }
   .layout { grid-template-columns: 1fr !important; padding: 0 !important; }
   .day-panel { display: block !important; }
   .session-block { break-inside: avoid; margin-bottom: 8px; }
   .session-row { background: #fff !important; grid-template-columns: 70px 1fr 120px !important; }
-  .sub-panel { display: block !important; }
+  .session-expanded { display: block !important; }
   .print-room-header { display: block !important; font-size: 18px; font-weight: 700; margin: 20px 0 10px; border-bottom: 2px solid #1f2328; padding-bottom: 6px; }
   .print-day-header  { display: block !important; font-size: 13px; font-weight: 700; color: #57606a; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: .04em; }
 }
@@ -111,11 +111,11 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .session-block.sb-distributed{ border-left-color: var(--purple); }
 .session-block.sb-nofile     { border-left-color: #d1d5db; }
 /* Session row */
-.session-row { display: grid; grid-template-columns: 76px 1fr 118px 110px 196px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); }
+.session-row { display: grid; grid-template-columns: 76px 1fr 118px 110px 166px 30px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); cursor: pointer; user-select: none; transition: background .15s; }
 .session-row:hover { background: #eef0f3; }
 .session-time { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.5; }
 .session-time .t-start { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
-.session-info { min-width: 0; cursor: default; }
+.session-info { min-width: 0; }
 .session-title { font-weight: 600; font-size: 13px; line-height: 1.35; margin-bottom: 3px; }
 .session-sub { font-size: 11px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* Room column */
@@ -130,16 +130,6 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .badge-roundtable{ background: #e0f2fe; color: #0369a1; }
 .badge-playback  { background: #f0fdf4; color: #166534; }
 .badge-default   { background: var(--surface); color: var(--muted); }
-/* Action buttons */
-.row-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; transition: all .1s; }
-.row-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
-.row-btn.active { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
-/* Download Status column */
-.files-col { display: flex; flex-direction: column; gap: 3px; }
-.files-col-btn { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--border); background: #fff; cursor: pointer; width: 100%; text-align: left; flex-wrap: wrap; transition: all .1s; }
-.files-col-btn:hover { background: #f0f4ff; border-color: #93c5fd; }
-.files-col-btn.active { background: #eff6ff; border-color: #3b82d4; }
-.files-col-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); white-space: nowrap; margin-right: 2px; }
 .fs-pill { display: inline-flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; width: 24px; height: 24px; border-radius: 4px; }
 .fs-update { background: #fde68a; color: #92400e; animation: dl-pulse 1.6s ease-in-out infinite; }
 .fs-new    { background: var(--blue-bg); color: var(--blue); }
@@ -166,7 +156,10 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .av-req .v-yes { display: block; font-size: 12px; font-weight: 600; color: var(--green); }
 .av-empty { color: var(--muted); font-size: 12px; font-style: italic; }
 /* Expanded session body */
-.session-expanded { border-top: 1px solid var(--border); padding: 10px 14px 14px; background: #fff; }
+.session-expanded { display: none; border-top: 1px solid var(--border); padding: 10px 14px 14px; background: #fff; }
+.session-block.open .session-expanded { display: block; }
+.chevron { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-size: 14px; color: var(--subtle); transition: transform 0.2s ease; }
+.session-block.open .chevron { transform: rotate(90deg); color: var(--text); }
 /* AV Note card */
 .av-note-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
 .av-note-card .av-group-hdr { background: #f6f8fa; border-bottom: 1px solid var(--border); }
@@ -370,15 +363,6 @@ function dlState(f) {
   return "done";
 }
 
-// Called from onclick — records download then flips button to "done"
-function onDownload(boxFileId, btnId) {
-  recordDownload(boxFileId);
-  const btn = document.getElementById(btnId);
-  if (btn) {
-    btn.className = "dl-btn dl-done";
-    btn.innerHTML = "✓ Downloaded";
-  }
-}
 
 // ── Legacy → structured av migration (mirrors admin.html) ─────────────────
 // Runs once per session at load time. Non-destructive: only sets av.* fields that
@@ -741,6 +725,7 @@ function sessionBlockClass(s) {
 
 function buildSessionBlock(s) {
   const block = document.createElement("div");
+  block.id = "sblock-" + s.id;
   const sbCls = sessionBlockClass(s);
   block.className = "session-block" + (sbCls ? " " + sbCls : "");
   if (s.room) block.dataset.room = s.room;
@@ -748,8 +733,18 @@ function buildSessionBlock(s) {
   const files = s.files || [];
   const endPart = s.endTime ? `<span style="font-weight:400;color:var(--subtle)"> – ${esc(s.endTime)}</span>` : "";
 
+  let noteHTML = "";
+  if (s.avNote) {
+    noteHTML = '<div class="av-groups" style="margin-top:0">' +
+      '<div class="av-note-card">' +
+        '<div class="av-group-hdr"><span class="g-icon">📝</span> AV Note <span style="font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--subtle);margin-left:4px">(visible to vendor team)</span></div>' +
+        '<div class="av-note-body">' + esc(s.avNote) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
   block.innerHTML = `
-    <div class="session-row">
+    <div class="session-row" onclick="toggleSession('${s.id}')">
       <div class="session-time">
         <span class="t-start">${esc(s.startTime || "—")}</span>${endPart}
       </div>
@@ -761,8 +756,11 @@ function buildSessionBlock(s) {
         <span class="session-room-label">Room</span>
         <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
-      <div style="grid-column:4/-1;display:flex;align-items:center;gap:6px;justify-content:flex-end">
+      <div id="row-pills-${s.id}" style="grid-column:4/6;display:flex;align-items:center;gap:6px;justify-content:flex-end">
         ${buildRowFilePills(files)}
+      </div>
+      <div style="grid-column:6;display:flex;align-items:center;justify-content:center">
+        <span class="chevron">&#x25B8;</span>
       </div>
     </div>
     <div class="session-expanded">
@@ -777,13 +775,7 @@ function buildSessionBlock(s) {
         </div>
       </div>
       ${buildAVChips(s)}
-      ${s.avNote ? `
-      <div class="av-groups" style="margin-top:0">
-        <div class="av-note-card">
-          <div class="av-group-hdr"><span class="g-icon">📝</span> AV Note <span style="font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--subtle);margin-left:4px">(visible to vendor team)</span></div>
-          <div class="av-note-body">${esc(s.avNote)}</div>
-        </div>
-      </div>` : ""}
+      ${noteHTML}
     </div>`;
   return block;
 }
@@ -792,10 +784,10 @@ function buildAVChips(s) {
   // migrateAll() guarantees s.av is fully populated at load time
   const av = s.av || {};
 
-  // Helpers — render a labeled read-only field tile
-  const num  = (k, v)       => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v">${v}</span>` : `<span class="v-muted">—</span>`}</div>`;
-  const bool = (k, v)       => `<div class="av-req"><span class="k">${k}</span>${v ? `<span class="v-yes">✓ Yes</span>` : `<span class="v-muted">—</span>`}</div>`;
-  const txt  = (k, v, full) => `<div class="av-req${full ? " av-req-full" : ""}"><span class="k">${k}</span>${v ? `<span class="v">${esc(v)}</span>` : `<span class="v-muted">—</span>`}</div>`;
+  // Helpers — render a labeled read-only field tile ONLY if the value exists
+  const num  = (k, v)       => v ? `<div class="av-req"><span class="k">${k}</span><span class="v">${v}</span></div>` : "";
+  const bool = (k, v)       => v ? `<div class="av-req"><span class="k">${k}</span><span class="v-yes">✓ Yes</span></div>` : "";
+  const txt  = (k, v, full) => v ? `<div class="av-req${full ? " av-req-full" : ""}"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>` : "";
 
   // Lavalier/Headset: prefer new combined field, fall back to sum of legacy
   const lhVal = av.lavalierHeadsetMics != null
@@ -876,6 +868,8 @@ function buildAVChips(s) {
       return "";
     }).join("") + (grp.key === "presentation" ? micsNote : "");
 
+    if (!fieldsHTML.trim()) return "";
+
     return `
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
@@ -885,29 +879,35 @@ function buildAVChips(s) {
     </div>`;
   }).join("");
 
-  return `<div class="av-groups">
+  let speakersHTML = "";
+  if (s.speakers) {
+    const sList = s.speakers.split(",").map(n => n.trim()).filter(Boolean);
+    if (sList.length > 0) {
+      speakersHTML = `
+      <div class="av-group">
+        <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
+        <div class="av-group-body av-special">
+          ${sList.map(n => `<div class="av-req"><span class="v">${esc(n)}</span></div>`).join("")}
+        </div>
+      </div>`;
+    }
+  }
 
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
-      <div class="av-group-body av-special">
-        ${s.speakers
-          ? s.speakers.split(",").map(n => n.trim()).filter(Boolean).map(n =>
-              `<div class="av-req"><span class="v">${esc(n)}</span></div>`).join("")
-          : `<div class="av-req"><span class="v-muted">—</span></div>`}
-      </div>
-    </div>
-
-    ${groupsHTML}
-
+  let specHTML = "";
+  if (specItems.length > 0) {
+    specHTML = `
     <div class="av-group">
       <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
       <div class="av-group-body av-special">
-        ${specItems.length
-          ? `<div class="av-req av-req-full"><span class="k">Notes</span><span class="v">${specItems.map(i => esc(i)).join("<br>")}</span></div>`
-          : `<div class="av-req av-req-full"><span class="v-muted">None</span></div>`}
+        <div class="av-req av-req-full"><span class="k">Notes</span><span class="v">${specItems.map(i => esc(i)).join("<br>")}</span></div>
       </div>
-    </div>
+    </div>`;
+  }
 
+  return `<div class="av-groups">
+    ${speakersHTML}
+    ${groupsHTML}
+    ${specHTML}
   </div>`;
 }
 
@@ -1030,38 +1030,29 @@ function renderChangelog() {
 }
 
 // ── Interaction ────────────────────────────────────────────
-function togglePanel(sid, which) {
-  const avPanel    = document.getElementById("av-panel-"    + sid);
-  const filesPanel = document.getElementById("files-panel-" + sid);
-  const avBtn      = document.getElementById("avbtn-"       + sid);
-  const filesBtn   = document.getElementById("filesbtn-"    + sid);
-  if (which === "av") {
-    const open = avPanel.classList.toggle("open");
-    avBtn.classList.toggle("active", open);
-  } else {
-    const open = filesPanel.classList.toggle("open");
-    filesBtn.classList.toggle("active", open);
+function toggleSession(sid) {
+  const block = document.getElementById("sblock-" + sid);
+  if (block) {
+    block.classList.toggle("open");
   }
 }
 
-// After a file is downloaded, also refresh the row pills so state updates immediately
-const _origOnDownload = onDownload;
+// Called from onclick — records download, flips button to "done", and updates row pills
 function onDownload(boxFileId, btnId) {
-  _origOnDownload(boxFileId, btnId);
-  // Find which session owns this file and refresh its row pills
+  recordDownload(boxFileId);
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.className = "dl-btn dl-done";
+    btn.innerHTML = "✓ Downloaded";
+  }
   if (!avData) return;
   for (const s of avData.sessions) {
     if ((s.files || []).some(f => f.boxFileId === boxFileId)) {
-      // Record the download in the file object temporarily so dlState() returns "done"
-      const btn = document.getElementById("filesbtn-" + s.id);
-      if (btn) {
-        // Re-render just the pills inside the button
-        const label = btn.querySelector(".files-col-label");
-        if (label) {
-          // Update each file's pill that matches this boxFileId
-          s.files.forEach(f => { if (f.boxFileId === boxFileId) f._justDownloaded = true; });
-          btn.innerHTML = `<span class="files-col-label">Download Status</span>${buildRowFilePillsLive(s.files)}`;
-        }
+      // Temporarily record the download state
+      s.files.forEach(f => { if (f.boxFileId === boxFileId) f._justDownloaded = true; });
+      const rowPills = document.getElementById("row-pills-" + s.id);
+      if (rowPills) {
+        rowPills.innerHTML = buildRowFilePillsLive(s.files);
       }
       break;
     }
