@@ -111,7 +111,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .session-block.sb-distributed{ border-left-color: var(--purple); }
 .session-block.sb-nofile     { border-left-color: #d1d5db; }
 /* Session row */
-.session-row { display: grid; grid-template-columns: 76px 1fr 118px 110px 166px 30px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); cursor: pointer; user-select: none; transition: background .15s; }
+.session-row { display: grid; grid-template-columns: 76px 1fr 118px 180px 110px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); user-select: none; transition: background .15s; }
 .session-row:hover { background: #eef0f3; }
 .session-time { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.5; }
 .session-time .t-start { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
@@ -130,7 +130,11 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .badge-roundtable{ background: #e0f2fe; color: #0369a1; }
 .badge-playback  { background: #f0fdf4; color: #166534; }
 .badge-default   { background: var(--surface); color: var(--muted); }
-.fs-pill { display: inline-flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; width: 24px; height: 24px; border-radius: 4px; }
+.av-details-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none; transition: all .1s; height: 26px; }
+.av-details-btn:hover { background: #f0f4ff; border-color: #93c5fd; color: #1d4ed8; }
+.session-block.open .av-details-btn { background: #eff6ff; border-color: #3b82d4; color: #1d4ed8; }
+.fs-pill { display: inline-flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; width: 24px; height: 24px; border-radius: 4px; text-decoration: none; transition: filter .1s; }
+a.fs-pill:hover { filter: brightness(.9); }
 .fs-update { background: #fde68a; color: #92400e; animation: dl-pulse 1.6s ease-in-out infinite; }
 .fs-new    { background: var(--blue-bg); color: var(--blue); }
 .fs-done   { background: var(--green-bg); color: var(--green); }
@@ -158,8 +162,8 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 /* Expanded session body */
 .session-expanded { display: none; border-top: 1px solid var(--border); padding: 10px 14px 14px; background: #fff; }
 .session-block.open .session-expanded { display: block; }
-.chevron { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-size: 14px; color: var(--subtle); transition: transform 0.2s ease; }
-.session-block.open .chevron { transform: rotate(90deg); color: var(--text); }
+.chevron { display: inline-flex; align-items: center; justify-content: center; width: 12px; height: 12px; font-size: 11px; color: var(--subtle); transition: transform 0.2s ease; line-height: 1; margin-left: 2px; }
+.session-block.open .chevron { transform: rotate(90deg); color: #1d4ed8; }
 /* AV Note card */
 .av-note-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
 .av-note-card .av-group-hdr { background: #f6f8fa; border-bottom: 1px solid var(--border); }
@@ -744,7 +748,7 @@ function buildSessionBlock(s) {
   }
 
   block.innerHTML = `
-    <div class="session-row" onclick="toggleSession('${s.id}')">
+    <div class="session-row">
       <div class="session-time">
         <span class="t-start">${esc(s.startTime || "—")}</span>${endPart}
       </div>
@@ -756,11 +760,13 @@ function buildSessionBlock(s) {
         <span class="session-room-label">Room</span>
         <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
-      <div id="row-pills-${s.id}" style="grid-column:4/6;display:flex;align-items:center;gap:6px;justify-content:flex-end">
-        ${buildRowFilePills(files)}
+      <div id="row-pills-${s.id}" style="display:flex;align-items:center;gap:6px;justify-content:flex-start">
+        ${buildRowFilePills(s)}
       </div>
-      <div style="grid-column:6;display:flex;align-items:center;justify-content:center">
-        <span class="chevron">&#x25B8;</span>
+      <div style="display:flex;align-items:center;justify-content:flex-end">
+        <button class="av-details-btn" onclick="toggleSession('${s.id}')">
+          AV Details <span class="chevron">&#x25B8;</span>
+        </button>
       </div>
     </div>
     <div class="session-expanded">
@@ -911,18 +917,52 @@ function buildAVChips(s) {
   </div>`;
 }
 
-// Inline icon-only pills shown on the collapsed session row
-function buildRowFilePills(files) {
+// Clickable download pills shown on the collapsed session row
+function buildRowFilePills(s) {
+  const files = s.files || [];
   if (!files.length) return `<span class="fs-pill fs-nofile" title="Awaiting File">—</span>`;
-  return files.map(f => {
-    const state = dlState(f);
-    const tip   = f.fileName || f.fileType || "file";
-    if (state === "update")      return `<span class="fs-pill fs-update" title="↻ Update — re-download: ${tip}">↻</span>`;
-    if (state === "new")         return `<span class="fs-pill fs-new"    title="⬇ Download needed: ${tip}">⬇</span>`;
-    if (state === "distributed") return `<span class="fs-pill fs-done"   title="✓ Distributed: ${tip}">✓</span>`;
-    if (state === "done")        return `<span class="fs-pill fs-done"   title="✓ Downloaded: ${tip}">✓</span>`;
-    if (f.status === "onhold")   return `<span class="fs-pill fs-hold"   title="⏸ On Hold: ${tip}">⏸</span>`;
-    return `<span class="fs-pill fs-nofile" title="Awaiting File: ${tip}">—</span>`;
+  const log = getDownloadLog();
+  
+  return files.map((f, i) => {
+    const tip = f.fileName || f.fileType || "file";
+    const lastDl = f._justDownloaded || (f.boxFileId && log[f.boxFileId]);
+    
+    let state;
+    if (f.status === "distributed")              state = "distributed";
+    else if (!f.boxFileId)                       state = "nolink";
+    else if (!lastDl)                            state = "new";
+    else if (f.updatedAt && f.updatedAt > lastDl) state = "update";
+    else                                         state = "done";
+    
+    const href = f.boxFileId ? `https://ibm.box.com/s/${esc(f.boxFileId)}` : null;
+    const btnId = `row-dlbtn-${s.id}-${i}`;
+    const clickHandler = `event.stopPropagation(); onDownload('${esc(f.boxFileId || "")}', '${btnId}')`;
+    
+    if (state === "distributed") {
+      return href
+        ? `<a id="${btnId}" class="fs-pill fs-done" href="${href}" target="_blank" rel="noopener" onclick="${clickHandler}" title="Distributed: ${tip}">✓</a>`
+        : `<span class="fs-pill fs-done" title="Distributed: ${tip}">✓</span>`;
+    }
+    if (state === "nolink") {
+      return `<span class="fs-pill fs-nofile" title="Awaiting File: ${tip}">—</span>`;
+    }
+    if (f.status === "onhold") {
+      return href
+        ? `<a id="${btnId}" class="fs-pill fs-hold" href="${href}" target="_blank" rel="noopener" onclick="${clickHandler}" title="On Hold: ${tip}">⏸</a>`
+        : `<span class="fs-pill fs-hold" title="On Hold: ${tip}">⏸</span>`;
+    }
+    
+    let cls = "fs-new";
+    let icon = "⬇";
+    if (state === "update") {
+      cls = "fs-update";
+      icon = "↻";
+    } else if (state === "done") {
+      cls = "fs-done";
+      icon = "✓";
+    }
+    
+    return `<a id="${btnId}" class="fs-pill ${cls}" href="${href}" target="_blank" rel="noopener" onclick="${clickHandler}" title="${tip}">${icon}</a>`;
   }).join("");
 }
 
@@ -1042,8 +1082,14 @@ function onDownload(boxFileId, btnId) {
   recordDownload(boxFileId);
   const btn = document.getElementById(btnId);
   if (btn) {
-    btn.className = "dl-btn dl-done";
-    btn.innerHTML = "✓ Downloaded";
+    // Update button classes based on id prefix
+    if (btnId.startsWith("row-dlbtn-")) {
+      btn.className = "fs-pill fs-done";
+      btn.innerHTML = "✓";
+    } else {
+      btn.className = "dl-btn dl-done";
+      btn.innerHTML = "✓ Downloaded";
+    }
   }
   if (!avData) return;
   for (const s of avData.sessions) {
@@ -1052,31 +1098,11 @@ function onDownload(boxFileId, btnId) {
       s.files.forEach(f => { if (f.boxFileId === boxFileId) f._justDownloaded = true; });
       const rowPills = document.getElementById("row-pills-" + s.id);
       if (rowPills) {
-        rowPills.innerHTML = buildRowFilePillsLive(s.files);
+        rowPills.innerHTML = buildRowFilePills(s);
       }
       break;
     }
   }
-}
-
-function buildRowFilePillsLive(files) {
-  if (!files.length) return `<span class="fs-pill fs-nofile" title="Awaiting File">—</span>`;
-  const log = getDownloadLog();
-  return files.map(f => {
-    const tip    = f.fileName || f.fileType || "file";
-    const lastDl = f.boxFileId && log[f.boxFileId];
-    let state;
-    if (f.status === "distributed")              state = "distributed";
-    else if (!f.boxFileId)                       state = "nolink";
-    else if (!lastDl)                            state = "new";
-    else if (f.updatedAt && f.updatedAt > lastDl) state = "update";
-    else                                         state = "done";
-    if (state === "update")                        return `<span class="fs-pill fs-update" title="↻ Update — re-download: ${tip}">↻</span>`;
-    if (state === "new")                           return `<span class="fs-pill fs-new"    title="⬇ Download needed: ${tip}">⬇</span>`;
-    if (state === "distributed" || state==="done") return `<span class="fs-pill fs-done"   title="✓ Downloaded: ${tip}">✓</span>`;
-    if (f.status === "onhold")                     return `<span class="fs-pill fs-hold"   title="⏸ On Hold: ${tip}">⏸</span>`;
-    return `<span class="fs-pill fs-nofile" title="${tip}">—</span>`;
-  }).join("");
 }
 
 function switchDay(day) {
