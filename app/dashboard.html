@@ -111,7 +111,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 .session-block.sb-distributed{ border-left-color: var(--purple); }
 .session-block.sb-nofile     { border-left-color: #d1d5db; }
 /* Session row */
-.session-row { display: grid; grid-template-columns: 76px 1fr 118px 180px 110px; align-items: center; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); user-select: none; transition: background .15s; }
+.session-row { display: grid; grid-template-columns: 76px 1fr 118px 180px; align-items: start; gap: 0 12px; padding: 10px 14px 9px; background: var(--surface); user-select: none; transition: background .15s; }
 .session-row:hover { background: #eef0f3; }
 .session-time { font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.5; }
 .session-time .t-start { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
@@ -755,18 +755,21 @@ function buildSessionBlock(s) {
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-sub">${s.speakers ? esc(s.speakers.slice(0,80)) : "&nbsp;"}</div>
+        <div style="margin-top:6px">
+          <button class="av-details-btn" onclick="toggleSession('${s.id}')">
+            AV Details <span class="chevron">&#x25B8;</span>
+          </button>
+        </div>
       </div>
       <div class="session-type-col" style="flex-direction:column;align-items:flex-start">
         <span class="session-room-label">Room</span>
         <span class="session-room-val">${esc(s.room || "—")}</span>
       </div>
-      <div id="row-pills-${s.id}" style="display:flex;align-items:center;gap:6px;justify-content:flex-start">
-        ${buildRowFilePills(s)}
-      </div>
-      <div style="display:flex;align-items:center;justify-content:flex-end">
-        <button class="av-details-btn" onclick="toggleSession('${s.id}')">
-          AV Details <span class="chevron">&#x25B8;</span>
-        </button>
+      <div class="session-type-col" style="flex-direction:column;align-items:flex-start">
+        <span class="session-room-label">Files</span>
+        <div id="row-pills-${s.id}" style="display:flex;align-items:center;gap:6px;justify-content:flex-start">
+          ${buildRowFilePills(s)}
+        </div>
       </div>
     </div>
     <div class="session-expanded">
