@@ -876,13 +876,15 @@ function buildAVChips(s) {
       } else if (f.type === "room-picker") {
         const raw = avStr("roomSetup", s.roomSetup || "");
         const decoded = decodePickerValue(raw, typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null) || raw;
-        const displayVal = decoded || "—";
-        fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+        if (decoded) {
+          fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(decoded)}</span></div>`;
+        }
       } else if (f.type === "stage-picker") {
         const raw = avStr("stageSetup", s.stageSetup || "");
         const decoded = decodePickerValue(raw, typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null) || raw;
-        const displayVal = decoded || "—";
-        fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+        if (decoded) {
+          fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(decoded)}</span></div>`;
+        }
       } else if (f.type === "text") {
         const val = avStr(f.id, "");
         const displayVal = val || "—";
