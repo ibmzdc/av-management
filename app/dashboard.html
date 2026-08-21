@@ -756,10 +756,11 @@ function buildSessionBlock(s) {
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-sub">${s.speakers ? esc(s.speakers.slice(0,80)) : "&nbsp;"}</div>
-        <div style="margin-top:6px">
+        <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
           <button class="av-details-btn" onclick="toggleSession('${s.id}')">
             AV Details <span class="chevron">&#x25B8;</span>
           </button>
+          ${(s.avNote || (s.av && s.av.avNote) || s.operatorNote) ? '<span style="font-size:11px;color:#d97706;font-weight:600;display:inline-flex;align-items:center;gap:3px">📝 Note</span>' : ''}
         </div>
       </div>
       <div class="session-type-col" style="flex-direction:column;align-items:flex-start">

@@ -916,8 +916,9 @@ function renderSession(s){
       <div class="session-info">
         <div class="session-title">${esc(s.title)}</div>
         <div class="session-meta">${s.speakers?esc(s.speakers.split(",")[0].trim())+(s.speakers.includes(",")?" et al.":""):""}</div>
-        <div onclick="event.stopPropagation()" style="margin-top:5px">
+        <div onclick="event.stopPropagation()" style="margin-top:5px;display:flex;align-items:center;gap:8px">
           <button class="btn-av-details" onclick="toggleCard('${s.id}')">AV Details <span class="chevron" id="chev-${s.id}">▼</span></button>
+          ${(s.avNote || s.operatorNote) ? '<span style="font-size:11px;color:#d97706;font-weight:600;display:inline-flex;align-items:center;gap:3px">📝 Note</span>' : ''}
         </div>
       </div>
       <!-- Change 3: room gets its own class for responsive grid placement -->
@@ -1219,6 +1220,19 @@ function collectAVReqs(sessionId){
 
   // Read all AV fields from config
   for(const f of AV_CONFIG){
+    if(f.type === "room-picker") {
+      const ns = 'avf-rs-' + sessionId;
+      s.av.roomSetup  = roomSetupValue(ns);
+      s.roomSetup     = s.av.roomSetup;
+      continue;
+    }
+    if(f.type === "stage-picker") {
+      const ns = 'avf-ss-' + sessionId;
+      s.av.stageSetup = stageSetupValue(ns);
+      s.stageSetup    = s.av.stageSetup;
+      continue;
+    }
+
     const el = g(f.id);
     if(!el) continue;
     if(f.type === "bool") {
@@ -1226,14 +1240,6 @@ function collectAVReqs(sessionId){
       if(f.id === "podium") s.podium = s.av.podium; // mirror legacy root
     } else if(f.type === "num") {
       s.av[f.id] = gn(f.id);
-    } else if(f.type === "room-picker") {
-      const ns = 'avf-rs-' + sessionId;
-      s.av.roomSetup  = roomSetupValue(ns);
-      s.roomSetup     = s.av.roomSetup;
-    } else if(f.type === "stage-picker") {
-      const ns = 'avf-ss-' + sessionId;
-      s.av.stageSetup = stageSetupValue(ns);
-      s.stageSetup    = s.av.stageSetup;
     } else if(f.type === "select" || f.type === "text") {
       s.av[f.id] = gv(f.id);
     }
