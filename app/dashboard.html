@@ -790,28 +790,21 @@ function buildSessionBlock(s) {
 }
 
 function buildAVChips(s) {
-  // migrateAll() guarantees s.av is fully populated at load time
-  const av = s.av || {};
+  const id = s.id;
+  // Migration is guaranteed by migrateAll() at load time.
+  if (!s.av) migrateSession(s);
 
-  // Helpers — render a labeled read-only field tile ONLY if the value exists
-  const num  = (k, v)       => v ? `<div class="av-req"><span class="k">${k}</span><span class="v">${v}</span></div>` : "";
-  const bool = (k, v)       => v ? `<div class="av-req"><span class="k">${k}</span><span class="v-yes">✓ Yes</span></div>` : "";
-  const txt  = (k, v, full) => v ? `<div class="av-req${full ? " av-req-full" : ""}"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>` : "";
-
-  // PresentationRequired fallback — matches admin.html logic exactly
+  const av = s.av;
   const presSource = av.presentationSource || "";
   const presRequired = av.presentationRequired != null ? av.presentationRequired : !!presSource;
 
   // Podium fallback — matches admin.html logic exactly
   const podiumVal = av.podium != null ? av.podium : !!s.podium;
 
-  // Lavalier/Headset: prefer new combined field, fall back to sum of legacy
-  const lhVal = av.lavalierHeadsetMics != null
-    ? av.lavalierHeadsetMics
-    : (av.wirelessLavalierMics || 0) + (av.headsetMics || 0);
-
-  // Timer: prefer timerMins number; legacy bool shows as fallback
-  const timerDisplay = av.timerMins ? `${av.timerMins} min` : null;
+  // Helpers matching admin.html exactly
+  const avNum  = (field, def=0)     => (av && av[field] != null) ? av[field] : def;
+  const avBool = (field, def=false) => (av && av[field] != null) ? av[field] : def;
+  const avStr  = (field, def="")    => (av && av[field] != null) ? av[field] : def;
 
   // Decode a picker-serialised value ("presetKey|opt1,opt2,capacity:N|notes") into readable HTML
   function decodePickerValue(raw, presets) {
@@ -839,21 +832,66 @@ function buildAVChips(s) {
     return lines.length ? lines.join("\n") : null;
   }
 
-  // hasAny: check all config fields plus speakers and special requirements
-  const hasAny = AV_CONFIG.some(f => {
-    const v = av[f.id];
-    return !!v;
-  }) || av.timer || s.speakers || s.roomSetup
-    || (Array.isArray(av.specialRequirements) && av.specialRequirements.length)
-    || (s.specialReqs && s.specialReqs.trim());
+  // ── Speakers group ────────────────────────────────────────────────────────
+  const names = s.speakers ? s.speakers.split(",").map(n => n.trim()).filter(Boolean) : [];
+  const speakerRows = names.length > 0
+    ? names.map(name => `<div class="av-req"><span class="v">${esc(name)}</span></div>`).join("")
+    : `<div class="av-req"><span class="v-muted">—</span></div>`;
 
-  if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
+  let html = `<div class="av-groups">
+    <div class="av-group">
+      <div class="av-group-hdr"><span><span class="g-icon">👤</span> Speakers</span></div>
+      <div class="av-group-body av-special">
+        ${speakerRows}
+      </div>
+    </div>`;
 
-  // Legacy mic note fallback (free-text that couldn't be parsed into counts)
-  const micsNote = (!av.wirelessHandheldMics && !lhVal && !av.catchBoxMics && av.legacyMicsNote)
-    ? `<div class="av-req av-req-full"><span class="k">Microphones</span><span class="v">${esc(av.legacyMicsNote)}</span></div>` : "";
+  // ── AV groups from config ─────────────────────────────────────────────────
+  for (const grp of AV_GROUPS) {
+    const fields = AV_CONFIG.filter(f => f.group === grp.key);
+    let fieldsHTML = "";
+    for (const f of fields) {
+      if (f.type === "bool") {
+        const val = f.id === "presentationRequired" ? presRequired
+                  : f.id === "podium" ? podiumVal
+                  : avBool(f.id);
+        const badge = val ? '<span class="v-yes">✓ Yes</span>' : '<span class="v-muted">—</span>';
+        fieldsHTML += `<div class="av-req"><span class="k">${f.label}</span><span class="v">${badge}</span></div>`;
+      } else if (f.type === "num") {
+        const val = f.id === "lavalierHeadsetMics"
+          ? avNum("lavalierHeadsetMics", (avNum("wirelessLavalierMics") || 0) + (avNum("headsetMics") || 0))
+          : avNum(f.id);
+        fieldsHTML += `<div class="av-req"><span class="k">${f.label}</span><span class="v">${val}</span></div>`;
+      } else if (f.type === "select") {
+        const cur = avStr(f.id, "");
+        const opt = f.options.find(o => o.value === cur);
+        const displayVal = opt ? opt.label : (cur || "—");
+        fieldsHTML += `<div class="av-req"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+      } else if (f.type === "room-picker") {
+        const raw = avStr("roomSetup", s.roomSetup || "");
+        const decoded = decodePickerValue(raw, typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null) || raw;
+        const displayVal = decoded || "—";
+        fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+      } else if (f.type === "stage-picker") {
+        const raw = avStr("stageSetup", s.stageSetup || "");
+        const decoded = decodePickerValue(raw, typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null) || raw;
+        const displayVal = decoded || "—";
+        fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+      } else if (f.type === "text") {
+        const val = avStr(f.id, "");
+        const displayVal = val || "—";
+        const cls = f.full ? " av-req-full" : "";
+        fieldsHTML += `<div class="av-req${cls}"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
+      }
+    }
+    html += `
+    <div class="av-group">
+      <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
+      <div class="av-group-body">${fieldsHTML}</div>
+    </div>`;
+  }
 
-  // Special requirements robust fallback — matches admin.html logic exactly
+  // ── Special Requirements ──────────────────────────────────────────────────
   let specItems = [];
   if (Array.isArray(av.specialRequirements)) {
     specItems = av.specialRequirements;
@@ -862,81 +900,23 @@ function buildAVChips(s) {
   } else if (s.specialReqs && s.specialReqs.trim()) {
     specItems = s.specialReqs.split(/[;\n]/).map(x => x.trim()).filter(Boolean);
   }
+  const specVal = specItems.length > 0
+    ? specItems.map(i => esc(i)).join("<br>")
+    : '<span class="v-muted">—</span>';
 
-  // Build each group from AV_CONFIG
-  const groupsHTML = AV_GROUPS.map(grp => {
-    const fields = AV_CONFIG.filter(f => f.group === grp.key);
-    const fieldsHTML = fields.map(f => {
-      if(f.type === "bool") {
-        let val;
-        if (f.id === "presentationRequired") val = presRequired;
-        else if (f.id === "podium")          val = podiumVal;
-        else                                 val = av[f.id];
-        return bool(f.label, val);
-      }
-      if(f.type === "num") {
-        let val;
-        if(f.id === "lavalierHeadsetMics") val = lhVal || null;
-        else if(f.id === "timerMins")      val = timerDisplay || (av.timer ? "set in admin" : null);
-        else                               val = av[f.id] || null;
-        return num(f.label, val);
-      }
-      if(f.type === "select") return txt(f.label, av[f.id]);
-      if(f.type === "room-picker") {
-        const raw = av.roomSetup || s.roomSetup;
-        const decoded = decodePickerValue(raw, typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null) || raw;
-        return txt(f.label, decoded, true);
-      }
-      if(f.type === "stage-picker") {
-        const raw = av.stageSetup || s.stageSetup;
-        const decoded = decodePickerValue(raw, typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null) || raw;
-        return txt(f.label, decoded, true);
-      }
-      if(f.type === "text") return txt(f.label, av[f.id], f.full);
-      return "";
-    }).join("") + (grp.key === "audio" ? micsNote : "");
-
-    if (!fieldsHTML.trim()) return "";
-
-    return `
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">${grp.icon}</span> ${grp.label}</div>
-      <div class="av-group-body">
-        ${fieldsHTML}
+  html += `
+  <div class="av-group">
+    <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
+    <div class="av-group-body av-special">
+      <div class="av-req av-req-full">
+        <span class="k">Notes</span>
+        <span class="v">${specVal}</span>
       </div>
-    </div>`;
-  }).join("");
-
-  let speakersHTML = "";
-  if (s.speakers) {
-    const sList = s.speakers.split(",").map(n => n.trim()).filter(Boolean);
-    if (sList.length > 0) {
-      speakersHTML = `
-      <div class="av-group">
-        <div class="av-group-hdr"><span class="g-icon">👤</span> Speakers</div>
-        <div class="av-group-body av-special">
-          ${sList.map(n => `<div class="av-req"><span class="v">${esc(n)}</span></div>`).join("")}
-        </div>
-      </div>`;
-    }
-  }
-
-  let specHTML = "";
-  if (specItems.length > 0) {
-    specHTML = `
-    <div class="av-group">
-      <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
-      <div class="av-group-body av-special">
-        <div class="av-req av-req-full"><span class="k">Notes</span><span class="v">${specItems.map(i => esc(i)).join("<br>")}</span></div>
-      </div>
-    </div>`;
-  }
-
-  return `<div class="av-groups">
-    ${speakersHTML}
-    ${groupsHTML}
-    ${specHTML}
+    </div>
   </div>`;
+
+  html += "</div>";
+  return html;
 }
 
 // Clickable download pills shown on the collapsed session row
