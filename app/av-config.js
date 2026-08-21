@@ -143,13 +143,11 @@ const AV_CONFIG = [
   {
     group: "room", label: "Room Setup",
     id: "roomSetup", modalId: "ns-roomsetup",
-    type: "text", full: true, rows: 2,
-    placeholder: "Stage with podium, schoolroom 240…"
+    type: "room-picker"
   },
   {
     group: "room", label: "Stage Setup",
     id: "stageSetup", modalId: "ns-stagesetup",
-    type: "text", full: true, rows: 2,
-    placeholder: "Stage setup details…"
+    type: "stage-picker"
   },
 ];

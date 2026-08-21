@@ -673,7 +673,7 @@ function renderDays() {
     <span class="legend-item"><span class="fs-pill fs-done"   style="width:20px;height:20px;font-size:12px">✓</span> Downloaded / Distributed</span>
     <span class="legend-item"><span class="fs-pill fs-hold"   style="width:20px;height:20px;font-size:12px">⏸</span> On Hold — awaiting upload</span>
     <span class="legend-item"><span class="fs-pill fs-nofile" style="width:20px;height:20px;font-size:12px">—</span> Awaiting File</span>
-    <span style="margin-left:4px;font-style:italic">· Hover a pill to see file name · Click Download Status to open/close full details</span>
+    <span style="margin-left:4px;font-style:italic">· Hover a pill to see file name · Click AV Details to open/close full details</span>
   </div>`;
 
   days.forEach(day => {
@@ -737,12 +737,13 @@ function buildSessionBlock(s) {
   const files = s.files || [];
   const endPart = s.endTime ? `<span style="font-weight:400;color:var(--subtle)"> – ${esc(s.endTime)}</span>` : "";
 
+  const avNoteValue = s.avNote || (s.av && s.av.avNote) || s.operatorNote || "";
   let noteHTML = "";
-  if (s.avNote) {
+  if (avNoteValue && avNoteValue.trim()) {
     noteHTML = '<div class="av-groups" style="margin-top:0">' +
       '<div class="av-note-card">' +
         '<div class="av-group-hdr"><span class="g-icon">📝</span> AV Note <span style="font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--subtle);margin-left:4px">(visible to vendor team)</span></div>' +
-        '<div class="av-note-body">' + esc(s.avNote) + '</div>' +
+        '<div class="av-note-body">' + esc(avNoteValue.trim()) + '</div>' +
       '</div>' +
     '</div>';
   }
@@ -816,13 +817,18 @@ function buildAVChips(s) {
     const preset    = presets ? presets.find(p => p.key === presetKey) : null;
     const lines = [];
     if(preset) {
+      lines.push(preset.label);
+      const optLabels = [];
       for(const o of preset.options) {
         if(o.isCapacity) {
           const capMatch = optKeys.find(k => k.startsWith("capacity:"));
-          if(capMatch) lines.push("Capacity: " + capMatch.replace("capacity:", ""));
+          if(capMatch) optLabels.push("Capacity: " + capMatch.replace("capacity:", ""));
         } else if(optKeys.includes(o.id)) {
-          lines.push(o.label);
+          optLabels.push(o.label);
         }
+      }
+      if(optLabels.length > 0) {
+        lines[0] += " (" + optLabels.join(", ") + ")";
       }
     } else if(presetKey) {
       // Unknown preset — show raw
