@@ -101,10 +101,17 @@ The dashboard has a `decodePickerValue()` function that renders this as human-re
 
 ## Current state / next work items
 
-- Dashboard is "too busy" — user wants to clean it up. Options discussed:
-  - Collapsed-by-default with click-to-expand
-  - Condense AV group cards to read-only chip/pill format
-- Dead code in dashboard to clean up: `.sub-panel`, `togglePanel()`, `.row-btn`, `.files-col` CSS/JS
+- **Accomplished in Last Session:**
+  - **Admin Room Setup Picker Overhaul:** Refactored the preset selector row in `admin.html` with explicit room-type checkbox indicators next to room-type labels, conditionally displaying and activating option panels only when checked.
+  - **Dashboard Setup Picker Alignment:** Enhanced `dashboard.html` to render room setup and stage setup picker states as beautiful, read-only facsimile panels matching the admin UI (highlighted active preset pills, checked disabled boxes, capacities, notes cards) instead of flat text.
+  - **Critical Picker Save Bugfix:** Resolved a DOM check issue in `collectAVReqs()` where room and stage picker element searches returned `null` and skipped saving. Pickers now serialize and write to `av-data.json` successfully.
+  - **Visual AV Note Badges:** Added orange `📝 Note` badges next to the "AV Details" button on collapsed card rows of both `admin.html` and `dashboard.html` so notes are never hidden or missed.
+  - **Database Consolidation:** Pruned 344 redundant root-level variables (e.g. `projection`, `microphones`, `timer`, `monitor`) from `av-data.json` and cleanly structured everything in `av-config.js` and `s.av`.
+  - **Reference Constants Sync:** Kept reference variables inside `av-config.js` synchronized perfectly with the inlined scripts.
+
+- **Next Work Items:**
+  - Standard user maintenance, further layout cleanup, or new file type uploads as required.
+  - Monitor local embedded fallbacks if drift from github raw content occurs.
 
 ---
 
