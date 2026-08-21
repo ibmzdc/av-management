@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18ÃÂ¢ÃÂÃÂ22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-08-21T17:52:37.227Z",
+  "lastUpdated": "2026-08-21T18:05:33.727Z",
   "changelog": [
     {
       "ts": "2026-08-17T19:03:53.667Z",
@@ -2925,7 +2925,7 @@
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
       "files": [],
-      "avNote": null,
+      "avNote": "Mic all speakers and complete audio checks no later than 10 minutes before session start.",
       "operatorNote": null,
       "showInDashboard": true,
       "av": {
