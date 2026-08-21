@@ -155,7 +155,7 @@ a.fs-pill:hover { filter: brightness(.9); }
 .av-req { background: #f9fafb; border: 1px solid var(--border); border-radius: 5px; padding: 8px 10px; }
 .av-req.av-req-full { grid-column: 1 / -1; }
 .av-req .k { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); margin-bottom: 5px; }
-.av-req .v { display: block; font-size: 12px; font-weight: 500; color: var(--text); }
+.av-req .v { display: block; font-size: 12px; font-weight: 500; color: var(--text); white-space: pre-wrap; }
 .av-req .v-muted { display: block; font-size: 12px; color: var(--subtle); font-style: italic; }
 .av-req .v-yes { display: block; font-size: 12px; font-weight: 600; color: var(--green); }
 .av-empty { color: var(--muted); font-size: 12px; font-style: italic; }
@@ -798,6 +798,13 @@ function buildAVChips(s) {
   const bool = (k, v)       => v ? `<div class="av-req"><span class="k">${k}</span><span class="v-yes">✓ Yes</span></div>` : "";
   const txt  = (k, v, full) => v ? `<div class="av-req${full ? " av-req-full" : ""}"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>` : "";
 
+  // PresentationRequired fallback — matches admin.html logic exactly
+  const presSource = av.presentationSource || "";
+  const presRequired = av.presentationRequired != null ? av.presentationRequired : !!presSource;
+
+  // Podium fallback — matches admin.html logic exactly
+  const podiumVal = av.podium != null ? av.podium : !!s.podium;
+
   // Lavalier/Headset: prefer new combined field, fall back to sum of legacy
   const lhVal = av.lavalierHeadsetMics != null
     ? av.lavalierHeadsetMics
@@ -837,7 +844,8 @@ function buildAVChips(s) {
     const v = av[f.id];
     return !!v;
   }) || av.timer || s.speakers || s.roomSetup
-    || (Array.isArray(av.specialRequirements) && av.specialRequirements.length);
+    || (Array.isArray(av.specialRequirements) && av.specialRequirements.length)
+    || (s.specialReqs && s.specialReqs.trim());
 
   if (!hasAny) return `<p class="av-empty">No AV details on file.</p>`;
 
@@ -845,14 +853,25 @@ function buildAVChips(s) {
   const micsNote = (!av.wirelessHandheldMics && !lhVal && !av.catchBoxMics && av.legacyMicsNote)
     ? `<div class="av-req av-req-full"><span class="k">Microphones</span><span class="v">${esc(av.legacyMicsNote)}</span></div>` : "";
 
-  const specItems = Array.isArray(av.specialRequirements) ? av.specialRequirements : [];
+  // Special requirements robust fallback — matches admin.html logic exactly
+  let specItems = [];
+  if (Array.isArray(av.specialRequirements)) {
+    specItems = av.specialRequirements;
+  } else if (typeof av.specialRequirements === "string" && av.specialRequirements.trim()) {
+    specItems = [av.specialRequirements.trim()];
+  } else if (s.specialReqs && s.specialReqs.trim()) {
+    specItems = s.specialReqs.split(/[;\n]/).map(x => x.trim()).filter(Boolean);
+  }
 
   // Build each group from AV_CONFIG
   const groupsHTML = AV_GROUPS.map(grp => {
     const fields = AV_CONFIG.filter(f => f.group === grp.key);
     const fieldsHTML = fields.map(f => {
       if(f.type === "bool") {
-        const val = f.id === "podium" ? (av.podium || s.podium) : av[f.id];
+        let val;
+        if (f.id === "presentationRequired") val = presRequired;
+        else if (f.id === "podium")          val = podiumVal;
+        else                                 val = av[f.id];
         return bool(f.label, val);
       }
       if(f.type === "num") {
@@ -875,7 +894,7 @@ function buildAVChips(s) {
       }
       if(f.type === "text") return txt(f.label, av[f.id], f.full);
       return "";
-    }).join("") + (grp.key === "presentation" ? micsNote : "");
+    }).join("") + (grp.key === "audio" ? micsNote : "");
 
     if (!fieldsHTML.trim()) return "";
 
