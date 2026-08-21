@@ -289,7 +289,7 @@ a{color:var(--accent);text-decoration:none}
 .rs-preset{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit;color:var(--text)}
 .rs-preset:hover{background:#f0f4ff;border-color:#93c5fd;color:var(--blue)}
 .rs-preset.active{background:#dbeafe;border-color:#3b82d4;color:#1d4ed8}
-.rs-preset-check{font-size:11px;color:#1d4ed8;width:10px;display:inline-block;flex-shrink:0}
+.rs-preset-cb{width:13px;height:13px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;margin:0;padding:0}
 .rs-options{display:flex;flex-direction:column;gap:4px;padding:8px 10px;background:#f9fafb;border:1px solid var(--border);border-radius:5px}
 .rs-option{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);cursor:pointer;padding:2px 0}
 .rs-option input[type=checkbox]{width:13px;height:13px;accent-color:var(--accent);flex-shrink:0;cursor:pointer}
@@ -1005,7 +1005,7 @@ function renderSetupPicker(ns, presets, existing, placeholder) {
     html += '<button type="button" class="rs-preset' + (isActive ? ' active' : '') + '"'
       + ' id="' + ns + '-preset-btn-' + p.key + '"'
       + ' onclick="rsSelectPreset(\'' + ns + '\',\'' + p.key + '\')">'
-      + '<span class="rs-preset-check">' + (isActive ? '✓' : '') + '</span>'
+      + '<input type="checkbox" class="rs-preset-cb" id="' + ns + '-preset-cb-' + p.key + '"' + (isActive ? ' checked' : '') + ' onclick="event.stopPropagation(); rsSelectPreset(\'' + ns + '\',\'' + p.key + '\')">'
       + p.label + '</button>';
   }
   html += '</div>';
@@ -1052,13 +1052,21 @@ function rsSelectPreset(ns, key) {
   // Deactivate all presets in this picker
   for(const p of presets) {
     const btn = document.getElementById(ns + '-preset-btn-' + p.key);
-    if(btn) { btn.classList.remove('active'); btn.querySelector('.rs-preset-check').textContent = ''; }
+    if(btn) {
+      btn.classList.remove('active');
+      const cb = btn.querySelector('.rs-preset-cb');
+      if(cb) cb.checked = false;
+    }
     const panel = document.getElementById(ns + '-opts-' + p.key);
     if(panel) panel.style.display = 'none';
   }
 
   if(!wasActive) {
-    if(thisBtn) { thisBtn.classList.add('active'); thisBtn.querySelector('.rs-preset-check').textContent = '✓'; }
+    if(thisBtn) {
+      thisBtn.classList.add('active');
+      const cb = thisBtn.querySelector('.rs-preset-cb');
+      if(cb) cb.checked = true;
+    }
     const panel = document.getElementById(ns + '-opts-' + key);
     if(panel) panel.style.display = 'flex';
     const preset = presets.find(p => p.key === key);

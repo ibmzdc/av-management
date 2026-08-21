@@ -151,3 +151,57 @@ const AV_CONFIG = [
     type: "stage-picker"
   },
 ];
+
+// ── Room Setup Presets ────────────────────────────────────────────────────────
+// Each preset has: key, label, defaultCapacity, options[]
+// options: { id, label, isCapacity (bool) }
+const ROOM_SETUP_PRESETS = [
+  {
+    key: "ballroom",
+    label: "Main Tent / Ballroom",
+    defaultCapacity: 200,
+    options: [
+      { id: "schoolroom",   label: "Schoolroom style seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "aisles",       label: "Center and side aisles for attendee access" },
+      { id: "water",        label: "Water stations" },
+    ]
+  },
+  {
+    key: "breakout",
+    label: "Breakout Room",
+    defaultCapacity: 80,
+    options: [
+      { id: "schoolroom",   label: "Schoolroom style seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "podium",       label: "Table / Podium for facilitator laptop and presentation materials" },
+      { id: "hdmi",         label: "Power and HDMI connection to projector" },
+    ]
+  },
+  {
+    key: "collab",
+    label: "Collab Room",
+    defaultCapacity: 30,
+    options: [
+      { id: "seating",      label: "Collaborative circle or U-shape seating" },
+      { id: "capacity",     label: "Capacity", isCapacity: true },
+      { id: "podium",       label: "Table / Podium for facilitator laptop and presentation materials" },
+      { id: "hdmi",         label: "Power and HDMI connection to projector" },
+      { id: "supplies",     label: "Supply table for workshop materials (sticky notes, markers, and handouts)" },
+      { id: "waste",        label: "Waste Basket" },
+      { id: "candy",        label: "Serving bowl for candy (to be provided by the event team)" },
+    ]
+  },
+];
+
+// ── Stage Setup Presets ───────────────────────────────────────────────────────
+const STAGE_SETUP_PRESETS = [
+  {
+    key: "panel",
+    label: "Panel Stage",
+    options: [
+      { id: "chairs",  label: "Soft chairs centered on stage in a conversational panel layout" },
+      { id: "table",   label: "Small side / Coffee table between the chairs stocked with water" },
+    ]
+  },
+];
