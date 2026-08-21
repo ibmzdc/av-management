@@ -169,6 +169,103 @@ a.fs-pill:hover { filter: brightness(.9); }
 .av-note-card .av-group-hdr { background: #f6f8fa; border-bottom: 1px solid var(--border); }
 .av-note-card .av-note-body { padding: 10px; font-size: 12px; color: var(--text); white-space: pre-wrap; line-height: 1.5; }
 
+/* ── Room / Stage Setup Picker Read-Only ───────────────────────────────── */
+.rs-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+.rs-preset-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.rs-preset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text);
+}
+.rs-preset.active {
+  background: #dbeafe;
+  border-color: #3b82d4;
+  color: #1d4ed8;
+}
+.rs-preset-cb {
+  width: 13px;
+  height: 13px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+.rs-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.rs-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text);
+  padding: 2px 0;
+}
+.rs-option input[type=checkbox] {
+  width: 13px;
+  height: 13px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+.rs-option.rs-capacity {
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+}
+.rs-capacity-val {
+  font-weight: 600;
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.rs-notes-read {
+  width: 100%;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 12px;
+  background: #fff;
+  color: var(--text);
+  white-space: pre-wrap;
+  min-height: 24px;
+}
+.rs-legacy-text {
+  width: 100%;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 12px;
+  background: #f9fafb;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
 /* ── Files Table ─────────────────────────────────────────── */
 .files-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
 .files-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--subtle); padding: 5px 8px; border-bottom: 1px solid var(--border); text-align: left; }
@@ -839,6 +936,79 @@ function buildAVChips(s) {
     return lines.length ? lines.join("\n") : null;
   }
 
+  // Renders a read-only picker layout for Room Setup / Stage Setup in the dashboard
+  function renderSetupPickerReadOnly(presets, existing, placeholder) {
+    if(!existing) return "";
+    
+    // If it is a raw custom legacy string (does not contain "|")
+    if(existing.indexOf("|") === -1) {
+      return '<div class="rs-picker">' +
+               '<div class="rs-legacy-text">' + esc(existing) + '</div>' +
+             '</div>';
+    }
+
+    let activePreset = "", activeOpts = {}, capacityVal = {}, freeText = "";
+    const parts = existing.split("|");
+    activePreset = parts[0] || "";
+    if(parts[1]) {
+      parts[1].split(",").forEach(o => {
+        const cap = o.match(/^capacity:(\d+)$/);
+        if(cap) { activeOpts["capacity"] = true; capacityVal[activePreset] = cap[1]; }
+        else if(o) { activeOpts[o] = true; }
+      });
+    }
+    freeText = parts[2] || "";
+
+    // If there is no active preset and no notes, return empty
+    if(!activePreset && !freeText.trim()) return "";
+
+    let html = '<div class="rs-picker">';
+
+    // Preset selector row
+    if (activePreset) {
+      html += '<div class="rs-preset-row">';
+      for(const p of presets) {
+        const isActive = activePreset === p.key;
+        html += '<div class="rs-preset' + (isActive ? ' active' : '') + '">'
+          + '<input type="checkbox" class="rs-preset-cb" disabled' + (isActive ? ' checked' : '') + '>'
+          + p.label + '</div>';
+      }
+      html += '</div>';
+    }
+
+    // Options panel for active preset
+    if(activePreset) {
+      const p = presets.find(x => x.key === activePreset);
+      if(p) {
+        const capDefault = capacityVal[p.key] || p.defaultCapacity || "";
+        html += '<div class="rs-options">';
+        for(const o of p.options) {
+          if(o.isCapacity) {
+            const isChecked = activeOpts["capacity"];
+            html += '<div class="rs-option rs-capacity">'
+              + '<input type="checkbox" disabled' + (isChecked ? ' checked' : '') + '>'
+              + 'Capacity: <span class="rs-capacity-val">' + capDefault + '</span>'
+              + '</div>';
+          } else {
+            const isChecked = activeOpts[o.id];
+            html += '<div class="rs-option">'
+              + '<input type="checkbox" disabled' + (isChecked ? ' checked' : '') + '>'
+              + o.label + '</div>';
+          }
+        }
+        html += '</div>';
+      }
+    }
+
+    // Notes area
+    if(freeText.trim()) {
+      html += '<div class="rs-notes-read">' + esc(freeText.trim()) + '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
   // ── Speakers group ────────────────────────────────────────────────────────
   const names = s.speakers ? s.speakers.split(",").map(n => n.trim()).filter(Boolean) : [];
   const speakerRows = names.length > 0
@@ -876,15 +1046,15 @@ function buildAVChips(s) {
         fieldsHTML += `<div class="av-req"><span class="k">${f.label}</span><span class="v">${esc(displayVal)}</span></div>`;
       } else if (f.type === "room-picker") {
         const raw = avStr("roomSetup", s.roomSetup || "");
-        const decoded = decodePickerValue(raw, typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null) || raw;
-        if (decoded) {
-          fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(decoded)}</span></div>`;
+        const htmlMarkup = renderSetupPickerReadOnly(typeof ROOM_SETUP_PRESETS !== "undefined" ? ROOM_SETUP_PRESETS : null, raw);
+        if (htmlMarkup) {
+          fieldsHTML += `<div class="av-req av-req-full" style="flex-direction:column;align-items:flex-start"><span class="k">${f.label}</span><span class="v" style="width:100%">${htmlMarkup}</span></div>`;
         }
       } else if (f.type === "stage-picker") {
         const raw = avStr("stageSetup", s.stageSetup || "");
-        const decoded = decodePickerValue(raw, typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null) || raw;
-        if (decoded) {
-          fieldsHTML += `<div class="av-req av-req-full"><span class="k">${f.label}</span><span class="v">${esc(decoded)}</span></div>`;
+        const htmlMarkup = renderSetupPickerReadOnly(typeof STAGE_SETUP_PRESETS !== "undefined" ? STAGE_SETUP_PRESETS : null, raw);
+        if (htmlMarkup) {
+          fieldsHTML += `<div class="av-req av-req-full" style="flex-direction:column;align-items:flex-start"><span class="k">${f.label}</span><span class="v" style="width:100%">${htmlMarkup}</span></div>`;
         }
       } else if (f.type === "text") {
         const val = avStr(f.id, "");
