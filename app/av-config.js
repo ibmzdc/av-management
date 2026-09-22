@@ -22,7 +22,6 @@
 //
 // Special fields handled separately (not in AV_CONFIG):
 //   • Speakers   — dynamic list with add/remove buttons
-//   • specialRequirements — stored as array; has its own save logic
 
 const AV_GROUPS = [
   { key: "presentation", icon: "🎞",  label: "Presentation" },

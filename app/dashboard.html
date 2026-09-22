@@ -349,10 +349,6 @@ function migrateSession(s) {
   if (s.roomSetup && !av.roomSetup)
     av.roomSetup = s.roomSetup;
 
-  if (s.specialReqs && (!av.specialRequirements || !av.specialRequirements.length)) {
-    av.specialRequirements = s.specialReqs.split(/[;\n]/).map(x => x.trim()).filter(Boolean);
-  }
-
   const hasMicCounts = av.wirelessHandheldMics || av.lavalierHeadsetMics ||
                        av.wirelessLavalierMics || av.headsetMics ||
                        av.tableMics || av.catchBoxMics || av.panelMics;
@@ -838,30 +834,6 @@ function buildAVChips(s) {
       <div class="av-group-body">${fieldsHTML}</div>
     </div>`;
   }
-
-  // ── Special Requirements ──────────────────────────────────────────────────
-  let specItems = [];
-  if (Array.isArray(av.specialRequirements)) {
-    specItems = av.specialRequirements;
-  } else if (typeof av.specialRequirements === "string" && av.specialRequirements.trim()) {
-    specItems = [av.specialRequirements.trim()];
-  } else if (s.specialReqs && s.specialReqs.trim()) {
-    specItems = s.specialReqs.split(/[;\n]/).map(x => x.trim()).filter(Boolean);
-  }
-  const specVal = specItems.length > 0
-    ? specItems.map(i => esc(i)).join("<br>")
-    : '<span class="v-muted">—</span>';
-
-  html += `
-  <div class="av-group">
-    <div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
-    <div class="av-group-body av-special">
-      <div class="av-req av-req-full">
-        <span class="k">Notes</span>
-        <span class="v">${specVal}</span>
-      </div>
-    </div>
-  </div>`;
 
   html += "</div>";
   return html;

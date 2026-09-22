@@ -370,16 +370,6 @@ a{color:var(--accent);text-decoration:none}
     <!-- AV sections generated from AV_CONFIG by buildModalAVSections() -->
     <div id="ns-av-sections"></div>
 
-    <!-- ── ⚡ Special Requirements ── -->
-    <div class="modal-section">
-      <div class="modal-section-hdr"><span class="g-icon">⚡</span> Special Requirements</div>
-      <div class="modal-section-grid wide">
-        <div>
-          <label>Notes (one per line)</label>
-          <textarea id="ns-specialRequirements" rows="3" placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician"></textarea>
-        </div>
-      </div>
-    </div>
 
     <div class="modal-btns">
       <button class="btn" style="background:#f3f4f6;color:#374151" onclick="closeAddSession()">Cancel</button>
@@ -508,7 +498,6 @@ const EMBEDDED_DATA = {"event":"ZDC 2026 Fall","eventDates":"Oct 18â22, 202
 //   s.timer       → av.timer (legacy boolean; new field is av.timerMins)
 //   s.monitor     → av.confidenceMonitors (parses leading integer)
 //   s.roomSetup   → av.roomSetup (also mirrored back on save)
-//   s.specialReqs → av.specialRequirements (array)
 //   s.microphones → av.wirelessHandheldMics, av.lavalierHeadsetMics (combined),
 //                   av.catchBoxMics, av.legacyMicsNote
 //                   Note: av.wirelessLavalierMics, av.headsetMics, av.tableMics,
@@ -539,11 +528,6 @@ function migrateSession(s){
   // roomSetup
   if(s.roomSetup && !av.roomSetup)
     av.roomSetup = s.roomSetup;
-
-  // specialReqs → specialRequirements array
-  if(s.specialReqs && (!av.specialRequirements || !av.specialRequirements.length)){
-    av.specialRequirements = s.specialReqs.split(/[;\n]/).map(x=>x.trim()).filter(Boolean);
-  }
 
   // microphones (free-text) → attempt to extract structured counts
   // Only runs if none of the structured mic fields have been set yet
@@ -958,15 +942,6 @@ function renderAVReqs(s){
       + '</div>';
   }
 
-  // ── Special Requirements ──────────────────────────────────────────────────
-  const specVal = esc(Array.isArray(av.specialRequirements) ? av.specialRequirements.join("\n") : (av.specialRequirements||s.specialReqs||""));
-  html += '<div class="av-group">'
-    + '<div class="av-group-hdr"><span class="g-icon">⚡</span> Special Requirements</div>'
-    + '<div class="av-group-body av-special"><div class="av-req av-req-full"><span class="k">Notes (one per line)</span>'
-    + '<textarea id="avf-specialRequirements-' + id + '" oninput="markDirty()" rows="3"'
-    + ' placeholder="Interpreter feed&#10;Power strip at stage&#10;Dedicated AV technician">' + specVal + '</textarea>'
-    + '</div></div></div>';
-
   html += '</div>';
   return html;
 }
@@ -998,12 +973,6 @@ function collectAVReqs(sessionId){
   const speakerNames = Array.from(speakerInputs).map(el => el.value.trim()).filter(Boolean);
   s.speakers = speakerNames.join(", ") || null;
 
-  // Special Requirements — stored as array
-  if(g("specialRequirements")){
-    const raw = g("specialRequirements").value.trim();
-    s.av.specialRequirements = raw ? raw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
-    s.specialReqs = s.av.specialRequirements.join("; ")||null; // legacy compat
-  }
 }
 
 function renderFiles(s){
@@ -1127,9 +1096,6 @@ function openAddSession(day){
     if(f.type === "select") el.value   = "";
     if(f.type === "text")   el.value   = "";
   }
-  // Special reqs
-  document.getElementById("ns-specialRequirements").value = "";
-
   document.getElementById("addSessionModal").classList.add("open");
   setTimeout(()=>document.getElementById("ns-title").focus(), 50);
 }
@@ -1166,9 +1132,6 @@ function confirmAddSession(){
     else if(f.type === "select")         av[f.id] = nsStr(f.modalId);
     else if(f.type === "text")           av[f.id] = nsStr(f.modalId);
   }
-  const specRaw = document.getElementById("ns-specialRequirements").value.trim();
-  const specArr = specRaw ? specRaw.split("\n").map(l=>l.trim()).filter(Boolean) : [];
-  av.specialRequirements = specArr;
 
   const newSession = {
     id,
@@ -1182,10 +1145,6 @@ function confirmAddSession(){
     description:  null,
     speakers:     nsStr("ns-speakers"),
     room,
-    roomSetup:    av.roomSetup || null,
-    stageSetup:   av.stageSetup  || null,
-    podium:       av.podium      || false,
-    specialReqs:  specArr.join("; ") || null,
     av,
     showInDashboard: false,
     files:        [],
