@@ -1165,7 +1165,12 @@ function buildFilesSummary(files) {
 
 function buildFilesSection(s) {
   const files = s.files || [];
-  if (!files.length) return `<p class="no-files-msg">Awaiting File — no files uploaded yet.</p>`;
+  if (!files.length) {
+    const noPresReq = s.av && s.av.presentationRequired === false;
+    return noPresReq
+      ? `<p class="no-files-msg">No file required — presentation not required for this session.</p>`
+      : `<p class="no-files-msg">Awaiting File — no files uploaded yet.</p>`;
+  }
 
   const rows = files.map((f, i) => {
     const pillClass = {

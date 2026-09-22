@@ -1259,7 +1259,12 @@ function collectAVReqs(sessionId){
 }
 
 function renderFiles(s){
-  if(!s.files || s.files.length===0) return `<div class="no-file">No files added yet.</div>`;
+  if(!s.files || s.files.length===0){
+    const noPresReq = s.av && s.av.presentationRequired === false;
+    return noPresReq
+      ? `<div class="no-file">No file required — presentation not required for this session.</div>`
+      : `<div class="no-file">No files added yet.</div>`;
+  }
   return s.files.map((f,i)=>`
     <div class="file-row" id="filerow-${s.id}-${i}">
       <select id="ftype-${s.id}-${i}" onchange="markDirty()">
