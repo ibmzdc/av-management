@@ -28,7 +28,6 @@ const AV_GROUPS = [
   { key: "presentation", icon: "🎞",  label: "Presentation" },
   { key: "audio",        icon: "🎙",  label: "Audio"        },
   { key: "video",        icon: "📽",  label: "Video"        },
-  { key: "staging",      icon: "🎭",  label: "Staging"      },
 ];
 
 const AV_CONFIG = [
@@ -106,36 +105,4 @@ const AV_CONFIG = [
     type: "bool"
   },
 
-  // ── Staging ────────────────────────────────────────────────────────────────
-  {
-    group: "staging", label: "Podium",
-    id: "podium", modalId: "ns-podium",
-    type: "bool"
-  },
-  {
-    group: "staging", label: "Panel Chairs",
-    id: "panelChairs", modalId: "ns-panelChairs",
-    type: "num"
-  },
-  {
-    group: "staging", label: "Side Tables",
-    id: "sideTables", modalId: "ns-sideTables",
-    type: "num"
-  },
-  {
-    group: "staging", label: "High-top Tables",
-    id: "highTopTables", modalId: "ns-highTopTables",
-    type: "num"
-  },
-  {
-    group: "staging", label: "Easel",
-    id: "easel", modalId: "ns-easel",
-    type: "bool"
-  },
-  {
-    group: "staging", label: "Flip Chart",
-    id: "flipChart", modalId: "ns-flipChart",
-    type: "bool"
-  },
-
-];
+  ];

@@ -272,7 +272,6 @@ const AV_GROUPS = [
   { key: "presentation", icon: "🎞",  label: "Presentation" },
   { key: "audio",        icon: "🎙",  label: "Audio"        },
   { key: "video",        icon: "📽",  label: "Video"        },
-  { key: "staging",      icon: "🎭",  label: "Staging"      },
 ];
 const AV_CONFIG = [
   { group:"presentation", label:"Presentation Required", id:"presentationRequired", modalId:"ns-presRequired",       type:"bool" },
@@ -288,12 +287,6 @@ const AV_CONFIG = [
   { group:"audio",        label:"XLR Audio Feed",        id:"xlrAudioFeed",         modalId:"ns-xlrAudioFeed",       type:"bool" },
   { group:"video",        label:"Projector",             id:"projector",            modalId:"ns-projector",          type:"bool" },
   { group:"video",        label:"Video Playback",        id:"videoPlayback",        modalId:"ns-videoPlayback",      type:"bool" },
-  { group:"staging",      label:"Podium",                id:"podium",               modalId:"ns-podium",             type:"bool" },
-  { group:"staging",      label:"Panel Chairs",          id:"panelChairs",          modalId:"ns-panelChairs",        type:"num"  },
-  { group:"staging",      label:"Side Tables",           id:"sideTables",           modalId:"ns-sideTables",         type:"num"  },
-  { group:"staging",      label:"High-top Tables",       id:"highTopTables",        modalId:"ns-highTopTables",      type:"num"  },
-  { group:"staging",      label:"Easel",                 id:"easel",                modalId:"ns-easel",              type:"bool" },
-  { group:"staging",      label:"Flip Chart",            id:"flipChart",            modalId:"ns-flipChart",          type:"bool" },
 ];
 </script>
 <script>
@@ -344,9 +337,6 @@ function migrateSession(s) {
 
   if (s.projection && !av.presentationSource)
     av.presentationSource = s.projection;
-
-  if (s.podium && !av.podium)
-    av.podium = true;
 
   if (s.timer != null && s.timer !== false && s.timer !== "" && av.timer == null)
     av.timer = true;
@@ -766,9 +756,6 @@ function buildAVChips(s) {
   const presSource = av.presentationSource || "";
   const presRequired = av.presentationRequired != null ? av.presentationRequired : !!presSource;
 
-  // Podium fallback — matches admin.html logic exactly
-  const podiumVal = av.podium != null ? av.podium : !!s.podium;
-
   // Helpers matching admin.html exactly
   const avNum  = (field, def=0)     => (av && av[field] != null) ? av[field] : def;
   const avBool = (field, def=false) => (av && av[field] != null) ? av[field] : def;
@@ -825,9 +812,7 @@ function buildAVChips(s) {
     let fieldsHTML = "";
     for (const f of fields) {
       if (f.type === "bool") {
-        const val = f.id === "presentationRequired" ? presRequired
-                  : f.id === "podium" ? podiumVal
-                  : avBool(f.id);
+        const val = f.id === "presentationRequired" ? presRequired : avBool(f.id);
         const badge = val ? '<span class="v-yes">✓ Yes</span>' : '<span class="v-muted">—</span>';
         fieldsHTML += `<div class="av-req"><span class="k">${f.label}</span><span class="v">${badge}</span></div>`;
       } else if (f.type === "num") {

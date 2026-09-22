@@ -442,7 +442,6 @@ const AV_GROUPS = [
   { key: "presentation", icon: "🎞",  label: "Presentation" },
   { key: "audio",        icon: "🎙",  label: "Audio"        },
   { key: "video",        icon: "📽",  label: "Video"        },
-  { key: "staging",      icon: "🎭",  label: "Staging"      },
 ];
 const AV_CONFIG = [
   { group:"presentation", label:"Presentation Required", id:"presentationRequired", modalId:"ns-presRequired",       type:"bool" },
@@ -458,12 +457,6 @@ const AV_CONFIG = [
   { group:"audio",        label:"XLR Audio Feed",        id:"xlrAudioFeed",         modalId:"ns-xlrAudioFeed",       type:"bool" },
   { group:"video",        label:"Projector",             id:"projector",            modalId:"ns-projector",          type:"bool" },
   { group:"video",        label:"Video Playback",        id:"videoPlayback",        modalId:"ns-videoPlayback",      type:"bool" },
-  { group:"staging",      label:"Podium",                id:"podium",               modalId:"ns-podium",             type:"bool" },
-  { group:"staging",      label:"Panel Chairs",          id:"panelChairs",          modalId:"ns-panelChairs",        type:"num"  },
-  { group:"staging",      label:"Side Tables",           id:"sideTables",           modalId:"ns-sideTables",         type:"num"  },
-  { group:"staging",      label:"High-top Tables",       id:"highTopTables",        modalId:"ns-highTopTables",      type:"num"  },
-  { group:"staging",      label:"Easel",                 id:"easel",                modalId:"ns-easel",              type:"bool" },
-  { group:"staging",      label:"Flip Chart",            id:"flipChart",            modalId:"ns-flipChart",          type:"bool" },
   ];
 </script>
 <script>
@@ -512,7 +505,6 @@ const EMBEDDED_DATA = {"event":"ZDC 2026 Fall","eventDates":"Oct 18â22, 202
 //
 // Legacy root fields (read-only — never written by the new save path):
 //   s.projection  → av.presentationSource
-//   s.podium      → av.podium  (also mirrored back on save)
 //   s.timer       → av.timer (legacy boolean; new field is av.timerMins)
 //   s.monitor     → av.confidenceMonitors (parses leading integer)
 //   s.roomSetup   → av.roomSetup (also mirrored back on save)
@@ -938,9 +930,7 @@ function renderAVReqs(s){
     for(const f of fields){
       const elId = "avf-" + f.id + "-" + id;
       if(f.type === "bool"){
-        const checked = f.id === "presentationRequired" ? presRequired
-                      : f.id === "podium" ? avBool(s,"podium", s.podium||false)
-                      : avBool(s, f.id);
+        const checked = f.id === "presentationRequired" ? presRequired : avBool(s, f.id);
         fieldsHTML += '<div class="av-req"><span class="k">' + f.label + '</span>'
           + '<div class="av-req-check">' + chk(elId, checked)
           + '<label for="' + elId + '">Yes</label></div></div>';
@@ -996,7 +986,6 @@ function collectAVReqs(sessionId){
     if(!el) continue;
     if(f.type === "bool") {
       s.av[f.id] = gb(f.id);
-      if(f.id === "podium") s.podium = s.av.podium; // mirror legacy root
     } else if(f.type === "num") {
       s.av[f.id] = gn(f.id);
     } else if(f.type === "select" || f.type === "text") {
