@@ -1262,7 +1262,7 @@ function renderFiles(s){
   if(!s.files || s.files.length===0){
     const noPresReq = s.av && s.av.presentationRequired === false;
     return noPresReq
-      ? `<div class="no-file">No file required — presentation not required for this session.</div>`
+      ? `<div class="no-file">No file required — presentation not required for this session or projected from presenter&#39;s laptop.</div>`
       : `<div class="no-file">No files added yet.</div>`;
   }
   return s.files.map((f,i)=>`

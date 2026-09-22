@@ -1168,7 +1168,7 @@ function buildFilesSection(s) {
   if (!files.length) {
     const noPresReq = s.av && s.av.presentationRequired === false;
     return noPresReq
-      ? `<p class="no-files-msg">No file required — presentation not required for this session.</p>`
+      ? `<p class="no-files-msg">No file required — presentation not required for this session or projected from presenter&#39;s laptop.</p>`
       : `<p class="no-files-msg">Awaiting File — no files uploaded yet.</p>`;
   }
 
