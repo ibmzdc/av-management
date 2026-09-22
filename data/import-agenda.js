@@ -7,10 +7,14 @@
  * Usage (from workspace root):
  *   node av-management/data/import-agenda.js
  *
- * Run this once at the start of each event cycle to seed the data file from
- * the agenda spreadsheet.  Re-running is safe — it will merge new sessions in
- * and preserve any existing AV tracking fields (files, avNote, operatorNote)
- * on sessions whose id is unchanged.
+ * Re-running is safe — it will merge new/changed sessions and preserve all
+ * admin-edited AV tracking fields (files, avNote, operatorNote, showInDashboard,
+ * and all av.* overrides) for any session whose id is unchanged.
+ *
+ * Inclusion rules:
+ *   • ALL session types are imported (no type exclusion).
+ *   • Only rows that have at least a Day, Date, and Start Time are included.
+ *   • Duplicate rows (same Day + StartTime + Room + Title) are de-duped.
  *
  * Requirements:
  *   npm install xlsx          (SheetJS community edition)
@@ -26,39 +30,21 @@ const XLSX = require("xlsx");
 const XLSX_PATH = path.join(__dirname, "../../Data/ZDC_Agenda_Master_2026_Fall.xlsx");
 const OUT_PATH  = path.join(__dirname, "av-data.json");
 
-// ── Session types to INCLUDE in AV tracking ──────────────────────────────────
-const EXCLUDED_TYPES = new Set([
-  "Meal", "Break", "Networking", "Transportation", "Registration",
-  "Collaborative Session", "Collaborative Session Playbacks"
-]);
-
-// ── Only include sessions where Projection is "AV Team" or "Presenter" ────────
-function hasAVProjection(projectionVal) {
-  if (!projectionVal) return false;
-  const p = projectionVal.trim().toLowerCase();
-  return p.startsWith("av team") || p === "presenter";
-}
-
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmtTime(excelDateVal) {
-  // Times in Excel are stored as fractional days from 1899-12-30
   if (excelDateVal == null || excelDateVal === "") return null;
-  // If already a JS Date (SheetJS with dates:true)
   if (excelDateVal instanceof Date) {
     const h = excelDateVal.getUTCHours().toString().padStart(2, "0");
     const m = excelDateVal.getUTCMinutes().toString().padStart(2, "0");
     return `${h}:${m}`;
   }
-  // Numeric fractional day
   if (typeof excelDateVal === "number") {
-    // Strip integer part (date), keep fractional (time)
     const frac = excelDateVal % 1;
     const totalMin = Math.round(frac * 24 * 60);
     const h = Math.floor(totalMin / 60).toString().padStart(2, "0");
     const m = (totalMin % 60).toString().padStart(2, "0");
     return `${h}:${m}`;
   }
-  // ISO string fallback
   if (typeof excelDateVal === "string" && excelDateVal.includes("T")) {
     const d = new Date(excelDateVal);
     if (!isNaN(d)) {
@@ -91,6 +77,21 @@ function clean(val) {
   return s || null;
 }
 
+// Parse 12-hour time string "3:00 PM" → "15:00"
+function parse12h(raw) {
+  if (!raw) return null;
+  const m12 = String(raw).match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (m12) {
+    let h = parseInt(m12[1]);
+    const min = m12[2];
+    const ampm = m12[3].toUpperCase();
+    if (ampm === "PM" && h !== 12) h += 12;
+    if (ampm === "AM" && h === 12) h = 0;
+    return `${h.toString().padStart(2, "0")}:${min}`;
+  }
+  return String(raw).trim() || null;
+}
+
 // ── Read workbook ─────────────────────────────────────────────────────────────
 console.log(`Reading: ${XLSX_PATH}`);
 const wb = XLSX.readFile(XLSX_PATH, { cellDates: true });
@@ -100,11 +101,9 @@ if (!ws) {
   process.exit(1);
 }
 
-// Convert to array of arrays; first row is group headers, second row is real headers
-const raw = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, dateNF: "yyyy-mm-dd" });
-
 // Row 0 = group headers (Session Details, AV & Technical Needs, …)
 // Row 1 = real column headers
+const raw = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, dateNF: "yyyy-mm-dd" });
 const colHeaders = raw[1];
 const dataRows   = raw.slice(2);
 
@@ -130,62 +129,29 @@ for (const row of dataRows) {
 
   const day         = clean(col(row, "Day"));
   const sessionType = clean(col(row, "Session Type"));
-  const title       = clean(col(row, "Session Title"));
+  const dateRaw     = col(row, "Date");
+  const startRaw    = col(row, "Start Time (am/pm)");
+  const endRaw      = col(row, "End Time (am/pm)");
 
-  if (!day || !sessionType) continue;
-  if (EXCLUDED_TYPES.has(sessionType)) continue;
+  // Must have day + date + start time to be a valid session row
+  if (!day || !sessionType || !dateRaw || !startRaw) continue;
 
-  // Apply projection filter before reading the rest of the row
-  const projectionRaw = clean(col(row, "Projection"));
-  if (!hasAVProjection(projectionRaw)) continue;
+  const date      = fmtDate(dateRaw);
+  const startTime = parse12h(startRaw);
+  const endTime   = parse12h(endRaw);
 
-  const dateRaw  = col(row, "Date");
-  const startRaw = col(row, "Start Time (am/pm)");
-  const endRaw   = col(row, "End Time (am/pm)");
-
-  // Parse times — SheetJS with raw:false returns formatted strings like "3:00 PM"
-  let startTime = null;
-  let endTime   = null;
-  if (startRaw) {
-    // Try to convert "3:00 PM" → "15:00"
-    const m12 = String(startRaw).match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-    if (m12) {
-      let h = parseInt(m12[1]);
-      const min = m12[2];
-      const ampm = m12[3].toUpperCase();
-      if (ampm === "PM" && h !== 12) h += 12;
-      if (ampm === "AM" && h === 12) h = 0;
-      startTime = `${h.toString().padStart(2,"0")}:${min}`;
-    } else {
-      startTime = String(startRaw).trim();
-    }
-  }
-  if (endRaw) {
-    const m12 = String(endRaw).match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-    if (m12) {
-      let h = parseInt(m12[1]);
-      const min = m12[2];
-      const ampm = m12[3].toUpperCase();
-      if (ampm === "PM" && h !== 12) h += 12;
-      if (ampm === "AM" && h === 12) h = 0;
-      endTime = `${h.toString().padStart(2,"0")}:${min}`;
-    } else {
-      endTime = String(endRaw).trim();
-    }
-  }
-
-  const date       = fmtDate(dateRaw);
+  const title      = clean(col(row, "Session Title"));
   const room       = clean(col(row, "Location/Room"));
   const safeTitle  = (title || "(Untitled)").replace(/\s+/g, " ").trim();
 
-  // Stable dedup key: same session repeated across Monday AM / PM is distinct by time
-  const dedupe = `${day}|${startTime}|${room}|${safeTitle.slice(0,50)}`;
+  // Stable de-dup key: same session repeated (e.g. AM/PM collab slots) is distinct by time+room+title
+  const dedupe = `${day}|${startTime}|${(room||"").trim()}|${safeTitle.slice(0, 50)}`;
   if (seenIds.has(dedupe)) continue;
   seenIds.add(dedupe);
 
   const id = slugify(`${day}-${startTime || "tba"}-${(room || "tbd").slice(0, 18)}-${safeTitle.slice(0, 28)}`);
 
-  const projection  = projectionRaw; // already read above for filter
+  const projection  = clean(col(row, "Projection"));
   const microphones = clean(col(row, "Microphones (type & quantity))"));
   const podiumRaw   = clean(col(row, "Podium Required"));
   const timerRaw    = clean(col(row, "Timer"));
@@ -215,6 +181,7 @@ for (const row of dataRows) {
     timer: timerRaw && timerRaw !== " " ? timerRaw : null,
     monitor: monitor || null,
     specialReqs: specialReqs || null,
+    showInDashboard: false,
     // AV tracking fields — admin-editable, never overwritten by this script on re-run
     files: [],
     avNote: null,
@@ -222,7 +189,7 @@ for (const row of dataRows) {
   });
 }
 
-console.log(`Parsed ${sessions.length} AV-relevant sessions across ${new Set(sessions.map(s=>s.day)).size} days.`);
+console.log(`Parsed ${sessions.length} sessions across ${new Set(sessions.map(s=>s.day)).size} days.`);
 
 // ── Merge with existing data (preserve AV tracking fields) ────────────────────
 let existing = {};
@@ -238,52 +205,61 @@ if (fs.existsSync(OUT_PATH)) {
   }
 }
 
+let preserved = 0;
+let brandNew  = 0;
+
 for (const s of sessions) {
   const ex = existing[s.id];
   if (ex) {
-    // Preserve all admin-managed fields — never overwrite with XLSX values
+    preserved++;
+    // Preserve all admin-managed tracking fields — never overwrite with XLSX values
     s.files           = ex.files           || [];
     s.avNote          = ex.avNote          || null;
     s.operatorNote    = ex.operatorNote    || null;
     s.showInDashboard = ex.showInDashboard ?? false;
-    // Preserve admin-edited AV fields if they differ from XLSX
-    // (admin edits take precedence; XLSX value used only for new sessions)
-    if (ex.projection  !== undefined) s.projection  = ex.projection;
-    if (ex.microphones !== undefined) s.microphones = ex.microphones;
-    if (ex.podium      !== undefined) s.podium      = ex.podium;
-    if (ex.timer       !== undefined) s.timer       = ex.timer;
-    if (ex.monitor     !== undefined) s.monitor     = ex.monitor;
-    if (ex.specialReqs !== undefined) s.specialReqs = ex.specialReqs;
-    if (ex.roomSetup   !== undefined) s.roomSetup   = ex.roomSetup;
-    if (ex.room        !== undefined) s.room        = ex.room;
-    if (ex.track       !== undefined) s.track       = ex.track;
+    // Preserve any admin-edited AV fields stored in s.av
+    if (ex.av !== undefined) s.av = ex.av;
   } else {
-    // Brand-new session from XLSX — default dashboard to false
-    s.showInDashboard = false;
+    brandNew++;
+    // Brand-new session — defaults already set above
   }
 }
 
+// Identify dropped sessions (were in existing JSON, not in new XLSX)
+const newIds = new Set(sessions.map(s => s.id));
+const dropped = Object.keys(existing).filter(id => !newIds.has(id));
+if (dropped.length > 0) {
+  console.log(`\n⚠  Dropped ${dropped.length} sessions (removed from XLSX):`);
+  for (const id of dropped) {
+    const s = existing[id];
+    const hadData = (s.files && s.files.length > 0) || s.avNote || s.operatorNote || s.showInDashboard;
+    console.log(`   ${hadData ? "*** HAS AV DATA *** " : ""}${s.day} | ${s.title} [${id}]`);
+  }
+}
+
+console.log(`\nMerge summary: ${preserved} preserved · ${brandNew} new · ${dropped.length} dropped`);
+
 // ── Write output ──────────────────────────────────────────────────────────────
+let changelog = [];
+if (fs.existsSync(OUT_PATH)) {
+  try {
+    const prev = JSON.parse(fs.readFileSync(OUT_PATH, "utf8"));
+    if (Array.isArray(prev.changelog)) changelog = prev.changelog;
+  } catch(_) {}
+}
+
 const output = {
   event:       "ZDC 2026 Fall",
   eventDates:  "Oct 18–22, 2026",
   location:    "Antwerp, Belgium",
   lastUpdated: new Date().toISOString(),
-  changelog:   existing["__meta__"]?.changelog || [],
+  changelog,
   sessions
 };
 
-// Preserve top-level changelog if it existed
-if (fs.existsSync(OUT_PATH)) {
-  try {
-    const prev = JSON.parse(fs.readFileSync(OUT_PATH, "utf8"));
-    if (Array.isArray(prev.changelog)) output.changelog = prev.changelog;
-  } catch(_) {}
-}
-
 fs.writeFileSync(OUT_PATH, JSON.stringify(output, null, 2), "utf8");
-console.log(`✓ Written to: ${OUT_PATH}`);
-console.log(`  Sessions: ${sessions.length}`);
+console.log(`\n✓ Written to: ${OUT_PATH}`);
+console.log(`  Total sessions: ${sessions.length}`);
 const days = [...new Set(sessions.map(s=>s.day))];
 for (const d of days) {
   console.log(`    ${d}: ${sessions.filter(s=>s.day===d).length} sessions`);
