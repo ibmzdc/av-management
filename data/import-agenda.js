@@ -162,6 +162,10 @@ for (const row of dataRows) {
   const roomSetup   = clean(col(row, "Room Setup Notes (INCLUDE: room set up, types of chairs, or luggage storage, DT Ushape)"));
   const description = clean(col(row, "Session Description"));
 
+  // Seed av.presentationRequired for new sessions where the AV team drives projection
+  const projLower = (projection || "").trim().toLowerCase();
+  const avTeamPresentation = projLower.startsWith("av team") || projLower.startsWith("av ");
+
   sessions.push({
     id,
     day,
@@ -182,6 +186,8 @@ for (const row of dataRows) {
     monitor: monitor || null,
     specialReqs: specialReqs || null,
     showInDashboard: false,
+    // Seed av.presentationRequired from XLSX for new sessions (preserved on re-run for existing)
+    av: avTeamPresentation ? { presentationRequired: true } : undefined,
     // AV tracking fields — admin-editable, never overwritten by this script on re-run
     files: [],
     avNote: null,
