@@ -2,8 +2,17 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-22T18:54:36.991Z",
+  "lastUpdated": "2026-09-22T18:59:21.045Z",
   "changelog": [
+    {
+      "ts": "2026-09-22T18:59:14.160Z",
+      "sessionId": "sunday-16-00-belle-epoque-ballr-introduction-to-the-zdc",
+      "sessionTitle": "Introduction to the ZDC",
+      "day": "Sunday",
+      "fileType": "presentation",
+      "oldStatus": "pending",
+      "newStatus": "approved"
+    },
     {
       "ts": "2026-09-22T18:54:28.237Z",
       "sessionId": "sunday-12-00-bell-epoque-ballro-holding-slides",
@@ -84,7 +93,7 @@
       "specialReqs": null,
       "showInDashboard": true,
       "av": {
-        "presentationRequired": true,
+        "presentationRequired": false,
         "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
@@ -155,7 +164,15 @@
         "specialRequirements": [],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "",
+          "boxFileId": "3sxwsu3l0oxemordzjx7suivcckqf6x9",
+          "status": "approved",
+          "updatedAt": "2026-09-22T18:59:14.160Z"
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
