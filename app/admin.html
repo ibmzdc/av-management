@@ -999,8 +999,9 @@ function renderFiles(s){
       </select>
       <button class="btn-remove" onclick="removeFile('${s.id}',${i})" title="Remove file">×</button>
     </div>
-    <div style="padding:0 0 6px 0">
-      <input type="text" id="fboxid-${s.id}-${i}" value="${esc(f.boxFileId||"")}" placeholder="IBM Box file ID or full Box URL" oninput="onBoxIdInput(this)" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:11.5px;font-family:monospace">
+    <div style="padding:0 0 6px 0;display:flex;gap:6px;align-items:center">
+      <input type="text" id="fboxid-${s.id}-${i}" value="${esc(f.boxFileId||"")}" placeholder="IBM Box file ID or full Box URL" oninput="onBoxIdInput(this)" style="flex:1;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:11.5px;font-family:monospace">
+      <button onclick="markFileUpdated('${s.id}',${i})" title="Mark file as updated now — stamps new timestamp and sets status to Updated" style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;border:1px solid #fbbf24;background:#fde68a;color:#92400e;cursor:pointer;white-space:nowrap">↻ File Updated</button>
     </div>
   `).join("");
 }
@@ -1276,6 +1277,22 @@ function onStatusChange(sessionId, idx){
     const statusLabel = {uploaded:"Uploaded",updated:"Updated",onhold:"On Hold",nofile:"No File Needed"}[newStatus]||newStatus;
     showToast(`${esc(fname)} → ${statusLabel}`, true);
   }
+  updateCardBadges(sessionId);
+  markDirty();
+}
+
+// Always stamps updatedAt + sets status to updated — works even if already updated
+function markFileUpdated(sessionId, idx){
+  const s = DATA.sessions.find(x=>x.id===sessionId);
+  if(!s||!s.files[idx]) return;
+  const oldStatus = s.files[idx].status;
+  s.files[idx].status    = "updated";
+  s.files[idx].updatedAt = new Date().toISOString();
+  const sel = document.getElementById(`fstatus-${sessionId}-${idx}`);
+  if(sel) sel.value = "updated";
+  if(oldStatus !== "updated") appendChangelog(s, s.files[idx].fileType||"file", oldStatus, "updated");
+  const fname = s.files[idx].fileName || s.files[idx].fileType || "File";
+  showToast(`${esc(fname)} — timestamp updated`, true);
   updateCardBadges(sessionId);
   markDirty();
 }
