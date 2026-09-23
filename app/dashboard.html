@@ -941,23 +941,23 @@ function buildFilesSection(s) {
                  onclick="onDownload('${esc(f.boxFileId)}','${btnId}')">${label}</a>`;
     }
 
-    const dlRow = dlFmt ? `<tr><td></td><td colspan="3" style="font-size:10.5px;color:var(--green);padding-top:0">✓ Downloaded ${dlFmt}</td><td></td></tr>` : "";
-
     return `<tr>
       <td>${esc(f.fileType||"")}</td>
       <td>${esc(f.fileName||"(unnamed)")}</td>
       <td><span class="status-pill ${pillClass}">${esc(statusLabel)}</span></td>
       <td style="font-size:11.5px;color:var(--muted)">${updFmt}</td>
+      <td style="font-size:11.5px;color:${dlFmt ? "var(--green)" : "var(--muted)"}">${dlFmt ? "✓ " + dlFmt : "—"}</td>
       <td>${dlBtn}</td>
-    </tr>${dlRow}`;
+    </tr>`;
   }).join("");
 
   return `<table class="files-table">
     <thead><tr>
       <th style="width:120px">Type</th>
       <th>Name</th>
-      <th style="width:160px">Status</th>
+      <th style="width:140px">Status</th>
       <th style="width:110px">Updated</th>
+      <th style="width:110px">Downloaded</th>
       <th style="width:130px"></th>
     </tr></thead>
     <tbody>${rows}</tbody>
