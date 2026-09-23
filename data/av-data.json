@@ -128,9 +128,9 @@
           "fileType": "presentation",
           "fileName": "Antwerp_light_4K",
           "boxFileId": "tram6clhgjz7yswrdgspnqmkujj6rh23",
-          "status": "downloaded",
+          "status": "updated",
           "updatedAt": "2026-09-23T18:44:10.677Z",
-          "downloadedAt": "2026-09-23T18:49:41.355Z"
+          "downloadedAt": "2026-09-23T18:39:24.538Z"
         }
       ],
       "avNote": null,
@@ -233,8 +233,9 @@
           "fileType": "presentation",
           "fileName": "Test - Introduction to the ZDC",
           "boxFileId": "3sxwsu3l0oxemordzjx7suivcckqf6x9",
-          "status": "uploaded",
-          "updatedAt": "2026-09-23T18:08:15.977Z"
+          "status": "downloaded",
+          "updatedAt": "2026-09-23T18:08:15.977Z",
+          "downloadedAt": "2026-09-23T18:50:46.038Z"
         }
       ],
       "avNote": null,
