@@ -757,7 +757,7 @@ function buildSessionBlock(s) {
           <div class="av-group-hdr" style="justify-content:space-between">
             <span><span class="g-icon">📁</span> Files</span>
           </div>
-          <div class="av-group-body av-special" style="padding:10px">
+          <div class="av-group-body av-special" style="padding:10px" id="files-body-${s.id}">
             ${buildFilesSection(s)}
           </div>
         </div>
@@ -1008,9 +1008,15 @@ function onDownload(boxFileId, btnId) {
           f.downloadedAt = new Date().toISOString();
         }
       });
-      // Re-render row pills so ✓⬇ icon shows immediately
+      // Re-render row pills (compact view)
       const rowPills = document.getElementById("row-pills-" + s.id);
       if (rowPills) rowPills.innerHTML = buildRowFilePills(s);
+      // Re-render expanded file table
+      const filesBody = document.getElementById("files-body-" + s.id);
+      if (filesBody) filesBody.innerHTML = buildFilesSection(s);
+      // Re-render stats bar and attention banner
+      renderSummary();
+      renderNeedsAttention();
       // Push to GitHub — best-effort, silent fail
       pushDownloadStatus(s.id, boxFileId);
       break;
