@@ -1,9 +1,18 @@
 {
   "event": "ZDC 2026 Fall",
-  "eventDates": "Oct 18ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ22, 2026",
+  "eventDates": "Oct 18ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-23T17:15:41.092Z",
+  "lastUpdated": "2026-09-23T17:32:05.490Z",
   "changelog": [
+    {
+      "ts": "2026-09-23T17:32:01.264Z",
+      "sessionId": "sunday-12-00-bell-epoque-ballro-holding-slides",
+      "sessionTitle": "Holding Slides",
+      "day": "Sunday",
+      "fileType": "presentation",
+      "oldStatus": "downloaded",
+      "newStatus": "updated"
+    },
     {
       "ts": "2026-09-23T17:15:35.267Z",
       "sessionId": "sunday-12-00-bell-epoque-ballro-holding-slides",
@@ -83,8 +92,8 @@
           "fileType": "presentation",
           "fileName": "Antwerp_light_4K",
           "boxFileId": "tram6clhgjz7yswrdgspnqmkujj6rh23",
-          "status": "downloaded",
-          "updatedAt": "2026-09-23T17:15:35.267Z",
+          "status": "updated",
+          "updatedAt": "2026-09-23T17:32:01.264Z",
           "downloadedAt": "2026-09-23T17:27:09.096Z"
         }
       ],
@@ -113,7 +122,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Rehearsal in ballroom to take place at this time. Walk through with speakers to take place this afternoon.",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -414,7 +423,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -437,7 +446,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -489,7 +499,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -518,7 +529,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -541,7 +552,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -570,7 +582,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -593,7 +605,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -622,7 +635,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -645,7 +658,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -674,7 +688,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -697,7 +711,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -726,7 +741,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -749,7 +764,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -826,7 +842,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -849,7 +865,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -878,7 +895,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -901,7 +918,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -930,7 +948,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -953,7 +971,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -982,7 +1001,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1005,7 +1024,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -1034,7 +1054,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -1057,7 +1077,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -1086,7 +1107,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1109,7 +1130,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -1138,7 +1160,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "Collaborative",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1161,7 +1183,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -1238,7 +1261,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": "AV team",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 2,
         "timerMins": 0,
@@ -1322,7 +1345,7 @@
       "sessionType": "Client Roundtable",
       "track": null,
       "title": "The Frontier Model Era: Transforming the IBM Z Security Landscape",
-      "description": "Frontier AI models are reshaping the enterprise security landscape, creating new opportunities and risks for organizations running mission-critical workloads on IBM Z. In this panel, we will share Rabobank's perspectives on the evolution of frontier models, key security concerns, and emerging governance requirements. The discussion will explore the growing need for AI-driven vulnerability scanning, approaches to planning and prioritizing IBM security patches, and how continuous security monitoring strengthens governance, auditability, and developer professionalÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs accountability. Join us to learn how leading enterprises are adapting their IBM Z security strategies to stay resilient in the age of AI.",
+      "description": "Frontier AI models are reshaping the enterprise security landscape, creating new opportunities and risks for organizations running mission-critical workloads on IBM Z. In this panel, we will share Rabobank's perspectives on the evolution of frontier models, key security concerns, and emerging governance requirements. The discussion will explore the growing need for AI-driven vulnerability scanning, approaches to planning and prioritizing IBM security patches, and how continuous security monitoring strengthens governance, auditability, and developer professionalÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs accountability. Join us to learn how leading enterprises are adapting their IBM Z security strategies to stay resilient in the age of AI.",
       "speakers": "Pradeep Parameshwaran",
       "room": "Teun",
       "roomSetup": null,
@@ -1370,7 +1393,7 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "IBM Atlas: System intelligence that discovers everything so you can understand anything",
-      "description": "See IBM Atlas in action as it discovers and maps relationships across your IT environment, from hardware and operating systems to middleware, software, and business applications. Through a live demonstration, attendees will explore AtlasÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs dynamic topology visualization and AI-powered chat experience, enabling users to quickly understand dependencies, answer environment questions, and gain actionable insights. Learn how organizations are leveraging Atlas for change management, audit readiness, application refactoring, business service mapping, and drift detection, while also helping shape the future of the platform through direct feedback.",
+      "description": "See IBM Atlas in action as it discovers and maps relationships across your IT environment, from hardware and operating systems to middleware, software, and business applications. Through a live demonstration, attendees will explore AtlasÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs dynamic topology visualization and AI-powered chat experience, enabling users to quickly understand dependencies, answer environment questions, and gain actionable insights. Learn how organizations are leveraging Atlas for change management, audit readiness, application refactoring, business service mapping, and drift detection, while also helping shape the future of the platform through direct feedback.",
       "speakers": "Meghan McGrath",
       "room": "Ballroom Foyer",
       "roomSetup": null,
@@ -1470,7 +1493,7 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "IBM Vault Premium Package for z/OS: native certificate and secrets management",
-      "description": "Experience a comprehensive approach to credential governance on IBM Z with IBM Vault Premium Package for z/OS, which brings certificate lifecycle automation, secrets discovery, and encryption key orchestration together in a single, policy-driven package. Security administrators gain automated rotation for RACF-managed TLS certificates, a centralized encrypted system of record that surfaces unmanaged secrets across z/OS datasets and USS file shares, and unified key governance spanning on-premises z/OS systems and major public cloud environments. The package replaces a fragmented assembly of separate tools with one entitlement and one consistent policy modelÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂenabling every credential across the IBM Z estate to be discovered, automated, and governed. Customers will be able to view and comment on a demo of end-to-end certificate management in z/OS RACF.",
+      "description": "Experience a comprehensive approach to credential governance on IBM Z with IBM Vault Premium Package for z/OS, which brings certificate lifecycle automation, secrets discovery, and encryption key orchestration together in a single, policy-driven package. Security administrators gain automated rotation for RACF-managed TLS certificates, a centralized encrypted system of record that surfaces unmanaged secrets across z/OS datasets and USS file shares, and unified key governance spanning on-premises z/OS systems and major public cloud environments. The package replaces a fragmented assembly of separate tools with one entitlement and one consistent policy modelÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂenabling every credential across the IBM Z estate to be discovered, automated, and governed. Customers will be able to view and comment on a demo of end-to-end certificate management in z/OS RACF.",
       "speakers": "Chris Brynes",
       "room": "Ballroom Foyer",
       "roomSetup": null,
@@ -1620,7 +1643,7 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "Workload Expansion: The Future of IBM Z and LinuxONE",
-      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBMÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs vision for a more secure, scalable, and versatile platform, highlighting how emerging technologiesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂincluding architectures such as ARMÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂcan complement traditional workloads and create new opportunities for innovation on IBM Z. Attendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
+      "description": "As organizations seek to modernize and consolidate more workloads within their existing data center footprint, the IBM Z ecosystem is evolving to support new architectures, deployment models, and development patterns. This interactive exhibit explores IBMÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs vision for a more secure, scalable, and versatile platform, highlighting how emerging technologiesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂincluding architectures such as ARMÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂcan complement traditional workloads and create new opportunities for innovation on IBM Z. Attendees will participate in collaborative activities designed to uncover new use cases, identify adoption opportunities, and explore where hybrid architectures could deliver the greatest business value. Participants will help shape the direction of an expanded IBM Z ecosystem that brings together mission-critical reliability with modern application and infrastructure experiences.",
       "speakers": "Anthony Cocuzza",
       "room": "Ballroom Foyer",
       "roomSetup": null,
@@ -1720,7 +1743,7 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "What Is Your Mainframe Not Telling You?",
-      "description": "Experience Confluent for Z in action and see how IBM Z event streaming through Confluent for Z turns your mainframe from a silent system of record into a real-time source of business events. Through a live demonstration, watch connectors capture activity across CICS, IMS, Db2, and MQ and stream it ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ as it happens ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ into the Kafka topics. See how AI agentic accelerators can be used to easily work with the connectors.This booth explores how enterprises can finally make trusted mainframe data available to the AI and decision engines that need it most, closing the long-standing gap between where transactions actually happen and where real-time insight is required. Attendees will gain insight into practical connector-led integration and agentic acceleration patterns while helping shape the future direction of Confluent for Z portfolio using AI capabilities.Visitors will also participate in an interactive activity to identify which real-time business signals matter most to their organizations and where streaming, event processing, and governance can deliver the greatest value. The experience highlights how event-driven architectures, AI-assisted workflows, and real-time insight can help enterprises move beyond monitoring individual transactions to detecting and responding to emerging business conditions as they happen.",
+      "description": "Experience Confluent for Z in action and see how IBM Z event streaming through Confluent for Z turns your mainframe from a silent system of record into a real-time source of business events. Through a live demonstration, watch connectors capture activity across CICS, IMS, Db2, and MQ and stream it ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ as it happens ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ into the Kafka topics. See how AI agentic accelerators can be used to easily work with the connectors.This booth explores how enterprises can finally make trusted mainframe data available to the AI and decision engines that need it most, closing the long-standing gap between where transactions actually happen and where real-time insight is required. Attendees will gain insight into practical connector-led integration and agentic acceleration patterns while helping shape the future direction of Confluent for Z portfolio using AI capabilities.Visitors will also participate in an interactive activity to identify which real-time business signals matter most to their organizations and where streaming, event processing, and governance can deliver the greatest value. The experience highlights how event-driven architectures, AI-assisted workflows, and real-time insight can help enterprises move beyond monitoring individual transactions to detecting and responding to emerging business conditions as they happen.",
       "speakers": "Anubhuti Kaushik",
       "room": "Ballroom Foyer",
       "roomSetup": null,
@@ -2001,7 +2024,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2053,7 +2077,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2105,7 +2130,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2157,7 +2183,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2209,7 +2236,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2261,7 +2289,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2313,7 +2342,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2415,7 +2445,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2467,7 +2498,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2519,7 +2551,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2571,7 +2604,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2623,7 +2657,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2675,7 +2710,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2727,7 +2763,8 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null
+        "legacyMicsNote": null,
+        "lavalierHeadsetMics": 0
       },
       "files": [],
       "avNote": null,
@@ -2790,7 +2827,7 @@
       "endTime": "17:00",
       "sessionType": "Solution Review",
       "track": null,
-      "title": "Continuing IBM Z full-stack simplification ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ from complexity to code",
+      "title": "Continuing IBM Z full-stack simplification ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ from complexity to code",
       "description": "In our last session we shared how our simplification projects fit together. In this session, we will share progress on our full-stack simplification strategy, focusing on reducing complexity, enabling modern industry practices and moving towards X-as-Code automation and AI-enhanced operation. We will highlight advances in our Everything-as-Code strategy, improved GitOps compatibility, direction on Open Telemetry and new software packaging concepts.",
       "speakers": "Mike Young",
       "room": "Belle Epoque Ballroom",
@@ -2845,7 +2882,7 @@
       "sessionType": "Client Experience",
       "track": null,
       "title": "Reimagining Mainframe Engineering Across the Stack",
-      "description": "IBM Z is no longer a platform apart. ABN AMRO and Atruvia will share how they are modernizing mainframe engineering across the full stackÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂfrom application development and testing to platform operations and infrastructure managementÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂusing DevOps, CI/CD, GitOps, new ways of working, and industry-standard tooling.",
+      "description": "IBM Z is no longer a platform apart. ABN AMRO and Atruvia will share how they are modernizing mainframe engineering across the full stackÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂfrom application development and testing to platform operations and infrastructure managementÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂusing DevOps, CI/CD, GitOps, new ways of working, and industry-standard tooling.",
       "speakers": "Shelley Brand, Mustafa Gulkara ABN AMRO: Marcel van Ree, Atruvia:Alexander Straub",
       "room": "Belle Epoque Ballroom",
       "roomSetup": "ballroom|schoolroom,capacity:200,aisles,water|",
@@ -3089,7 +3126,7 @@
       "sessionType": "General Session",
       "track": null,
       "title": "The Future of IBM Z and LinuxONE: Security Simplification and Workload Expansion",
-      "description": "What comes next for the platform? Join a panel of IBM Z / LinuxONE leaders as we explore two key areas shaping our future roadmap. First, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll discuss security simplification, including automated security and compliance operations, pre-emptive threat response, and the journey toward post quantum cryptography. Second, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll examine workload expansion through new architectural innovations, including ARM-based workloads, enabling organizations to run more applications within their existing data footprint. Hear our perspective on how the platform is evolving to deliver greater security, flexibility and growth for the enterprise.",
+      "description": "What comes next for the platform? Join a panel of IBM Z / LinuxONE leaders as we explore two key areas shaping our future roadmap. First, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll discuss security simplification, including automated security and compliance operations, pre-emptive threat response, and the journey toward post quantum cryptography. Second, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll examine workload expansion through new architectural innovations, including ARM-based workloads, enabling organizations to run more applications within their existing data footprint. Hear our perspective on how the platform is evolving to deliver greater security, flexibility and growth for the enterprise.",
       "speakers": "Elianne Bravo, Anthony Cocuzza",
       "room": "Belle Epoque Ballroom",
       "roomSetup": null,
@@ -3151,7 +3188,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": true,
-        "presentationSource": "Presenter",
+        "presentationSource": null,
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -3186,7 +3223,7 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Streamlining COBOL Modernization with IBM COBOL Elevate for z/OS",
-      "description": "Enterprise clients face fragmentedCOBOL modernization workflowsrequiring many hours of setup,specialized skills, and manualcoordination across compilerupgrades, performance analysis, andoptimization.This complexity delays modernizationinitiatives and increases technicaldebt.IBM COBOL Elevate for z/OSstreamlines the entire process with anintegrated, end-to-end modernizationexperience that accelerates COBOLapplication performance, upgradesCOBOL compiler versions, andgenerates actionable modernizationinsightsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂall within a unified platformbuilt for speed and simplicity.",
+      "description": "Enterprise clients face fragmentedCOBOL modernization workflowsrequiring many hours of setup,specialized skills, and manualcoordination across compilerupgrades, performance analysis, andoptimization.This complexity delays modernizationinitiatives and increases technicaldebt.IBM COBOL Elevate for z/OSstreamlines the entire process with anintegrated, end-to-end modernizationexperience that accelerates COBOLapplication performance, upgradesCOBOL compiler versions, andgenerates actionable modernizationinsightsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂall within a unified platformbuilt for speed and simplicity.",
       "speakers": "Reid Copeland",
       "room": "Teun",
       "roomSetup": null,
@@ -3287,7 +3324,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Z Database Assistant Update and Journey",
-      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Enhancements to core capabilitiesbased on feedback in 2Q.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Sponsor user feedback, particularlyaround installation and configurationexperienceÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Progress on tooling integration,including key priorities and upcominginvestmentsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Updates to Db2 distributedconnection management, includingrecent enhancements",
+      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Enhancements to core capabilitiesbased on feedback in 2Q.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Sponsor user feedback, particularlyaround installation and configurationexperienceÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Progress on tooling integration,including key priorities and upcominginvestmentsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Updates to Db2 distributedconnection management, includingrecent enhancements",
       "speakers": "Sueli Almeida",
       "room": "Sancy",
       "roomSetup": null,
@@ -3529,7 +3566,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Out-of-the-box-AI",
-      "description": "AI that helps configure an IBM Z box upon delivery. What does out-of-the-box AI mean to you? ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂLike a power button - you donÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂt ask why it exists.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ That insight was powerful and we took it seriously.",
+      "description": "AI that helps configure an IBM Z box upon delivery. What does out-of-the-box AI mean to you? ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂLike a power button - you donÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂt ask why it exists.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ That insight was powerful and we took it seriously.",
       "speakers": "Stefanie Lauria",
       "room": "Sancy",
       "roomSetup": null,
@@ -3577,7 +3614,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Advancing Agentic AI Governance with Security, Traceability, and Transparency",
-      "description": "In this playback, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll present more insight on how governance - spanning transparency, traceability, accountability, and security - can be embedded into real-world Agentic AI systems.",
+      "description": "In this playback, weÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂll present more insight on how governance - spanning transparency, traceability, accountability, and security - can be embedded into real-world Agentic AI systems.",
       "speakers": "Madhu B A, Elpida Tzortzatos",
       "room": "Teun",
       "roomSetup": null,
@@ -3673,7 +3710,7 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Bringing agentic workflows to CI/CD with IBM Pipeline Automation for Z to accelerate how apps are built, validated, and deployed",
-      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflowsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ. Identify adoption barriers and gaps in enabling end-to-end pipeline integrationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ. Prioritize enhancements to improve usability, interoperability, and release coordinationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ.",
+      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflowsÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ. Identify adoption barriers and gaps in enabling end-to-end pipeline integrationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ. Prioritize enhancements to improve usability, interoperability, and release coordinationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ.",
       "speakers": "Rich Larin",
       "room": "Teun",
       "roomSetup": null,
@@ -3721,7 +3758,7 @@
       "sessionType": "Solution Review",
       "track": "Infrastructure",
       "title": "Agentic management of infrastructure resources in a sovereign compute environment",
-      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂas-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
+      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂas-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
       "speakers": "Christopher Byrnes",
       "room": "Belle Epoque Ballroom",
       "roomSetup": null,
@@ -3770,7 +3807,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Unlocking IBM Z Data for AI and Real-Time Decisioning",
-      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Bring AI into the coreÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focusesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
+      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Bring AI into the coreÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focusesÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
       "speakers": "Daniel Martin",
       "room": "Sancy",
       "roomSetup": null,
@@ -3818,7 +3855,7 @@
       "sessionType": "Solution Review",
       "track": "Security",
       "title": "Part 2: New product innovation in IBM Z Security SW: A Briefing on portfolio simplification with comprehensive resiliency for the AI age",
-      "description": "Building on the strategic vision from Part 1, this deep dive session explores how IBM Z Security software transforms cyber resilience into measurable outcomes. Through IBM zSecure Secret Manager, zSecure Detection, zSecure Compliance, and the newly introduced zSecure Access, attendees will learn how to automate certificate lifecycle management, detect anomalous behavior at machine speed, maintain continuous compliance, and enforce least privilege access across z/OS environments. Together, these capabilities help reduce operational risk, accelerate threat response, simplify audit readiness, and strengthen resilience against AI driven attacks. Interactive discussions and readiness focused assessments will help participants benchmark their organizationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs security maturity and cyber resilience posture.",
+      "description": "Building on the strategic vision from Part 1, this deep dive session explores how IBM Z Security software transforms cyber resilience into measurable outcomes. Through IBM zSecure Secret Manager, zSecure Detection, zSecure Compliance, and the newly introduced zSecure Access, attendees will learn how to automate certificate lifecycle management, detect anomalous behavior at machine speed, maintain continuous compliance, and enforce least privilege access across z/OS environments. Together, these capabilities help reduce operational risk, accelerate threat response, simplify audit readiness, and strengthen resilience against AI driven attacks. Interactive discussions and readiness focused assessments will help participants benchmark their organizationÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs security maturity and cyber resilience posture.",
       "speakers": "Madhu B A",
       "room": "Tiffany/Shah",
       "roomSetup": null,
