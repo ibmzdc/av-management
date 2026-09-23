@@ -925,7 +925,8 @@ function buildFilesSection(s) {
     }[f.status] || f.status || "—";
 
     const updFmt      = f.updatedAt    ? fmtTs(f.updatedAt)    : "—";
-    const dlFmt       = f.downloadedAt ? fmtTs(f.downloadedAt) : null;
+    // Fall back to updatedAt for files downloaded before downloadedAt field was added
+    const dlFmt       = f.status === "downloaded" ? fmtTs(f.downloadedAt || f.updatedAt) : null;
 
     const state = dlState(f);
     const btnId = `dlbtn-${s.id}-${i}`;
