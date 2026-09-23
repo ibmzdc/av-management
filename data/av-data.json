@@ -119,9 +119,9 @@
           "fileType": "presentation",
           "fileName": "Antwerp_light_4K",
           "boxFileId": "tram6clhgjz7yswrdgspnqmkujj6rh23",
-          "status": "updated",
+          "status": "downloaded",
           "updatedAt": "2026-09-23T18:38:56.194Z",
-          "downloadedAt": "2026-09-23T18:31:12.460Z"
+          "downloadedAt": "2026-09-23T18:39:24.538Z"
         }
       ],
       "avNote": null,
@@ -149,7 +149,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Rehearsal in ballroom to take place at this time. Walk through with speakers to take place this afternoon.",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -450,7 +450,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -473,8 +473,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -526,8 +525,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -556,7 +554,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -579,8 +577,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -609,7 +606,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -632,8 +629,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -662,7 +658,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -685,8 +681,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -715,7 +710,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -738,8 +733,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -768,7 +762,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -791,8 +785,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -869,7 +862,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -892,8 +885,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -922,7 +914,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -945,8 +937,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -975,7 +966,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -998,8 +989,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -1028,7 +1018,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1051,8 +1041,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -1081,7 +1070,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 1,
         "timerMins": 0,
@@ -1104,8 +1093,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -1134,7 +1122,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1157,8 +1145,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -1187,7 +1174,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "Collaborative",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
@@ -1210,8 +1197,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -1288,7 +1274,7 @@
       "showInDashboard": true,
       "av": {
         "presentationRequired": false,
-        "presentationSource": null,
+        "presentationSource": "AV team",
         "clicker": false,
         "confidenceMonitors": 2,
         "timerMins": 0,
@@ -2051,8 +2037,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2104,8 +2089,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2157,8 +2141,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2210,8 +2193,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2263,8 +2245,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2316,8 +2297,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2369,8 +2349,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2472,8 +2451,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2525,8 +2503,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2578,8 +2555,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2631,8 +2607,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2684,8 +2659,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2737,8 +2711,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -2790,8 +2763,7 @@
         "panelMics": 0,
         "headsetMics": 0,
         "tableMics": 0,
-        "legacyMicsNote": null,
-        "lavalierHeadsetMics": 0
+        "legacyMicsNote": null
       },
       "files": [],
       "avNote": null,
@@ -3215,7 +3187,7 @@
       "showInDashboard": false,
       "av": {
         "presentationRequired": true,
-        "presentationSource": null,
+        "presentationSource": "Presenter",
         "clicker": false,
         "confidenceMonitors": 0,
         "timerMins": 0,
