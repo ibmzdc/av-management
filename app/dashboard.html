@@ -923,9 +923,8 @@ function buildFilesSection(s) {
       "onhold":"On Hold","nofile":"No File Needed","pending":"Awaiting File"
     }[f.status] || f.status || "—";
 
-    const updFmt      = f.updatedAt    ? fmtTs(f.updatedAt)    : "—";
-    // Fall back to updatedAt for files downloaded before downloadedAt field was added
-    const dlFmt       = f.status === "downloaded" ? fmtTs(f.downloadedAt || f.updatedAt) : null;
+    const updFmt = f.updatedAt    ? fmtTs(f.updatedAt)    : "—";
+    const dlFmt  = f.downloadedAt ? fmtTs(f.downloadedAt) : null;
 
     const state = dlState(f);
     const btnId = `dlbtn-${s.id}-${i}`;
