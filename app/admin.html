@@ -34,6 +34,8 @@ a{color:var(--accent);text-decoration:none}
 .btn-dl:hover{background:#30363d}
 .btn-dash-open{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
 .btn-dash-open:hover{background:#30363d}
+#dashAllBtn{background:#21262d;color:#c9d1d9;border:1px solid #30363d !important}
+#dashAllBtn:hover{background:#30363d}
 .save-status{font-size:11px;color:#8b949e;min-width:120px;max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .save-status.ok{color:#4ade80}
 .save-status.err{color:#f87171}
@@ -381,6 +383,7 @@ a{color:var(--accent);text-decoration:none}
   <span class="event">ZDC 2026 Fall · Antwerp · Oct 18–22</span>
   <input type="search" id="searchInput" placeholder="Search sessions…" oninput="onSearch(this.value)">
   <button id="dashFilterBtn" onclick="toggleDashFilter()" title="Show only dashboard sessions">⭐ Dashboard</button>
+  <button id="dashAllBtn" onclick="bulkDashToggle()" title="Toggle all visible sessions on/off dashboard">Dashboard: All</button>
   <span class="save-status" id="saveStatus"></span>
   <button class="btn-dash-open btn" onclick="openDashboard()" title="Open dashboard in new tab">↗ Dashboard</button>
   <button class="btn-token btn" onclick="showTokenModal()">Token</button>
@@ -1474,6 +1477,29 @@ function toggleDashFilter(){
   DASH_FILTER = !DASH_FILTER;
   document.getElementById("dashFilterBtn").classList.toggle("active", DASH_FILTER);
   applyFilters();
+}
+
+function bulkDashToggle(){
+  // Determine target state: if any visible session is OFF, turn all ON; otherwise turn all OFF
+  const visibleCards = [...document.querySelectorAll(".session-card")].filter(c => c.style.display !== "none");
+  const visibleIds = visibleCards.map(c => c.id.replace("card-",""));
+  const visibleSessions = visibleIds.map(id => DATA.sessions.find(s => s.id === id)).filter(Boolean);
+  const anyOff = visibleSessions.some(s => !s.showInDashboard);
+  const newState = anyOff; // turn all ON if any are off, turn all OFF if all are on
+  visibleSessions.forEach(s => {
+    s.showInDashboard = newState;
+    const cb = document.getElementById("dash-"+s.id);
+    if(cb) cb.checked = newState;
+    const btn = document.getElementById("dashbtn-"+s.id);
+    if(btn){
+      btn.classList.toggle("active", newState);
+      btn.innerHTML = `<span class="dash-dot"></span>${newState?"On Dashboard":"Dashboard"}`;
+    }
+    document.getElementById("card-"+s.id)?.classList.toggle("in-dashboard", newState);
+  });
+  // Update button label to reflect new state
+  document.getElementById("dashAllBtn").textContent = newState ? "Dashboard: All On" : "Dashboard: All Off";
+  markDirty();
 }
 
 function onSearch(val){
