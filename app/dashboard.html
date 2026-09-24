@@ -41,7 +41,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 @media print {
   /* Hide all app chrome */
   header, .summary-bar, .needs-attention, .left-nav, .right-sidebar,
-  .legend-bar, #app, #loading { display: none !important; }
+  .legend-bar, #app, #loading, .prd-dialog-overlay { display: none !important; }
   body { margin: 0; }
   /* Show only the print root */
   .print-rundown-root { display: block !important; }
@@ -548,7 +548,7 @@ function showPrintDialog() {
       </div>
       <div class="prd-dialog-footer">
         <button class="prd-dialog-cancel" onclick="this.closest('.prd-dialog-overlay').remove()">Cancel</button>
-        <button class="prd-dialog-print" onclick="printRoomRundown(this.closest('.prd-dialog-overlay').querySelector('input[name=prd-mode]:checked').value); this.closest('.prd-dialog-overlay').remove()">Print</button>
+        <button class="prd-dialog-print" onclick="var m=this.closest('.prd-dialog-overlay'); var v=m.querySelector('input[name=prd-mode]:checked').value; m.remove(); printRoomRundown(v);">Print</button>
       </div>
     </div>`;
   document.body.appendChild(overlay);
