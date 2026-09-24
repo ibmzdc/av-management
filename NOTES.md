@@ -102,16 +102,13 @@ The dashboard has a `decodePickerValue()` function that renders this as human-re
 ## Current state / next work items
 
 - **Accomplished in Last Session:**
-  - **Admin Room Setup Picker Overhaul:** Refactored the preset selector row in `admin.html` with explicit room-type checkbox indicators next to room-type labels, conditionally displaying and activating option panels only when checked.
-  - **Dashboard Setup Picker Alignment:** Enhanced `dashboard.html` to render room setup and stage setup picker states as beautiful, read-only facsimile panels matching the admin UI (highlighted active preset pills, checked disabled boxes, capacities, notes cards) instead of flat text.
-  - **Critical Picker Save Bugfix:** Resolved a DOM check issue in `collectAVReqs()` where room and stage picker element searches returned `null` and skipped saving. Pickers now serialize and write to `av-data.json` successfully.
-  - **Visual AV Note Badges:** Added orange `📝 Note` badges next to the "AV Details" button on collapsed card rows of both `admin.html` and `dashboard.html` so notes are never hidden or missed.
-  - **Database Consolidation:** Pruned 344 redundant root-level variables (e.g. `projection`, `microphones`, `timer`, `monitor`) from `av-data.json` and cleanly structured everything in `av-config.js` and `s.av`.
-  - **Reference Constants Sync:** Kept reference variables inside `av-config.js` synchronized perfectly with the inlined scripts.
+  - **Print Rundown overhaul:** Fixed title page (corrupt `eventDates` encoding, duplicate "ZDC" prefix), doubled then tuned font sizes to 10px body / 13px headers, fixed time column width using `calc((100% - 90px) / 3)` for equal session/AV/files columns, expanded all AV chip labels to full text, moved AV note into the AV column with amber left-border styling, normalized all smart punctuation to ASCII via `pesc()` for PDF compatibility.
+  - **By Room / By Day mode picker:** Print Rundown button now shows a modal dialog to choose between room-first or day-first grouping. Dialog is removed synchronously from DOM before `window.print()` fires; `afterprint` event cleans up the injected print DOM.
+  - **Encoding cleanup:** Fixed 16 garbled session fields (en-dashes, apostrophes) caused by triple UTF-8 encoding from the original XLSX import. Fixed `eventDates` field (same root cause).
 
 - **Next Work Items:**
+  - The `â` garbled character in session 54 title ("Continuing IBM Z full-stack simplification") in PDF output is a known open issue — `pesc()` normalises it in JS but PDF renderer may still misread the encoding. Investigate browser-side encoding of the print DOM.
   - Standard user maintenance, further layout cleanup, or new file type uploads as required.
-  - Monitor local embedded fallbacks if drift from github raw content occurs.
 
 ---
 
