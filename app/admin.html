@@ -133,9 +133,12 @@ a{color:var(--accent);text-decoration:none}
 .session-badges{display:flex;gap:4px;align-items:flex-start;padding-top:2px;flex-wrap:wrap}
 
 /* ── Dashboard toggle ────────────────────────────────────────────────── */
-.dash-toggle{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:3px}
-.dash-toggle label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--subtle);cursor:pointer;text-align:center;line-height:1.2}
-.dash-toggle input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--accent)}
+.dash-toggle{display:flex;align-items:center;padding-top:2px}
+.dash-toggle input[type=checkbox]{display:none}
+.dash-btn{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:20px;border:1.5px solid var(--border);background:#f3f4f6;color:var(--subtle);cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,color .15s;user-select:none}
+.dash-btn:hover{background:#e5e7eb;color:var(--text)}
+.dash-btn.active{background:#eff6ff;border-color:#3b82d4;color:#1d4ed8}
+.dash-btn .dash-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
 
 /* ── Badges ──────────────────────────────────────────────────────────── */
 .badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:600;border-radius:20px;padding:2px 8px;white-space:nowrap}
@@ -839,8 +842,10 @@ function renderSession(s){
         <div id="pill-${s.id}">${sessionStatusPill(s.files)}</div>
       </div>
       <div class="dash-toggle" onclick="event.stopPropagation()">
-        <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""} onchange="onDashToggle('${s.id}')">
-        <label for="dash-${s.id}">Dashboard</label>
+        <input type="checkbox" id="dash-${s.id}" ${s.showInDashboard?"checked":""}>
+        <button class="dash-btn${s.showInDashboard?" active":""}" id="dashbtn-${s.id}" onclick="onDashToggle('${s.id}')">
+          <span class="dash-dot"></span>${s.showInDashboard?"On Dashboard":"Dashboard"}
+        </button>
       </div>
     </div>
     <div class="session-body" id="body-${s.id}">
@@ -1230,7 +1235,17 @@ function onBoxIdInput(el){
 function onDashToggle(sessionId){
   const s = DATA.sessions.find(x=>x.id===sessionId);
   if(!s) return;
-  s.showInDashboard = document.getElementById("dash-"+sessionId).checked;
+  // Toggle the value
+  s.showInDashboard = !s.showInDashboard;
+  // Keep hidden checkbox in sync (used by collectFormState)
+  const cb = document.getElementById("dash-"+sessionId);
+  if(cb) cb.checked = s.showInDashboard;
+  // Update button appearance
+  const btn = document.getElementById("dashbtn-"+sessionId);
+  if(btn){
+    btn.classList.toggle("active", s.showInDashboard);
+    btn.innerHTML = `<span class="dash-dot"></span>${s.showInDashboard?"On Dashboard":"Dashboard"}`;
+  }
   // Update card border live
   document.getElementById("card-"+sessionId).classList.toggle("in-dashboard", s.showInDashboard);
   markDirty();
