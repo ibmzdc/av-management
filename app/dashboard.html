@@ -603,7 +603,8 @@ function printRoomRundown(mode) {
     let filesHTML = "";
     const noFileNeeded = !av.presentationRequired
       || av.presentationSource === "Design Fair Station"
-      || av.presentationSource === "Collaborative";
+      || av.presentationSource === "Collaborative"
+      || av.presentationSource === "Presenter Laptop";
     if (!files.length) {
       filesHTML = noFileNeeded
         ? `<div class="prd-file-row prd-file-wait" style="color:#9ca3af">Not required</div>`
