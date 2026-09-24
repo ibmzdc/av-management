@@ -854,6 +854,37 @@ function renderSession(s){
     <div class="session-body" id="body-${s.id}">
       <div class="av-groups">
         <div class="av-group">
+          <div class="av-group-hdr"><span class="g-icon">✏️</span> Session Info</div>
+          <div class="av-group-body" style="grid-template-columns:1fr 1fr;gap:8px;padding:10px">
+            <div class="av-req av-req-full">
+              <span class="k">Title</span>
+              <input type="text" id="si-title-${s.id}" value="${esc(s.title||"")}" oninput="markDirty()" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit">
+            </div>
+            <div class="av-req">
+              <span class="k">Start Time</span>
+              <input type="text" id="si-start-${s.id}" value="${esc(s.startTime||"")}" placeholder="09:00" oninput="markDirty()" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit">
+            </div>
+            <div class="av-req">
+              <span class="k">End Time</span>
+              <input type="text" id="si-end-${s.id}" value="${esc(s.endTime||"")}" placeholder="10:00" oninput="markDirty()" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit">
+            </div>
+            <div class="av-req">
+              <span class="k">Room</span>
+              <select id="si-room-${s.id}" onchange="markDirty()" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit">
+                ${["Ballroom Foyer","Bell Epoque Ballroom","Belle Epoque Ballroom","Botanic Sanctuary Antwerp","Cullinan","Florentine","Groenplaats 1","Groenplaats 2","Groenplaats 3","Hope","Hotel lobby","Hotel restaurant & Lijn","Lijn & Tiffany/Shah","Restaurant & Lijn","Sancy","TBD","Teun","Tiffany/Shah"].map(r=>`<option value="${r}" ${s.room===r?"selected":""}>${r}</option>`).join("")}
+              </select>
+            </div>
+            <div class="av-req">
+              <span class="k">Session Type</span>
+              <select id="si-type-${s.id}" onchange="markDirty()" style="width:100%;padding:5px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;font-family:inherit">
+                ${["Break","Client Experience","Client Roundtable","Collaborative Session","Collaborative Session Playbacks","General Session","Meal","Networking","Registration","Solution Review","Transportation","Z Design Fair"].map(t=>`<option value="${t}" ${s.sessionType===t?"selected":""}>${t}</option>`).join("")}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="av-groups">
+        <div class="av-group">
           <div class="av-group-hdr" style="justify-content:space-between">
             <span><span class="g-icon">📁</span> Files</span>
             <span id="badges-${s.id}">${fileStatusBadge(s.files)}</span>
@@ -982,6 +1013,17 @@ function collectAVReqs(sessionId){
   const speakerNames = Array.from(speakerInputs).map(el => el.value.trim()).filter(Boolean);
   s.speakers = speakerNames.join(", ") || null;
 
+  // Session Info fields
+  const siTitle = document.getElementById(`si-title-${sessionId}`);
+  if(siTitle) s.title = siTitle.value.trim() || s.title;
+  const siStart = document.getElementById(`si-start-${sessionId}`);
+  if(siStart) s.startTime = siStart.value.trim() || s.startTime;
+  const siEnd = document.getElementById(`si-end-${sessionId}`);
+  if(siEnd) s.endTime = siEnd.value.trim() || null;
+  const siRoom = document.getElementById(`si-room-${sessionId}`);
+  if(siRoom) s.room = siRoom.value || s.room;
+  const siType = document.getElementById(`si-type-${sessionId}`);
+  if(siType) s.sessionType = siType.value || s.sessionType;
 }
 
 function renderFiles(s){
