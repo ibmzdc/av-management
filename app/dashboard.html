@@ -562,7 +562,7 @@ function printRoomRundown() {
       const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
       lines.push(`<div class="prd-day-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
       lines.push(`<table class="prd-table"><thead><tr>
-        <th style="width:160px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
+        <th style="width:68px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
       </tr></thead><tbody>`);
 
       for (const s of daySessions) {
