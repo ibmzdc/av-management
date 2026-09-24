@@ -600,7 +600,9 @@ function printRoomRundown(mode) {
     const files = s.files || [];
     let filesHTML = "";
     if (!files.length) {
-      filesHTML = `<div class="prd-file-row prd-file-wait">Awaiting file</div>`;
+      filesHTML = av.presentationRequired
+        ? `<div class="prd-file-row prd-file-wait">Awaiting file</div>`
+        : `<div class="prd-file-row prd-file-wait" style="color:#9ca3af">Not required</div>`;
     } else {
       filesHTML = files.map(f => {
         const name = pesc(f.fileName || f.fileType || "file");
