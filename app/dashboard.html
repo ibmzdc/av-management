@@ -601,10 +601,13 @@ function printRoomRundown(mode) {
     if (av.xlrAudioFeed) avChips.push("XLR Audio Feed");
     const files = s.files || [];
     let filesHTML = "";
+    const noFileNeeded = !av.presentationRequired
+      || av.presentationSource === "Design Fair Station"
+      || av.presentationSource === "Collaborative";
     if (!files.length) {
-      filesHTML = av.presentationRequired
-        ? `<div class="prd-file-row prd-file-wait">Awaiting file</div>`
-        : `<div class="prd-file-row prd-file-wait" style="color:#9ca3af">Not required</div>`;
+      filesHTML = noFileNeeded
+        ? `<div class="prd-file-row prd-file-wait" style="color:#9ca3af">Not required</div>`
+        : `<div class="prd-file-row prd-file-wait">Awaiting file</div>`;
     } else {
       filesHTML = files.map(f => {
         const name = pesc(f.fileName || f.fileType || "file");
