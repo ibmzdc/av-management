@@ -2,8 +2,17 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-23T19:25:05.963Z",
+  "lastUpdated": "2026-09-24T19:00:44.756Z",
   "changelog": [
+    {
+      "ts": "2026-09-24T18:51:51.791Z",
+      "sessionId": "sunday-12-00-bell-epoque-ballro-holding-slides",
+      "sessionTitle": "Holding Slides",
+      "day": "Sunday",
+      "fileType": "presentation",
+      "oldStatus": "updated",
+      "newStatus": "uploaded"
+    },
     {
       "ts": "2026-09-23T18:44:10.677Z",
       "sessionId": "sunday-12-00-bell-epoque-ballro-holding-slides",
@@ -128,12 +137,12 @@
           "fileType": "presentation",
           "fileName": "Antwerp_light_4K",
           "boxFileId": "tram6clhgjz7yswrdgspnqmkujj6rh23",
-          "status": "updated",
-          "updatedAt": "2026-09-23T18:44:10.677Z",
+          "status": "uploaded",
+          "updatedAt": "2026-09-24T18:51:51.791Z",
           "downloadedAt": "2026-09-23T18:39:24.538Z"
         }
       ],
-      "avNote": null,
+      "avNote": "Event holding screen displayed before the start of each conference day and during all scheduled breaks.",
       "operatorNote": null
     },
     {
@@ -668,7 +677,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": false,
         "presentationSource": null,
@@ -774,7 +783,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": false,
         "presentationSource": null,
@@ -1087,7 +1096,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": false,
         "presentationSource": null,
@@ -1193,7 +1202,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": false,
         "presentationSource": null,
@@ -1539,7 +1548,7 @@
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
-      "showInDashboard": false,
+      "showInDashboard": true,
       "files": [],
       "avNote": null,
       "operatorNote": null,
@@ -1779,7 +1788,7 @@
       "sessionType": "Z Design Fair",
       "track": null,
       "title": "What Is Your Mainframe Not Telling You?",
-      "description": "Experience Confluent for Z in action and see how IBM Z event streaming through Confluent for Z turns your mainframe from a silent system of record into a real-time source of business events. Through a live demonstration, watch connectors capture activity across CICS, IMS, Db2, and MQ and stream it – as it happens – into the Kafka topics. See how AI agentic accelerators can be used to easily work with the connectors.This booth explores how enterprises can finally make trusted mainframe data available to the AI and decision engines that need it most, closing the long-standing gap between where transactions actually happen and where real-time insight is required. Attendees will gain insight into practical connector-led integration and agentic acceleration patterns while helping shape the future direction of Confluent for Z portfolio using AI capabilities.Visitors will also participate in an interactive activity to identify which real-time business signals matter most to their organizations and where streaming, event processing, and governance can deliver the greatest value. The experience highlights how event-driven architectures, AI-assisted workflows, and real-time insight can help enterprises move beyond monitoring individual transactions to detecting and responding to emerging business conditions as they happen.",
+      "description": "Experience Confluent for Z in action and see how IBM Z event streaming through Confluent for Z turns your mainframe from a silent system of record into a real-time source of business events. Through a live demonstration, watch connectors capture activity across CICS, IMS, Db2, and MQ and stream it â as it happens â into the Kafka topics. See how AI agentic accelerators can be used to easily work with the connectors.This booth explores how enterprises can finally make trusted mainframe data available to the AI and decision engines that need it most, closing the long-standing gap between where transactions actually happen and where real-time insight is required. Attendees will gain insight into practical connector-led integration and agentic acceleration patterns while helping shape the future direction of Confluent for Z portfolio using AI capabilities.Visitors will also participate in an interactive activity to identify which real-time business signals matter most to their organizations and where streaming, event processing, and governance can deliver the greatest value. The experience highlights how event-driven architectures, AI-assisted workflows, and real-time insight can help enterprises move beyond monitoring individual transactions to detecting and responding to emerging business conditions as they happen.",
       "speakers": "Anubhuti Kaushik",
       "room": "Ballroom Foyer",
       "roomSetup": null,
@@ -1789,7 +1798,7 @@
       "timer": null,
       "monitor": "Flatscreen on floorstand",
       "specialReqs": "Will need large sticky pad for easel",
-      "showInDashboard": false,
+      "showInDashboard": true,
       "files": [],
       "avNote": null,
       "operatorNote": null,
@@ -2034,7 +2043,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2087,7 +2096,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2140,7 +2149,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2193,7 +2202,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2246,7 +2255,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2299,7 +2308,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2352,7 +2361,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2455,7 +2464,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2508,7 +2517,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2561,7 +2570,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2614,7 +2623,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2667,7 +2676,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2720,7 +2729,7 @@
       "timer": null,
       "monitor": "1 flatscreen on floor stand",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2773,7 +2782,7 @@
       "timer": null,
       "monitor": "venue-provided screen",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -2863,7 +2872,7 @@
       "endTime": "17:00",
       "sessionType": "Solution Review",
       "track": null,
-      "title": "Continuing IBM Z full-stack simplification – from complexity to code",
+      "title": "Continuing IBM Z full-stack simplification â from complexity to code",
       "description": "In our last session we shared how our simplification projects fit together. In this session, we will share progress on our full-stack simplification strategy, focusing on reducing complexity, enabling modern industry practices and moving towards X-as-Code automation and AI-enhanced operation. We will highlight advances in our Everything-as-Code strategy, improved GitOps compatibility, direction on Open Telemetry and new software packaging concepts.",
       "speakers": "Mike Young",
       "room": "Belle Epoque Ballroom",
@@ -3269,7 +3278,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3317,7 +3326,7 @@
       "timer": null,
       "monitor": "Yes",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3360,7 +3369,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Z Database Assistant Update and Journey",
-      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:– Enhancements to core capabilitiesbased on feedback in 2Q.– Sponsor user feedback, particularlyaround installation and configurationexperience– Progress on tooling integration,including key priorities and upcominginvestments– Updates to Db2 distributedconnection management, includingrecent enhancements",
+      "description": "IBM Z Database Assistant delivers aunified, intelligent workspace poweredby agentic AI to augment databaseadministrators (DBAs) across IMS andDb2 for z/OS environments.In this session, we will provide an updateon the evolution of IBM Z DatabaseAssistant since the June GA release andengage the Council for feedback.The session will cover both IMS and Db2perspectives, including:â Enhancements to core capabilitiesbased on feedback in 2Q.â Sponsor user feedback, particularlyaround installation and configurationexperienceâ Progress on tooling integration,including key priorities and upcominginvestmentsâ Updates to Db2 distributedconnection management, includingrecent enhancements",
       "speakers": "Sueli Almeida",
       "room": "Sancy",
       "roomSetup": null,
@@ -3370,7 +3379,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3418,7 +3427,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3515,7 +3524,7 @@
       "timer": null,
       "monitor": null,
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "files": [],
       "avNote": null,
       "operatorNote": null,
@@ -3563,7 +3572,7 @@
       "timer": "45",
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3602,7 +3611,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Out-of-the-box-AI",
-      "description": "AI that helps configure an IBM Z box upon delivery. What does out-of-the-box AI mean to you? –Like a power button - you don't ask why it exists.– That insight was powerful and we took it seriously.",
+      "description": "AI that helps configure an IBM Z box upon delivery. What does out-of-the-box AI mean to you? âLike a power button - you don't ask why it exists.â That insight was powerful and we took it seriously.",
       "speakers": "Stefanie Lauria",
       "room": "Sancy",
       "roomSetup": null,
@@ -3612,7 +3621,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3660,7 +3669,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3708,7 +3717,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3746,7 +3755,7 @@
       "sessionType": "Solution Review",
       "track": "Application",
       "title": "Bringing agentic workflows to CI/CD with IBM Pipeline Automation for Z to accelerate how apps are built, validated, and deployed",
-      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflows–. Identify adoption barriers and gaps in enabling end-to-end pipeline integration–. Prioritize enhancements to improve usability, interoperability, and release coordination–.",
+      "description": "Validate the implementation of cross-application dependencies support across build and deploy workflowsâ. Identify adoption barriers and gaps in enabling end-to-end pipeline integrationâ. Prioritize enhancements to improve usability, interoperability, and release coordinationâ.",
       "speakers": "Rich Larin",
       "room": "Teun",
       "roomSetup": null,
@@ -3756,7 +3765,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3794,7 +3803,7 @@
       "sessionType": "Solution Review",
       "track": "Infrastructure",
       "title": "Agentic management of infrastructure resources in a sovereign compute environment",
-      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure –as-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
+      "description": "As hybrid cloud and AI operating modelsevolve and dominate the IT landscape,enterprises require governed, auditable,sovereign, and policy-driven infrastructuremanagement across mission-criticalplatforms.This collaboration session will driveexploration and co-creation of the use-casesand roadmap for IBM Meridian for Z andLinuxONE. This is an agentic AI-drivenworkflow and knowledge engine platform thatenables intent-based infrastructuremanagement through discovery, simulation,and rehearsal. The collaborative workingsessions will explore how Meridian integrateswith Terraform as an accelerant forInfrastructure âas-Code transformation onIBM Z and LinuxONE. Additionally, anecosystem of IBM Z software and tools willalso be discussed for future integration.We also recognize that customers running IBMZ and LinuxONE environments face the needto modernize operations while maintainingstrict requirements for data sovereignty,compliance, and operational control. We willalso seek understanding of how IBM mustprovide mission-critical environments with thenecessary governance to ensure that AIagents contribute meaningfully, while nothallucinating or making changes that are notconsistent with policy",
       "speakers": "Christopher Byrnes",
       "room": "Belle Epoque Ballroom",
       "roomSetup": null,
@@ -3804,7 +3813,7 @@
       "timer": "45",
       "monitor": "2 monitors for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3843,7 +3852,7 @@
       "sessionType": "Solution Review",
       "track": "Data & AI",
       "title": "Unlocking IBM Z Data for AI and Real-Time Decisioning",
-      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includes– Bring AI into the core– Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focuses– How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.– How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
+      "description": "Business focused innovation requires athoughtful data strategy. Factors effectingthis decision on where to maintain data onZ includesâ Bring AI into the coreâ Build a Z-native event access layer thatsurfaces IBM Z data and applicationsignals into Kafka / Confluent, enablingtrusted, real-time business events forenterprise streaming architectures.This session focusesâ How AI on Z can simplify interaction withcomplex enterprise data environments,accelerate analytical insights withoutmoving data off the platform, reduce thedependency on specialized technicalknowledge, semantic understanding,and AI-assisted exploration acrossstructured and unstructured enterprisedata.â How to form a business event refineryfor IBM Z that converts fragmentedsystem signals into trusted, actionablebusiness events.",
       "speakers": "Daniel Martin",
       "room": "Sancy",
       "roomSetup": null,
@@ -3853,7 +3862,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
@@ -3901,7 +3910,7 @@
       "timer": null,
       "monitor": "venue provided screen; 1 monitor for speaker",
       "specialReqs": null,
-      "showInDashboard": false,
+      "showInDashboard": true,
       "av": {
         "presentationRequired": true,
         "presentationSource": "Presenter Laptop",
