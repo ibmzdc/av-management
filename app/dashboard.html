@@ -395,7 +395,9 @@ function migrateSession(s) {
   if (!s.av) s.av = {};
   const av = s.av;
 
-  if (s.projection && !av.presentationSource)
+  // Only migrate projection if it's a known valid value, not free-text operator notes
+  const VALID_PROJECTION = ["av team", "av team - led", "presenter", "presenter laptop", "led wall", "design fair station", "not required"];
+  if (s.projection && !av.presentationSource && VALID_PROJECTION.some(v => s.projection.toLowerCase().startsWith(v)))
     av.presentationSource = s.projection;
 
   if (s.timer != null && s.timer !== false && s.timer !== "" && av.timer == null)

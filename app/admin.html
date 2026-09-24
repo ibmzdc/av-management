@@ -499,8 +499,9 @@ function migrateSession(s){
   if(!s.av) s.av = {};
   const av = s.av;
 
-  // projection → presentationSource
-  if(s.projection && !av.presentationSource)
+  // projection → presentationSource (only valid known values, not free-text notes)
+  const VALID_PROJECTION = ["av team", "av team - led", "presenter", "presenter laptop", "led wall", "design fair station", "not required"];
+  if(s.projection && !av.presentationSource && VALID_PROJECTION.some(v => s.projection.toLowerCase().startsWith(v)))
     av.presentationSource = s.projection;
 
   // podium
