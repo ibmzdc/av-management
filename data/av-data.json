@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-24T19:41:06.362Z",
+  "lastUpdated": "2026-09-24T19:41:35.157Z",
   "changelog": [
     {
       "ts": "2026-09-24T18:51:51.791Z",
@@ -142,7 +142,7 @@
           "downloadedAt": "2026-09-23T18:39:24.538Z"
         }
       ],
-      "avNote": "Event holding screen displayed before the start of each conference day and during all scheduled breaks.\nOne handheld microphone to remain at the front of the room for host announcements & audience communications throughout the event.",
+      "avNote": "Event holding screen displayed before the start of each conference day and during all scheduled breaks.\nOne handheld wireless microphone to remain at the front of the room for host announcements and audience communications throughout the event.",
       "operatorNote": null
     },
     {
@@ -495,7 +495,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -548,7 +548,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -601,7 +601,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -654,7 +654,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -707,7 +707,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -760,7 +760,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -813,7 +813,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -914,7 +914,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -967,7 +967,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1020,7 +1020,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1073,7 +1073,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1126,7 +1126,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1179,7 +1179,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1232,7 +1232,7 @@
         "lavalierHeadsetMics": 0
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1377,7 +1377,7 @@
         "specialRequirements": []
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1425,7 +1425,7 @@
         "specialRequirements": []
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room projector.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1475,7 +1475,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1525,7 +1525,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1550,7 +1550,7 @@
       "specialReqs": "Will need large sticky pad for easel",
       "showInDashboard": true,
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "av": {
         "presentationSource": "Design Fair Station",
@@ -1625,7 +1625,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1675,7 +1675,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1725,7 +1725,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1775,7 +1775,7 @@
         ]
       },
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "stageSetup": null
     },
@@ -1800,7 +1800,7 @@
       "specialReqs": "Will need large sticky pad for easel",
       "showInDashboard": true,
       "files": [],
-      "avNote": "Session hosts will use their laptops to project presentation content to the room monitor.",
+      "avNote": null,
       "operatorNote": null,
       "av": {
         "presentationSource": "Design Fair Station",
