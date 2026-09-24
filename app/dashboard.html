@@ -548,7 +548,7 @@ function showPrintDialog() {
       </div>
       <div class="prd-dialog-footer">
         <button class="prd-dialog-cancel" onclick="this.closest('.prd-dialog-overlay').remove()">Cancel</button>
-        <button class="prd-dialog-print" onclick="var m=this.closest('.prd-dialog-overlay'); var v=m.querySelector('input[name=prd-mode]:checked').value; m.remove(); printRoomRundown(v);">Print</button>
+        <button class="prd-dialog-print" onclick="var m=this.closest('.prd-dialog-overlay'); var v=m.querySelector('input[name=prd-mode]:checked').value; m.remove(); setTimeout(function(){ printRoomRundown(v); }, 80);">Print</button>
       </div>
     </div>`;
   document.body.appendChild(overlay);
@@ -679,13 +679,15 @@ function printRoomRundown(mode) {
 
   lines.push(`</div>`); // print-rundown-root
 
-  // Inject and print
+  // Inject and print — rAF ensures the dialog removal has painted before window.print() fires
   const wrapper = document.createElement("div");
   wrapper.innerHTML = lines.join("");
   const root = wrapper.firstElementChild;
   document.body.appendChild(root);
-  window.print();
-  setTimeout(() => root.remove(), 1000);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    window.print();
+    setTimeout(() => root.remove(), 1000);
+  }));
 }
 
 // ── Render ─────────────────────────────────────────────────
