@@ -516,6 +516,16 @@ async function manualRefresh() {
 
 function printRoomRundown() {
   if (!avData) return;
+
+  // Normalize smart punctuation to ASCII equivalents for reliable print rendering
+  function pesc(str) {
+    return esc(String(str ?? "")
+      .replace(/[\u2013\u2014]/g, "-")   // en-dash, em-dash → hyphen
+      .replace(/[\u2018\u2019]/g, "'")   // smart single quotes → apostrophe
+      .replace(/[\u201C\u201D]/g, '"')   // smart double quotes → straight quote
+    );
+  }
+
   const sessions = vendorSessions();
   const DAY_ORDER_P = ["Sunday","Monday","Tuesday","Wednesday","Thursday"];
 
@@ -538,26 +548,26 @@ function printRoomRundown() {
   const eventLoc  = avData.location || "";
   lines.push(`<div class="print-rundown-root">`);
   lines.push(`<div class="prd-cover">
-    <div class="prd-cover-title">${esc(avData.event || "AV")} — Room Rundown</div>
-    <div class="prd-cover-sub">${esc(eventDate)}${eventLoc ? " · " + esc(eventLoc) : ""} &nbsp;·&nbsp; Printed ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</div>
+    <div class="prd-cover-title">${pesc(avData.event || "AV")} - Room Rundown</div>
+    <div class="prd-cover-sub">${pesc(eventDate)}${eventLoc ? " - " + pesc(eventLoc) : ""} &nbsp;·&nbsp; Printed ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</div>
   </div>`);
 
   for (const room of Object.keys(roomMap).sort()) {
     lines.push(`<div class="prd-room">`);
-    lines.push(`<div class="prd-room-hdr">${esc(room)}</div>`);
+    lines.push(`<div class="prd-room-hdr">${pesc(room)}</div>`);
 
     const days = DAY_ORDER_P.filter(d => roomMap[room][d]);
     for (const day of days) {
       const daySessions = roomMap[room][day];
       const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
-      lines.push(`<div class="prd-day-hdr">${esc(day)}${date ? " — " + date : ""}</div>`);
+      lines.push(`<div class="prd-day-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
       lines.push(`<table class="prd-table"><thead><tr>
         <th style="width:160px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
       </tr></thead><tbody>`);
 
       for (const s of daySessions) {
         const av = s.av || {};
-        const timeStr = s.startTime + (s.endTime ? `\u2013${s.endTime}` : "");
+        const timeStr = s.startTime + (s.endTime ? `-${s.endTime}` : "");
 
         // AV summary chips
         const avChips = [];
@@ -580,9 +590,9 @@ function printRoomRundown() {
           filesHTML = `<div class="prd-file-row prd-file-wait">Awaiting file</div>`;
         } else {
           filesHTML = files.map(f => {
-            const name = esc(f.fileName || f.fileType || "file");
+            const name = pesc(f.fileName || f.fileType || "file");
             if (f.status === "nofile") return `<div class="prd-file-row prd-file-wait">No file needed</div>`;
-            if (f.status === "onhold") return `<div class="prd-file-row prd-file-wait">⏸ ${name}</div>`;
+            if (f.status === "onhold") return `<div class="prd-file-row prd-file-wait">${name} (On Hold)</div>`;
             const dlLine = f.downloadedAt
               ? `<span class="prd-file-dl"> ✓ ${fmtTs(f.downloadedAt)}</span>`
               : "";
@@ -593,19 +603,19 @@ function printRoomRundown() {
 
         const noteText = (s.avNote || (av && av.avNote) || "").trim();
         const noteHTML = noteText
-          ? `<div class="prd-note">Note: ${esc(noteText)}</div>`
+          ? `<div class="prd-note">Note: ${pesc(noteText)}</div>`
           : "";
 
-        const speakers = s.speakers ? `<div class="prd-speakers">${esc(s.speakers.slice(0,80))}</div>` : "";
+        const speakers = s.speakers ? `<div class="prd-speakers">${pesc(s.speakers.slice(0,80))}</div>` : "";
 
         const avHTML = (avChips.length
-          ? avChips.map(c => `<span class="prd-av-item">${esc(c)}</span>`).join("")
-          : `<span class="prd-av-item" style="color:#9ca3af">—</span>`)
+          ? avChips.map(c => `<span class="prd-av-item">${pesc(c)}</span>`).join("")
+          : `<span class="prd-av-item" style="color:#9ca3af">-</span>`)
           + noteHTML;
 
         lines.push(`<tr>
-          <td class="prd-time">${esc(timeStr)}</td>
-          <td class="prd-col-session"><div class="prd-title">${esc(s.title)}</div>${speakers}</td>
+          <td class="prd-time">${pesc(timeStr)}</td>
+          <td class="prd-col-session"><div class="prd-title">${pesc(s.title)}</div>${speakers}</td>
           <td class="prd-av">${avHTML}</td>
           <td class="prd-files">${filesHTML}</td>
         </tr>`);
