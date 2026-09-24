@@ -233,6 +233,19 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 #loading { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Print dialog ────────────────────────────────────────── */
+.prd-dialog-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.prd-dialog { background: #fff; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.18); width: 340px; padding: 20px 24px 18px; }
+.prd-dialog-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+.prd-dialog-body { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.prd-dialog-opt { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: var(--text); }
+.prd-dialog-opt input { margin-top: 2px; flex-shrink: 0; }
+.prd-dialog-footer { display: flex; justify-content: flex-end; gap: 8px; }
+.prd-dialog-cancel { font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 5px; border: 1px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; }
+.prd-dialog-cancel:hover { background: var(--surface); }
+.prd-dialog-print { font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 5px; border: none; background: var(--accent); color: #fff; cursor: pointer; }
+.prd-dialog-print:hover { background: var(--accent-hover); }
 </style>
 </head>
 <body>
@@ -240,7 +253,7 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
 <header>
   <h1>AV Dashboard — ZDC 2026 Fall · Antwerp</h1>
   <button class="btn-header" id="refreshBtn" onclick="manualRefresh()">↺ Refresh Now</button>
-  <button class="btn-header" onclick="printRoomRundown()">🖨 Print Rundown</button>
+  <button class="btn-header" onclick="showPrintDialog()">🖨 Print Rundown</button>
   <div class="refresh-meta">
     <span class="refresh-dot"></span><span id="last-refresh">Loading…</span><br>
     Auto-refreshes every 60 s
@@ -514,8 +527,36 @@ async function manualRefresh() {
   if (btn) { btn.disabled = false; btn.textContent = "↺ Refresh Now"; }
 }
 
-function printRoomRundown() {
+function showPrintDialog() {
   if (!avData) return;
+  // Remove any stale dialog
+  document.querySelectorAll(".prd-dialog-overlay").forEach(el => el.remove());
+  const overlay = document.createElement("div");
+  overlay.className = "prd-dialog-overlay";
+  overlay.innerHTML = `
+    <div class="prd-dialog">
+      <div class="prd-dialog-title">Print Rundown</div>
+      <div class="prd-dialog-body">
+        <label class="prd-dialog-opt">
+          <input type="radio" name="prd-mode" value="room" checked>
+          <span><strong>By Room</strong> — one section per room, days within</span>
+        </label>
+        <label class="prd-dialog-opt">
+          <input type="radio" name="prd-mode" value="day">
+          <span><strong>By Day</strong> — one section per day, rooms within</span>
+        </label>
+      </div>
+      <div class="prd-dialog-footer">
+        <button class="prd-dialog-cancel" onclick="this.closest('.prd-dialog-overlay').remove()">Cancel</button>
+        <button class="prd-dialog-print" onclick="printRoomRundown(this.closest('.prd-dialog-overlay').querySelector('input[name=prd-mode]:checked').value); this.closest('.prd-dialog-overlay').remove()">Print</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function printRoomRundown(mode) {
+  if (!avData) return;
+  mode = mode || "room";
 
   // Normalize smart punctuation to ASCII equivalents for reliable print rendering
   function pesc(str) {
@@ -529,100 +570,111 @@ function printRoomRundown() {
   const sessions = vendorSessions();
   const DAY_ORDER_P = ["Sunday","Monday","Tuesday","Wednesday","Thursday"];
 
-  // Group by room → day
-  const roomMap = {};
-  for (const s of sessions) {
-    const room = s.room || "Unassigned";
-    if (!roomMap[room]) roomMap[room] = {};
-    if (!roomMap[room][s.day]) roomMap[room][s.day] = [];
-    roomMap[room][s.day].push(s);
-  }
-
   // Remove any old print wrapper
   document.querySelectorAll(".print-rundown-root").forEach(el => el.remove());
 
-  const lines = [];
-
-  // Cover header
   const eventDate = avData.eventDates || "";
   const eventLoc  = avData.location || "";
+  const modeLabel = mode === "day" ? "Daily Rundown" : "Room Rundown";
+  const printDate = new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+
+  // ── Shared: build a single session row ───────────────────
+  function buildSessionRow(s) {
+    const av = s.av || {};
+    const timeStr = s.startTime + (s.endTime ? `-${s.endTime}` : "");
+    const avChips = [];
+    if (av.presentationSource) avChips.push(av.presentationSource);
+    if (av.clicker) avChips.push("Clicker");
+    if (av.confidenceMonitors) avChips.push(av.confidenceMonitors + " Confidence Monitor" + (av.confidenceMonitors > 1 ? "s" : ""));
+    if (av.timerMins) avChips.push(av.timerMins + " min Timer");
+    if (av.wirelessHandheldMics) avChips.push(av.wirelessHandheldMics + " Wireless Handheld Mic" + (av.wirelessHandheldMics > 1 ? "s" : ""));
+    if (av.lavalierHeadsetMics) avChips.push(av.lavalierHeadsetMics + " Lavalier / Headset Mic" + (av.lavalierHeadsetMics > 1 ? "s" : ""));
+    if (av.catchBoxMics) avChips.push(av.catchBoxMics + " CatchBox" + (av.catchBoxMics > 1 ? "es" : ""));
+    if (av.audioPlayback) avChips.push("Audio Playback");
+    if (av.videoPlayback) avChips.push("Video Playback");
+    if (av.projector) avChips.push("Projector");
+    if (av.xlrAudioFeed) avChips.push("XLR Audio Feed");
+    const files = s.files || [];
+    let filesHTML = "";
+    if (!files.length) {
+      filesHTML = `<div class="prd-file-row prd-file-wait">Awaiting file</div>`;
+    } else {
+      filesHTML = files.map(f => {
+        const name = pesc(f.fileName || f.fileType || "file");
+        if (f.status === "nofile") return `<div class="prd-file-row prd-file-wait">No file needed</div>`;
+        if (f.status === "onhold") return `<div class="prd-file-row prd-file-wait">${name} (On Hold)</div>`;
+        const dlLine = f.downloadedAt ? `<span class="prd-file-dl"> (dl ${fmtTs(f.downloadedAt)})</span>` : "";
+        const updClass = f.status === "updated" ? " prd-file-upd" : "";
+        return `<div class="prd-file-row${updClass}">${name}${dlLine}</div>`;
+      }).join("");
+    }
+    const noteText = (s.avNote || (av && av.avNote) || "").trim();
+    const noteHTML = noteText ? `<div class="prd-note">Note: ${pesc(noteText)}</div>` : "";
+    const speakers = s.speakers ? `<div class="prd-speakers">${pesc(s.speakers.slice(0,80))}</div>` : "";
+    const avHTML = (avChips.length
+      ? avChips.map(c => `<span class="prd-av-item">${pesc(c)}</span>`).join("")
+      : `<span class="prd-av-item" style="color:#9ca3af">-</span>`) + noteHTML;
+    return `<tr>
+      <td class="prd-time">${pesc(timeStr)}</td>
+      <td class="prd-col-session"><div class="prd-title">${pesc(s.title)}</div>${speakers}</td>
+      <td class="prd-av">${avHTML}</td>
+      <td class="prd-files">${filesHTML}</td>
+    </tr>`;
+  }
+
+  function buildTable(sectionSessions) {
+    return `<table class="prd-table"><thead><tr>
+      <th style="width:90px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
+    </tr></thead><tbody>${sectionSessions.map(buildSessionRow).join("")}</tbody></table>`;
+  }
+
+  const lines = [];
   lines.push(`<div class="print-rundown-root">`);
   lines.push(`<div class="prd-cover">
-    <div class="prd-cover-title">${pesc(avData.event || "AV")} - Room Rundown</div>
-    <div class="prd-cover-sub">${pesc(eventDate)}${eventLoc ? " | " + pesc(eventLoc) : ""} | Printed ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</div>
+    <div class="prd-cover-title">${pesc(avData.event || "AV")} - ${modeLabel}</div>
+    <div class="prd-cover-sub">${pesc(eventDate)}${eventLoc ? " | " + pesc(eventLoc) : ""} | Printed ${printDate}</div>
   </div>`);
 
-  for (const room of Object.keys(roomMap).sort()) {
-    lines.push(`<div class="prd-room">`);
-    lines.push(`<div class="prd-room-hdr">${pesc(room)}</div>`);
-
-    const days = DAY_ORDER_P.filter(d => roomMap[room][d]);
-    for (const day of days) {
-      const daySessions = roomMap[room][day];
-      const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
-      lines.push(`<div class="prd-day-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
-      lines.push(`<table class="prd-table"><thead><tr>
-        <th style="width:90px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
-      </tr></thead><tbody>`);
-
-      for (const s of daySessions) {
-        const av = s.av || {};
-        const timeStr = s.startTime + (s.endTime ? `-${s.endTime}` : "");
-
-        // AV summary chips
-        const avChips = [];
-        if (av.presentationSource) avChips.push(av.presentationSource);
-        if (av.clicker) avChips.push("Clicker");
-        if (av.confidenceMonitors) avChips.push(`${av.confidenceMonitors} Confidence Monitor${av.confidenceMonitors > 1 ? "s" : ""}`);
-        if (av.timerMins) avChips.push(`${av.timerMins} min Timer`);
-        if (av.wirelessHandheldMics) avChips.push(`${av.wirelessHandheldMics} Wireless Handheld Mic${av.wirelessHandheldMics > 1 ? "s" : ""}`);
-        if (av.lavalierHeadsetMics) avChips.push(`${av.lavalierHeadsetMics} Lavalier / Headset Mic${av.lavalierHeadsetMics > 1 ? "s" : ""}`);
-        if (av.catchBoxMics) avChips.push(`${av.catchBoxMics} CatchBox${av.catchBoxMics > 1 ? "es" : ""}`);
-        if (av.audioPlayback) avChips.push("Audio Playback");
-        if (av.videoPlayback) avChips.push("Video Playback");
-        if (av.projector) avChips.push("Projector");
-        if (av.xlrAudioFeed) avChips.push("XLR Audio Feed");
-
-        // File rows
-        const files = s.files || [];
-        let filesHTML = "";
-        if (!files.length) {
-          filesHTML = `<div class="prd-file-row prd-file-wait">Awaiting file</div>`;
-        } else {
-          filesHTML = files.map(f => {
-            const name = pesc(f.fileName || f.fileType || "file");
-            if (f.status === "nofile") return `<div class="prd-file-row prd-file-wait">No file needed</div>`;
-            if (f.status === "onhold") return `<div class="prd-file-row prd-file-wait">${name} (On Hold)</div>`;
-            const dlLine = f.downloadedAt
-              ? `<span class="prd-file-dl"> (dl ${fmtTs(f.downloadedAt)})</span>`
-              : "";
-            const updClass = f.status === "updated" ? " prd-file-upd" : "";
-            return `<div class="prd-file-row${updClass}">${name}${dlLine}</div>`;
-          }).join("");
-        }
-
-        const noteText = (s.avNote || (av && av.avNote) || "").trim();
-        const noteHTML = noteText
-          ? `<div class="prd-note">Note: ${pesc(noteText)}</div>`
-          : "";
-
-        const speakers = s.speakers ? `<div class="prd-speakers">${pesc(s.speakers.slice(0,80))}</div>` : "";
-
-        const avHTML = (avChips.length
-          ? avChips.map(c => `<span class="prd-av-item">${pesc(c)}</span>`).join("")
-          : `<span class="prd-av-item" style="color:#9ca3af">-</span>`)
-          + noteHTML;
-
-        lines.push(`<tr>
-          <td class="prd-time">${pesc(timeStr)}</td>
-          <td class="prd-col-session"><div class="prd-title">${pesc(s.title)}</div>${speakers}</td>
-          <td class="prd-av">${avHTML}</td>
-          <td class="prd-files">${filesHTML}</td>
-        </tr>`);
-      }
-      lines.push(`</tbody></table>`);
+  if (mode === "day") {
+    // ── By Day: section per day, sub-grouped by room ─────
+    const dayMap = {};
+    for (const s of sessions) {
+      if (!dayMap[s.day]) dayMap[s.day] = {};
+      const room = s.room || "Unassigned";
+      if (!dayMap[s.day][room]) dayMap[s.day][room] = [];
+      dayMap[s.day][room].push(s);
     }
-    lines.push(`</div>`); // prd-room
+    for (const day of DAY_ORDER_P.filter(d => dayMap[d])) {
+      const daySessions = sessions.filter(s => s.day === day);
+      const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
+      lines.push(`<div class="prd-room">`);
+      lines.push(`<div class="prd-room-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
+      for (const room of Object.keys(dayMap[day]).sort()) {
+        lines.push(`<div class="prd-day-hdr">${pesc(room)}</div>`);
+        lines.push(buildTable(dayMap[day][room]));
+      }
+      lines.push(`</div>`);
+    }
+  } else {
+    // ── By Room: section per room, sub-grouped by day ────
+    const roomMap = {};
+    for (const s of sessions) {
+      const room = s.room || "Unassigned";
+      if (!roomMap[room]) roomMap[room] = {};
+      if (!roomMap[room][s.day]) roomMap[room][s.day] = [];
+      roomMap[room][s.day].push(s);
+    }
+    for (const room of Object.keys(roomMap).sort()) {
+      lines.push(`<div class="prd-room">`);
+      lines.push(`<div class="prd-room-hdr">${pesc(room)}</div>`);
+      for (const day of DAY_ORDER_P.filter(d => roomMap[room][d])) {
+        const daySessions = roomMap[room][day];
+        const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
+        lines.push(`<div class="prd-day-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
+        lines.push(buildTable(daySessions));
+      }
+      lines.push(`</div>`);
+    }
   }
 
   lines.push(`</div>`); // print-rundown-root
