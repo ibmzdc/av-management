@@ -80,35 +80,58 @@ The dashboard has a `decodePickerValue()` function that renders this as human-re
 
 | Function | Purpose |
 |---|---|
-| `renderAVReqs()` | Renders read-only AV summary chips on session cards |
-| `buildModalAVSections()` | Builds the edit modal AV form from `AV_GROUPS` + `AV_CONFIG` |
-| `collectAVReqs()` | Reads the modal form and returns an `av` object |
+| `renderSession()` | Renders a full session card (collapsed + expanded) |
+| `renderAVReqs()` | Renders the inline AV edit form (speakers, AV groups, session info) — uses string concat, NOT template literals |
+| `collectAVReqs()` | Reads all AV + session info fields from the expanded card DOM and writes back to session object |
+| `collectSessionFiles()` | Reads file rows from expanded card DOM |
+| `collectFormState()` | Calls collectAVReqs + collectSessionFiles for all sessions before save |
+| `onDashToggle()` | Toggles `showInDashboard` on a session, updates pill button + card border |
+| `bulkDashToggle()` | Turns all visible sessions on/off dashboard in one click |
+| `toggleDashFilter()` | Filters card list to dashboard-flagged sessions only |
 | `renderSetupPicker()` | Renders the Room/Stage Setup picker UI |
-| `rsSelectPreset()` | Handles preset button clicks in the picker |
-| `roomSetupValue()` / `stageSetupValue()` | Read picker state → serialised string |
-| `collectFormState()` | Collects entire modal form into a session object |
+| `showPrintDialog()` | *Not in admin — dashboard only* |
 
 ## Key functions — dashboard.html
 
 | Function | Purpose |
 |---|---|
-| `buildSessionBlock()` | Renders a full session card |
-| `buildAVChips()` | Renders AV requirement chips |
+| `showPrintDialog()` | Shows By Room / By Day mode picker before printing |
+| `printRoomRundown(mode)` | Builds and prints the rundown DOM; uses `pesc()` for all text output |
+| `pesc()` | Local helper inside `printRoomRundown` — normalises smart punctuation to ASCII before injecting into print DOM |
+| `vendorSessions()` | Returns only sessions with `showInDashboard: true` |
+| `migrateSession()` | Migrates legacy root-level fields to `s.av.*` at load time |
+| `renderAll()` | Top-level render: summary, days, changelog, needs-attention |
 | `decodePickerValue()` | Converts serialised picker string to human-readable text |
-| `buildFilesSection()` | Renders the files card |
+
+---
+
+## Print Rundown — key behaviours
+
+- **Two modes:** By Room (room → day sections) and By Day (day → room sections)
+- **`pesc()`** normalises en-dashes, smart quotes to ASCII — required because browser print PDF renderer misreads Unicode in dynamically-injected DOM
+- **Color bands:** `.prd-room-hdr` (dark navy, white text) = top-level section; `.prd-day-hdr` (light blue) = sub-section. Requires `print-color-adjust: exact` — set on `*` inside `@media print`
+- **Dialog removal:** dialog must be removed from DOM synchronously (`m.style.display='none'; document.body.removeChild(m)`) BEFORE `printRoomRundown()` is called, or it prints on every page
+- **Files column logic:** "Not required" shown (grey) when `av.presentationRequired === false` OR source is `Design Fair Station` / `Collaborative` / `Presenter Laptop`. "Awaiting file" shown only when `presentationRequired: true` with an AV Team source and no files added yet
 
 ---
 
 ## Current state / next work items
 
-- **Accomplished in Last Session:**
-  - **Print Rundown overhaul:** Fixed title page (corrupt `eventDates` encoding, duplicate "ZDC" prefix), doubled then tuned font sizes to 10px body / 13px headers, fixed time column width using `calc((100% - 90px) / 3)` for equal session/AV/files columns, expanded all AV chip labels to full text, moved AV note into the AV column with amber left-border styling, normalized all smart punctuation to ASCII via `pesc()` for PDF compatibility.
-  - **By Room / By Day mode picker:** Print Rundown button now shows a modal dialog to choose between room-first or day-first grouping. Dialog is removed synchronously from DOM before `window.print()` fires; `afterprint` event cleans up the injected print DOM.
-  - **Encoding cleanup:** Fixed 16 garbled session fields (en-dashes, apostrophes) caused by triple UTF-8 encoding from the original XLSX import. Fixed `eventDates` field (same root cause).
+- **Accomplished in This Session:**
+  - **Print Rundown overhaul:** Title page fix, font sizing, time column `calc()` fix, full AV label text, AV note moved to AV column, color-banded section headers, By Room / By Day mode picker, dialog DOM removal fix, `pesc()` normalization, `print-color-adjust: exact` for color printing
+  - **Files column logic:** "Not required" for Design Fair Station, Presenter Laptop, Collaborative, and `presentationRequired: false` sessions
+  - **Migration guard:** `migrateSession()` now only copies `s.projection` → `av.presentationSource` for known valid values (not free-text notes)
+  - **Encoding cleanup:** Fixed 16 garbled session fields (en-dashes, apostrophes) from triple UTF-8 encoding. Fixed `eventDates` field.
+  - **Admin toggle button:** Dashboard checkbox replaced with a pill-style toggle button (grey = off, blue = "On Dashboard")
+  - **Admin bulk toggle:** "Dashboard: All" button in topbar turns all visible sessions on/off in one click
+  - **Admin Session Info panel:** Title, Start Time, End Time, Room, Session Type now editable inline in expanded card — collected by `collectAVReqs()` on save
+
+- **Known open issue:**
+  - The `â` garbled character in session 54 title ("Continuing IBM Z full-stack simplification – from complexity to code") still appears in PDF output when printed via Safari/Chrome print-to-PDF. The data in `av-data.json` and the HTML are clean (U+2013 en-dash). `pesc()` converts it to `-` but the PDF renderer is still seeing the raw Unicode. Root cause not yet identified — possibly a browser-version-specific print encoding bug.
 
 - **Next Work Items:**
-  - The `â` garbled character in session 54 title ("Continuing IBM Z full-stack simplification") in PDF output is a known open issue — `pesc()` normalises it in JS but PDF renderer may still misread the encoding. Investigate browser-side encoding of the print DOM.
-  - Standard user maintenance, further layout cleanup, or new file type uploads as required.
+  - Resolve session 54 PDF encoding issue
+  - Standard session data maintenance as event approaches
 
 ---
 
