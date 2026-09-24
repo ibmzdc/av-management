@@ -54,9 +54,9 @@ header h1::before { content: ""; display: inline-block; width: 8px; height: 8px;
   .prd-day-hdr { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #57606a; padding: 8px 0 3px; }
   .prd-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 6px; table-layout: fixed; }
   .prd-table th { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #57606a; border-bottom: 1px solid #d1d5db; padding: 4px 6px; text-align: left; }
-  .prd-table td { padding: 6px 6px; border-bottom: 1px solid #e5e7eb; vertical-align: top; line-height: 1.45; word-wrap: break-word; }
+  .prd-table td { padding: 6px 10px 6px 6px; border-bottom: 1px solid #e5e7eb; vertical-align: top; line-height: 1.45; word-wrap: break-word; }
   .prd-table tr:last-child td { border-bottom: none; }
-  .prd-time  { width: 68px; white-space: nowrap; font-variant-numeric: tabular-nums; color: #374151; font-weight: 600; }
+  .prd-time  { width: 90px; white-space: nowrap; font-variant-numeric: tabular-nums; color: #374151; font-weight: 600; }
   .prd-title { font-weight: 600; color: #1f2328; font-size: 10px; }
   .prd-speakers { font-size: 9px; color: #57606a; }
   .prd-col-session { width: 30%; }
@@ -562,7 +562,7 @@ function printRoomRundown() {
       const date = daySessions[0]?.date ? fmtDateShort(daySessions[0].date) : "";
       lines.push(`<div class="prd-day-hdr">${pesc(day)}${date ? " - " + date : ""}</div>`);
       lines.push(`<table class="prd-table"><thead><tr>
-        <th style="width:68px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
+        <th style="width:90px">Time</th><th class="prd-col-session">Session</th><th>AV</th><th>Files</th>
       </tr></thead><tbody>`);
 
       for (const s of daySessions) {
