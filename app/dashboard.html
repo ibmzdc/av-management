@@ -549,7 +549,7 @@ function printRoomRundown() {
   lines.push(`<div class="print-rundown-root">`);
   lines.push(`<div class="prd-cover">
     <div class="prd-cover-title">${pesc(avData.event || "AV")} - Room Rundown</div>
-    <div class="prd-cover-sub">${pesc(eventDate)}${eventLoc ? " - " + pesc(eventLoc) : ""} &nbsp;·&nbsp; Printed ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</div>
+    <div class="prd-cover-sub">${pesc(eventDate)}${eventLoc ? " | " + pesc(eventLoc) : ""} | Printed ${new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</div>
   </div>`);
 
   for (const room of Object.keys(roomMap).sort()) {
@@ -594,7 +594,7 @@ function printRoomRundown() {
             if (f.status === "nofile") return `<div class="prd-file-row prd-file-wait">No file needed</div>`;
             if (f.status === "onhold") return `<div class="prd-file-row prd-file-wait">${name} (On Hold)</div>`;
             const dlLine = f.downloadedAt
-              ? `<span class="prd-file-dl"> ✓ ${fmtTs(f.downloadedAt)}</span>`
+              ? `<span class="prd-file-dl"> (dl ${fmtTs(f.downloadedAt)})</span>`
               : "";
             const updClass = f.status === "updated" ? " prd-file-upd" : "";
             return `<div class="prd-file-row${updClass}">${name}${dlLine}</div>`;
