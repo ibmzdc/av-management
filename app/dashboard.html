@@ -619,7 +619,9 @@ function printRoomRundown(mode) {
       }).join("");
     }
     const noteText = (s.avNote || (av && av.avNote) || "").trim();
-    const noteHTML = noteText ? `<div class="prd-note">Note: ${pesc(noteText)}</div>` : "";
+    const noteHTML = noteText
+      ? `<div class="prd-note">` + noteText.split(/\n/).map(l => l.trim()).filter(Boolean).map(l => `<span style="display:block">${pesc(l)}</span>`).join("") + `</div>`
+      : "";
     const speakers = s.speakers ? `<div class="prd-speakers">${pesc(s.speakers.slice(0,80))}</div>` : "";
     const avHTML = (avChips.length
       ? avChips.map(c => `<span class="prd-av-item">${pesc(c)}</span>`).join("")
