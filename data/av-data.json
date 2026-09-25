@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-25T18:04:03.369Z",
+  "lastUpdated": "2026-09-25T18:06:07.268Z",
   "changelog": [
     {
       "ts": "2026-09-24T18:51:51.791Z",
@@ -344,7 +344,15 @@
         ],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
