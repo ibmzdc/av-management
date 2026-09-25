@@ -727,7 +727,7 @@ function renderSummary() {
     files    += sf.filter(f=>f.status!=="nofile").length;
     uploaded += sf.filter(f=>f.status==="uploaded"||f.status==="downloaded").length;
     updated  += sf.filter(f=>f.status==="updated").length;
-    if (sf.length === 0 || sf.every(f=>f.status==="onhold"||f.status==="nofile")) noFile++;
+    if (sf.length > 0 && sf.every(f=>f.status==="onhold"||f.status==="nofile")) noFile++;
   }
   document.getElementById("s-sessions").textContent = sessions.length;
   document.getElementById("s-files").textContent    = files;
