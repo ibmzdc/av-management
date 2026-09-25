@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-25T17:57:00.302Z",
+  "lastUpdated": "2026-09-25T18:04:03.369Z",
   "changelog": [
     {
       "ts": "2026-09-24T18:51:51.791Z",
@@ -3071,9 +3071,9 @@
       "endTime": "10:30",
       "sessionType": "Client Experience",
       "track": null,
-      "title": "IBM CIO Managing my Db2 & IMS systems with Z Database Assistant",
+      "title": "Managing my Db2 & IMS systems with Z Database Assistant",
       "description": "In this session IBM CIO, will share their early experience by modernizing their database system's management thru the agentic capability and natural language interfaces offered via the IBM Z Database Assistant.",
-      "speakers": "Sueli Almeida, Handelsbanken: Martin Alund US Bank: Thomas Lucey",
+      "speakers": "Sueli Almeida, Handelsbanken: Martin Alund, US Bank: Thomas Lucey",
       "room": "Belle Epoque Ballroom",
       "roomSetup": null,
       "projection": "AV team",
