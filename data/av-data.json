@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-25T18:07:05.985Z",
+  "lastUpdated": "2026-09-25T18:14:47.693Z",
   "changelog": [
     {
       "ts": "2026-09-24T18:51:51.791Z",
@@ -1324,9 +1324,9 @@
         "presentationRequired": false,
         "presentationSource": null,
         "clicker": false,
-        "confidenceMonitors": 2,
+        "confidenceMonitors": 0,
         "timerMins": 0,
-        "wirelessHandheldMics": 5,
+        "wirelessHandheldMics": 2,
         "lavalierHeadsetMics": 0,
         "catchBoxMics": 3,
         "audioPlayback": false,
@@ -1987,7 +1987,15 @@
         ],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
@@ -2978,7 +2986,15 @@
         "specialRequirements": [],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": "panel|chairs,table|"
@@ -3125,7 +3141,15 @@
         ],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
@@ -3222,7 +3246,15 @@
         "specialRequirements": [],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
@@ -3516,7 +3548,15 @@
         "specialRequirements": [],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
@@ -4097,7 +4137,15 @@
         ],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": "The presentation will include an embedded video.",
       "operatorNote": null,
       "stageSetup": null
@@ -4151,7 +4199,15 @@
         "stageSetup": null,
         "specialRequirements": []
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": "Timer - 15 minutes per team (4)",
       "operatorNote": null,
       "stageSetup": null
@@ -4254,7 +4310,7 @@
         "specialRequirements": []
       },
       "files": [],
-      "avNote": "Timer - 15 minutes per team (4)",
+      "avNote": "Timer - 15 minutes per team (4)\nUse same file as Part 1",
       "operatorNote": null,
       "stageSetup": null
     },
@@ -4301,7 +4357,15 @@
         "stageSetup": null,
         "specialRequirements": []
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
