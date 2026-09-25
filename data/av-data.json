@@ -2,7 +2,7 @@
   "event": "ZDC 2026 Fall",
   "eventDates": "Oct 18'22, 2026",
   "location": "Antwerp, Belgium",
-  "lastUpdated": "2026-09-25T18:06:07.268Z",
+  "lastUpdated": "2026-09-25T18:07:05.985Z",
   "changelog": [
     {
       "ts": "2026-09-24T18:51:51.791Z",
@@ -363,7 +363,7 @@
       "date": null,
       "startTime": "09:00",
       "endTime": "09:30",
-      "sessionType": "Client Experience",
+      "sessionType": "General Session",
       "track": null,
       "title": "AI on IBM Z: From Transactional Intelligence to agentic workflows",
       "description": null,
@@ -401,7 +401,15 @@
         "specialRequirements": [],
         "timer": true
       },
-      "files": [],
+      "files": [
+        {
+          "fileType": "presentation",
+          "fileName": "TBD",
+          "boxFileId": "",
+          "status": "onhold",
+          "updatedAt": null
+        }
+      ],
       "avNote": null,
       "operatorNote": null,
       "stageSetup": null
