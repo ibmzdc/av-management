@@ -117,20 +117,19 @@ The dashboard has a `decodePickerValue()` function that renders this as human-re
 
 ## Current state / next work items
 
-- **Accomplished in This Session:**
+- **Accomplished:**
   - **Print Rundown overhaul:** Title page fix, font sizing, time column `calc()` fix, full AV label text, AV note moved to AV column, color-banded section headers, By Room / By Day mode picker, dialog DOM removal fix, `pesc()` normalization, `print-color-adjust: exact` for color printing
   - **Files column logic:** "Not required" for Design Fair Station, Presenter Laptop, Collaborative, and `presentationRequired: false` sessions
   - **Migration guard:** `migrateSession()` now only copies `s.projection` → `av.presentationSource` for known valid values (not free-text notes)
-  - **Encoding cleanup:** Fixed 16 garbled session fields (en-dashes, apostrophes) from triple UTF-8 encoding. Fixed `eventDates` field.
+  - **Encoding cleanup (round 1):** Fixed 16 garbled session fields (en-dashes, apostrophes) from triple UTF-8 encoding. Fixed `eventDates` field.
+  - **Encoding cleanup (round 2):** Binary-level fix — replaced 17 occurrences of the triple-UTF-8-encoded en-dash byte sequence (12 bytes → 3 bytes, U+2013) in `av-data.json`. Session 54 title now renders correctly in all PDF print modes.
   - **Admin toggle button:** Dashboard checkbox replaced with a pill-style toggle button (grey = off, blue = "On Dashboard")
   - **Admin bulk toggle:** "Dashboard: All" button in topbar turns all visible sessions on/off in one click
   - **Admin Session Info panel:** Title, Start Time, End Time, Room, Session Type now editable inline in expanded card — collected by `collectAVReqs()` on save
 
-- **Known open issue:**
-  - The `â` garbled character in session 54 title ("Continuing IBM Z full-stack simplification – from complexity to code") still appears in PDF output when printed via Safari/Chrome print-to-PDF. The data in `av-data.json` and the HTML are clean (U+2013 en-dash). `pesc()` converts it to `-` but the PDF renderer is still seeing the raw Unicode. Root cause not yet identified — possibly a browser-version-specific print encoding bug.
+- **Known open issues:** None.
 
 - **Next Work Items:**
-  - Resolve session 54 PDF encoding issue
   - Standard session data maintenance as event approaches
 
 ---
